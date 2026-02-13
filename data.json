@@ -20,7 +20,7 @@
       "nombre_completo": "Carlos Ramírez Mendoza",
       "nombre_usuario": "german",
       "correo": "gerfile12@gmail.com",
-      "password_hash": "$2b$10$xK9mLpQr3TvWzN8uA1eJdO...",
+      "password_hash": "german",
       "rol": "administrador",
       "area_id": "AREA-001",
       "cargo": "Responsable de audivisual",
