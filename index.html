@@ -539,7 +539,7 @@
   //  Si tu JSON está en otra ruta, cambia DB_PATH abajo.
   // ══════════════════════════════════════════════════════════════════
 
-  const DB_PATH = 'https://raw.githubusercontent.com/Leonel-calle-dev/ADM/main/database.json'; // ← ajusta esta ruta si es necesario
+  const DB_PATH = 'https://raw.githubusercontent.com/Leonel-calle-dev/ADM/main/database.json';
 
   // Variable global donde se almacena el JSON cargado
   let DATABASE = null;
@@ -576,11 +576,13 @@
       Swal.fire({
         icon: 'error',
         title: 'Error al cargar el sistema',
-        html: `No se pudo leer el archivo <code>${DB_PATH}</code>.<br><br>
+        html: `No se pudo cargar la base de datos desde GitHub.<br><br>
                <small style="color:#6c757d">
-                 Verifica que el archivo exista y que el servidor esté corriendo.<br>
-                 <strong>Nota:</strong> fetch() requiere un servidor HTTP local
-                 (no funciona abriendo el HTML directamente como archivo).
+                 URL: <code style="font-size:10px;word-break:break-all">${DB_PATH}</code><br><br>
+                 Posibles causas:<br>
+                 • El repositorio es privado (debe ser público)<br>
+                 • CORS bloqueado — usa la URL <strong>raw.githubusercontent.com</strong><br>
+                 • Sin conexión a internet
                </small>`,
         confirmButtonColor: '#dc3545',
         confirmButtonText: 'Entendido'
