@@ -527,122 +527,101 @@
 
   <script>
   // ══════════════════════════════════════════════════════════════════
-  //  BASE DE DATOS JSON — MÓDULO 1: AUTENTICACIÓN Y GESTIÓN DE USUARIOS
-  //  Fuente: database.json → colecciones: usuarios, sesiones,
-  //          configuracion, auditoria
+  //  MÓDULO 1 — AUTENTICACIÓN Y GESTIÓN DE USUARIOS
+  //  Carga el archivo database.json externo mediante fetch()
+  //  Estructura de carpetas esperada:
+  //
+  //    proyecto/
+  //    ├── login.html          ← este archivo
+  //    └── data/
+  //        └── database.json   ← archivo JSON externo
+  //
+  //  Si tu JSON está en otra ruta, cambia DB_PATH abajo.
   // ══════════════════════════════════════════════════════════════════
 
-  const DATABASE = {
-    _info: {
-      nombre: "Base de Datos — Sistema de Control y Seguimiento",
-      unidad: "Administración del Campus",
-      version: "1.0.0"
-    },
+  const DB_PATH = 'data/database.json'; // ← ajusta esta ruta si es necesario
 
-    // ── MÓDULO 1: USUARIOS ──────────────────────────────────────────
-    usuarios: [
-      {
-        id: "USR-001",
-        nombre_completo: "Carlos Ramírez Mendoza",
-        nombre_usuario: "c.ramirez",
-        correo: "c.ramirez@campus.edu.bo",
-        // En producción real las passwords son hashes (bcrypt).
-        // Aquí se usa texto plano solo para demostración frontend.
-        password: "Admin2025#",
-        rol: "administrador",
-        area_id: "AREA-001",
-        cargo: "Director de Administración",
-        activo: true,
-        forzar_cambio_password: false,
-        intentos_fallidos: 0,
-        bloqueado: false,
-        ultimo_acceso: null
-      },
-      {
-        id: "USR-002",
-        nombre_completo: "María Elena Quispe Choque",
-        nombre_usuario: "m.quispe",
-        correo: "m.quispe@campus.edu.bo",
-        password: "Super2025#",
-        rol: "supervisor",
-        area_id: "AREA-002",
-        cargo: "Jefa de Infraestructura",
-        activo: true,
-        forzar_cambio_password: false,
-        intentos_fallidos: 0,
-        bloqueado: false,
-        ultimo_acceso: null
-      },
-      {
-        id: "USR-003",
-        nombre_completo: "Jorge Luis Mamani Flores",
-        nombre_usuario: "j.mamani",
-        correo: "j.mamani@campus.edu.bo",
-        password: "Personal25#",
-        rol: "personal",
-        area_id: "AREA-002",
-        cargo: "Técnico de Mantenimiento",
-        activo: true,
-        forzar_cambio_password: true, // Debe cambiar contraseña al primer ingreso
-        intentos_fallidos: 0,
-        bloqueado: false,
-        ultimo_acceso: null
-      },
-      {
-        id: "USR-004",
-        nombre_completo: "Ana Patricia Torrez Vidal",
-        nombre_usuario: "a.torrez",
-        correo: "a.torrez@campus.edu.bo",
-        password: "Personal25#",
-        rol: "personal",
-        area_id: "AREA-003",
-        cargo: "Asistente Administrativa",
-        activo: true,
-        forzar_cambio_password: false,
-        intentos_fallidos: 0,
-        bloqueado: false,
-        ultimo_acceso: null
-      },
-      {
-        id: "USR-005",
-        nombre_completo: "Roberto Condori Apaza",
-        nombre_usuario: "r.condori",
-        correo: "r.condori@campus.edu.bo",
-        password: "Visor2025#",
-        rol: "visor",
-        area_id: "AREA-001",
-        cargo: "Auditor Interno",
-        activo: true,
-        forzar_cambio_password: false,
-        intentos_fallidos: 0,
-        bloqueado: false,
-        ultimo_acceso: null
+  // Variable global donde se almacena el JSON cargado
+  let DATABASE = null;
+
+  // ──────────────────────────────────────────────────────────────────
+  //  CARGA DEL JSON EXTERNO
+  // ──────────────────────────────────────────────────────────────────
+  async function cargarBaseDeDatos() {
+    try {
+      mostrarEstadoCarga(true);
+      const respuesta = await fetch(DB_PATH);
+
+      if (!respuesta.ok) {
+        throw new Error(`No se pudo cargar ${DB_PATH} (HTTP ${respuesta.status})`);
       }
-    ],
 
-    // ── SESIONES ACTIVAS ────────────────────────────────────────────
-    sesiones: [],
+      DATABASE = await respuesta.json();
 
-    // ── LOG DE AUDITORÍA ────────────────────────────────────────────
-    auditoria: [],
+      // Asegurarse que existan las colecciones dinámicas si no están en el JSON
+      if (!DATABASE.sesiones)              DATABASE.sesiones              = [];
+      if (!DATABASE.auditoria)             DATABASE.auditoria             = [];
+      if (!DATABASE.recuperacion_password) DATABASE.recuperacion_password = [];
 
-    // ── RECUPERACIÓN DE CONTRASEÑA ──────────────────────────────────
-    recuperacion_password: [],
+      console.log(`✅ [DB] ${DATABASE._info?.nombre || 'Base de datos'} cargada correctamente`);
+      console.log(`👤 [M1] ${DATABASE.usuarios.length} usuarios encontrados`);
 
-    // ── CONFIGURACIÓN DEL SISTEMA ───────────────────────────────────
-    configuracion: {
-      sistema: {
-        nombre_institucion: "Campus Universitario",
-        nombre_unidad: "Unidad de Administración del Campus",
-        color_primario: "#2563eb"
-      },
-      sesiones: {
-        duracion_sesion_horas: 12,
-        max_intentos_fallidos: 5,
-        bloqueo_segundos: 30
-      }
+      mostrarEstadoCarga(false);
+      renderizarAccesoRapido();
+
+    } catch (error) {
+      mostrarEstadoCarga(false);
+      console.error('❌ [DB] Error al cargar database.json:', error);
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al cargar el sistema',
+        html: `No se pudo leer el archivo <code>${DB_PATH}</code>.<br><br>
+               <small style="color:#6c757d">
+                 Verifica que el archivo exista y que el servidor esté corriendo.<br>
+                 <strong>Nota:</strong> fetch() requiere un servidor HTTP local
+                 (no funciona abriendo el HTML directamente como archivo).
+               </small>`,
+        confirmButtonColor: '#dc3545',
+        confirmButtonText: 'Entendido'
+      });
+
+      // Deshabilitar el formulario si no hay datos
+      document.getElementById('loginButton').disabled = true;
+      document.getElementById('loginButton').innerHTML =
+        '<i class="fas fa-exclamation-triangle" style="margin-right:8px;"></i>Sin conexión a datos';
     }
+  }
+
+  // Spinner de carga mientras fetch trae el JSON
+  function mostrarEstadoCarga(cargando) {
+    const btn = document.getElementById('loginButton');
+    if (!btn) return;
+    if (cargando) {
+      btn.disabled = true;
+      btn.classList.add('btn-loading');
+      btn.innerHTML = '<span style="opacity:0">Cargando sistema…</span>';
+    } else {
+      btn.disabled = false;
+      btn.classList.remove('btn-loading');
+      btn.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar';
+    }
+  }
+
+  // ──────────────────────────────────────────────────────────────────
+  //  A partir de aquí todo el código usa DATABASE (ya cargado)
+  // ──────────────────────────────────────────────────────────────────
+
+  // Objeto temporal vacío para que las referencias no fallen
+  // antes de que cargarBaseDeDatos() termine
+  const DATABASE_FALLBACK = {
+    _info: { nombre: '', version: '' },
+    usuarios: [], sesiones: [], auditoria: [],
+    recuperacion_password: [],
+    configuracion: { sesiones: { max_intentos_fallidos: 5, bloqueo_segundos: 30, duracion_sesion_horas: 12 } }
   };
+
+
 
   // ──────────────────────────────────────────────────────────────────
   //  MAPA DE ROLES (para UI)
@@ -684,13 +663,19 @@
 
   // ──────────────────────────────────────────────────────────────────
   //  ESTADO DE LA APLICACIÓN (Módulo 1 - Seguridad)
+  //  Los límites se leen del DATABASE cargado vía fetch.
   // ──────────────────────────────────────────────────────────────────
   const appState = {
     intentosFallidos: 0,
-    maxIntentos: DATABASE.configuracion.sesiones.max_intentos_fallidos,
     bloqueadoHasta: null,
-    bloqueoDuracionMs: DATABASE.configuracion.sesiones.bloqueo_segundos * 1000,
-    lockoutTimer: null
+    lockoutTimer: null,
+    // Getters dinámicos: leen del JSON una vez que fue cargado
+    get maxIntentos() {
+      return DATABASE?.configuracion?.sesiones?.max_intentos_fallidos ?? 5;
+    },
+    get bloqueoDuracionMs() {
+      return (DATABASE?.configuracion?.sesiones?.bloqueo_segundos ?? 30) * 1000;
+    }
   };
 
   // ──────────────────────────────────────────────────────────────────
@@ -721,7 +706,7 @@
       token: token,
       activa: true,
       fecha_inicio: new Date().toISOString(),
-      fecha_expiracion: new Date(Date.now() + DATABASE.configuracion.sesiones.duracion_sesion_horas * 3600000).toISOString()
+      fecha_expiracion: new Date(Date.now() + (DATABASE?.configuracion?.sesiones?.duracion_sesion_horas ?? 12) * 3600000).toISOString()
     };
     DATABASE.sesiones.push(sesion);
 
@@ -932,6 +917,18 @@
   document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
+    // Verificar que el JSON ya fue cargado
+    if (!DATABASE) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Sistema cargando',
+        text: 'Espera un momento mientras se carga la base de datos.',
+        confirmButtonColor: '#0077ff',
+        timer: 2000, timerProgressBar: true, showConfirmButton: false
+      });
+      return;
+    }
+
     // Verificar bloqueo temporal en appState
     if (appState.bloqueadoHasta && Date.now() < appState.bloqueadoHasta) {
       const restantes = Math.ceil((appState.bloqueadoHasta - Date.now()) / 1000);
@@ -1016,7 +1013,7 @@
           case 'bloqueo_por_intentos':
             appState.bloqueadoHasta = Date.now() + appState.bloqueoDuracionMs;
             document.getElementById('loginButton').disabled = true;
-            mostrarBloqueoCuenta(DATABASE.configuracion.sesiones.bloqueo_segundos);
+            mostrarBloqueoCuenta(DATABASE?.configuracion?.sesiones?.bloqueo_segundos ?? 30);
             Swal.fire({
               icon: 'error',
               title: 'Cuenta bloqueada',
@@ -1122,10 +1119,12 @@
   // ──────────────────────────────────────────────────────────────────
   //  INICIALIZACIÓN
   // ──────────────────────────────────────────────────────────────────
+  // ──────────────────────────────────────────────────────────────────
+  //  INICIALIZACIÓN — carga el JSON externo al arrancar la página
+  // ──────────────────────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
-    renderizarAccesoRapido();
-    console.log(`[SISTEMA] ${DATABASE._info.nombre} v${DATABASE._info.version} — Lista para autenticación`);
-    console.log(`[MÓDULO 1] ${DATABASE.usuarios.length} usuarios cargados desde JSON`);
+    // 🔁 Todo el sistema arranca aquí: fetch → database.json
+    cargarBaseDeDatos();
   });
   </script>
 </body>
