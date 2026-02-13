@@ -97,8 +97,8 @@
     },
     {
       "id": "USR-005",
-      "nombre_completo": "Roberto Condori Apaza",
-      "nombre_usuario": "r.condori",
+      "nombre_completo": "Roger Leonel Chui Calle",
+      "nombre_usuario": "roger",
       "correo": "r.condori@campus.edu.bo",
       "password_hash": "$2b$10$dU0qNsOv7XzAcR2yE5iOhS...",
       "rol": "visor",
