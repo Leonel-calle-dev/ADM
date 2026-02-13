@@ -1,1230 +1,183 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Login - Sistema de Seguimiento Administrativo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- SweetAlert2 -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Font Awesome para iconos -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<title>Login - Sistema UAP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
-    }
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      background: linear-gradient(135deg, rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
-                  url("https://lh3.googleusercontent.com/fife/ALs6j_HMdLowsBDyMH08lSYMP526rzMIMN9wt7jXZZFf8jM6CZZH1ivkEyLEyCmVha1VedXa8c75Sk3RqnW-6Sm-IBSwEOtoJQvc7Esu-RzT0LJ3FuXPBkivVzwM9Q2748XvBIw8aanjN6fyfQeGFhRXoLuZOwf0tpSaOYCECdmCfEk2a6R4-802OCn4S7i1YMb5hM-qd9UdOu47PFFPL06yinWib4KhsmNfD_W7TFo83U_OGEuJZzPbcT7LkKZXC3b_2VgEMe2JS6o7kcb2ry6oRIbOWzqOlFjk61Tlmd-32jBuQWZrn6sy_UJ0a69eYe9uibqkE6pmW9PHP3Gi0BHBTPnvO92uOBJVCWXHOBIegNzBA2uGcx_m-xmDwX4XMuxFK2cqRx3X2vt1E8ElJ4RlFPczag8nWfdC6PtqPJEQU2l7rymXzhiIaE98Q6lyDwzmZIROcddNduoQAljarqmhC_tDzGdFLQATfwVtwFoP1lsJTz_02g2LX8nCAum9oPnR1E_Z5eDu90XBnq_-bvu3dozD7ohKBenK_bmPqCLcbfVkr4TWbg65jy2smsQ6cxqg0lIIFAAwqvU0SZLA0U-hNIE7QGKkwsTLWRvBIXjH4PnGViJf0JokDgRQ3t5FNf7jo3XtbhIXUMGdLOEHmjSqxk_DXinm71dTQH2IdEIkVX_uLFuQJ0h7IamAYO1AE6gcJSbJO08b0sDeAzLIILseimolgNrLHJGmCy3O3SzsolvitUkL8vrYmSRCHRSBZyntsqnhg5VO4DBwc8oBJYUtz2deMX53XJ43Uiui2E4E5V9A8UqL6raacHQfQqbDzVnmOymYwjy6UEmOHNyshpRuFHoQSmTPoDC-OlPvIRF3OUIhnpyaP628spE74uE5inv689gT8ZWIHhRi2Jdj_JJmCcA3e5Xs1ODHF0OHaj7gy4znKZbz-XL6xeR4mETQe8BHzf2GHQDbgDIgieT84MlYNEP_OpzGaKmrL3fpNpDqGQ6IOe4OFzy3uf8d-chcRjr--8Fb9IueJaEzlmJFbor54oJNATKK9J6K6MI2WPmzh48-pfsWLhKNfffOwyFpi6EzUTCE5WTHLGNiYj_aHh3pyN4_KDZlBe8kBsfKwiYyBYwHl_9-B25vDZgZ50kzyNPe9JVpkxW2FphapRaFucNkbfJXsxTXfIS-cuCU-3K_kcuNw0iEAA9HDy6vSAiXHGSX5KWFhpaGwtAoAbmZDf9Hp99elOQ2y3r2bf9lE56OPPvtyK5gvQHRB8U89QxR50DL-9nvYKxUV-3am5qYND1_LXrklWT5fxM9DNIUCbDTjTcl4wMtiRWNmdHTlEW8cspHMrnwmLLLTuEaOgFSDU95aqhUJczV0cnZIhfZ1qM6Ag-FYWOp79RUG9d4lXPWATmtD1G5uIgLqxO8m-3ggULYa3ul9iJ0G2HgDbTR0lAu0m8c1uN-GHCpn1cpwcGPh7e5lf-K9VUBRCEG7Fy1NxEgyuDO4FQZhhxEK3fB5KoEiA2vwN3JaKyfgb7jjaaV_P7nAk_x1f95XwKIjm0zAct0j69srXvRFPhmKjEpTgIEOEs-AydSuz8nkzjJdGTkLznFA_0Lb67owlRMIyZYen5-sBMOkiJd1VVwdURGXbNSmYsA3QbAWF4UqRXHEbno1TgH9eGG8AXXHqsIsY0GWNyj5LAMwDBIa6bRLXjSbKM4T13rmEBG8YWvipHmBEZGbhWV3BvP2ho_m_dYBrw07YU=w1910-h922?auditContext=prefetch") no-repeat center center/cover;
-      background-attachment: fixed;
-      color: #fff;
-    }
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    .main-content {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .login-container {
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(12px);
-      padding: 45px 40px;
-      border-radius: 24px;
-      width: 100%;
-      max-width: 420px;
-      text-align: center;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      animation: fadeIn 0.8s ease-out;
-      margin: 20px auto;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .login-container::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(0, 119, 255, 0.15) 0%, rgba(0, 225, 255, 0.08) 35%, transparent 70%);
-      z-index: -1;
-      animation: rotate 15s linear infinite;
-    }
-    
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .login-container img {
-      width: 130px;
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 18px;
-      animation: bounce 2s infinite;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      border: 2px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .login-container h2 {
-      color: #fff;
-      margin-bottom: 6px;
-      font-weight: 700;
-      font-size: 2.1rem;
-      letter-spacing: -0.5px;
-      position: relative;
-      display: inline-block;
-    }
-    
-    .login-container h2::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, #00e1ff, transparent);
-      border-radius: 3px;
-    }
-
-    /* Badge de sistema */
-    .sistema-badge {
-      display: inline-block;
-      background: rgba(0, 119, 255, 0.2);
-      border: 1px solid rgba(0, 225, 255, 0.3);
-      color: #00e1ff;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      border-radius: 100px;
-      margin-bottom: 24px;
-      margin-top: 14px;
-    }
-
-    .input-field {
-      margin-bottom: 22px;
-      position: relative;
-    }
-    
-    .input-field i {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: rgba(255, 255, 255, 0.65);
-      font-size: 18px;
-      z-index: 2;
-    }
-
-    .input-field input {
-      width: 100%;
-      padding: 16px 15px 16px 48px;
-      border: none;
-      border-radius: 14px;
-      outline: none;
-      font-size: 16px;
-      transition: all 0.35s ease;
-      background: rgba(255, 255, 255, 0.92);
-      color: #2c3e50;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-    
-    .input-field input::placeholder {
-      color: #7f8c8d;
-      font-weight: 400;
-      opacity: 1;
-    }
-
-    .input-field input:focus {
-      box-shadow: 0 0 0 3px rgba(0, 225, 255, 0.35), 0 0 12px rgba(0, 225, 255, 0.25);
-      background: rgba(255, 255, 255, 1);
-      transform: translateY(-1px);
-    }
-    
-    .toggle-password {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: rgba(255, 255, 255, 0.7);
-      cursor: pointer;
-      font-size: 18px;
-      padding: 5px;
-      z-index: 3;
-      transition: all 0.3s ease;
-      width: auto;
-      margin-top: 0;
-      box-shadow: none;
-    }
-    
-    .toggle-password:hover {
-      color: #00e1ff;
-      transform: translateY(-50%) scale(1.15);
-      background: none;
-      box-shadow: none;
-    }
-
-    .options-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    
-    .remember-me {
-      display: flex;
-      align-items: center;
-      color: rgba(255, 255, 255, 0.85);
-      font-size: 14px;
-      cursor: pointer;
-    }
-    
-    .remember-me input {
-      margin-right: 8px;
-      width: 16px;
-      height: 16px;
-      cursor: pointer;
-    }
-    
-    .forgot-password {
-      color: rgba(255, 255, 255, 0.85);
-      font-size: 14px;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      font-weight: 500;
-    }
-    
-    .forgot-password:hover {
-      color: #00e1ff;
-      text-decoration: underline;
-    }
-
-    button[type="submit"], #loginButton {
-      width: 100%;
-      padding: 16px;
-      background: linear-gradient(90deg, #0077ff, #00c6ff, #00e1ff);
-      border: none;
-      border-radius: 14px;
-      color: white;
-      font-size: 17px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.35s ease;
-      margin-top: 8px;
-      box-shadow: 0 6px 20px rgba(0, 100, 255, 0.4);
-      position: relative;
-      overflow: hidden;
-      letter-spacing: 0.5px;
-    }
-    
-    button[type="submit"]::after, #loginButton::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(rgba(255,255,255,0.2), transparent, rgba(255,255,255,0.3));
-      transform: rotate(30deg);
-      transition: all 0.6s;
-      opacity: 0;
-    }
-    
-    button[type="submit"]:hover::after, #loginButton:hover::after {
-      opacity: 1;
-      left: 120%;
-    }
-
-    button[type="submit"]:hover, #loginButton:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 119, 255, 0.55), 0 0 15px rgba(0, 225, 255, 0.4);
-      background: linear-gradient(90deg, #0066e0, #00b3e6, #00ccff);
-    }
-
-    button[type="submit"]:active, #loginButton:active {
-      transform: translateY(1px);
-      box-shadow: 0 4px 15px rgba(0, 100, 255, 0.4);
-    }
-    
-    button[type="submit"]:disabled, #loginButton:disabled {
-      background: linear-gradient(90deg, #5a98ff, #7eb3ff);
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: 0 4px 12px rgba(0, 80, 200, 0.3);
-    }
-
-    /* Panel de acceso rápido por roles */
-    .divider {
-      display: flex;
-      align-items: center;
-      text-align: center;
-      margin: 22px 0 16px;
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 14px;
-    }
-    .divider::before, .divider::after {
-      content: '';
-      flex: 1;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-    }
-    .divider::before { margin-right: 15px; }
-    .divider::after  { margin-left: 15px; }
-
-    .quick-access {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-
-    .qa-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.07);
-      color: rgba(255,255,255,0.88);
-      font-size: 12.5px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      text-align: left;
-      width: 100%;
-      margin: 0;
-      box-shadow: none;
-      letter-spacing: 0;
-    }
-    .qa-btn:hover {
-      background: rgba(0,119,255,0.25);
-      border-color: rgba(0,225,255,0.4);
-      color: #fff;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,100,255,0.2);
-    }
-    .qa-btn .qa-icon {
-      font-size: 16px;
-      width: 24px;
-      text-align: center;
-      flex-shrink: 0;
-    }
-    .qa-btn .qa-info { line-height: 1.3; }
-    .qa-btn .qa-role { font-size: 10px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.05em; }
-
-    /* Role color indicators */
-    .qa-btn.role-admin  { border-left: 3px solid #ef4444; }
-    .qa-btn.role-super  { border-left: 3px solid #a855f7; }
-    .qa-btn.role-user   { border-left: 3px solid #10b981; }
-    .qa-btn.role-view   { border-left: 3px solid #f59e0b; }
-
-    /* Estado de sesión bloqueada */
-    .lockout-bar {
-      display: none;
-      background: rgba(220, 53, 69, 0.2);
-      border: 1px solid rgba(220, 53, 69, 0.4);
-      border-radius: 12px;
-      padding: 10px 14px;
-      margin-bottom: 16px;
-      font-size: 13px;
-      color: #ff6b6b;
-      text-align: left;
-    }
-    .lockout-bar i { margin-right: 6px; }
-
-    /* Indicador de intentos */
-    .attempts-indicator {
-      display: flex;
-      gap: 5px;
-      justify-content: center;
-      margin-top: 10px;
-      min-height: 14px;
-    }
-    .attempt-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      transition: background 0.3s;
-    }
-    .attempt-dot.used { background: #ef4444; }
-    .attempt-dot.safe { background: rgba(255,255,255,0.2); }
-
-    /* Footer */
-    .footer {
-      background: rgba(0, 15, 35, 0.85);
-      backdrop-filter: blur(10px);
-      padding: 22px 0;
-      text-align: center;
-      margin-top: auto;
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.25);
-    }
-
-    .footer-text {
-      color: rgba(255, 255, 255, 0.75);
-      font-size: 15px;
-      font-weight: 400;
-      letter-spacing: 0.5px;
-    }
-    
-    .footer-text strong { color: #00e1ff; font-weight: 600; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(25px); filter: blur(5px); }
-      to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-10px); }
-    }
-    @keyframes pulse {
-      0%   { box-shadow: 0 0 0 0 rgba(0, 225, 255, 0.4); }
-      70%  { box-shadow: 0 0 0 12px rgba(0, 225, 255, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(0, 225, 255, 0); }
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20%, 60%  { transform: translateX(-5px); }
-      40%, 80%  { transform: translateX(5px); }
-    }
-
-    .login-success { animation: pulse 1.5s infinite; }
-    .input-error   { animation: shake 0.5s; box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.4) !important; }
-
-    .btn-loading { position: relative; padding-left: 45px !important; }
-    .btn-loading::after {
-      content: '';
-      position: absolute;
-      left: 15px; top: 50%;
-      transform: translateY(-50%);
-      width: 20px; height: 20px;
-      border: 2.5px solid rgba(255,255,255,0.4);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 1s linear infinite;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .login-container { padding: 35px 30px; margin: 15px; border-radius: 20px; }
-      .login-container h2 { font-size: 1.8rem; margin-bottom: 22px; }
-      .login-container img { width: 110px; margin-bottom: 15px; }
-      .input-field input { padding: 15px 15px 15px 45px; font-size: 16px; }
-      .options-container { flex-direction: column; align-items: flex-start; gap: 12px; }
-      button[type="submit"], #loginButton { padding: 15px; font-size: 16px; }
-      .footer { padding: 18px 0; }
-      .footer-text { font-size: 14px; padding: 0 15px; }
-    }
-    @media (max-width: 480px) {
-      .main-content { padding: 10px; }
-      .login-container { padding: 30px 25px; margin: 10px; border-radius: 18px; }
-      .login-container h2 { font-size: 1.65rem; }
-      .login-container img { width: 95px; }
-      .input-field { margin-bottom: 18px; }
-      .input-field input { padding: 14px 15px 14px 42px; font-size: 15.5px; }
-      .toggle-password { font-size: 17px; }
-      button[type="submit"], #loginButton { padding: 14px; font-size: 16px; }
-      .quick-access { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 360px) {
-      .login-container { padding: 25px 20px; }
-      .login-container h2 { font-size: 1.55rem; }
-      .input-field input { padding: 13px 15px 13px 40px; font-size: 15px; }
-      .options-container { font-size: 13px; }
-      .footer-text { font-size: 13px; line-height: 1.5; }
-    }
-  </style>
+<style>
+*{
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+body{
+  background:linear-gradient(135deg,#1e3c72,#2a5298);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.login-box{
+  background:#fff;
+  padding:40px;
+  width:100%;
+  max-width:380px;
+  border-radius:10px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+.login-box h2{
+  text-align:center;
+  margin-bottom:25px;
+  color:#1e3c72;
+}
+.input-group{
+  margin-bottom:15px;
+}
+.input-group label{
+  display:block;
+  margin-bottom:5px;
+}
+.input-group input{
+  width:100%;
+  padding:10px;
+  border-radius:6px;
+  border:1px solid #ccc;
+  outline:none;
+}
+.input-group input:focus{
+  border-color:#1e3c72;
+}
+.remember{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-bottom:15px;
+}
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:6px;
+  background:#1e3c72;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+button:hover{
+  background:#163060;
+}
+.footer{
+  margin-top:15px;
+  text-align:center;
+  font-size:13px;
+  color:#777;
+}
+</style>
 </head>
+
 <body>
-  <div class="main-content">
-    <div class="login-container">
 
-      <img src="https://lh3.googleusercontent.com/fife/ALs6j_G2PUe0Mfr2fWt-nMSpt9Z-tDjXQQc8UI2grsBRqmIIHBnSTuhXsT43xM11ANSHIARGJXzCxA7woBJz7VAY4Kxb7Dozqrj4Ifu5l0tUk0z2Fe2u5FihqlRQtu7Iezlq45yp4s5gJVcSYUFYu2F0kwfy18qE0mc1kFu42kurl8o2C0XmeXOK5ZE47DSnCENoL6_UZLA31QFkhRyzhp2yO4fuKUQPvKbHiGnwUJEPN8vKm3L0e9Ni16Gfp0gRluU5Ou76M8TFU2nk8gQIhSU1hBzV5TRd2vWa0ZXL5q7K_Dz-oUD3BCQ80IUDsOZzJtng33ZUX-iXu5jowA5GdyrMMmhYQOs3bCvzdW-1iVdN7v2xHgpCMweOTD1Wr_8EFjEV3W-0llk806qSyqyV-MbozbDZTxiyNGTSpkNzinBVS1YBWtq8LKitrx57Vfx1l3uUlOORRCFZ3IFPflrmRxM9Hf_0-t_LZsbU3XnuHukd9GEtpZMioG2FB6hLMQNZvap4vDZh3yyaTrn7OKYg-06tnZIoPWCp4JGROJ9dWrTiSDkAoaVFX_apX8QHzppyLQfzPhQ-_IifBOlX0FsXIHeg_7SO2u8ZEwqs6TiB2B5NhIwcUO8zOGe-K_L16CNJyXYDoMhvVE46lfYPMsCBNgBRqAs-N5vuqI5tN7ZtxTRQY2TPEEZv4n-OqgQsQ2hGpmzOs_XkzMPyaCWu81sGPHTqZEC06QvF6OvAKo0cHLL3D2GSFCAijBvkoNk_wkQ-NBpVHMNy1l00Cf9h9hG4Os5p4v9DljOPsnAQ9KnDYjYV9rgUxtjJ7nCcgLVo7AAAQwIE3jnJC2aWQ_hjjDs4L6zkpy2zlbnxJivdPwx1KjOfvF5aUbEUblRomh0PUWtWPRz7PamRZm_cLZAkpqs_l4uCvoV5r2_oyctsZ2QJ4I2peTROtgbDDfAdPVAQYwtGTC23bdjVaxBrIQMHtVtsN0usLHFGrhKSX2z8bYWsZj4gpj3LYqQyKilq1es2VRzuPbLo2ooLXlEmOKtF8-hdjmYlNnz6fjOQfpnHTFBe7p73I_azp_HbGiW26PHwDOiTAzDY32flGYC3hwlDhFWlv9QEe28wdltqtwn0sqMcMMOPN5hTlSWP22v_HHNSd2nFSW1rSESafvvyIb5Gg1ge4rY7s6257NlTCg36o5dYPlSbsN6FMXF9nPP3FGFTKU0xixXbyY0EtPOuR3Hc1Zr1V8xluEW_QHI19nJTXKMic-K8piZo2cxB0qO_usHTGxO9toJlT9Hvu8wLVKu11tK99qM3ZjCNwW9yem67fxv0kVy9_LzRNAcoQa6IXYmsQSXNShb2Dwv5fgM-LkON19-hXMfNlo5Vep-ZJ1fW_BaPFOSN12Ud5yEREds6aBLFeGs-ZXTEw8vjn70gU14YbmqyH117G0w0jBzx5BjjE3v1rSYnq_npQ4lHRXjCgK49vXln_qDBDxJRPBtkGOGEhxvb-QFMWOlOP-VhAxZBcNnmWxwgvIoDiCMJOU28jdcjXkFbyMfaIsdsTSZU90Y94lvUBa-phgLaFFUzfbw6dbr8NhjOhFuaiWlxHuiYW2zONuxYO5ymRErbyalvAor8Q-kVBUcgaHdj65aT_wec3eScWBppModO8lVEOeFCplwtz9eZcILXfIupUkhqkpd5pIqT4W4EJhfTIky0H8Bo3W9JumX34hak29U50J6aptS1kFqLSF6T0AQelch0opP1ShZQhX0=w843-h922?auditContext=prefetch" alt="Logo Campus">
+<div class="login-box">
+  <h2>Sistema UAP</h2>
 
-      <h2>Iniciar Sesión</h2>
-      <div class="sistema-badge">
-        <i class="fas fa-shield-alt" style="margin-right:5px;font-size:10px;"></i>
-        Sistema de Seguimiento Administrativo
-      </div>
-
-      <!-- Barra de bloqueo por intentos -->
-      <div class="lockout-bar" id="lockoutBar">
-        <i class="fas fa-lock"></i>
-        <span id="lockoutMsg">Cuenta bloqueada temporalmente.</span>
-      </div>
-
-      <form id="loginForm">
-        <div class="input-field">
-          <i class="fas fa-user"></i>
-          <input type="text" id="usuario" placeholder="Nombre de usuario" autocomplete="username" required>
-        </div>
-        <div class="input-field">
-          <i class="fas fa-lock"></i>
-          <input type="password" id="password" placeholder="Contraseña" autocomplete="current-password" required>
-          <button type="button" class="toggle-password" id="togglePassword">
-            <i class="fas fa-eye"></i>
-          </button>
-        </div>
-        
-        <div class="options-container">
-          <label class="remember-me">
-            <input type="checkbox" id="rememberMe"> Recordar usuario
-          </label>
-          <a href="#" class="forgot-password" id="forgotPassword">¿Olvidaste tu contraseña?</a>
-        </div>
-        
-        <button type="submit" id="loginButton">
-          <i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar
-        </button>
-
-        <!-- Indicador visual de intentos fallidos -->
-        <div class="attempts-indicator" id="attemptsIndicator"></div>
-      </form>
-
-      <!-- Acceso rápido por rol desde JSON -->
-      <div class="divider">acceso rápido por rol</div>
-      <div class="quick-access" id="quickAccess">
-        <!-- Se genera dinámicamente desde el JSON -->
-      </div>
-
-    </div>
+  <div class="input-group">
+    <label>Usuario</label>
+    <input type="text" id="usuario">
   </div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-text">
-      <strong>Sistema de Seguimiento Administrativo</strong> — Unidad de Administración del Campus<br>
-      © 2025 · Campus Universitario · Todos los derechos reservados
-    </div>
-  </footer>
+  <div class="input-group">
+    <label>Contraseña</label>
+    <input type="password" id="password">
+  </div>
 
-  <script>
-  // ══════════════════════════════════════════════════════════════════
-  //  MÓDULO 1 — AUTENTICACIÓN Y GESTIÓN DE USUARIOS
-  //  Carga el archivo database.json externo mediante fetch()
-  //  Estructura de carpetas esperada:
-  //
-  //    proyecto/
-  //    ├── login.html          ← este archivo
-  //    └── data/
-  //        └── database.json   ← archivo JSON externo
-  //
-  //  Si tu JSON está en otra ruta, cambia DB_PATH abajo.
-  // ══════════════════════════════════════════════════════════════════
+  <div class="remember">
+    <input type="checkbox" id="remember">
+    <label for="remember">Recordarme</label>
+  </div>
 
-  // Variable global donde se almacena el JSON cargado
-  let DATABASE = null;
+  <button onclick="login()">Ingresar</button>
 
-  // ──────────────────────────────────────────────────────────────────
-  //  CARGA DEL JSON EXTERNO
-  // ──────────────────────────────────────────────────────────────────
-  // ──────────────────────────────────────────────────────────────────
-  //  CARGA DEL JSON — 3 estrategias en cascada
-  //
-  //  1. GitHub Contents API   → funciona si el repo ES PÚBLICO
-  //  2. jsDelivr CDN          → espejo automático de GitHub (público)
-  //  3. Carga manual          → el usuario selecciona el archivo local
-  //
-  //  Si tu repo es PRIVADO, solo la opción 3 funcionará sin token.
-  // ──────────────────────────────────────────────────────────────────
-  const FUENTES_JSON = [
-    {
-      nombre: 'GitHub API',
-      url: 'https://api.github.com/repos/Leonel-calle-dev/ADM/contents/database.json?ref=main',
-      headers: { 'Accept': 'application/vnd.github.v3.raw' }
-    },
-    {
-      nombre: 'jsDelivr CDN',
-      url: 'https://cdn.jsdelivr.net/gh/Leonel-calle-dev/ADM@main/database.json',
-      headers: {}
-    }
-  ];
+  <div class="footer">
+    © 2026 Universidad Amazónica de Pando
+  </div>
+</div>
 
-  async function cargarBaseDeDatos() {
-    mostrarEstadoCarga(true);
+<script>
 
-    // ── Intentar cada fuente en orden ──────────────────────────────
-    for (const fuente of FUENTES_JSON) {
-      try {
-        console.log(`🔄 [DB] Intentando: ${fuente.nombre}...`);
-        const res = await fetch(fuente.url, { headers: fuente.headers });
+const GITHUB_JSON_URL = "https://raw.githubusercontent.com/Leonel-calle-dev/ADM/main/database.json";
 
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+let usuariosDB = [];
 
-        const data = await res.json();
+async function cargarUsuarios(){
+  try{
+    const res = await fetch(GITHUB_JSON_URL);
+    const data = await res.json();
+    usuariosDB = data.usuarios;
+  }catch(e){
+    Swal.fire("Error","No se pudo cargar la base de usuarios","error");
+  }
+}
 
-        // Validar que sea el JSON correcto
-        if (!data.usuarios || !Array.isArray(data.usuarios)) {
-          throw new Error('El JSON no tiene la estructura esperada (falta "usuarios")');
-        }
+cargarUsuarios();
 
-        DATABASE = data;
-        if (!DATABASE.sesiones)              DATABASE.sesiones              = [];
-        if (!DATABASE.auditoria)             DATABASE.auditoria             = [];
-        if (!DATABASE.recuperacion_password) DATABASE.recuperacion_password = [];
+function login(){
 
-        mostrarEstadoCarga(false);
-        renderizarAccesoRapido();
-        console.log(`✅ [DB] Cargado desde ${fuente.nombre} — ${DATABASE.usuarios.length} usuarios`);
-        return; // ← éxito, salir
+  const usuario = document.getElementById("usuario").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-      } catch (err) {
-        console.warn(`⚠️ [DB] ${fuente.nombre} falló:`, err.message);
-      }
-    }
-
-    // ── Todas las fuentes remotas fallaron → ofrecer carga manual ──
-    mostrarEstadoCarga(false);
-    console.error('❌ [DB] No se pudo cargar desde ninguna fuente remota');
-    mostrarDialogoCargaManual()
+  if(usuario==="" || password===""){
+    Swal.fire("Advertencia","Complete todos los campos","warning");
+    return;
   }
 
-  // ── Carga manual: el usuario abre el database.json desde su PC ──
-  function mostrarDialogoCargaManual() {
-    Swal.fire({
-      icon: 'warning',
-      title: 'No se pudo conectar al repositorio',
-      html: `
-        <p style="color:#555;font-size:14px;margin-bottom:16px">
-          Puede que el repositorio sea <strong>privado</strong> o no haya conexión.<br>
-          Puedes cargar el archivo <code>database.json</code> manualmente:
-        </p>
-        <label for="fileInput" style="
-          display:inline-flex;align-items:center;gap:10px;
-          background:#0077ff;color:#fff;padding:12px 20px;
-          border-radius:12px;cursor:pointer;font-size:14px;font-weight:600">
-          <i class="fas fa-folder-open"></i> Seleccionar database.json
-        </label>
-        <input type="file" id="fileInput" accept=".json" style="display:none">
-        <p id="fileStatus" style="margin-top:12px;font-size:13px;color:#6c757d">
-          Ningún archivo seleccionado
-        </p>`,
-      showConfirmButton: true,
-      confirmButtonText: 'Cargar archivo',
-      confirmButtonColor: '#0077ff',
-      showCancelButton: true,
-      cancelButtonText: 'Cancelar',
-      didOpen: () => {
-        const input  = document.getElementById('fileInput');
-        const status = document.getElementById('fileStatus');
-        input.addEventListener('change', () => {
-          status.textContent = input.files[0]
-            ? `📄 Seleccionado: ${input.files[0].name}`
-            : 'Ningún archivo seleccionado';
-          status.style.color = input.files[0] ? '#10b981' : '#6c757d';
-        });
-      },
-      preConfirm: () => {
-        const input = document.getElementById('fileInput');
-        if (!input.files[0]) {
-          Swal.showValidationMessage('Selecciona el archivo database.json primero');
-          return false;
-        }
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = e => {
-            try {
-              const data = JSON.parse(e.target.result);
-              if (!data.usuarios || !Array.isArray(data.usuarios)) {
-                throw new Error('El archivo no tiene la estructura correcta');
-              }
-              resolve(data);
-            } catch (err) {
-              Swal.showValidationMessage(`❌ JSON inválido: ${err.message}`);
-              reject();
-            }
-          };
-          reader.readAsText(input.files[0]);
-        });
-      }
-    }).then(result => {
-      if (result.isConfirmed && result.value) {
-        DATABASE = result.value;
-        if (!DATABASE.sesiones)              DATABASE.sesiones              = [];
-        if (!DATABASE.auditoria)             DATABASE.auditoria             = [];
-        if (!DATABASE.recuperacion_password) DATABASE.recuperacion_password = [];
+  const user = usuariosDB.find(u =>
+    u.nombre_usuario.toLowerCase() === usuario.toLowerCase() &&
+    u.password_plano === password &&
+    u.activo === true &&
+    u.bloqueado === false
+  );
 
-        renderizarAccesoRapido();
-        console.log(`✅ [DB] Cargado manualmente — ${DATABASE.usuarios.length} usuarios`);
-
-        Swal.fire({
-          icon: 'success',
-          title: '¡Base de datos cargada!',
-          html: `<strong>${DATABASE.usuarios.length}</strong> usuarios encontrados.<br>
-                 <small style="color:#6c757d">Ya puedes iniciar sesión.</small>`,
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false
-        });
-      } else {
-        // Usuario canceló — deshabilitar botón
-        document.getElementById('loginButton').disabled = true;
-        document.getElementById('loginButton').innerHTML =
-          '<i class="fas fa-exclamation-triangle" style="margin-right:8px"></i>Sin datos cargados';
-      }
-    });
+  if(!user){
+    Swal.fire("Error","Usuario o contraseña incorrectos","error");
+    return;
   }
 
-  // Spinner de carga mientras fetch trae el JSON
-  function mostrarEstadoCarga(cargando) {
-    const btn = document.getElementById('loginButton');
-    if (!btn) return;
-    if (cargando) {
-      btn.disabled = true;
-      btn.classList.add('btn-loading');
-      btn.innerHTML = '<span style="opacity:0">Cargando sistema…</span>';
-    } else {
-      btn.disabled = false;
-      btn.classList.remove('btn-loading');
-      btn.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar';
-    }
-  }
-
-  // ──────────────────────────────────────────────────────────────────
-  //  A partir de aquí todo el código usa DATABASE (ya cargado)
-  // ──────────────────────────────────────────────────────────────────
-
-  // Objeto temporal vacío para que las referencias no fallen
-  // antes de que cargarBaseDeDatos() termine
-  const DATABASE_FALLBACK = {
-    _info: { nombre: '', version: '' },
-    usuarios: [], sesiones: [], auditoria: [],
-    recuperacion_password: [],
-    configuracion: { sesiones: { max_intentos_fallidos: 5, bloqueo_segundos: 30, duracion_sesion_horas: 12 } }
+  const session = {
+    id:user.id,
+    usuario:user.nombre_usuario,
+    nombre:user.nombre_completo,
+    rol:user.rol,
+    loginTime:new Date().toISOString()
   };
 
+  sessionStorage.setItem("userSession", JSON.stringify(session));
 
-
-  // ──────────────────────────────────────────────────────────────────
-  //  MAPA DE ROLES (para UI)
-  // ──────────────────────────────────────────────────────────────────
-  const ROLES_CONFIG = {
-    administrador: {
-      label: "Administrador",
-      icono: "🔴",
-      clase: "role-admin",
-      dashboard: "admin-dashboard.html",
-      color: "#ef4444",
-      descripcion: "Acceso total al sistema"
-    },
-    supervisor: {
-      label: "Supervisor",
-      icono: "🟣",
-      clase: "role-super",
-      dashboard: "supervisor-dashboard.html",
-      color: "#a855f7",
-      descripcion: "Revisión y aprobación"
-    },
-    personal: {
-      label: "Personal",
-      icono: "🟢",
-      clase: "role-user",
-      dashboard: "personal-dashboard.html",
-      color: "#10b981",
-      descripcion: "Registro de actividades"
-    },
-    visor: {
-      label: "Visor",
-      icono: "🟡",
-      clase: "role-view",
-      dashboard: "visor-dashboard.html",
-      color: "#f59e0b",
-      descripcion: "Solo lectura"
-    }
-  };
-
-  // ──────────────────────────────────────────────────────────────────
-  //  ESTADO DE LA APLICACIÓN (Módulo 1 - Seguridad)
-  //  Los límites se leen del DATABASE cargado vía fetch.
-  // ──────────────────────────────────────────────────────────────────
-  const appState = {
-    intentosFallidos: 0,
-    bloqueadoHasta: null,
-    lockoutTimer: null,
-    // Getters dinámicos: leen del JSON una vez que fue cargado
-    get maxIntentos() {
-      return DATABASE?.configuracion?.sesiones?.max_intentos_fallidos ?? 5;
-    },
-    get bloqueoDuracionMs() {
-      return (DATABASE?.configuracion?.sesiones?.bloqueo_segundos ?? 30) * 1000;
-    }
-  };
-
-  // ──────────────────────────────────────────────────────────────────
-  //  FUNCIONES DE AUDITORÍA
-  // ──────────────────────────────────────────────────────────────────
-  function registrarAuditoria(usuarioId, accion, detalle) {
-    const registro = {
-      id: `AUD-${String(DATABASE.auditoria.length + 1).padStart(3,'0')}`,
-      usuario_id: usuarioId,
-      accion: accion,
-      modulo: "autenticacion",
-      detalle: detalle,
-      ip: "192.168.x.x", // En producción: obtenida del servidor
-      fecha: new Date().toISOString()
-    };
-    DATABASE.auditoria.push(registro);
-    console.log(`[AUDITORÍA] ${accion} | ${detalle} | ${registro.fecha}`);
+  if(document.getElementById("remember").checked){
+    localStorage.setItem("userSession", JSON.stringify(session));
   }
 
-  // ──────────────────────────────────────────────────────────────────
-  //  FUNCIONES DE SESIÓN
-  // ──────────────────────────────────────────────────────────────────
-  function crearSesion(usuario) {
-    const token = btoa(`${usuario.id}:${usuario.nombre_usuario}:${Date.now()}`);
-    const sesion = {
-      id: `SES-${String(DATABASE.sesiones.length + 1).padStart(3,'0')}`,
-      usuario_id: usuario.id,
-      token: token,
-      activa: true,
-      fecha_inicio: new Date().toISOString(),
-      fecha_expiracion: new Date(Date.now() + (DATABASE?.configuracion?.sesiones?.duracion_sesion_horas ?? 12) * 3600000).toISOString()
-    };
-    DATABASE.sesiones.push(sesion);
-
-    // Guardar en sessionStorage (simula JWT en producción)
-    const sessionData = {
-      sesion_id: sesion.id,
-      usuario_id: usuario.id,
-      nombre_completo: usuario.nombre_completo,
-      nombre_usuario: usuario.nombre_usuario,
-      correo: usuario.correo,
-      rol: usuario.rol,
-      cargo: usuario.cargo,
-      area_id: usuario.area_id,
-      token: token,
-      expira: sesion.fecha_expiracion
-    };
-    sessionStorage.setItem('session_SAC', JSON.stringify(sessionData));
-    return sessionData;
+  if(user.rol==="administrador"){
+    window.location.href="admin-dashboard.html";
+  }
+  else if(user.rol==="personal"){
+    window.location.href="personal-dashboard.html";
+  }
+  else if(user.rol==="visor"){
+    window.location.href="visor-dashboard.html";
+  }
+  else{
+    Swal.fire("Error","Rol no reconocido","error");
   }
 
-  // ──────────────────────────────────────────────────────────────────
-  //  FUNCIÓN PRINCIPAL DE AUTENTICACIÓN
-  // ──────────────────────────────────────────────────────────────────
-  function autenticar(nombreUsuario, password) {
-    // 1) Buscar usuario en la base de datos JSON
-    const usuario = DATABASE.usuarios.find(
-      u => u.nombre_usuario.toLowerCase() === nombreUsuario.toLowerCase()
-    );
+}
 
-    // 2) Usuario no encontrado
-    if (!usuario) {
-      registrarAuditoria(null, "LOGIN_FAILED", `Usuario '${nombreUsuario}' no existe en el sistema`);
-      return { exito: false, motivo: "credenciales_invalidas" };
-    }
+</script>
 
-    // 3) Usuario inactivo
-    if (!usuario.activo) {
-      registrarAuditoria(usuario.id, "LOGIN_BLOCKED", `Cuenta inactiva: ${usuario.nombre_usuario}`);
-      return { exito: false, motivo: "cuenta_inactiva", usuario };
-    }
-
-    // 4) Usuario bloqueado en BD
-    if (usuario.bloqueado) {
-      registrarAuditoria(usuario.id, "LOGIN_BLOCKED", `Cuenta bloqueada: ${usuario.nombre_usuario}`);
-      return { exito: false, motivo: "cuenta_bloqueada", usuario };
-    }
-
-    // 5) Contraseña incorrecta
-    if (usuario.password !== password) {
-      usuario.intentos_fallidos++;
-      if (usuario.intentos_fallidos >= appState.maxIntentos) {
-        usuario.bloqueado = true;
-        registrarAuditoria(usuario.id, "LOGIN_LOCKOUT", `Cuenta bloqueada por ${appState.maxIntentos} intentos fallidos`);
-        return { exito: false, motivo: "bloqueo_por_intentos", usuario };
-      }
-      registrarAuditoria(usuario.id, "LOGIN_FAILED", `Contraseña incorrecta. Intento ${usuario.intentos_fallidos}/${appState.maxIntentos}`);
-      return { exito: false, motivo: "credenciales_invalidas", intentosRestantes: appState.maxIntentos - usuario.intentos_fallidos };
-    }
-
-    // 6) ✅ Login exitoso — resetear intentos y registrar acceso
-    usuario.intentos_fallidos = 0;
-    usuario.bloqueado = false;
-    usuario.ultimo_acceso = new Date().toISOString();
-
-    const sesion = crearSesion(usuario);
-    registrarAuditoria(usuario.id, "LOGIN_SUCCESS", `Inicio de sesión exitoso. Rol: ${usuario.rol}`);
-
-    return {
-      exito: true,
-      usuario,
-      sesion,
-      forzar_cambio_password: usuario.forzar_cambio_password
-    };
-  }
-
-  // ──────────────────────────────────────────────────────────────────
-  //  UI — INDICADOR DE INTENTOS FALLIDOS
-  // ──────────────────────────────────────────────────────────────────
-  function actualizarIndicadorIntentos() {
-    const cont = document.getElementById('attemptsIndicator');
-    if (!cont) return;
-    cont.innerHTML = '';
-    if (appState.intentosFallidos === 0) return;
-    for (let i = 0; i < appState.maxIntentos; i++) {
-      const dot = document.createElement('div');
-      dot.className = 'attempt-dot ' + (i < appState.intentosFallidos ? 'used' : 'safe');
-      cont.appendChild(dot);
-    }
-  }
-
-  // ──────────────────────────────────────────────────────────────────
-  //  UI — BARRA DE BLOQUEO CON CONTADOR REGRESIVO
-  // ──────────────────────────────────────────────────────────────────
-  function mostrarBloqueoCuenta(segundos) {
-    const bar = document.getElementById('lockoutBar');
-    const msg = document.getElementById('lockoutMsg');
-    if (!bar || !msg) return;
-    bar.style.display = 'block';
-
-    let restantes = segundos;
-    const tick = () => {
-      msg.innerHTML = `<i class="fas fa-lock"></i> Cuenta bloqueada. Espera <strong>${restantes}s</strong> para intentar nuevamente.`;
-      if (restantes <= 0) {
-        bar.style.display = 'none';
-        appState.intentosFallidos = 0;
-        actualizarIndicadorIntentos();
-        document.getElementById('loginButton').disabled = false;
-        document.getElementById('loginButton').innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar';
-        return;
-      }
-      restantes--;
-      appState.lockoutTimer = setTimeout(tick, 1000);
-    };
-    tick();
-  }
-
-  // ──────────────────────────────────────────────────────────────────
-  //  UI — BOTÓN DE CARGA
-  // ──────────────────────────────────────────────────────────────────
-  function setButtonLoading(loading) {
-    const btn = document.getElementById('loginButton');
-    if (loading) {
-      btn.disabled = true;
-      btn.classList.add('btn-loading');
-      btn.innerHTML = '<span style="opacity:0">Verificando...</span>';
-    } else {
-      btn.disabled = false;
-      btn.classList.remove('btn-loading');
-      btn.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar';
-    }
-  }
-
-  // ──────────────────────────────────────────────────────────────────
-  //  UI — ACCESO RÁPIDO (generado desde JSON de usuarios)
-  // ──────────────────────────────────────────────────────────────────
-  function renderizarAccesoRapido() {
-    const cont = document.getElementById('quickAccess');
-    if (!cont) return;
-
-    // Mostrar solo un usuario representativo por rol
-    const rolesVistos = new Set();
-    DATABASE.usuarios.forEach(usr => {
-      if (rolesVistos.has(usr.rol) || !usr.activo) return;
-      rolesVistos.add(usr.rol);
-      const cfg = ROLES_CONFIG[usr.rol];
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = `qa-btn ${cfg.clase}`;
-      btn.innerHTML = `
-        <span class="qa-icon">${cfg.icono}</span>
-        <span class="qa-info">
-          <span style="display:block;font-weight:600">${usr.nombre_usuario}</span>
-          <span class="qa-role">${cfg.label} · ${cfg.descripcion}</span>
-        </span>`;
-      btn.addEventListener('click', () => {
-        document.getElementById('usuario').value = usr.nombre_usuario;
-        document.getElementById('password').value = usr.password;
-        document.getElementById('usuario').focus();
-        // Resaltar los campos brevemente
-        ['usuario','password'].forEach(id => {
-          const el = document.getElementById(id);
-          el.style.boxShadow = `0 0 0 3px ${cfg.color}55`;
-          setTimeout(() => el.style.boxShadow = '', 1200);
-        });
-      });
-      cont.appendChild(btn);
-    });
-  }
-
-  // ──────────────────────────────────────────────────────────────────
-  //  UI — MOSTRAR PERFIL TRAS LOGIN EXITOSO
-  // ──────────────────────────────────────────────────────────────────
-  function mostrarPerfilUsuario(resultado) {
-    const { usuario, sesion } = resultado;
-    const cfg = ROLES_CONFIG[usuario.rol];
-
-    Swal.fire({
-      icon: 'success',
-      title: '¡Acceso concedido!',
-      html: `
-        <div style="text-align:left;background:#f0f4ff;border-radius:14px;padding:18px;margin-top:10px;font-size:14px;line-height:2">
-          <p><i class="fas fa-id-badge" style="color:${cfg.color};width:22px;"></i> <strong>${usuario.nombre_completo}</strong></p>
-          <p><i class="fas fa-user-tag" style="color:${cfg.color};width:22px;"></i> ${cfg.icono} ${cfg.label} — ${usuario.cargo}</p>
-          <p><i class="fas fa-envelope" style="color:${cfg.color};width:22px;"></i> ${usuario.correo}</p>
-          <p><i class="fas fa-clock" style="color:${cfg.color};width:22px;"></i> Sesión activa hasta ${new Date(sesion.expira).toLocaleTimeString('es-BO')}</p>
-          <p><i class="fas fa-key" style="color:${cfg.color};width:22px;"></i> Token: <code style="font-size:11px;color:#555">${sesion.token.substring(0,30)}…</code></p>
-        </div>
-        <p style="margin-top:12px;color:#6c757d;font-size:13px;">Redirigiendo al panel de <strong>${cfg.label}</strong>…</p>
-      `,
-      confirmButtonColor: cfg.color,
-      confirmButtonText: `Ir al Panel <i class="fas fa-arrow-right" style="margin-left:6px;"></i>`,
-      timer: 4000,
-      timerProgressBar: true,
-      willOpen: () => {
-        document.getElementById('loginButton').classList.add('login-success');
-      },
-      willClose: () => {
-        document.getElementById('loginButton').classList.remove('login-success');
-        // En producción: window.location.href = cfg.dashboard;
-        console.log(`[SISTEMA] Redirigiendo a: ${cfg.dashboard}`);
-      }
-    });
-  }
-
-  // ──────────────────────────────────────────────────────────────────
-  //  FORMULARIO DE LOGIN — EVENT LISTENER
-  // ──────────────────────────────────────────────────────────────────
-  document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // Verificar que el JSON ya fue cargado
-    if (!DATABASE) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Sistema cargando',
-        text: 'Espera un momento mientras se carga la base de datos.',
-        confirmButtonColor: '#0077ff',
-        timer: 2000, timerProgressBar: true, showConfirmButton: false
-      });
-      return;
-    }
-
-    // Verificar bloqueo temporal en appState
-    if (appState.bloqueadoHasta && Date.now() < appState.bloqueadoHasta) {
-      const restantes = Math.ceil((appState.bloqueadoHasta - Date.now()) / 1000);
-      Swal.fire({
-        icon: 'warning',
-        title: 'Cuenta bloqueada',
-        html: `Demasiados intentos fallidos.<br>Podrás intentar nuevamente en <strong>${restantes} segundos</strong>.`,
-        confirmButtonColor: '#f59e0b'
-      });
-      return;
-    }
-
-    const nombreUsuario = document.getElementById('usuario').value.trim();
-    const password      = document.getElementById('password').value.trim();
-
-    if (!nombreUsuario || !password) {
-      Swal.fire({ icon: 'warning', title: 'Campos requeridos', text: 'Por favor completa todos los campos.', confirmButtonColor: '#0077ff' });
-      return;
-    }
-
-    setButtonLoading(true);
-
-    // Simulación de latencia de red (en producción: fetch/axios al backend)
-    setTimeout(() => {
-      setButtonLoading(false);
-      const resultado = autenticar(nombreUsuario, password);
-
-      if (resultado.exito) {
-        // ✅ LOGIN EXITOSO
-        appState.intentosFallidos = 0;
-        actualizarIndicadorIntentos();
-
-        if (resultado.forzar_cambio_password) {
-          // Aviso de cambio de contraseña obligatorio
-          Swal.fire({
-            icon: 'info',
-            title: 'Cambio de contraseña requerido',
-            html: `Bienvenido, <strong>${resultado.usuario.nombre_completo}</strong>.<br><br>
-                   Por seguridad, debes establecer una nueva contraseña antes de continuar.`,
-            confirmButtonColor: '#2563eb',
-            confirmButtonText: 'Cambiar contraseña'
-          }).then(() => mostrarPerfilUsuario(resultado));
-        } else {
-          mostrarPerfilUsuario(resultado);
-        }
-
-      } else {
-        // ❌ LOGIN FALLIDO
-        appState.intentosFallidos++;
-        actualizarIndicadorIntentos();
-
-        // Efecto de shake en los inputs
-        ['usuario','password'].forEach(id => {
-          const el = document.getElementById(id);
-          el.classList.add('input-error');
-          setTimeout(() => el.classList.remove('input-error'), 600);
-        });
-
-        switch (resultado.motivo) {
-          case 'credenciales_invalidas':
-            Swal.fire({
-              icon: 'error',
-              title: 'Credenciales incorrectas',
-              html: `Usuario o contraseña no válidos.<br>
-                     <small style="color:#6c757d">Te quedan <strong>${resultado.intentosRestantes || (appState.maxIntentos - appState.intentosFallidos)}</strong> intento(s) antes del bloqueo.</small>`,
-              confirmButtonColor: '#dc3545',
-              confirmButtonText: 'Reintentar'
-            });
-            break;
-
-          case 'cuenta_inactiva':
-            Swal.fire({
-              icon: 'warning',
-              title: 'Cuenta inactiva',
-              html: `La cuenta <strong>${resultado.usuario?.nombre_usuario}</strong> ha sido desactivada.<br>
-                     <small style="color:#6c757d">Contacta al administrador del sistema.</small>`,
-              confirmButtonColor: '#f59e0b'
-            });
-            break;
-
-          case 'cuenta_bloqueada':
-          case 'bloqueo_por_intentos':
-            appState.bloqueadoHasta = Date.now() + appState.bloqueoDuracionMs;
-            document.getElementById('loginButton').disabled = true;
-            mostrarBloqueoCuenta(DATABASE?.configuracion?.sesiones?.bloqueo_segundos ?? 30);
-            Swal.fire({
-              icon: 'error',
-              title: 'Cuenta bloqueada',
-              html: `Se superó el límite de <strong>${appState.maxIntentos} intentos</strong> fallidos.<br>
-                     La cuenta se desbloqueará automáticamente en <strong>${DATABASE.configuracion.sesiones.bloqueo_segundos} segundos</strong>.`,
-              confirmButtonColor: '#dc3545'
-            });
-            break;
-        }
-      }
-    }, 1000);
-  });
-
-  // ──────────────────────────────────────────────────────────────────
-  //  TOGGLE CONTRASEÑA
-  // ──────────────────────────────────────────────────────────────────
-  document.getElementById('togglePassword').addEventListener('click', function() {
-    const input = document.getElementById('password');
-    const tipo = input.type === 'password' ? 'text' : 'password';
-    input.type = tipo;
-    this.innerHTML = tipo === 'password'
-      ? '<i class="fas fa-eye"></i>'
-      : '<i class="fas fa-eye-slash"></i>';
-  });
-
-  // ──────────────────────────────────────────────────────────────────
-  //  RECORDAR USUARIO (sessionStorage / localStorage)
-  // ──────────────────────────────────────────────────────────────────
-  const storedUser = localStorage.getItem('SAC_rememberedUser');
-  if (storedUser) {
-    document.getElementById('usuario').value = storedUser;
-    document.getElementById('rememberMe').checked = true;
-  }
-
-  document.getElementById('rememberMe').addEventListener('change', function() {
-    const val = document.getElementById('usuario').value;
-    this.checked ? localStorage.setItem('SAC_rememberedUser', val) : localStorage.removeItem('SAC_rememberedUser');
-  });
-  document.getElementById('usuario').addEventListener('input', function() {
-    if (document.getElementById('rememberMe').checked) {
-      localStorage.setItem('SAC_rememberedUser', this.value);
-    }
-  });
-
-  // ──────────────────────────────────────────────────────────────────
-  //  RECUPERACIÓN DE CONTRASEÑA
-  // ──────────────────────────────────────────────────────────────────
-  document.getElementById('forgotPassword').addEventListener('click', function(e) {
-    e.preventDefault();
-    Swal.fire({
-      title: 'Recuperar contraseña',
-      html: `
-        <input type="text" id="swal_usuario" class="swal2-input" placeholder="Nombre de usuario" style="margin-bottom:8px">
-        <input type="email"  id="swal_correo"  class="swal2-input" placeholder="Correo institucional">
-        <small style="display:block;margin-top:10px;color:#6c757d;font-size:12px">
-          <i class="fas fa-info-circle"></i> Se enviará un enlace de restablecimiento a tu correo registrado.
-        </small>`,
-      confirmButtonText: 'Enviar instrucciones',
-      confirmButtonColor: '#0077ff',
-      showCancelButton: true,
-      cancelButtonText: 'Cancelar',
-      preConfirm: () => {
-        const usr  = document.getElementById('swal_usuario').value.trim();
-        const mail = document.getElementById('swal_correo').value.trim();
-        if (!usr || !mail) {
-          Swal.showValidationMessage('Completa ambos campos');
-          return false;
-        }
-        // Validar que el usuario y correo coincidan en la BD
-        const found = DATABASE.usuarios.find(
-          u => u.nombre_usuario.toLowerCase() === usr.toLowerCase() && u.correo.toLowerCase() === mail.toLowerCase()
-        );
-        if (!found) {
-          Swal.showValidationMessage('No se encontró ningún usuario con esos datos');
-          return false;
-        }
-        // Generar token de recuperación
-        const token = Math.random().toString(36).slice(2) + Date.now().toString(36);
-        DATABASE.recuperacion_password.push({
-          id: `RPASS-${String(DATABASE.recuperacion_password.length+1).padStart(3,'0')}`,
-          usuario_id: found.id,
-          token,
-          usado: false,
-          fecha_expiracion: new Date(Date.now() + 86400000).toISOString(),
-          created_at: new Date().toISOString()
-        });
-        registrarAuditoria(found.id, "PASSWORD_RESET_REQUEST", `Solicitud de restablecimiento para ${found.correo}`);
-        return { usuario: found, token };
-      }
-    }).then(result => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          icon: 'success',
-          title: '¡Correo enviado!',
-          html: `Instrucciones enviadas a <strong>${result.value.usuario.correo}</strong>.<br>
-                 <small style="color:#6c757d">El enlace expira en 24 horas. Revisa tu bandeja y carpeta de spam.</small>`,
-          confirmButtonColor: '#0077ff'
-        });
-      }
-    });
-  });
-
-  // ──────────────────────────────────────────────────────────────────
-  //  INICIALIZACIÓN
-  // ──────────────────────────────────────────────────────────────────
-  // ──────────────────────────────────────────────────────────────────
-  //  INICIALIZACIÓN — carga el JSON externo al arrancar la página
-  // ──────────────────────────────────────────────────────────────────
-  document.addEventListener('DOMContentLoaded', () => {
-    // 🔁 Todo el sistema arranca aquí: fetch → database.json
-    cargarBaseDeDatos();
-  });
-  </script>
 </body>
 </html>
