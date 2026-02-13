@@ -1,0 +1,14 @@
+{
+  "receta": "Ensalada",
+  "ingredientes": [
+    "lechuga",
+    "tomate",
+    "cebolla"
+  ],
+  "puntuacion": 4.5,
+  "esVegano": true,
+  "detalles": {
+    "tiempo": "10 min",
+    "dificultad": "baja"
+  }
+}
