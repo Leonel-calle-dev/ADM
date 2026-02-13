@@ -77,9 +77,9 @@
     },
     {
       "id": "USR-004",
-      "nombre_completo": "Ana Patricia Torrez Vidal",
-      "nombre_usuario": "a.torrez",
-      "correo": "a.torrez@campus.edu.bo",
+      "nombre_completo": "Germán Ayaviri Negrete",
+      "nombre_usuario": "g.ayaviri",
+      "correo": "g.ayaviri@campus.edu.bo",
       "password_hash": "$2b$10$cT9pMrOu6WyZbQ1xD4hNgR...",
       "rol": "personal",
       "area_id": "AREA-003",

@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Supervisión - Campus Universitario</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            color: #f1f5f9;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title h1 {
+            font-size: 1.875rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.025em;
+        }
+
+        .header-title p {
+            color: #94a3b8;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-top: 0.25rem;
+        }
+
+        .header-date {
+            text-align: right;
+        }
+
+        .header-date .label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .header-date .date {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .kpis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.5) 100%);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .kpi-icon {
+            width: 2rem;
+            height: 2rem;
+        }
+
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .kpi-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .kpi-description {
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+
+        .filters-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.5) 100%);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .filters-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filters-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #e2e8f0;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .filter-input, .filter-select {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            padding: 0.625rem 1rem;
+            color: #e2e8f0;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .filter-input:focus, .filter-select:focus {
+            outline: none;
+            border-color: #06b6d4;
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+
+        .filter-select option {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        .btn {
+            padding: 0.625rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-clear {
+            background: rgba(51, 65, 85, 0.5);
+            color: #e2e8f0;
+            border: 1px solid #475569;
+        }
+
+        .btn-clear:hover {
+            background: #475569;
+        }
+
+        .employee-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.5) 100%);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .employee-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        .employee-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .employee-header:hover {
+            background: rgba(30, 41, 59, 0.3);
+        }
+
+        .employee-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .employee-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .employee-avatar {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        .employee-details h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 0.25rem;
+        }
+
+        .employee-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+
+        .employee-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .progress-container {
+            text-align: right;
+        }
+
+        .progress-bar-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .progress-bar {
+            width: 8rem;
+            height: 0.625rem;
+            background: rgba(51, 65, 85, 0.5);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #06b6d4 0%, #3b82f6 100%);
+            border-radius: 9999px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-value {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #06b6d4;
+            width: 3rem;
+        }
+
+        .progress-label {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .alert-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.375rem 0.75rem;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 0.5rem;
+        }
+
+        .alert-badge span {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #f87171;
+        }
+
+        .chevron {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: #94a3b8;
+            transition: transform 0.3s;
+        }
+
+        .chevron.expanded {
+            transform: rotate(180deg);
+        }
+
+        .employee-timeline {
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            background: rgba(15, 23, 42, 0.3);
+            padding: 1.5rem;
+            display: none;
+        }
+
+        .employee-timeline.expanded {
+            display: block;
+        }
+
+        .timeline-header {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(30, 41, 59, 0.3);
+            border-radius: 0.75rem;
+            border: 1px solid rgba(51, 65, 85, 0.3);
+            margin-bottom: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .activity-item:hover {
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        .activity-icon-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .activity-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid;
+        }
+
+        .activity-connector {
+            width: 0.125rem;
+            height: 2rem;
+            background: rgba(51, 65, 85, 0.5);
+            margin-top: 0.5rem;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: #e2e8f0;
+            transition: color 0.2s;
+        }
+
+        .activity-item:hover .activity-title {
+            color: #06b6d4;
+        }
+
+        .activity-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.25rem;
+        }
+
+        .activity-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid;
+        }
+
+        .status-aprobado {
+            background: rgba(16, 185, 129, 0.1);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .status-enviado {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+
+        .status-borrador {
+            background: rgba(251, 191, 36, 0.1);
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.2);
+        }
+
+        .status-observado {
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-review {
+            padding: 0.25rem 0.75rem;
+            background: rgba(6, 182, 212, 0.1);
+            color: #06b6d4;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-review:hover {
+            background: rgba(6, 182, 212, 0.2);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 1rem;
+            border: 1px solid #334155;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            max-width: 42rem;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 0.75rem;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-textarea {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            color: #e2e8f0;
+            font-size: 0.875rem;
+            resize: none;
+            font-family: inherit;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #06b6d4;
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn-approve {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-approve:hover {
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.5);
+        }
+
+        .btn-reject {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-reject:hover {
+            background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+            box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.5);
+        }
+
+        .btn-cancel {
+            padding: 0.75rem 1.5rem;
+            background: rgba(51, 65, 85, 0.5);
+            color: #e2e8f0;
+            border: 1px solid #475569;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-cancel:hover {
+            background: #475569;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            color: #64748b;
+        }
+
+        .empty-state svg {
+            width: 4rem;
+            height: 4rem;
+            margin: 0 auto 1rem;
+            opacity: 0.5;
+        }
+
+        .icon-sm {
+            width: 0.875rem;
+            height: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .kpis {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .employee-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .employee-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .progress-bar {
+                width: 6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <h1>Dashboard de Supervisión</h1>
+                <p>Monitoreo de actividades del personal</p>
+            </div>
+            <div class="header-date">
+                <div class="label">Fecha actual</div>
+                <div class="date" id="currentDate"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Container -->
+    <div class="container">
+        <!-- KPIs -->
+        <div class="kpis" id="kpisContainer"></div>
+
+        <!-- Filtros -->
+        <div class="filters-card">
+            <div class="filters-header">
+                <svg class="kpi-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #06b6d4;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                </svg>
+                <h2>Filtros</h2>
+            </div>
+            <div class="filters-grid">
+                <input type="text" id="searchFilter" class="filter-input" placeholder="Buscar actividad...">
+                
+                <select id="employeeFilter" class="filter-select">
+                    <option value="">Todos los empleados</option>
+                </select>
+                
+                <select id="areaFilter" class="filter-select">
+                    <option value="">Todas las áreas</option>
+                </select>
+                
+                <select id="statusFilter" class="filter-select">
+                    <option value="">Todos los estados</option>
+                    <option value="aprobado">Aprobado</option>
+                    <option value="enviado">Enviado</option>
+                    <option value="borrador">Borrador</option>
+                    <option value="observado">Observado</option>
+                </select>
+                
+                <select id="typeFilter" class="filter-select">
+                    <option value="">Todos los tipos</option>
+                </select>
+                
+                <input type="date" id="dateFromFilter" class="filter-input">
+                
+                <input type="date" id="dateToFilter" class="filter-input">
+                
+                <button class="btn btn-clear" onclick="clearFilters()">Limpiar filtros</button>
+            </div>
+        </div>
+
+        <!-- Lista de empleados -->
+        <div id="employeesContainer"></div>
+    </div>
+
+    <!-- Modal de revisión -->
+    <div class="modal" id="reviewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalActivityTitle"></h3>
+                <div class="activity-meta" id="modalActivityMeta"></div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Comentarios (opcional)</label>
+                    <textarea id="modalComment" class="form-textarea" rows="4" placeholder="Añade comentarios sobre esta actividad..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-approve" onclick="approveActivity(true)">✓ Aprobar</button>
+                    <button class="btn-reject" onclick="approveActivity(false)">✗ Devolver</button>
+                    <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variable global para almacenar los datos
+        let databaseData = null;
+        let currentActivityId = null;
+
+        // Cargar datos desde el archivo JSON
+        async function loadData() {
+            try {
+                // Aquí debes reemplazar 'database.json' con la ruta a tu archivo JSON
+                const response = await fetch('database.json');
+                databaseData = await response.json();
+                initializeDashboard();
+            } catch (error) {
+                console.error('Error al cargar los datos:', error);
+                // Si no se puede cargar el JSON, usar datos de ejemplo
+                useSampleData();
+            }
+        }
+
+        // Datos de ejemplo en caso de que no se pueda cargar el JSON
+        function useSampleData() {
+            databaseData = {
+                usuarios: [
+                    { id: "USR-001", nombre_completo: "Carlos Ramírez Mendoza", rol: "administrador", area_id: "AREA-001" },
+                    { id: "USR-002", nombre_completo: "María Elena Quispe Choque", rol: "supervisor", area_id: "AREA-002" },
+                    { id: "USR-003", nombre_completo: "Jorge Luis Mamani Flores", rol: "personal", area_id: "AREA-002" },
+                    { id: "USR-004", nombre_completo: "Germán Ayaviri Negrete", rol: "personal", area_id: "AREA-003" }
+                ],
+                areas: [
+                    { id: "AREA-001", nombre: "Dirección Administrativa" },
+                    { id: "AREA-002", nombre: "Infraestructura y Mantenimiento" },
+                    { id: "AREA-003", nombre: "Servicios Administrativos" }
+                ],
+                tipos_actividad: [
+                    { id: "TIPO-001", nombre: "Mantenimiento Preventivo" },
+                    { id: "TIPO-002", nombre: "Mantenimiento Correctivo" },
+                    { id: "TIPO-003", nombre: "Gestión Documental" },
+                    { id: "TIPO-004", nombre: "Atención al Personal" }
+                ],
+                actividades: [
+                    {
+                        id: "ACT-001",
+                        titulo: "Revisión del sistema de agua potable",
+                        tipo_actividad_id: "TIPO-001",
+                        area_id: "AREA-002",
+                        usuario_id: "USR-003",
+                        fecha_actividad: "2025-02-12",
+                        duracion_horas: 3.5,
+                        estado: "aprobado"
+                    },
+                    {
+                        id: "ACT-002",
+                        titulo: "Archivo y clasificación de contratos 2024",
+                        tipo_actividad_id: "TIPO-003",
+                        area_id: "AREA-003",
+                        usuario_id: "USR-004",
+                        fecha_actividad: "2025-02-12",
+                        duracion_horas: 7.0,
+                        estado: "aprobado"
+                    },
+                    {
+                        id: "ACT-003",
+                        titulo: "Cambio de luminarias LED",
+                        tipo_actividad_id: "TIPO-002",
+                        area_id: "AREA-002",
+                        usuario_id: "USR-003",
+                        fecha_actividad: "2025-02-13",
+                        duracion_horas: 4.5,
+                        estado: "enviado"
+                    }
+                ]
+            };
+            initializeDashboard();
+        }
+
+        // Inicializar el dashboard
+        function initializeDashboard() {
+            setCurrentDate();
+            populateFilters();
+            renderKPIs();
+            renderEmployees();
+            
+            // Event listeners para filtros
+            document.getElementById('searchFilter').addEventListener('input', renderEmployees);
+            document.getElementById('employeeFilter').addEventListener('change', renderEmployees);
+            document.getElementById('areaFilter').addEventListener('change', renderEmployees);
+            document.getElementById('statusFilter').addEventListener('change', renderEmployees);
+            document.getElementById('typeFilter').addEventListener('change', renderEmployees);
+            document.getElementById('dateFromFilter').addEventListener('change', renderEmployees);
+            document.getElementById('dateToFilter').addEventListener('change', renderEmployees);
+        }
+
+        // Establecer fecha actual
+        function setCurrentDate() {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const date = new Date().toLocaleDateString('es-ES', options);
+            document.getElementById('currentDate').textContent = date;
+        }
+
+        // Poblar los filtros con datos
+        function populateFilters() {
+            const employeeSelect = document.getElementById('employeeFilter');
+            const areaSelect = document.getElementById('areaFilter');
+            const typeSelect = document.getElementById('typeFilter');
+
+            // Poblar empleados
+            databaseData.usuarios
+                .filter(u => u.rol === 'personal' || u.rol === 'supervisor')
+                .forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.textContent = user.nombre_completo;
+                    employeeSelect.appendChild(option);
+                });
+
+            // Poblar áreas
+            databaseData.areas.forEach(area => {
+                const option = document.createElement('option');
+                option.value = area.id;
+                option.textContent = area.nombre;
+                areaSelect.appendChild(option);
+            });
+
+            // Poblar tipos
+            databaseData.tipos_actividad.forEach(tipo => {
+                const option = document.createElement('option');
+                option.value = tipo.id;
+                option.textContent = tipo.nombre;
+                typeSelect.appendChild(option);
+            });
+        }
+
+        // Limpiar filtros
+        function clearFilters() {
+            document.getElementById('searchFilter').value = '';
+            document.getElementById('employeeFilter').value = '';
+            document.getElementById('areaFilter').value = '';
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('typeFilter').value = '';
+            document.getElementById('dateFromFilter').value = '';
+            document.getElementById('dateToFilter').value = '';
+            renderEmployees();
+        }
+
+        // Obtener actividades filtradas
+        function getFilteredActivities() {
+            const search = document.getElementById('searchFilter').value.toLowerCase();
+            const employee = document.getElementById('employeeFilter').value;
+            const area = document.getElementById('areaFilter').value;
+            const status = document.getElementById('statusFilter').value;
+            const type = document.getElementById('typeFilter').value;
+            const dateFrom = document.getElementById('dateFromFilter').value;
+            const dateTo = document.getElementById('dateToFilter').value;
+
+            return databaseData.actividades.filter(activity => {
+                if (search && !activity.titulo.toLowerCase().includes(search)) return false;
+                if (employee && activity.usuario_id !== employee) return false;
+                if (area && activity.area_id !== area) return false;
+                if (status && activity.estado !== status) return false;
+                if (type && activity.tipo_actividad_id !== type) return false;
+                if (dateFrom && activity.fecha_actividad < dateFrom) return false;
+                if (dateTo && activity.fecha_actividad > dateTo) return false;
+                return true;
+            });
+        }
+
+        // Renderizar KPIs
+        function renderKPIs() {
+            const activities = getFilteredActivities();
+            const total = activities.length;
+            const aprobadas = activities.filter(a => a.estado === 'aprobado').length;
+            const enviadas = activities.filter(a => a.estado === 'enviado').length;
+            const borradores = activities.filter(a => a.estado === 'borrador').length;
+            const observadas = activities.filter(a => a.estado === 'observado').length;
+            const completionRate = total > 0 ? Math.round((aprobadas / total) * 100) : 0;
+
+            const kpisHTML = `
+                <div class="kpi-card" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.5) 100%);">
+                    <div class="kpi-header">
+                        <svg class="kpi-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #06b6d4;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                        <div style="text-align: right;">
+                            <div class="kpi-value" style="color: #06b6d4;">${completionRate}%</div>
+                        </div>
+                    </div>
+                    <div class="kpi-label">Tasa de cumplimiento</div>
+                    <div class="kpi-description">${aprobadas} de ${total}</div>
+                </div>
+
+                <div class="kpi-card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(15, 23, 42, 0.5) 100%);">
+                    <div class="kpi-header">
+                        <svg class="kpi-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #34d399;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div class="kpi-value" style="color: #34d399;">${aprobadas}</div>
+                    </div>
+                    <div class="kpi-label">Aprobadas</div>
+                    <div class="kpi-description">Tareas completadas</div>
+                </div>
+
+                <div class="kpi-card" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(15, 23, 42, 0.5) 100%);">
+                    <div class="kpi-header">
+                        <svg class="kpi-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #60a5fa;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div class="kpi-value" style="color: #60a5fa;">${enviadas}</div>
+                    </div>
+                    <div class="kpi-label">Enviadas</div>
+                    <div class="kpi-description">En revisión</div>
+                </div>
+
+                <div class="kpi-card" style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(15, 23, 42, 0.5) 100%);">
+                    <div class="kpi-header">
+                        <svg class="kpi-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #fbbf24;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        <div class="kpi-value" style="color: #fbbf24;">${borradores}</div>
+                    </div>
+                    <div class="kpi-label">Borradores</div>
+                    <div class="kpi-description">Por enviar</div>
+                </div>
+
+                <div class="kpi-card" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(15, 23, 42, 0.5) 100%);">
+                    <div class="kpi-header">
+                        <svg class="kpi-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #f87171;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div class="kpi-value" style="color: #f87171;">${observadas}</div>
+                    </div>
+                    <div class="kpi-label">Observadas</div>
+                    <div class="kpi-description">Con comentarios</div>
+                </div>
+            `;
+
+            document.getElementById('kpisContainer').innerHTML = kpisHTML;
+        }
+
+        // Renderizar lista de empleados
+        function renderEmployees() {
+            renderKPIs(); // Actualizar KPIs con cada filtro
+            
+            const activities = getFilteredActivities();
+            const employeeMap = new Map();
+
+            // Agrupar actividades por empleado
+            activities.forEach(activity => {
+                if (!employeeMap.has(activity.usuario_id)) {
+                    const user = databaseData.usuarios.find(u => u.id === activity.usuario_id);
+                    const area = databaseData.areas.find(a => a.id === activity.area_id);
+                    
+                    if (user) {
+                        employeeMap.set(activity.usuario_id, {
+                            user,
+                            area: area ? area.nombre : 'Sin área',
+                            activities: []
+                        });
+                    }
+                }
+                employeeMap.get(activity.usuario_id).activities.push(activity);
+            });
+
+            let html = '';
+            
+            employeeMap.forEach((data, userId) => {
+                const { user, area, activities } = data;
+                const total = activities.length;
+                const aprobadas = activities.filter(a => a.estado === 'aprobado').length;
+                const observadas = activities.filter(a => a.estado === 'observado').length;
+                const completionRate = total > 0 ? Math.round((aprobadas / total) * 100) : 0;
+                const initials = user.nombre_completo.split(' ').map(n => n[0]).join('').substring(0, 2);
+
+                // Ordenar actividades por fecha
+                const sortedActivities = activities.sort((a, b) => 
+                    new Date(b.fecha_actividad) - new Date(a.fecha_actividad)
+                );
+
+                html += `
+                    <div class="employee-card">
+                        <div class="employee-header" onclick="toggleEmployee('${userId}')">
+                            <div class="employee-info">
+                                <div class="employee-left">
+                                    <div class="employee-avatar">${initials}</div>
+                                    <div class="employee-details">
+                                        <h3>${user.nombre_completo}</h3>
+                                        <div class="employee-meta">
+                                            <span>
+                                                <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: inline; vertical-align: middle; margin-right: 0.25rem;">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                                </svg>
+                                                ${area}
+                                            </span>
+                                            <span>•</span>
+                                            <span>${total} actividades</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="employee-right">
+                                    <div class="progress-container">
+                                        <div class="progress-bar-wrapper">
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: ${completionRate}%"></div>
+                                            </div>
+                                            <span class="progress-value">${completionRate}%</span>
+                                        </div>
+                                        <div class="progress-label">Cumplimiento</div>
+                                    </div>
+                                    ${observadas > 0 ? `
+                                        <div class="alert-badge">
+                                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #f87171;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                            </svg>
+                                            <span>${observadas} observadas</span>
+                                        </div>
+                                    ` : ''}
+                                    <svg class="chevron" id="chevron-${userId}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="employee-timeline" id="timeline-${userId}">
+                            <div class="timeline-header">Línea de tiempo de actividades</div>
+                            ${sortedActivities.map((activity, index) => renderActivity(activity, index === sortedActivities.length - 1)).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (html === '') {
+                html = `
+                    <div class="empty-state">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                        </svg>
+                        <h3>No se encontraron actividades</h3>
+                        <p>Intenta ajustar los filtros para ver más resultados</p>
+                    </div>
+                `;
+            }
+
+            document.getElementById('employeesContainer').innerHTML = html;
+        }
+
+        // Renderizar una actividad
+        function renderActivity(activity, isLast) {
+            const tipo = databaseData.tipos_actividad.find(t => t.id === activity.tipo_actividad_id);
+            const user = databaseData.usuarios.find(u => u.id === activity.usuario_id);
+            const area = databaseData.areas.find(a => a.id === activity.area_id);
+            
+            const statusColors = {
+                'aprobado': { bg: 'rgba(16, 185, 129, 0.1)', text: '#34d399', border: 'rgba(16, 185, 129, 0.2)' },
+                'enviado': { bg: 'rgba(59, 130, 246, 0.1)', text: '#60a5fa', border: 'rgba(59, 130, 246, 0.2)' },
+                'borrador': { bg: 'rgba(251, 191, 36, 0.1)', text: '#fbbf24', border: 'rgba(251, 191, 36, 0.2)' },
+                'observado': { bg: 'rgba(239, 68, 68, 0.1)', text: '#f87171', border: 'rgba(239, 68, 68, 0.2)' }
+            };
+
+            const color = statusColors[activity.estado];
+            const statusIcons = {
+                'aprobado': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>',
+                'enviado': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>',
+                'borrador': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>',
+                'observado': '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>'
+            };
+
+            const statusLabels = {
+                'aprobado': 'Aprobado',
+                'enviado': 'Enviado',
+                'borrador': 'Borrador',
+                'observado': 'Observado'
+            };
+
+            const date = new Date(activity.fecha_actividad);
+            const formattedDate = date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+
+            return `
+                <div class="activity-item">
+                    <div class="activity-icon-wrapper">
+                        <div class="activity-icon" style="background: ${color.bg}; border-color: ${color.border};">
+                            <svg style="width: 1rem; height: 1rem; color: ${color.text};" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                ${statusIcons[activity.estado]}
+                            </svg>
+                        </div>
+                        ${!isLast ? '<div class="activity-connector"></div>' : ''}
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-header">
+                            <div>
+                                <div class="activity-title">${activity.titulo}</div>
+                                <div class="activity-meta">
+                                    <span>
+                                        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: inline; vertical-align: middle; margin-right: 0.25rem;">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        </svg>
+                                        ${formattedDate}
+                                    </span>
+                                    <span>•</span>
+                                    <span>${tipo ? tipo.nombre : 'Sin tipo'}</span>
+                                    <span>•</span>
+                                    <span>${activity.duracion_horas}h</span>
+                                </div>
+                            </div>
+                            <div class="activity-actions">
+                                <span class="status-badge status-${activity.estado}">${statusLabels[activity.estado]}</span>
+                                ${activity.estado === 'enviado' ? `
+                                    <button class="btn-review" onclick="openReviewModal('${activity.id}')">Revisar</button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Toggle empleado expandido
+        function toggleEmployee(userId) {
+            const timeline = document.getElementById(`timeline-${userId}`);
+            const chevron = document.getElementById(`chevron-${userId}`);
+            
+            if (timeline.classList.contains('expanded')) {
+                timeline.classList.remove('expanded');
+                chevron.classList.remove('expanded');
+            } else {
+                timeline.classList.add('expanded');
+                chevron.classList.add('expanded');
+            }
+        }
+
+        // Abrir modal de revisión
+        function openReviewModal(activityId) {
+            currentActivityId = activityId;
+            const activity = databaseData.actividades.find(a => a.id === activityId);
+            const user = databaseData.usuarios.find(u => u.id === activity.usuario_id);
+            const area = databaseData.areas.find(a => a.id === activity.area_id);
+            
+            document.getElementById('modalActivityTitle').textContent = activity.titulo;
+            
+            const date = new Date(activity.fecha_actividad);
+            const formattedDate = date.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+            
+            document.getElementById('modalActivityMeta').innerHTML = `
+                <span>
+                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: inline; vertical-align: middle; margin-right: 0.25rem;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    ${user.nombre_completo}
+                </span>
+                <span>•</span>
+                <span>
+                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: inline; vertical-align: middle; margin-right: 0.25rem;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                    </svg>
+                    ${area.nombre}
+                </span>
+                <span>•</span>
+                <span>
+                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: inline; vertical-align: middle; margin-right: 0.25rem;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    ${formattedDate}
+                </span>
+            `;
+            
+            document.getElementById('modalComment').value = '';
+            document.getElementById('reviewModal').classList.add('active');
+        }
+
+        // Cerrar modal
+        function closeModal() {
+            document.getElementById('reviewModal').classList.remove('active');
+            currentActivityId = null;
+        }
+
+        // Aprobar o rechazar actividad
+        function approveActivity(approved) {
+            if (!currentActivityId) return;
+            
+            const activity = databaseData.actividades.find(a => a.id === currentActivityId);
+            const comment = document.getElementById('modalComment').value;
+            
+            // Actualizar estado
+            activity.estado = approved ? 'aprobado' : 'observado';
+            activity.observacion_supervisor = comment || (approved ? 'Aprobado' : 'Necesita revisión');
+            
+            // Aquí puedes agregar lógica para enviar al servidor
+            console.log('Actividad actualizada:', activity);
+            
+            // Cerrar modal y re-renderizar
+            closeModal();
+            renderEmployees();
+            
+            // Mostrar notificación (opcional)
+            alert(approved ? 'Actividad aprobada correctamente' : 'Actividad devuelta con observaciones');
+        }
+
+        // Cerrar modal al hacer clic fuera
+        document.getElementById('reviewModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Iniciar la aplicación
+        loadData();
+    </script>
+</body>
+</html>
