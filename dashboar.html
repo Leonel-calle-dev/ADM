@@ -752,7 +752,7 @@
         async function loadData() {
             try {
                 // Aquí debes reemplazar 'database.json' con la ruta a tu archivo JSON
-                const response = await fetch('database.json');
+                const response = await fetch('data.json');
                 databaseData = await response.json();
                 initializeDashboard();
             } catch (error) {
