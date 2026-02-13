@@ -1,14 +1,695 @@
 {
-  "receta": "Ensalada",
-  "ingredientes": [
-    "lechuga",
-    "tomate",
-    "cebolla"
+  "_info": {
+    "nombre": "Base de Datos — Sistema de Control y Seguimiento",
+    "unidad": "Administración del Campus",
+    "version": "1.0.0",
+    "fecha_creacion": "2025-02-13",
+    "modulos": [
+      "M1 - Usuarios y Autenticación",
+      "M2 - Registro de Actividades",
+      "M3 - Seguimiento y Supervisión",
+      "M4 - Reportes",
+      "M5 - Repositorio de Evidencias",
+      "M6 - Configuración y Auditoría"
+    ]
+  },
+
+  "usuarios": [
+    {
+      "id": "USR-001",
+      "nombre_completo": "Carlos Ramírez Mendoza",
+      "nombre_usuario": "c.ramirez",
+      "correo": "c.ramirez@campus.edu.bo",
+      "password_hash": "$2b$10$xK9mLpQr3TvWzN8uA1eJdO...",
+      "rol": "administrador",
+      "area_id": "AREA-001",
+      "cargo": "Director de Administración",
+      "telefono": "591-71234567",
+      "foto_perfil": "uploads/perfiles/USR-001.jpg",
+      "activo": true,
+      "forzar_cambio_password": false,
+      "intentos_fallidos": 0,
+      "bloqueado": false,
+      "fecha_registro": "2025-01-10T08:00:00Z",
+      "ultimo_acceso": "2025-02-13T07:45:22Z",
+      "created_at": "2025-01-10T08:00:00Z",
+      "updated_at": "2025-02-13T07:45:22Z"
+    },
+    {
+      "id": "USR-002",
+      "nombre_completo": "María Elena Quispe Choque",
+      "nombre_usuario": "m.quispe",
+      "correo": "m.quispe@campus.edu.bo",
+      "password_hash": "$2b$10$aR7nKpMs4UwXzO9vB2fLeP...",
+      "rol": "supervisor",
+      "area_id": "AREA-002",
+      "cargo": "Jefa de Infraestructura",
+      "telefono": "591-72345678",
+      "foto_perfil": "uploads/perfiles/USR-002.jpg",
+      "activo": true,
+      "forzar_cambio_password": false,
+      "intentos_fallidos": 0,
+      "bloqueado": false,
+      "fecha_registro": "2025-01-10T08:30:00Z",
+      "ultimo_acceso": "2025-02-13T08:10:05Z",
+      "created_at": "2025-01-10T08:30:00Z",
+      "updated_at": "2025-02-13T08:10:05Z"
+    },
+    {
+      "id": "USR-003",
+      "nombre_completo": "Jorge Luis Mamani Flores",
+      "nombre_usuario": "j.mamani",
+      "correo": "j.mamani@campus.edu.bo",
+      "password_hash": "$2b$10$bS8oLqNt5VxYaP0wC3gMfQ...",
+      "rol": "personal",
+      "area_id": "AREA-002",
+      "cargo": "Técnico de Mantenimiento",
+      "telefono": "591-73456789",
+      "foto_perfil": null,
+      "activo": true,
+      "forzar_cambio_password": true,
+      "intentos_fallidos": 0,
+      "bloqueado": false,
+      "fecha_registro": "2025-01-15T09:00:00Z",
+      "ultimo_acceso": "2025-02-12T16:30:00Z",
+      "created_at": "2025-01-15T09:00:00Z",
+      "updated_at": "2025-02-12T16:30:00Z"
+    },
+    {
+      "id": "USR-004",
+      "nombre_completo": "Ana Patricia Torrez Vidal",
+      "nombre_usuario": "a.torrez",
+      "correo": "a.torrez@campus.edu.bo",
+      "password_hash": "$2b$10$cT9pMrOu6WyZbQ1xD4hNgR...",
+      "rol": "personal",
+      "area_id": "AREA-003",
+      "cargo": "Asistente Administrativa",
+      "telefono": "591-74567890",
+      "foto_perfil": "uploads/perfiles/USR-004.jpg",
+      "activo": true,
+      "forzar_cambio_password": false,
+      "intentos_fallidos": 0,
+      "bloqueado": false,
+      "fecha_registro": "2025-01-15T09:15:00Z",
+      "ultimo_acceso": "2025-02-13T09:00:00Z",
+      "created_at": "2025-01-15T09:15:00Z",
+      "updated_at": "2025-02-13T09:00:00Z"
+    },
+    {
+      "id": "USR-005",
+      "nombre_completo": "Roberto Condori Apaza",
+      "nombre_usuario": "r.condori",
+      "correo": "r.condori@campus.edu.bo",
+      "password_hash": "$2b$10$dU0qNsOv7XzAcR2yE5iOhS...",
+      "rol": "visor",
+      "area_id": "AREA-001",
+      "cargo": "Auditor Interno",
+      "telefono": "591-75678901",
+      "foto_perfil": null,
+      "activo": true,
+      "forzar_cambio_password": false,
+      "intentos_fallidos": 0,
+      "bloqueado": false,
+      "fecha_registro": "2025-01-20T10:00:00Z",
+      "ultimo_acceso": "2025-02-10T11:00:00Z",
+      "created_at": "2025-01-20T10:00:00Z",
+      "updated_at": "2025-02-10T11:00:00Z"
+    }
   ],
-  "puntuacion": 4.5,
-  "esVegano": true,
-  "detalles": {
-    "tiempo": "10 min",
-    "dificultad": "baja"
-  }
+
+  "sesiones": [
+    {
+      "id": "SES-001",
+      "usuario_id": "USR-001",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "ip_origen": "192.168.1.105",
+      "dispositivo": "Chrome 120 / Windows 11",
+      "activa": true,
+      "fecha_inicio": "2025-02-13T07:45:22Z",
+      "fecha_expiracion": "2025-02-13T19:45:22Z",
+      "created_at": "2025-02-13T07:45:22Z"
+    },
+    {
+      "id": "SES-002",
+      "usuario_id": "USR-003",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "ip_origen": "192.168.1.210",
+      "dispositivo": "Firefox 121 / Android",
+      "activa": false,
+      "fecha_inicio": "2025-02-12T14:30:00Z",
+      "fecha_expiracion": "2025-02-13T02:30:00Z",
+      "created_at": "2025-02-12T14:30:00Z"
+    }
+  ],
+
+  "recuperacion_password": [
+    {
+      "id": "RPASS-001",
+      "usuario_id": "USR-003",
+      "token": "f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8",
+      "usado": false,
+      "fecha_expiracion": "2025-02-14T10:00:00Z",
+      "created_at": "2025-02-13T10:00:00Z"
+    }
+  ],
+
+  "areas": [
+    {
+      "id": "AREA-001",
+      "nombre": "Dirección Administrativa",
+      "descripcion": "Área de dirección y coordinación general del campus",
+      "responsable_id": "USR-001",
+      "activo": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "AREA-002",
+      "nombre": "Infraestructura y Mantenimiento",
+      "descripcion": "Gestión de instalaciones, equipos y mantenimiento general",
+      "responsable_id": "USR-002",
+      "activo": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "AREA-003",
+      "nombre": "Servicios Administrativos",
+      "descripcion": "Atención al personal, documentación y trámites internos",
+      "responsable_id": "USR-002",
+      "activo": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "AREA-004",
+      "nombre": "Seguridad y Vigilancia",
+      "descripcion": "Control de acceso y vigilancia del campus",
+      "responsable_id": "USR-002",
+      "activo": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  ],
+
+  "tipos_actividad": [
+    { "id": "TIPO-001", "nombre": "Mantenimiento Preventivo", "icono": "🔧", "color": "#2563eb", "activo": true },
+    { "id": "TIPO-002", "nombre": "Mantenimiento Correctivo", "icono": "🛠️", "color": "#ef4444", "activo": true },
+    { "id": "TIPO-003", "nombre": "Gestión Documental",       "icono": "📂", "color": "#10b981", "activo": true },
+    { "id": "TIPO-004", "nombre": "Atención al Personal",     "icono": "👥", "color": "#f59e0b", "activo": true },
+    { "id": "TIPO-005", "nombre": "Supervisión de Obra",      "icono": "🏗️", "color": "#a855f7", "activo": true },
+    { "id": "TIPO-006", "nombre": "Inventario y Logística",   "icono": "📦", "color": "#0ea5e9", "activo": true },
+    { "id": "TIPO-007", "nombre": "Seguridad y Vigilancia",   "icono": "🛡️", "color": "#64748b", "activo": true },
+    { "id": "TIPO-008", "nombre": "Capacitación",             "icono": "📚", "color": "#ec4899", "activo": true },
+    { "id": "TIPO-009", "nombre": "Informe y Reunión",        "icono": "📋", "color": "#14b8a6", "activo": true },
+    { "id": "TIPO-010", "nombre": "Otro",                     "icono": "📌", "color": "#78716c", "activo": true }
+  ],
+
+  "actividades": [
+    {
+      "id": "ACT-001",
+      "titulo": "Revisión del sistema de agua potable - Bloque A",
+      "descripcion": "Se realizó inspección completa de tuberías, válvulas y medidores del bloque A. Se detectó fuga menor en válvula P-12, se procedió a cambio de empaque. Sistema operativo al 100%.",
+      "tipo_actividad_id": "TIPO-001",
+      "area_id": "AREA-002",
+      "usuario_id": "USR-003",
+      "fecha_actividad": "2025-02-12",
+      "hora_inicio": "08:00",
+      "hora_fin": "11:30",
+      "duracion_horas": 3.5,
+      "lugar": "Bloque A — Planta Baja",
+      "estado": "aprobado",
+      "prioridad": "media",
+      "observacion_empleado": "Se utilizaron materiales del almacén central, queda pendiente reponer stock de empaques.",
+      "observacion_supervisor": "Trabajo realizado correctamente. Verificar stock de repuestos.",
+      "supervisor_id": "USR-002",
+      "fecha_envio": "2025-02-12T12:00:00Z",
+      "fecha_revision": "2025-02-12T14:30:00Z",
+      "evidencias": ["EVI-001", "EVI-002", "EVI-003"],
+      "created_at": "2025-02-12T07:55:00Z",
+      "updated_at": "2025-02-12T14:30:00Z"
+    },
+    {
+      "id": "ACT-002",
+      "titulo": "Archivo y clasificación de contratos 2024",
+      "descripcion": "Se procedió a la digitalización y archivo físico de 47 contratos de servicios del año 2024. Cada contrato fue escaneado, nombrado según nomenclatura institucional y subido al repositorio.",
+      "tipo_actividad_id": "TIPO-003",
+      "area_id": "AREA-003",
+      "usuario_id": "USR-004",
+      "fecha_actividad": "2025-02-12",
+      "hora_inicio": "09:00",
+      "hora_fin": "17:00",
+      "duracion_horas": 7.0,
+      "lugar": "Oficina de Servicios Administrativos",
+      "estado": "aprobado",
+      "prioridad": "alta",
+      "observacion_empleado": "Se completaron los 47 contratos. Índice actualizado en sistema.",
+      "observacion_supervisor": "Excelente trabajo. Enviar copia del índice al Director.",
+      "supervisor_id": "USR-002",
+      "fecha_envio": "2025-02-12T17:05:00Z",
+      "fecha_revision": "2025-02-13T08:30:00Z",
+      "evidencias": ["EVI-004", "EVI-005"],
+      "created_at": "2025-02-12T08:55:00Z",
+      "updated_at": "2025-02-13T08:30:00Z"
+    },
+    {
+      "id": "ACT-003",
+      "titulo": "Cambio de luminarias LED — Pasillo Principal",
+      "descripcion": "Reemplazo de 18 luminarias fluorescentes por luminarias LED de bajo consumo en el pasillo principal del edificio central. Se trabajó con el técnico eléctrico externo.",
+      "tipo_actividad_id": "TIPO-002",
+      "area_id": "AREA-002",
+      "usuario_id": "USR-003",
+      "fecha_actividad": "2025-02-13",
+      "hora_inicio": "07:30",
+      "hora_fin": "12:00",
+      "duracion_horas": 4.5,
+      "lugar": "Edificio Central — Pasillo Principal",
+      "estado": "enviado",
+      "prioridad": "media",
+      "observacion_empleado": "Se instalaron 18 de 20 luminarias. Las 2 restantes quedan pendientes por falta de acceso al techo.",
+      "observacion_supervisor": null,
+      "supervisor_id": null,
+      "fecha_envio": "2025-02-13T12:15:00Z",
+      "fecha_revision": null,
+      "evidencias": ["EVI-006", "EVI-007", "EVI-008"],
+      "created_at": "2025-02-13T07:25:00Z",
+      "updated_at": "2025-02-13T12:15:00Z"
+    },
+    {
+      "id": "ACT-004",
+      "titulo": "Atención solicitud de certificados laborales",
+      "descripcion": "Se procesaron 12 solicitudes de certificados laborales para el personal docente y administrativo. Se verificaron datos en sistema y se entregaron certificados firmados y sellados.",
+      "tipo_actividad_id": "TIPO-004",
+      "area_id": "AREA-003",
+      "usuario_id": "USR-004",
+      "fecha_actividad": "2025-02-13",
+      "hora_inicio": "08:00",
+      "hora_fin": "12:00",
+      "duracion_horas": 4.0,
+      "lugar": "Ventanilla de Atención — Planta Baja",
+      "estado": "borrador",
+      "prioridad": "baja",
+      "observacion_empleado": null,
+      "observacion_supervisor": null,
+      "supervisor_id": null,
+      "fecha_envio": null,
+      "fecha_revision": null,
+      "evidencias": [],
+      "created_at": "2025-02-13T08:00:00Z",
+      "updated_at": "2025-02-13T12:05:00Z"
+    },
+    {
+      "id": "ACT-005",
+      "titulo": "Inspección de extintores — Bloques A, B y C",
+      "descripcion": "Verificación del estado, presión y fecha de vencimiento de todos los extintores de los bloques A, B y C. Se identificaron 3 extintores vencidos que requieren recarga urgente.",
+      "tipo_actividad_id": "TIPO-001",
+      "area_id": "AREA-002",
+      "usuario_id": "USR-003",
+      "fecha_actividad": "2025-02-11",
+      "hora_inicio": "14:00",
+      "hora_fin": "17:30",
+      "duracion_horas": 3.5,
+      "lugar": "Bloques A, B y C",
+      "estado": "observado",
+      "prioridad": "alta",
+      "observacion_empleado": "Se adjunta listado completo con estado de cada extintor.",
+      "observacion_supervisor": "Proceder urgente con los 3 extintores vencidos. Cotizar recarga esta semana.",
+      "supervisor_id": "USR-002",
+      "fecha_envio": "2025-02-11T17:45:00Z",
+      "fecha_revision": "2025-02-12T09:00:00Z",
+      "evidencias": ["EVI-009", "EVI-010"],
+      "created_at": "2025-02-11T13:55:00Z",
+      "updated_at": "2025-02-12T09:00:00Z"
+    }
+  ],
+
+  "evidencias": [
+    {
+      "id": "EVI-001",
+      "actividad_id": "ACT-001",
+      "usuario_id": "USR-003",
+      "nombre_original": "foto_valvula_P12_antes.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-001_EVI-001.jpg",
+      "tipo_archivo": "image/jpeg",
+      "tamaño_bytes": 2457600,
+      "descripcion": "Estado de la válvula P-12 antes de la intervención",
+      "miniatura": "evidencias/thumbs/ACT-001_EVI-001_thumb.jpg",
+      "created_at": "2025-02-12T09:30:00Z"
+    },
+    {
+      "id": "EVI-002",
+      "actividad_id": "ACT-001",
+      "usuario_id": "USR-003",
+      "nombre_original": "foto_valvula_P12_despues.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-001_EVI-002.jpg",
+      "tipo_archivo": "image/jpeg",
+      "tamaño_bytes": 2150400,
+      "descripcion": "Estado de la válvula P-12 después del cambio de empaque",
+      "miniatura": "evidencias/thumbs/ACT-001_EVI-002_thumb.jpg",
+      "created_at": "2025-02-12T11:15:00Z"
+    },
+    {
+      "id": "EVI-003",
+      "actividad_id": "ACT-001",
+      "usuario_id": "USR-003",
+      "nombre_original": "registro_materiales_usados.pdf",
+      "nombre_almacenado": "evidencias/2025/02/ACT-001_EVI-003.pdf",
+      "tipo_archivo": "application/pdf",
+      "tamaño_bytes": 512000,
+      "descripcion": "Lista de materiales utilizados en la intervención",
+      "miniatura": null,
+      "created_at": "2025-02-12T11:45:00Z"
+    },
+    {
+      "id": "EVI-004",
+      "actividad_id": "ACT-002",
+      "usuario_id": "USR-004",
+      "nombre_original": "indice_contratos_2024.xlsx",
+      "nombre_almacenado": "evidencias/2025/02/ACT-002_EVI-004.xlsx",
+      "tipo_archivo": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "tamaño_bytes": 204800,
+      "descripcion": "Índice completo de los 47 contratos archivados",
+      "miniatura": null,
+      "created_at": "2025-02-12T16:50:00Z"
+    },
+    {
+      "id": "EVI-005",
+      "actividad_id": "ACT-002",
+      "usuario_id": "USR-004",
+      "nombre_original": "foto_archivo_fisico.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-002_EVI-005.jpg",
+      "tipo_archivo": "image/jpeg",
+      "tamaño_bytes": 3145728,
+      "descripcion": "Fotografía del archivo físico organizado",
+      "miniatura": "evidencias/thumbs/ACT-002_EVI-005_thumb.jpg",
+      "created_at": "2025-02-12T17:00:00Z"
+    },
+    {
+      "id": "EVI-006",
+      "actividad_id": "ACT-003",
+      "usuario_id": "USR-003",
+      "nombre_original": "luminarias_instaladas.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-003_EVI-006.jpg",
+      "tipo_archivo": "image/jpeg",
+      "tamaño_bytes": 2621440,
+      "descripcion": "Vista del pasillo con las nuevas luminarias LED instaladas",
+      "miniatura": "evidencias/thumbs/ACT-003_EVI-006_thumb.jpg",
+      "created_at": "2025-02-13T11:30:00Z"
+    },
+    {
+      "id": "EVI-007",
+      "actividad_id": "ACT-003",
+      "usuario_id": "USR-003",
+      "nombre_original": "luminarias_retiradas.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-003_EVI-007.jpg",
+      "tipo_archivo": "image/jpeg",
+      "tamaño_bytes": 1835008,
+      "descripcion": "Luminarias fluorescentes retiradas para disposición final",
+      "miniatura": "evidencias/thumbs/ACT-003_EVI-007_thumb.jpg",
+      "created_at": "2025-02-13T11:45:00Z"
+    },
+    {
+      "id": "EVI-008",
+      "actividad_id": "ACT-003",
+      "usuario_id": "USR-003",
+      "nombre_original": "orden_trabajo_electrico.pdf",
+      "nombre_almacenado": "evidencias/2025/02/ACT-003_EVI-008.pdf",
+      "tipo_archivo": "application/pdf",
+      "tamaño_bytes": 368640,
+      "descripcion": "Orden de trabajo firmada por técnico eléctrico",
+      "miniatura": null,
+      "created_at": "2025-02-13T12:00:00Z"
+    },
+    {
+      "id": "EVI-009",
+      "actividad_id": "ACT-005",
+      "usuario_id": "USR-003",
+      "nombre_original": "listado_extintores.pdf",
+      "nombre_almacenado": "evidencias/2025/02/ACT-005_EVI-009.pdf",
+      "tipo_archivo": "application/pdf",
+      "tamaño_bytes": 614400,
+      "descripcion": "Listado completo con estado de cada extintor revisado",
+      "miniatura": null,
+      "created_at": "2025-02-11T17:00:00Z"
+    },
+    {
+      "id": "EVI-010",
+      "actividad_id": "ACT-005",
+      "usuario_id": "USR-003",
+      "nombre_original": "extintores_vencidos.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-005_EVI-010.jpg",
+      "tipo_archivo": "image/jpeg",
+      "tamaño_bytes": 1572864,
+      "descripcion": "Fotografía de los 3 extintores vencidos identificados",
+      "miniatura": "evidencias/thumbs/ACT-005_EVI-010_thumb.jpg",
+      "created_at": "2025-02-11T17:20:00Z"
+    }
+  ],
+
+  "notificaciones": [
+    {
+      "id": "NOTI-001",
+      "destinatario_id": "USR-002",
+      "remitente_id": "USR-003",
+      "tipo": "nueva_actividad",
+      "titulo": "Nueva actividad enviada para revisión",
+      "mensaje": "Jorge Luis Mamani ha enviado el registro 'Cambio de luminarias LED — Pasillo Principal' para su aprobación.",
+      "actividad_id": "ACT-003",
+      "leida": false,
+      "fecha_envio": "2025-02-13T12:15:00Z",
+      "created_at": "2025-02-13T12:15:00Z"
+    },
+    {
+      "id": "NOTI-002",
+      "destinatario_id": "USR-003",
+      "remitente_id": "USR-002",
+      "tipo": "actividad_aprobada",
+      "titulo": "Tu actividad fue aprobada",
+      "mensaje": "La actividad 'Revisión del sistema de agua potable - Bloque A' fue aprobada por María Elena Quispe.",
+      "actividad_id": "ACT-001",
+      "leida": true,
+      "fecha_envio": "2025-02-12T14:30:00Z",
+      "created_at": "2025-02-12T14:30:00Z"
+    },
+    {
+      "id": "NOTI-003",
+      "destinatario_id": "USR-003",
+      "remitente_id": "USR-002",
+      "tipo": "actividad_observada",
+      "titulo": "Tu actividad tiene una observación",
+      "mensaje": "La actividad 'Inspección de extintores' tiene una observación de tu supervisor. Por favor revisa y toma acciones.",
+      "actividad_id": "ACT-005",
+      "leida": false,
+      "fecha_envio": "2025-02-12T09:00:00Z",
+      "created_at": "2025-02-12T09:00:00Z"
+    },
+    {
+      "id": "NOTI-004",
+      "destinatario_id": "USR-004",
+      "remitente_id": "USR-002",
+      "tipo": "actividad_aprobada",
+      "titulo": "Tu actividad fue aprobada",
+      "mensaje": "La actividad 'Archivo y clasificación de contratos 2024' fue aprobada. Recuerda enviar el índice al Director.",
+      "actividad_id": "ACT-002",
+      "leida": true,
+      "fecha_envio": "2025-02-13T08:30:00Z",
+      "created_at": "2025-02-13T08:30:00Z"
+    }
+  ],
+
+  "reportes": [
+    {
+      "id": "REP-001",
+      "titulo": "Reporte Semanal — Infraestructura y Mantenimiento",
+      "tipo": "semanal",
+      "area_id": "AREA-002",
+      "generado_por": "USR-002",
+      "periodo_inicio": "2025-02-10",
+      "periodo_fin": "2025-02-16",
+      "estado": "generado",
+      "formato": "pdf",
+      "ruta_archivo": "reportes/2025/02/REP-001.pdf",
+      "actividades_incluidas": ["ACT-001", "ACT-003", "ACT-005"],
+      "resumen": {
+        "total_actividades": 3,
+        "aprobadas": 1,
+        "enviadas": 1,
+        "observadas": 1,
+        "horas_totales": 11.5,
+        "personal_activo": 1
+      },
+      "enviado_por_correo": true,
+      "correos_destinatarios": ["c.ramirez@campus.edu.bo", "m.quispe@campus.edu.bo"],
+      "fecha_generacion": "2025-02-13T18:00:00Z",
+      "created_at": "2025-02-13T18:00:00Z"
+    },
+    {
+      "id": "REP-002",
+      "titulo": "Reporte Mensual — Servicios Administrativos — Enero 2025",
+      "tipo": "mensual",
+      "area_id": "AREA-003",
+      "generado_por": "USR-001",
+      "periodo_inicio": "2025-01-01",
+      "periodo_fin": "2025-01-31",
+      "estado": "generado",
+      "formato": "pdf",
+      "ruta_archivo": "reportes/2025/01/REP-002.pdf",
+      "actividades_incluidas": [],
+      "resumen": {
+        "total_actividades": 18,
+        "aprobadas": 15,
+        "enviadas": 0,
+        "observadas": 3,
+        "horas_totales": 86.5,
+        "personal_activo": 1
+      },
+      "enviado_por_correo": true,
+      "correos_destinatarios": ["c.ramirez@campus.edu.bo"],
+      "fecha_generacion": "2025-02-01T08:00:00Z",
+      "created_at": "2025-02-01T08:00:00Z"
+    }
+  ],
+
+  "programacion_reportes": [
+    {
+      "id": "PROG-001",
+      "nombre": "Reporte Semanal Automático — Infraestructura",
+      "tipo": "semanal",
+      "area_id": "AREA-002",
+      "dia_envio": "viernes",
+      "hora_envio": "18:00",
+      "formato": "pdf",
+      "activo": true,
+      "correos_destinatarios": ["c.ramirez@campus.edu.bo", "m.quispe@campus.edu.bo"],
+      "ultima_ejecucion": "2025-02-07T18:00:00Z",
+      "proxima_ejecucion": "2025-02-14T18:00:00Z",
+      "created_at": "2025-01-10T09:00:00Z"
+    },
+    {
+      "id": "PROG-002",
+      "nombre": "Reporte Mensual General — Todos los Departamentos",
+      "tipo": "mensual",
+      "area_id": null,
+      "dia_envio": "1",
+      "hora_envio": "07:00",
+      "formato": "pdf",
+      "activo": true,
+      "correos_destinatarios": ["c.ramirez@campus.edu.bo"],
+      "ultima_ejecucion": "2025-02-01T07:00:00Z",
+      "proxima_ejecucion": "2025-03-01T07:00:00Z",
+      "created_at": "2025-01-10T09:00:00Z"
+    }
+  ],
+
+  "configuracion": {
+    "sistema": {
+      "nombre_institucion": "Campus Universitario",
+      "nombre_unidad": "Unidad de Administración del Campus",
+      "logo": "assets/logo_campus.png",
+      "color_primario": "#2563eb",
+      "zona_horaria": "America/La_Paz",
+      "idioma": "es",
+      "moneda": "BOB"
+    },
+    "sesiones": {
+      "duracion_sesion_horas": 12,
+      "max_intentos_fallidos": 5,
+      "bloqueo_minutos": 30,
+      "forzar_https": true
+    },
+    "archivos": {
+      "tamaño_maximo_mb": 20,
+      "tipos_permitidos": ["jpg", "jpeg", "png", "gif", "pdf", "docx", "xlsx", "mp4", "zip"],
+      "almacenamiento": "local",
+      "ruta_base": "uploads/"
+    },
+    "notificaciones": {
+      "correo_habilitado": true,
+      "servidor_smtp": "smtp.campus.edu.bo",
+      "puerto_smtp": 587,
+      "correo_remitente": "sistema@campus.edu.bo",
+      "nombre_remitente": "Sistema de Seguimiento Administrativo"
+    },
+    "recordatorios": {
+      "habilitado": true,
+      "dias_sin_registro_alerta": 3,
+      "hora_recordatorio_diario": "17:00"
+    }
+  },
+
+  "auditoria": [
+    {
+      "id": "AUD-001",
+      "usuario_id": "USR-001",
+      "accion": "CREATE_USER",
+      "modulo": "usuarios",
+      "entidad_id": "USR-003",
+      "detalle": "Creó el usuario j.mamani con rol 'personal'",
+      "ip": "192.168.1.105",
+      "navegador": "Chrome 120 / Windows 11",
+      "fecha": "2025-01-15T09:00:00Z"
+    },
+    {
+      "id": "AUD-002",
+      "usuario_id": "USR-003",
+      "accion": "LOGIN",
+      "modulo": "autenticacion",
+      "entidad_id": "USR-003",
+      "detalle": "Inicio de sesión exitoso",
+      "ip": "192.168.1.210",
+      "navegador": "Firefox 121 / Android",
+      "fecha": "2025-02-12T14:30:00Z"
+    },
+    {
+      "id": "AUD-003",
+      "usuario_id": "USR-003",
+      "accion": "CREATE_ACTIVITY",
+      "modulo": "actividades",
+      "entidad_id": "ACT-001",
+      "detalle": "Registró nueva actividad: 'Revisión del sistema de agua potable - Bloque A'",
+      "ip": "192.168.1.210",
+      "navegador": "Firefox 121 / Android",
+      "fecha": "2025-02-12T07:55:00Z"
+    },
+    {
+      "id": "AUD-004",
+      "usuario_id": "USR-003",
+      "accion": "UPLOAD_EVIDENCE",
+      "modulo": "evidencias",
+      "entidad_id": "EVI-001",
+      "detalle": "Subió evidencia 'foto_valvula_P12_antes.jpg' para actividad ACT-001",
+      "ip": "192.168.1.210",
+      "navegador": "Firefox 121 / Android",
+      "fecha": "2025-02-12T09:30:00Z"
+    },
+    {
+      "id": "AUD-005",
+      "usuario_id": "USR-002",
+      "accion": "APPROVE_ACTIVITY",
+      "modulo": "seguimiento",
+      "entidad_id": "ACT-001",
+      "detalle": "Aprobó la actividad 'Revisión del sistema de agua potable - Bloque A' de USR-003",
+      "ip": "192.168.1.101",
+      "navegador": "Chrome 120 / Windows 10",
+      "fecha": "2025-02-12T14:30:00Z"
+    },
+    {
+      "id": "AUD-006",
+      "usuario_id": "USR-002",
+      "accion": "OBSERVE_ACTIVITY",
+      "modulo": "seguimiento",
+      "entidad_id": "ACT-005",
+      "detalle": "Marcó como observada la actividad 'Inspección de extintores' de USR-003",
+      "ip": "192.168.1.101",
+      "navegador": "Chrome 120 / Windows 10",
+      "fecha": "2025-02-12T09:00:00Z"
+    },
+    {
+      "id": "AUD-007",
+      "usuario_id": "USR-001",
+      "accion": "GENERATE_REPORT",
+      "modulo": "reportes",
+      "entidad_id": "REP-002",
+      "detalle": "Generó reporte mensual de Servicios Administrativos — Enero 2025",
+      "ip": "192.168.1.105",
+      "navegador": "Chrome 120 / Windows 11",
+      "fecha": "2025-02-01T08:00:00Z"
+    }
+  ]
 }
