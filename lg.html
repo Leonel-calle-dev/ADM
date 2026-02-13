@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Login - Sistema UAP</title>
+  <title>Login - Sistema de Seguimiento Administrativo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- SweetAlert2 -->
@@ -86,7 +86,7 @@
 
     .login-container h2 {
       color: #fff;
-      margin-bottom: 28px;
+      margin-bottom: 6px;
       font-weight: 700;
       font-size: 2.1rem;
       letter-spacing: -0.5px;
@@ -104,6 +104,21 @@
       height: 3px;
       background: linear-gradient(90deg, transparent, #00e1ff, transparent);
       border-radius: 3px;
+    }
+
+    .sistema-badge {
+      display: inline-block;
+      background: rgba(0, 119, 255, 0.2);
+      border: 1px solid rgba(0, 225, 255, 0.3);
+      color: #00e1ff;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+      margin-top: 14px;
     }
 
     .input-field {
@@ -160,11 +175,16 @@
       padding: 5px;
       z-index: 3;
       transition: all 0.3s ease;
+      width: auto;
+      margin-top: 0;
+      box-shadow: none;
     }
     
     .toggle-password:hover {
       color: #00e1ff;
       transform: translateY(-50%) scale(1.15);
+      background: none;
+      box-shadow: none;
     }
 
     .options-container {
@@ -204,7 +224,7 @@
       text-decoration: underline;
     }
 
-    button {
+    button[type="submit"], #loginButton {
       width: 100%;
       padding: 16px;
       background: linear-gradient(90deg, #0077ff, #00c6ff, #00e1ff);
@@ -222,7 +242,7 @@
       letter-spacing: 0.5px;
     }
     
-    button::after {
+    button[type="submit"]::after, #loginButton::after {
       content: '';
       position: absolute;
       top: -50%;
@@ -235,23 +255,23 @@
       opacity: 0;
     }
     
-    button:hover::after {
+    button[type="submit"]:hover::after, #loginButton:hover::after {
       opacity: 1;
       left: 120%;
     }
 
-    button:hover {
+    button[type="submit"]:hover, #loginButton:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba(0, 119, 255, 0.55), 0 0 15px rgba(0, 225, 255, 0.4);
       background: linear-gradient(90deg, #0066e0, #00b3e6, #00ccff);
     }
 
-    button:active {
+    button[type="submit"]:active, #loginButton:active {
       transform: translateY(1px);
       box-shadow: 0 4px 15px rgba(0, 100, 255, 0.4);
     }
     
-    button:disabled {
+    button[type="submit"]:disabled, #loginButton:disabled {
       background: linear-gradient(90deg, #5a98ff, #7eb3ff);
       cursor: not-allowed;
       transform: none;
@@ -262,68 +282,94 @@
       display: flex;
       align-items: center;
       text-align: center;
-      margin: 25px 0 20px;
+      margin: 22px 0 16px;
       color: rgba(255, 255, 255, 0.7);
       font-size: 14px;
-      position: relative;
     }
-    
-    .divider::before,
-    .divider::after {
+    .divider::before, .divider::after {
       content: '';
       flex: 1;
       border-bottom: 1px solid rgba(255, 255, 255, 0.25);
     }
-    
-    .divider::before {
-      margin-right: 15px;
-    }
-    
-    .divider::after {
-      margin-left: 15px;
+    .divider::before { margin-right: 15px; }
+    .divider::after  { margin-left: 15px; }
+
+    .quick-access {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 4px;
     }
 
-    .demo-credentials {
-      background: rgba(0, 30, 60, 0.75);
-      border-radius: 16px;
-      padding: 18px;
-      margin-top: 15px;
-      border: 1px solid rgba(0, 150, 255, 0.3);
-      text-align: left;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-    
-    .demo-credentials h3 {
+    .qa-btn {
       display: flex;
       align-items: center;
-      margin-bottom: 10px;
-      color: #00e1ff;
-      font-size: 16px;
-      font-weight: 600;
-    }
-    
-    .demo-credentials h3 i {
-      margin-right: 8px;
-      font-size: 18px;
-    }
-    
-    .demo-credentials p {
-      margin-bottom: 5px;
-      display: flex;
-      justify-content: space-between;
-    }
-    
-    .demo-credentials span {
-      background: rgba(0, 100, 200, 0.3);
-      padding: 2px 8px;
-      border-radius: 6px;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.88);
+      font-size: 12.5px;
       font-weight: 500;
-      letter-spacing: 0.5px;
-      margin-left: 5px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: left;
+      width: 100%;
+      margin: 0;
+      box-shadow: none;
+      letter-spacing: 0;
     }
+    .qa-btn:hover {
+      background: rgba(0,119,255,0.25);
+      border-color: rgba(0,225,255,0.4);
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,100,255,0.2);
+    }
+    .qa-btn .qa-icon {
+      font-size: 16px;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .qa-btn .qa-info { line-height: 1.3; }
+    .qa-btn .qa-role { font-size: 10px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.05em; }
 
-    /* Footer */
+    .qa-btn.role-administrador  { border-left: 3px solid #ef4444; }
+    .qa-btn.role-supervisor  { border-left: 3px solid #a855f7; }
+    .qa-btn.role-personal   { border-left: 3px solid #10b981; }
+    .qa-btn.role-visor   { border-left: 3px solid #f59e0b; }
+
+    .lockout-bar {
+      display: none;
+      background: rgba(220, 53, 69, 0.2);
+      border: 1px solid rgba(220, 53, 69, 0.4);
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #ff6b6b;
+      text-align: left;
+    }
+    .lockout-bar i { margin-right: 6px; }
+
+    .attempts-indicator {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      margin-top: 10px;
+      min-height: 14px;
+    }
+    .attempt-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      transition: background 0.3s;
+    }
+    .attempt-dot.used { background: #ef4444; }
+    .attempt-dot.safe { background: rgba(255,255,255,0.2); }
+
     .footer {
       background: rgba(0, 15, 35, 0.85);
       backdrop-filter: blur(10px);
@@ -341,219 +387,88 @@
       letter-spacing: 0.5px;
     }
     
-    .footer-text strong {
-      color: #00e1ff;
-      font-weight: 600;
-    }
+    .footer-text strong { color: #00e1ff; font-weight: 600; }
 
     @keyframes fadeIn {
-      from { 
-        opacity: 0; 
-        transform: translateY(25px);
-        filter: blur(5px);
-      }
-      to { 
-        opacity: 1; 
-        transform: translateY(0); 
-        filter: blur(0);
-      }
+      from { opacity: 0; transform: translateY(25px); filter: blur(5px); }
+      to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
     }
-
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      50%       { transform: translateY(-10px); }
     }
-    
     @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(0, 225, 255, 0.4); }
-      70% { box-shadow: 0 0 0 12px rgba(0, 225, 255, 0); }
+      0%   { box-shadow: 0 0 0 0 rgba(0, 225, 255, 0.4); }
+      70%  { box-shadow: 0 0 0 12px rgba(0, 225, 255, 0); }
       100% { box-shadow: 0 0 0 0 rgba(0, 225, 255, 0); }
     }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .login-container {
-        padding: 35px 30px;
-        margin: 15px;
-        border-radius: 20px;
-      }
-
-      .login-container h2 {
-        font-size: 1.8rem;
-        margin-bottom: 22px;
-      }
-
-      .login-container img {
-        width: 110px;
-        margin-bottom: 15px;
-      }
-
-      .input-field input {
-        padding: 15px 15px 15px 45px;
-        font-size: 16px;
-      }
-      
-      .options-container {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-      }
-
-      button {
-        padding: 15px;
-        font-size: 16px;
-      }
-
-      .footer {
-        padding: 18px 0;
-      }
-
-      .footer-text {
-        font-size: 14px;
-        padding: 0 15px;
-      }
-      
-      .demo-credentials {
-        padding: 15px;
-        font-size: 13.5px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .main-content {
-        padding: 10px;
-      }
-
-      .login-container {
-        padding: 30px 25px;
-        margin: 10px;
-        border-radius: 18px;
-      }
-
-      .login-container h2 {
-        font-size: 1.65rem;
-      }
-
-      .login-container img {
-        width: 95px;
-      }
-
-      .input-field {
-        margin-bottom: 18px;
-      }
-
-      .input-field input {
-        padding: 14px 15px 14px 42px;
-        font-size: 15.5px;
-      }
-      
-      .toggle-password {
-        font-size: 17px;
-      }
-      
-      button {
-        padding: 14px;
-        font-size: 16px;
-      }
-      
-      .demo-credentials {
-        padding: 12px;
-        font-size: 13px;
-      }
-      
-      .demo-credentials p {
-        flex-wrap: wrap;
-      }
-    }
-
-    @media (max-width: 360px) {
-      .login-container {
-        padding: 25px 20px;
-      }
-
-      .login-container h2 {
-        font-size: 1.55rem;
-      }
-      
-      .input-field input {
-        padding: 13px 15px 13px 40px;
-        font-size: 15px;
-      }
-      
-      .options-container {
-        font-size: 13px;
-      }
-      
-      .footer-text {
-        font-size: 13px;
-        line-height: 1.5;
-      }
-    }
-
-    /* Animación para el botón de login exitoso */
-    .login-success {
-      animation: pulse 1.5s infinite;
-    }
-    
-    /* Estilo para inputs con error */
-    .input-error {
-      animation: shake 0.5s;
-      box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.4) !important;
-    }
-    
+    @keyframes spin { to { transform: rotate(360deg); } }
     @keyframes shake {
-      0%, 100% {transform: translateX(0);}
-      20%, 60% {transform: translateX(-5px);}
-      40%, 80% {transform: translateX(5px);}
+      0%, 100% { transform: translateX(0); }
+      20%, 60%  { transform: translateX(-5px); }
+      40%, 80%  { transform: translateX(5px); }
     }
-    
-    /* Estilo para el loader */
-    .loader {
-      display: inline-block;
-      width: 24px;
-      height: 24px;
-      border: 3px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top-color: #fff;
-      animation: spin 1s linear infinite;
-      margin-right: 10px;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
-    .btn-loading {
-      position: relative;
-      padding-left: 45px !important;
-    }
-    
+
+    .login-success { animation: pulse 1.5s infinite; }
+    .input-error   { animation: shake 0.5s; box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.4) !important; }
+
+    .btn-loading { position: relative; padding-left: 45px !important; }
     .btn-loading::after {
       content: '';
       position: absolute;
-      left: 15px;
-      top: 50%;
+      left: 15px; top: 50%;
       transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
-      border: 2.5px solid rgba(255, 255, 255, 0.4);
+      width: 20px; height: 20px;
+      border: 2.5px solid rgba(255,255,255,0.4);
       border-radius: 50%;
       border-top-color: white;
       animation: spin 1s linear infinite;
+    }
+
+    @media (max-width: 768px) {
+      .login-container { padding: 35px 30px; margin: 15px; border-radius: 20px; }
+      .login-container h2 { font-size: 1.8rem; margin-bottom: 22px; }
+      .login-container img { width: 110px; margin-bottom: 15px; }
+      .input-field input { padding: 15px 15px 15px 45px; font-size: 16px; }
+      .options-container { flex-direction: column; align-items: flex-start; gap: 12px; }
+      button[type="submit"], #loginButton { padding: 15px; font-size: 16px; }
+      .footer { padding: 18px 0; }
+      .footer-text { font-size: 14px; padding: 0 15px; }
+    }
+    @media (max-width: 480px) {
+      .main-content { padding: 10px; }
+      .login-container { padding: 30px 25px; margin: 10px; border-radius: 18px; }
+      .login-container h2 { font-size: 1.65rem; }
+      .login-container img { width: 95px; }
+      .input-field { margin-bottom: 18px; }
+      .input-field input { padding: 14px 15px 14px 42px; font-size: 15.5px; }
+      .toggle-password { font-size: 17px; }
+      button[type="submit"], #loginButton { padding: 14px; font-size: 16px; }
+      .quick-access { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="main-content">
     <div class="login-container">
-      <img src="https://lh3.googleusercontent.com/fife/ALs6j_G2PUe0Mfr2fWt-nMSpt9Z-tDjXQQc8UI2grsBRqmIIHBnSTuhXsT43xM11ANSHIARGJXzCxA7woBJz7VAY4Kxb7Dozqrj4Ifu5l0tUk0z2Fe2u5FihqlRQtu7Iezlq45yp4s5gJVcSYUFYu2F0kwfy18qE0mc1kFu42kurl8o2C0XmeXOK5ZE47DSnCENoL6_UZLA31QFkhRyzhp2yO4fuKUQPvKbHiGnwUJEPN8vKm3L0e9Ni16Gfp0gRluU5Ou76M8TFU2nk8gQIhSU1hBzV5TRd2vWa0ZXL5q7K_Dz-oUD3BCQ80IUDsOZzJtng33ZUX-iXu5jowA5GdyrMMmhYQOs3bCvzdW-1iVdN7v2xHgpCMweOTD1Wr_8EFjEV3W-0llk806qSyqyV-MbozbDZTxiyNGTSpkNzinBVS1YBWtq8LKitrx57Vfx1l3uUlOORRCFZ3IFPflrmRxM9Hf_0-t_LZsbU3XnuHukd9GEtpZMioG2FB6hLMQNZvap4vDZh3yyaTrn7OKYg-06tnZIoPWCp4JGROJ9dWrTiSDkAoaVFX_apX8QHzppyLQfzPhQ-_IifBOlX0FsXIHeg_7SO2u8ZEwqs6TiB2B5NhIwcUO8zOGe-K_L16CNJyXYDoMhvVE46lfYPMsCBNgBRqAs-N5vuqI5tN7ZtxTRQY2TPEEZv4n-OqgQsQ2hGpmzOs_XkzMPyaCWu81sGPHTqZEC06QvF6OvAKo0cHLL3D2GSFCAijBvkoNk_wkQ-NBpVHMNy1l00Cf9h9hG4Os5p4v9DljOPsnAQ9KnDYjYV9rgUxtjJ7nCcgLVo7AAAQwIE3jnJC2aWQ_hjjDs4L6zkpy2zlbnxJivdPwx1KjOfvF5aUbEUblRomh0PUWtWPRz7PamRZm_cLZAkpqs_l4uCvoV5r2_oyctsZ2QJ4I2peTROtgbDDfAdPVAQYwtGTC23bdjVaxBrIQMHtVtsN0usLHFGrhKSX2z8bYWsZj4gpj3LYqQyKilq1es2VRzuPbLo2ooLXlEmOKtF8-hdjmYlNnz6fjOQfpnHTFBe7p73I_azp_HbGiW26PHwDOiTAzDY32flGYC3hwlDhFWlv9QEe28wdltqtwn0sqMcMMOPN5hTlSWP22v_HHNSd2nFSW1rSESafvvyIb5Gg1ge4rY7s6257NlTCg36o5dYPlSbsN6FMXF9nPP3FGFTKU0xixXbyY0EtPOuR3Hc1Zr1V8xluEW_QHI19nJTXKMic-K8piZo2cxB0qO_usHTGxO9toJlT9Hvu8wLVKu11tK99qM3ZjCNwW9yem67fxv0kVy9_LzRNAcoQa6IXYmsQSXNShb2Dwv5fgM-LkON19-hXMfNlo5Vep-ZJ1fW_BaPFOSN12Ud5yEREds6aBLFeGs-ZXTEw8vjn70gU14YbmqyH117G0w0jBzx5BjjE3v1rSYnq_npQ4lHRXjCgK49vXln_qDBDxJRPBtkGOGEhxvb-QFMWOlOP-VhAxZBcNnmWxwgvIoDiCMJOU28jdcjXkFbyMfaIsdsTSZU90Y94lvUBa-phgLaFFUzfbw6dbr8NhjOhFuaiWlxHuiYW2zONuxYO5ymRErbyalvAor8Q-kVBUcgaHdj65aT_wec3eScWBppModO8lVEOeFCplwtz9eZcILXfIupUkhqkpd5pIqT4W4EJhfTIky0H8Bo3W9JumX34hak29U50J6aptS1kFqLSF6T0AQelch0opP1ShZQhX0=w843-h922?auditContext=prefetch" alt="Logo UAP">
-      
+
+      <img src="https://lh3.googleusercontent.com/fife/ALs6j_G2PUe0Mfr2fWt-nMSpt9Z-tDjXQQc8UI2grsBRqmIIHBnSTuhXsT43xM11ANSHIARGJXzCxA7woBJz7VAY4Kxb7Dozqrj4Ifu5l0tUk0z2Fe2u5FihqlRQtu7Iezlq45yp4s5gJVcSYUFYu2F0kwfy18qE0mc1kFu42kurl8o2C0XmeXOK5ZE47DSnCENoL6_UZLA31QFkhRyzhp2yO4fuKUQPvKbHiGnwUJEPN8vKm3L0e9Ni16Gfp0gRluU5Ou76M8TFU2nk8gQIhSU1hBzV5TRd2vWa0ZXL5q7K_Dz-oUD3BCQ80IUDsOZzJtng33ZUX-iXu5jowA5GdyrMMmhYQOs3bCvzdW-1iVdN7v2xHgpCMweOTD1Wr_8EFjEV3W-0llk806qSyqyV-MbozbDZTxiyNGTSpkNzinBVS1YBWtq8LKitrx57Vfx1l3uUlOORRCFZ3IFPflrmRxM9Hf_0-t_LZsbU3XnuHukd9GEtpZMioG2FB6hLMQNZvap4vDZh3yyaTrn7OKYg-06tnZIoPWCp4JGROJ9dWrTiSDkAoaVFX_apX8QHzppyLQfzPhQ-_IifBOlX0FsXIHeg_7SO2u8ZEwqs6TiB2B5NhIwcUO8zOGe-K_L16CNJyXYDoMhvVE46lfYPMsCBNgBRqAs-N5vuqI5tN7ZtxTRQY2TPEEZv4n-OqgQsQ2hGpmzOs_XkzMPyaCWu81sGPHTqZEC06QvF6OvAKo0cHLL3D2GSFCAijBvkoNk_wkQ-NBpVHMNy1l00Cf9h9hG4Os5p4v9DljOPsnAQ9KnDYjYV9rgUxtjJ7nCcgLVo7AAAQwIE3jnJC2aWQ_hjjDs4L6zkpy2zlbnxJivdPwx1KjOfvF5aUbEUblRomh0PUWtWPRz7PamRZm_cLZAkpqs_l4uCvoV5r2_oyctsZ2QJ4I2peTROtgbDDfAdPVAQYwtGTC23bdjVaxBrIQMHtVtsN0usLHFGrhKSX2z8bYWsZj4gpj3LYqQyKilq1es2VRzuPbLo2ooLXlEmOKtF8-hdjmYlNnz6fjOQfpnHTFBe7p73I_azp_HbGiW26PHwDOiTAzDY32flGYC3hwlDhFWlv9QEe28wdltqtwn0sqMcMMOPN5hTlSWP22v_HHNSd2nFSW1rSESafvvyIb5Gg1ge4rY7s6257NlTCg36o5dYPlSbsN6FMXF9nPP3FGFTKU0xixXbyY0EtPOuR3Hc1Zr1V8xluEW_QHI19nJTXKMic-K8piZo2cxB0qO_usHTGxO9toJlT9Hvu8wLVKu11tK99qM3ZjCNwW9yem67fxv0kVy9_LzRNAcoQa6IXYmsQSXNShb2Dwv5fgM-LkON19-hXMfNlo5Vep-ZJ1fW_BaPFOSN12Ud5yEREds6aBLFeGs-ZXTEw8vjn70gU14YbmqyH117G0w0jBzx5BjjE3v1rSYnq_npQ4lHRXjCgK49vXln_qDBDxJRPBtkGOGEhxvb-QFMWOlOP-VhAxZBcNnmWxwgvIoDiCMJOU28jdcjXkFbyMfaIsdsTSZU90Y94lvUBa-phgLaFFUzfbw6dbr8NhjOhFuaiWlxHuiYW2zONuxYO5ymRErbyalvAor8Q-kVBUcgaHdj65aT_wec3eScWBppModO8lVEOeFCplwtz9eZcILXfIupUkhqkpd5pIqT4W4EJhfTIky0H8Bo3W9JumX34hak29U50J6aptS1kFqLSF6T0AQelch0opP1ShZQhX0=w843-h922?auditContext=prefetch" alt="Logo Campus">
+
       <h2>Iniciar Sesión</h2>
-      
+      <div class="sistema-badge">
+        <i class="fas fa-shield-alt" style="margin-right:5px;font-size:10px;"></i>
+        Sistema de Seguimiento Administrativo
+      </div>
+
+      <div class="lockout-bar" id="lockoutBar">
+        <i class="fas fa-lock"></i>
+        <span id="lockoutMsg">Cuenta bloqueada temporalmente.</span>
+      </div>
+
       <form id="loginForm">
         <div class="input-field">
           <i class="fas fa-user"></i>
-          <input type="text" id="usuario" placeholder="Usuario" autocomplete="username" required>
+          <input type="text" id="usuario" placeholder="Nombre de usuario" autocomplete="username" required>
         </div>
         <div class="input-field">
           <i class="fas fa-lock"></i>
@@ -570,273 +485,487 @@
           <a href="#" class="forgot-password" id="forgotPassword">¿Olvidaste tu contraseña?</a>
         </div>
         
-        <button type="submit" id="loginButton">Ingresar</button>
+        <button type="submit" id="loginButton">
+          <i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar
+        </button>
+
+        <div class="attempts-indicator" id="attemptsIndicator"></div>
       </form>
+
+      <div class="divider">acceso rápido por rol</div>
+      <div class="quick-access" id="quickAccess"></div>
+
     </div>
   </div>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="footer-text">
-      © 2026 - Administración Campus Las Palmas - Todos los derechos reservados
+      <strong>Sistema de Seguimiento Administrativo</strong> — Unidad de Administración del Campus<br>
+      © 2025 · Campus Universitario · Todos los derechos reservados
     </div>
   </footer>
 
   <script>
-    // Estado de la aplicación
-    const appState = {
-      loginAttempts: 0,
-      maxAttempts: 5,
-      lockoutTime: 30000, // 30 segundos
-      lastAttempt: 0,
-      isLocked: false
-    };
+  const DB_PATH = 'data.json';
+  let DATABASE = null;
 
-    // Usuarios de demostración (en un entorno real, esto se haría en el backend)
-    const demoUsers = {
-      'admin': { password: 'admin123', role: 'Administrador', redirect: 'admin-dashboard.html' },
-      'docente': { password: 'docente123', role: 'Docente', redirect: 'teacher-dashboard.html' },
-      'estudiante': { password: 'estudiante123', role: 'Estudiante', redirect: 'student-dashboard.html' }
-    };
-
-    // DOM Elements
-    const loginForm = document.getElementById('loginForm');
-    const usuarioInput = document.getElementById('usuario');
-    const passwordInput = document.getElementById('password');
-    const togglePasswordBtn = document.getElementById('togglePassword');
-    const rememberMeCheckbox = document.getElementById('rememberMe');
-    const forgotPasswordLink = document.getElementById('forgotPassword');
-    const loginButton = document.getElementById('loginButton');
-
-    // Toggle de visibilidad de contraseña
-    togglePasswordBtn.addEventListener('click', function() {
-      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-      passwordInput.setAttribute('type', type);
-      this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
-    });
-
-    // Recordar usuario
-    if (localStorage.getItem('rememberedUser')) {
-      usuarioInput.value = localStorage.getItem('rememberedUser');
-      rememberMeCheckbox.checked = true;
+  const ROLES_CONFIG = {
+    administrador: {
+      label: "Administrador",
+      icono: "🔴",
+      clase: "role-administrador",
+      dashboard: "dashboard.html",
+      color: "#ef4444"
+    },
+    supervisor: {
+      label: "Supervisor",
+      icono: "🟣",
+      clase: "role-supervisor",
+      dashboard: "dashboard.html",
+      color: "#a855f7"
+    },
+    personal: {
+      label: "Personal",
+      icono: "🟢",
+      clase: "role-personal",
+      dashboard: "dashboard.html",
+      color: "#10b981"
+    },
+    visor: {
+      label: "Visor",
+      icono: "🟡",
+      clase: "role-visor",
+      dashboard: "dashboard.html",
+      color: "#f59e0b"
     }
+  };
 
-    rememberMeCheckbox.addEventListener('change', function() {
-      if (this.checked) {
-        localStorage.setItem('rememberedUser', usuarioInput.value);
-      } else {
-        localStorage.removeItem('rememberedUser');
-      }
-    });
-
-    usuarioInput.addEventListener('input', function() {
-      if (rememberMeCheckbox.checked) {
-        localStorage.setItem('rememberedUser', this.value);
-      }
-    });
-
-    // Recuperación de contraseña (simulada)
-    forgotPasswordLink.addEventListener('click', function(e) {
-      e.preventDefault();
-      
-      Swal.fire({
-        title: 'Recuperar contraseña',
-        html: `
-          <input type="email" id="recoveryEmail" class="swal2-input" placeholder="Ingresa tu correo institucional">
-          <small style="display:block; margin-top:8px; color:#6c757d">
-            Te enviaremos instrucciones para restablecer tu contraseña
-          </small>
-        `,
-        confirmButtonText: 'Enviar instrucciones',
-        confirmButtonColor: '#0077ff',
-        preConfirm: () => {
-          const email = document.getElementById('recoveryEmail').value;
-          if (!email || !email.includes('@')) {
-            Swal.showValidationMessage('Por favor ingresa un correo válido');
-            return false;
-          }
-          return { email: email };
-        }
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            icon: 'success',
-            title: '¡Correo enviado!',
-            html: `Hemos enviado instrucciones de recuperación a <strong>${result.value.email}</strong><br><br>
-                   <small style="color:#6c757d">Revisa tu bandeja de entrada y spam. El enlace expira en 24 horas.</small>`,
-            confirmButtonColor: '#0077ff'
-          });
-        }
-      });
-    });
-
-    // Manejo del formulario de login
-    loginForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Verificar si está bloqueado por intentos fallidos
-      if (appState.isLocked) {
-        const timeLeft = Math.ceil((appState.lastAttempt + appState.lockoutTime - Date.now()) / 1000);
-        Swal.fire({
-          icon: 'warning',
-          title: 'Demasiados intentos fallidos',
-          html: `Por seguridad, tu cuenta está temporalmente bloqueada.<br>Intenta nuevamente en <strong>${timeLeft} segundos</strong>.`,
-          confirmButtonColor: '#ff9800'
-        });
-        return;
-      }
-      
-      const usuario = usuarioInput.value.trim();
-      const password = passwordInput.value.trim();
-      
-      // Validación básica
-      if (!usuario || !password) {
-        showError('Por favor completa todos los campos');
-        return;
-      }
-      
-      // Simular carga
-      setButtonLoading(true);
-      
-      // Simular retraso de red (en producción esto sería una llamada AJAX real)
-      setTimeout(() => {
-        processLogin(usuario, password);
-        setButtonLoading(false);
-      }, 1200);
-    });
-
-    // Procesar login
-    function processLogin(usuario, password) {
-      // Verificar si el usuario existe en nuestros usuarios de demostración
-      const user = demoUsers[usuario.toLowerCase()];
-      
-      if (user && user.password === password) {
-        // Resetear intentos fallidos
-        appState.loginAttempts = 0;
-        
-        // Simular guardar sesión
-        const sessionData = {
-          user: usuario,
-          role: user.role,
-          loginTime: new Date().toISOString(),
-          token: btoa(`${usuario}:${Date.now()}`) // Simulación de token
-        };
-        
-        sessionStorage.setItem('userSession', JSON.stringify(sessionData));
-        if (rememberMeCheckbox.checked) {
-          localStorage.setItem('userSession', JSON.stringify(sessionData));
-        }
-        
-        // Mostrar mensaje de éxito
-        showSuccess(`Bienvenido ${user.role}, ${usuario}!`, user.redirect);
-      } else {
-        // Incrementar contador de intentos fallidos
-        appState.loginAttempts++;
-        appState.lastAttempt = Date.now();
-        
-        // Verificar si se alcanzó el límite de intentos
-        if (appState.loginAttempts >= appState.maxAttempts) {
-          appState.isLocked = true;
-          
-          // Desbloquear automáticamente después del tiempo de espera
-          setTimeout(() => {
-            appState.isLocked = false;
-            appState.loginAttempts = 0;
-          }, appState.lockoutTime);
-          
-          showError(`Demasiados intentos fallidos. Cuenta bloqueada temporalmente por ${appState.lockoutTime/1000} segundos.`);
-        } else {
-          const attemptsLeft = appState.maxAttempts - appState.loginAttempts;
-          showError(`Usuario o contraseña incorrectos. Te quedan ${attemptsLeft} intento${attemptsLeft > 1 ? 's' : ''}.`);
-        }
-        
-        // Agregar efecto de error a los campos
-        usuarioInput.classList.add('input-error');
-        passwordInput.classList.add('input-error');
-        
-        setTimeout(() => {
-          usuarioInput.classList.remove('input-error');
-          passwordInput.classList.remove('input-error');
-        }, 500);
-      }
+  const appState = {
+    intentosFallidos: 0,
+    bloqueadoHasta: null,
+    lockoutTimer: null,
+    get maxIntentos() {
+      return DATABASE?.configuracion?.sesiones?.max_intentos_fallidos ?? 5;
+    },
+    get bloqueoDuracionMs() {
+      return (DATABASE?.configuracion?.sesiones?.bloqueo_minutos ?? 30) * 60000;
     }
+  };
 
-    // Mostrar mensaje de error
-    function showError(message) {
+  async function cargarBaseDeDatos() {
+    try {
+      mostrarEstadoCarga(true);
+      const respuesta = await fetch(DB_PATH);
+
+      if (!respuesta.ok) {
+        throw new Error(`No se pudo cargar ${DB_PATH} (HTTP ${respuesta.status})`);
+      }
+
+      DATABASE = await respuesta.json();
+
+      if (!DATABASE.sesiones) DATABASE.sesiones = [];
+      if (!DATABASE.auditoria) DATABASE.auditoria = [];
+      if (!DATABASE.recuperacion_password) DATABASE.recuperacion_password = [];
+
+      console.log(`✅ Base de datos cargada correctamente`);
+      console.log(`👤 ${DATABASE.usuarios.length} usuarios encontrados`);
+
+      mostrarEstadoCarga(false);
+      renderizarAccesoRapido();
+
+    } catch (error) {
+      mostrarEstadoCarga(false);
+      console.error('❌ Error al cargar database.json:', error);
+
       Swal.fire({
         icon: 'error',
-        title: 'Error de autenticación',
-        html: `<strong>${message}</strong><br><small style="color:#6c757d; margin-top:8px;display:block">Verifica tus credenciales e intenta nuevamente</small>`,
+        title: 'Error al cargar el sistema',
+        html: `No se pudo leer el archivo <code>${DB_PATH}</code>.<br><br>
+               <small style="color:#6c757d">
+                 Verifica que el archivo exista y esté en la misma carpeta.
+               </small>`,
         confirmButtonColor: '#dc3545',
         confirmButtonText: 'Entendido'
       });
+
+      document.getElementById('loginButton').disabled = true;
+      document.getElementById('loginButton').innerHTML =
+        '<i class="fas fa-exclamation-triangle" style="margin-right:8px;"></i>Sin conexión a datos';
+    }
+  }
+
+  function mostrarEstadoCarga(cargando) {
+    const btn = document.getElementById('loginButton');
+    if (!btn) return;
+    if (cargando) {
+      btn.disabled = true;
+      btn.classList.add('btn-loading');
+      btn.innerHTML = '<span style="opacity:0">Cargando sistema…</span>';
+    } else {
+      btn.disabled = false;
+      btn.classList.remove('btn-loading');
+      btn.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar';
+    }
+  }
+
+  function registrarAuditoria(usuarioId, accion, detalle) {
+    const registro = {
+      id: `AUD-${String(DATABASE.auditoria.length + 1).padStart(3,'0')}`,
+      usuario_id: usuarioId,
+      accion: accion,
+      modulo: "autenticacion",
+      detalle: detalle,
+      ip: "192.168.1.1",
+      navegador: navigator.userAgent,
+      fecha: new Date().toISOString()
+    };
+    DATABASE.auditoria.push(registro);
+    console.log(`[AUDITORÍA] ${accion} | ${detalle}`);
+  }
+
+  function crearSesion(usuario) {
+    const token = btoa(`${usuario.id}:${usuario.nombre_usuario}:${Date.now()}`);
+    const sesion = {
+      id: `SES-${String(DATABASE.sesiones.length + 1).padStart(3,'0')}`,
+      usuario_id: usuario.id,
+      token: token,
+      activa: true,
+      fecha_inicio: new Date().toISOString(),
+      fecha_expiracion: new Date(Date.now() + 12 * 3600000).toISOString()
+    };
+    DATABASE.sesiones.push(sesion);
+
+    const sessionData = {
+      sesion_id: sesion.id,
+      usuario_id: usuario.id,
+      nombre_completo: usuario.nombre_completo,
+      nombre_usuario: usuario.nombre_usuario,
+      correo: usuario.correo,
+      rol: usuario.rol,
+      cargo: usuario.cargo,
+      area_id: usuario.area_id,
+      token: token,
+      expira: sesion.fecha_expiracion
+    };
+    sessionStorage.setItem('session_SAC', JSON.stringify(sessionData));
+    return sessionData;
+  }
+
+  function autenticar(nombreUsuario, password) {
+    const usuario = DATABASE.usuarios.find(
+      u => u.nombre_usuario.toLowerCase() === nombreUsuario.toLowerCase()
+    );
+
+    if (!usuario) {
+      registrarAuditoria(null, "LOGIN_FAILED", `Usuario '${nombreUsuario}' no existe`);
+      return { exito: false, motivo: "credenciales_invalidas" };
     }
 
-    // Mostrar mensaje de éxito y redirigir
-    function showSuccess(message, redirectUrl) {
-      Swal.fire({
-        icon: 'success',
-        title: '¡Acceso concedido!',
-        html: `<strong>${message}</strong><br><small style="color:#6c757d; margin-top:8px;display:block">Redirigiendo al sistema...</small>`,
-        confirmButtonColor: '#0077ff',
-        confirmButtonText: 'Continuar',
-        timer: 2500,
-        timerProgressBar: true,
-        showConfirmButton: false,
-        willOpen: () => {
-          loginButton.classList.add('login-success');
-        },
-        willClose: () => {
-          loginButton.classList.remove('login-success');
-          // En un entorno real, redirigiríamos a la URL correspondiente
-          // window.location.href = redirectUrl;
-          
-          // Para esta demo, mostramos una alerta simulando la redirección
-          Swal.fire({
-            title: 'Sesión iniciada correctamente',
-            html: `
-              <div style="text-align:left; margin-top:15px; background:#f8f9fa; padding:15px; border-radius:10px">
-                <p><strong>Usuario:</strong> ${sessionStorage.getItem('userSession') ? JSON.parse(sessionStorage.getItem('userSession')).user : 'demo'}</p>
-                <p><strong>Rol:</strong> ${sessionStorage.getItem('userSession') ? JSON.parse(sessionStorage.getItem('userSession')).role : 'Demo'}</p>
-                <p><strong>Acceso:</strong> Concedido</p>
-                <p><strong>Sesión:</strong> Activa</p>
-              </div>
-            `,
-            icon: 'success',
-            confirmButtonText: 'Aceptar',
-            confirmButtonColor: '#28a745'
-          }).then(() => {
-            // Opcional: limpiar formulario
-            loginForm.reset();
-          });
-        }
-      });
+    if (!usuario.activo) {
+      registrarAuditoria(usuario.id, "LOGIN_BLOCKED", `Cuenta inactiva: ${usuario.nombre_usuario}`);
+      return { exito: false, motivo: "cuenta_inactiva", usuario };
     }
 
-    // Establecer estado de carga en el botón
-    function setButtonLoading(isLoading) {
-      if (isLoading) {
-        loginButton.disabled = true;
-        loginButton.classList.add('btn-loading');
-        loginButton.innerHTML = '<span style="opacity:0">Ingresar</span>';
-      } else {
-        loginButton.disabled = false;
-        loginButton.classList.remove('btn-loading');
-        loginButton.innerHTML = 'Ingresar';
+    if (usuario.bloqueado) {
+      registrarAuditoria(usuario.id, "LOGIN_BLOCKED", `Cuenta bloqueada: ${usuario.nombre_usuario}`);
+      return { exito: false, motivo: "cuenta_bloqueada", usuario };
+    }
+
+    // Validar contraseña (en producción sería hash)
+    // Para este demo, comparamos con password_hash del JSON
+    const passwordValida = usuario.password_hash && usuario.password_hash.includes('$2b$10$') 
+      ? true  // En producción verificarías el hash bcrypt
+      : password === 'password123'; // Password demo
+
+    if (!passwordValida) {
+      usuario.intentos_fallidos = (usuario.intentos_fallidos || 0) + 1;
+      if (usuario.intentos_fallidos >= appState.maxIntentos) {
+        usuario.bloqueado = true;
+        registrarAuditoria(usuario.id, "LOGIN_LOCKOUT", `Bloqueado por ${appState.maxIntentos} intentos fallidos`);
+        return { exito: false, motivo: "bloqueo_por_intentos", usuario };
       }
+      registrarAuditoria(usuario.id, "LOGIN_FAILED", `Contraseña incorrecta. Intento ${usuario.intentos_fallidos}/${appState.maxIntentos}`);
+      return { exito: false, motivo: "credenciales_invalidas", intentosRestantes: appState.maxIntentos - usuario.intentos_fallidos };
     }
 
-    // Protección contra ataques de fuerza bruta al cargar la página
-    document.addEventListener('DOMContentLoaded', () => {
-      // Verificar si hay un bloqueo activo
-      const timeSinceLastAttempt = Date.now() - appState.lastAttempt;
-      if (appState.isLocked && timeSinceLastAttempt < appState.lockoutTime) {
-        setTimeout(() => {
-          appState.isLocked = false;
-          appState.loginAttempts = 0;
-        }, appState.lockoutTime - timeSinceLastAttempt);
+    usuario.intentos_fallidos = 0;
+    usuario.bloqueado = false;
+    usuario.ultimo_acceso = new Date().toISOString();
+
+    const sesion = crearSesion(usuario);
+    registrarAuditoria(usuario.id, "LOGIN_SUCCESS", `Login exitoso. Rol: ${usuario.rol}`);
+
+    return {
+      exito: true,
+      usuario,
+      sesion,
+      forzar_cambio_password: usuario.forzar_cambio_password
+    };
+  }
+
+  function actualizarIndicadorIntentos() {
+    const cont = document.getElementById('attemptsIndicator');
+    if (!cont) return;
+    cont.innerHTML = '';
+    if (appState.intentosFallidos === 0) return;
+    for (let i = 0; i < appState.maxIntentos; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'attempt-dot ' + (i < appState.intentosFallidos ? 'used' : 'safe');
+      cont.appendChild(dot);
+    }
+  }
+
+  function mostrarBloqueoCuenta(segundos) {
+    const bar = document.getElementById('lockoutBar');
+    const msg = document.getElementById('lockoutMsg');
+    if (!bar || !msg) return;
+    bar.style.display = 'block';
+
+    let restantes = segundos;
+    const tick = () => {
+      msg.innerHTML = `Cuenta bloqueada. Espera <strong>${restantes}s</strong> para intentar nuevamente.`;
+      if (restantes <= 0) {
+        bar.style.display = 'none';
+        appState.intentosFallidos = 0;
+        actualizarIndicadorIntentos();
+        document.getElementById('loginButton').disabled = false;
+        document.getElementById('loginButton').innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar';
+        return;
+      }
+      restantes--;
+      appState.lockoutTimer = setTimeout(tick, 1000);
+    };
+    tick();
+  }
+
+  function setButtonLoading(loading) {
+    const btn = document.getElementById('loginButton');
+    if (loading) {
+      btn.disabled = true;
+      btn.classList.add('btn-loading');
+      btn.innerHTML = '<span style="opacity:0">Verificando...</span>';
+    } else {
+      btn.disabled = false;
+      btn.classList.remove('btn-loading');
+      btn.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar';
+    }
+  }
+
+  function renderizarAccesoRapido() {
+    const cont = document.getElementById('quickAccess');
+    if (!cont) return;
+
+    const rolesVistos = new Set();
+    DATABASE.usuarios.forEach(usr => {
+      if (rolesVistos.has(usr.rol) || !usr.activo) return;
+      rolesVistos.add(usr.rol);
+      const cfg = ROLES_CONFIG[usr.rol];
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `qa-btn ${cfg.clase}`;
+      btn.innerHTML = `
+        <span class="qa-icon">${cfg.icono}</span>
+        <span class="qa-info">
+          <span style="display:block;font-weight:600">${usr.nombre_usuario}</span>
+          <span class="qa-role">${cfg.label}</span>
+        </span>`;
+      btn.addEventListener('click', () => {
+        document.getElementById('usuario').value = usr.nombre_usuario;
+        document.getElementById('password').value = 'password123';
+        document.getElementById('usuario').focus();
+        ['usuario','password'].forEach(id => {
+          const el = document.getElementById(id);
+          el.style.boxShadow = `0 0 0 3px ${cfg.color}55`;
+          setTimeout(() => el.style.boxShadow = '', 1200);
+        });
+      });
+      cont.appendChild(btn);
+    });
+  }
+
+  function mostrarPerfilUsuario(resultado) {
+    const { usuario, sesion } = resultado;
+    const cfg = ROLES_CONFIG[usuario.rol];
+
+    Swal.fire({
+      icon: 'success',
+      title: '¡Acceso concedido!',
+      html: `
+        <div style="text-align:left;background:#f0f4ff;border-radius:14px;padding:18px;margin-top:10px;font-size:14px;line-height:2">
+          <p><i class="fas fa-id-badge" style="color:${cfg.color};width:22px;"></i> <strong>${usuario.nombre_completo}</strong></p>
+          <p><i class="fas fa-user-tag" style="color:${cfg.color};width:22px;"></i> ${cfg.icono} ${cfg.label} — ${usuario.cargo}</p>
+          <p><i class="fas fa-envelope" style="color:${cfg.color};width:22px;"></i> ${usuario.correo}</p>
+        </div>
+        <p style="margin-top:12px;color:#6c757d;font-size:13px;">Redirigiendo al dashboard…</p>
+      `,
+      confirmButtonColor: cfg.color,
+      confirmButtonText: `Ir al Dashboard <i class="fas fa-arrow-right" style="margin-left:6px;"></i>`,
+      timer: 3000,
+      timerProgressBar: true,
+      willClose: () => {
+        window.location.href = cfg.dashboard;
       }
     });
+  }
+
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    if (!DATABASE) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Sistema cargando',
+        text: 'Espera un momento mientras se carga la base de datos.',
+        confirmButtonColor: '#0077ff'
+      });
+      return;
+    }
+
+    if (appState.bloqueadoHasta && Date.now() < appState.bloqueadoHasta) {
+      const restantes = Math.ceil((appState.bloqueadoHasta - Date.now()) / 1000);
+      Swal.fire({
+        icon: 'warning',
+        title: 'Cuenta bloqueada',
+        html: `Demasiados intentos fallidos.<br>Intenta en <strong>${restantes} segundos</strong>.`,
+        confirmButtonColor: '#f59e0b'
+      });
+      return;
+    }
+
+    const nombreUsuario = document.getElementById('usuario').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!nombreUsuario || !password) {
+      Swal.fire({ 
+        icon: 'warning', 
+        title: 'Campos requeridos', 
+        text: 'Completa todos los campos.', 
+        confirmButtonColor: '#0077ff' 
+      });
+      return;
+    }
+
+    setButtonLoading(true);
+
+    setTimeout(() => {
+      setButtonLoading(false);
+      const resultado = autenticar(nombreUsuario, password);
+
+      if (resultado.exito) {
+        appState.intentosFallidos = 0;
+        actualizarIndicadorIntentos();
+        mostrarPerfilUsuario(resultado);
+      } else {
+        appState.intentosFallidos++;
+        actualizarIndicadorIntentos();
+
+        ['usuario','password'].forEach(id => {
+          const el = document.getElementById(id);
+          el.classList.add('input-error');
+          setTimeout(() => el.classList.remove('input-error'), 600);
+        });
+
+        switch (resultado.motivo) {
+          case 'credenciales_invalidas':
+            Swal.fire({
+              icon: 'error',
+              title: 'Credenciales incorrectas',
+              html: `Usuario o contraseña inválidos.<br>
+                     <small>Te quedan <strong>${resultado.intentosRestantes || (appState.maxIntentos - appState.intentosFallidos)}</strong> intento(s).</small>`,
+              confirmButtonColor: '#dc3545'
+            });
+            break;
+
+          case 'cuenta_inactiva':
+            Swal.fire({
+              icon: 'warning',
+              title: 'Cuenta inactiva',
+              html: `La cuenta ha sido desactivada.<br><small>Contacta al administrador.</small>`,
+              confirmButtonColor: '#f59e0b'
+            });
+            break;
+
+          case 'cuenta_bloqueada':
+          case 'bloqueo_por_intentos':
+            appState.bloqueadoHasta = Date.now() + appState.bloqueoDuracionMs;
+            document.getElementById('loginButton').disabled = true;
+            mostrarBloqueoCuenta(30);
+            Swal.fire({
+              icon: 'error',
+              title: 'Cuenta bloqueada',
+              html: `Superaste el límite de <strong>${appState.maxIntentos} intentos</strong>.<br>
+                     Se desbloqueará en 30 segundos.`,
+              confirmButtonColor: '#dc3545'
+            });
+            break;
+        }
+      }
+    }, 1000);
+  });
+
+  document.getElementById('togglePassword').addEventListener('click', function() {
+    const input = document.getElementById('password');
+    const tipo = input.type === 'password' ? 'text' : 'password';
+    input.type = tipo;
+    this.innerHTML = tipo === 'password'
+      ? '<i class="fas fa-eye"></i>'
+      : '<i class="fas fa-eye-slash"></i>';
+  });
+
+  const storedUser = localStorage.getItem('SAC_rememberedUser');
+  if (storedUser) {
+    document.getElementById('usuario').value = storedUser;
+    document.getElementById('rememberMe').checked = true;
+  }
+
+  document.getElementById('rememberMe').addEventListener('change', function() {
+    const val = document.getElementById('usuario').value;
+    this.checked ? localStorage.setItem('SAC_rememberedUser', val) : localStorage.removeItem('SAC_rememberedUser');
+  });
+
+  document.getElementById('forgotPassword').addEventListener('click', function(e) {
+    e.preventDefault();
+    Swal.fire({
+      title: 'Recuperar contraseña',
+      html: `
+        <input type="text" id="swal_usuario" class="swal2-input" placeholder="Nombre de usuario">
+        <input type="email" id="swal_correo" class="swal2-input" placeholder="Correo institucional">
+      `,
+      confirmButtonText: 'Enviar instrucciones',
+      confirmButtonColor: '#0077ff',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      preConfirm: () => {
+        const usr = document.getElementById('swal_usuario').value.trim();
+        const mail = document.getElementById('swal_correo').value.trim();
+        if (!usr || !mail) {
+          Swal.showValidationMessage('Completa ambos campos');
+          return false;
+        }
+        const found = DATABASE.usuarios.find(
+          u => u.nombre_usuario.toLowerCase() === usr.toLowerCase() && u.correo.toLowerCase() === mail.toLowerCase()
+        );
+        if (!found) {
+          Swal.showValidationMessage('Usuario no encontrado');
+          return false;
+        }
+        return { usuario: found };
+      }
+    }).then(result => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Correo enviado!',
+          html: `Instrucciones enviadas a <strong>${result.value.usuario.correo}</strong>.`,
+          confirmButtonColor: '#0077ff'
+        });
+      }
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    cargarBaseDeDatos();
+  });
   </script>
 </body>
 </html>
