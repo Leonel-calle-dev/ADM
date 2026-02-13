@@ -74,7 +74,6 @@
       "ultimo_acceso": "2025-02-12T16:30:00Z",
       "created_at": "2025-01-15T09:00:00Z",
       "updated_at": "2025-02-12T16:30:00Z"
-<<<<<<<< HEAD:database.json
     },
     {
       "id": "USR-004",
@@ -115,8 +114,6 @@
       "ultimo_acceso": "2025-02-10T11:00:00Z",
       "created_at": "2025-01-20T10:00:00Z",
       "updated_at": "2025-02-10T11:00:00Z"
-========
->>>>>>>> b3a73a2a6d8fe09c00fd5d4e42fd5c927edf3e11:Database.json
     }
   ],
 
