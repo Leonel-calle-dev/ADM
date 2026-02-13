@@ -755,7 +755,7 @@
     }
 
     // 5) Contraseña incorrecta
-    if (usuario.password_hash !== password_hash) {
+    if (usuario.password !== password) {
       usuario.intentos_fallidos++;
       if (usuario.intentos_fallidos >= appState.maxIntentos) {
         usuario.bloqueado = true;
