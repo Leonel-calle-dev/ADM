@@ -1477,17 +1477,17 @@
       }
     }
 
-    function populateSelects() {
+   // function populateSelects() {
       // Populate areas
-      const areaSelects = [document.getElementById('userArea'), document.getElementById('activityArea')];
-      areaSelects.forEach(select => {
-        if (select) {
-          select.innerHTML = '<option value="">Seleccionar...</option>';
-          DATABASE.areas.forEach(area => {
-            select.innerHTML += `<option value="${area.id}">${area.nombre}</option>`;
-          });
-        }
-      });
+     // const areaSelects = [document.getElementById('userArea'), document.getElementById('activityArea')];
+      //areaSelects.forEach(select => {
+        //if (select) {
+          //select.innerHTML = '<option value="">Seleccionar...</option>';
+          //DATABASE.areas.forEach(area => {
+            //select.innerHTML += `<option value="${area.id}">${area.nombre}</option>`;
+          //});
+        //}
+     // });
 
       // Populate users for activities
       const userSelect = document.getElementById('activityUser');
