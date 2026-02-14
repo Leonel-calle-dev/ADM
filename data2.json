@@ -164,29 +164,6 @@
       "updated_at": "2026-02-14T11:00:00Z"
     }
   ],
-  "sesiones": [
-    {
-      "id": "SES-001",
-      "usuario_id": "USR-001",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-      "ip_origen": "192.168.1.105",
-      "dispositivo": "Chrome 120 / Windows 11",
-      "activa": true,
-      "fecha_inicio": "2026-02-14T07:45:22Z",
-      "fecha_expiracion": "2026-02-14T19:45:22Z",
-      "created_at": "2026-02-14T07:45:22Z"
-    }
-  ],
-  "recuperacion_password": [
-    {
-      "id": "RPASS-001",
-      "usuario_id": "USR-003",
-      "token": "f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8",
-      "usado": false,
-      "fecha_expiracion": "2026-02-15T10:00:00Z",
-      "created_at": "2026-02-14T10:00:00Z"
-    }
-  ],
   "categorias_mantenimiento": [
     {
       "id": "CAT-001",
