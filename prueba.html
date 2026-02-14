@@ -122,8 +122,9 @@
     }
 
     .input-field {
-      margin-bottom: 22px;
       position: relative;
+      margin-bottom: 22px;
+      overflow: hidden; 
     }
     
     .input-field i {
@@ -138,7 +139,7 @@
     
     .input-field input {
       width: 100%;
-      padding: 16px 48px 16px 48px; /* CORREGIDO: padding simétrico */
+      padding: 16px 40px 16px 48px; /* Reduce el padding derecho a 40px */
       border: none;
       border-radius: 14px;
       outline: none;
@@ -164,7 +165,7 @@
     
     .toggle-password {
       position: absolute;
-      right: 15px;
+      right: 12px; /* Reducido de 15px a 12px */
       top: 50%;
       transform: translateY(-50%);
       background: none;
@@ -172,13 +173,15 @@
       color: rgba(255, 255, 255, 0.7);
       cursor: pointer;
       font-size: 18px;
-      padding: 5px 8px; /* CORREGIDO: padding horizontal */
+      padding: 0; /* Elimina padding */
       z-index: 3;
       transition: all 0.3s ease;
-      width: auto;
-      margin-top: 0;
-      box-shadow: none;
+      width: 24px; /* Fija el ancho */
+      height: 24px; /* Fija la altura */
       line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
     .toggle-password:hover {
