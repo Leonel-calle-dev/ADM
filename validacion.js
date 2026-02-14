@@ -1,4 +1,3 @@
-<script>
 (function() {
   const sessionData = sessionStorage.getItem('session_SAC') || localStorage.getItem('session_SAC_permanent');
   if (!sessionData) {
@@ -29,4 +28,3 @@
     window.location.href = ROLES_CONFIG[session.rol].dashboard;
   }
 })();
-</script>
