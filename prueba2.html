@@ -487,171 +487,480 @@
     </div>
   </footer>
   <script>
-  const DB_PATH = 'data2.json';
-  let DATABASE = null;
+// ===== CONFIGURACIÓN INICIAL (DEBE ESTAR AL INICIO) =====
+const DB_PATH = 'data2.json';
+let DATABASE = null;
 
-  // Configuración de roles con dashboards específicos
-  const ROLES_CONFIG = {
-    administrador: {
-      label: "Administrador",
-      icono: "🔴",
-      clase: "role-administrador",
-      dashboard: "dashboard_admin.html", // Dashboard específico
-      color: "#1e3a8a"
-    },
-    tecnico_sistemas: {
-      label: "Técnico Sistemas Esenciales",
-      icono: "🟣",
-      clase: "role-tecnico_sistemas",
-      dashboard: "dashboard_tecnico_sistemas.html", // Dashboard específico
-      color: "#a855f7"
-    },
-    tecnico_audiovisual: {
-      label: "Técnico Audiovisual",
-      icono: "🟢",
-      clase: "role-tecnico_audiovisual",
-      dashboard: "dashboard_tecnico_audiovisual.html", // Dashboard específico
-      color: "#10b981"
-    },
-    tecnico_integral: {
-      label: "Técnico Integral",
-      icono: "🟡",
-      clase: "role-tecnico_integral",
-      dashboard: "dashboard_tecnico_integral.html", // Dashboard específico
-      color: "#f59e0b"
-    }
-  };
-
-  // ... resto de tu código JavaScript existente ...
-
-  function crearSesion(usuario) {
-    const token = btoa(`${usuario.id}:${usuario.nombre_usuario}:${Date.now()}`);
-    const sesion = {
-      id: `SES-${String(DATABASE.sesiones.length + 1).padStart(3,'0')}`,
-      usuario_id: usuario.id,
-      token: token,
-      activa: true,
-      fecha_inicio: new Date().toISOString(),
-      fecha_expiracion: new Date(Date.now() + 12 * 3600000).toISOString()
-    };
-    DATABASE.sesiones.push(sesion);
-
-    // Datos completos de sesión con rol y especialidad
-    const sessionData = {
-      sesion_id: sesion.id,
-      usuario_id: usuario.id,
-      nombre_completo: usuario.nombre_completo,
-      nombre_usuario: usuario.nombre_usuario,
-      correo: usuario.correo,
-      rol: usuario.rol,
-      cargo: usuario.cargo,
-      area_id: usuario.area_id,
-      especialidad: usuario.especialidad,
-      token: token,
-      expira: sesion.fecha_expiracion,
-      login_time: new Date().toISOString()
-    };
-    
-    // Guardar en sessionStorage y localStorage (para persistencia)
-    sessionStorage.setItem('session_SAC', JSON.stringify(sessionData));
-    localStorage.setItem('session_SAC_permanent', JSON.stringify(sessionData));
-    
-    return sessionData;
+// Configuración de roles con dashboards específicos
+const ROLES_CONFIG = {
+  administrador: {
+    label: "Administrador",
+    icono: "🔴",
+    clase: "role-administrador",
+    dashboard: "dashboard_admin.html",
+    color: "#1e3a8a"
+  },
+  tecnico_sistemas: {
+    label: "Técnico Sistemas Esenciales",
+    icono: "🟣",
+    clase: "role-tecnico_sistemas",
+    dashboard: "dashboard_tecnico_sistemas.html",
+    color: "#a855f7"
+  },
+  tecnico_audiovisual: {
+    label: "Técnico Audiovisual",
+    icono: "🟢",
+    clase: "role-tecnico_audiovisual",
+    dashboard: "dashboard_tecnico_audiovisual.html",
+    color: "#10b981"
+  },
+  tecnico_integral: {
+    label: "Técnico Integral",
+    icono: "🟡",
+    clase: "role-tecnico_integral",
+    dashboard: "dashboard_tecnico_integral.html",
+    color: "#f59e0b"
   }
+};
 
-  function verificarSesionActiva() {
-    const sessionData = sessionStorage.getItem('session_SAC');
-    if (sessionData) {
+const appState = {
+  intentosFallidos: 0,
+  bloqueadoHasta: null,
+  lockoutTimer: null,
+  get maxIntentos() {
+    return DATABASE?.configuracion?.sesiones?.max_intentos_fallidos ?? 5;
+  },
+  get bloqueoDuracionMs() {
+    return (DATABASE?.configuracion?.sesiones?.bloqueo_segundos ?? 30) * 1000;
+  }
+};
+
+// ===== FUNCIONES PRINCIPALES (DEBEN ESTAR DEFINIDAS ANTES DE USARSE) =====
+function verificarSesionActiva() {
+  const sessionData = sessionStorage.getItem('session_SAC');
+  if (sessionData) {
+    try {
       const session = JSON.parse(sessionData);
       const ahora = new Date();
       const expira = new Date(session.expira);
       
-      // Si la sesión está activa, redirigir al dashboard correspondiente
       if (ahora < expira && ROLES_CONFIG[session.rol]) {
         window.location.href = ROLES_CONFIG[session.rol].dashboard;
         return true;
       }
+    } catch (e) {
+      console.error("Error al verificar sesión:", e);
     }
-    return false;
+  }
+  return false;
+}
+
+async function cargarBaseDeDatos() {
+  try {
+    mostrarEstadoCarga(true);
+    const respuesta = await fetch(DB_PATH);
+
+    if (!respuesta.ok) {
+      throw new Error(`No se pudo cargar ${DB_PATH} (HTTP ${respuesta.status})`);
+    }
+
+    DATABASE = await respuesta.json();
+
+    // Inicializar estructuras si no existen
+    if (!DATABASE.sesiones) DATABASE.sesiones = [];
+    if (!DATABASE.auditoria) DATABASE.auditoria = [];
+    if (!DATABASE.recuperacion_password) DATABASE.recuperacion_password = [];
+
+    console.log(`✅ Base de datos cargada correctamente`);
+    console.log(`👤 ${DATABASE.usuarios.length} usuarios encontrados`);
+
+    mostrarEstadoCarga(false);
+    setupEventListeners(); // Configurar eventos después de cargar DB
+
+  } catch (error) {
+    mostrarEstadoCarga(false);
+    console.error('❌ Error al cargar database.json:', error);
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Error al cargar el sistema',
+      html: `No se pudo leer el archivo <code>${DB_PATH}</code>.<br><br>
+             <small style="color:#6c757d">
+               Verifica que el archivo exista y esté en la misma carpeta.
+             </small>`,
+      confirmButtonColor: '#dc3545',
+      confirmButtonText: 'Entendido'
+    });
+
+    document.getElementById('loginButton').disabled = true;
+    document.getElementById('loginButton').innerHTML =
+      '<i class="fas fa-exclamation-triangle" style="margin-right:8px;"></i>Sin conexión a datos';
+  }
+}
+
+function mostrarEstadoCarga(cargando) {
+  const btn = document.getElementById('loginButton');
+  if (!btn) return;
+  if (cargando) {
+    btn.disabled = true;
+    btn.classList.add('btn-loading');
+    btn.innerHTML = '<span style="opacity:0">Cargando sistema…</span>';
+  } else {
+    btn.disabled = false;
+    btn.classList.remove('btn-loading');
+    btn.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar';
+  }
+}
+
+function registrarAuditoria(usuarioId, accion, detalle) {
+  if (!DATABASE) return;
+  
+  const registro = {
+    id: `AUD-${String(DATABASE.auditoria.length + 1).padStart(3,'0')}`,
+    usuario_id: usuarioId,
+    accion: accion,
+    modulo: "autenticacion",
+    detalle: detalle,
+    ip: "192.168.1.1",
+    navegador: navigator.userAgent,
+    fecha: new Date().toISOString()
+  };
+  DATABASE.auditoria.push(registro);
+  console.log(`[AUDITORÍA] ${accion} | ${detalle}`);
+}
+
+function crearSesion(usuario) {
+  const token = btoa(`${usuario.id}:${usuario.nombre_usuario}:${Date.now()}`);
+  const sesion = {
+    id: `SES-${String(DATABASE.sesiones.length + 1).padStart(3,'0')}`,
+    usuario_id: usuario.id,
+    token: token,
+    activa: true,
+    fecha_inicio: new Date().toISOString(),
+    fecha_expiracion: new Date(Date.now() + 12 * 3600000).toISOString()
+  };
+  DATABASE.sesiones.push(sesion);
+
+  const sessionData = {
+    sesion_id: sesion.id,
+    usuario_id: usuario.id,
+    nombre_completo: usuario.nombre_completo,
+    nombre_usuario: usuario.nombre_usuario,
+    correo: usuario.correo,
+    rol: usuario.rol,
+    cargo: usuario.cargo,
+    area_id: usuario.area_id,
+    especialidad: usuario.especialidad,
+    token: token,
+    expira: sesion.fecha_expiracion,
+    login_time: new Date().toISOString()
+  };
+  
+  sessionStorage.setItem('session_SAC', JSON.stringify(sessionData));
+  localStorage.setItem('session_SAC_permanent', JSON.stringify(sessionData));
+  return sessionData;
+}
+
+function autenticar(nombreUsuario, password) {
+  if (!DATABASE) {
+    return { exito: false, motivo: "sin_base_datos" };
   }
 
-  function mostrarPerfilUsuario(resultado) {
-    const { usuario, sesion } = resultado;
-    const cfg = ROLES_CONFIG[usuario.rol];
+  const usuario = DATABASE.usuarios.find(
+    u => u.nombre_usuario.toLowerCase() === nombreUsuario.toLowerCase().trim()
+  );
 
-    // Validar que el rol exista en la configuración
-    if (!cfg) {
+  if (!usuario) {
+    registrarAuditoria(null, "LOGIN_FAILED", `Usuario '${nombreUsuario}' no existe`);
+    return { exito: false, motivo: "credenciales_invalidas" };
+  }
+
+  if (!usuario.activo) {
+    registrarAuditoria(usuario.id, "LOGIN_BLOCKED", `Cuenta inactiva: ${usuario.nombre_usuario}`);
+    return { exito: false, motivo: "cuenta_inactiva", usuario };
+  }
+
+  if (usuario.bloqueado) {
+    registrarAuditoria(usuario.id, "LOGIN_BLOCKED", `Cuenta bloqueada: ${usuario.nombre_usuario}`);
+    return { exito: false, motivo: "cuenta_bloqueada", usuario };
+  }
+
+  // Validar contraseña con el JSON
+  const passwordValida = password === usuario.password;
+
+  if (!passwordValida) {
+    usuario.intentos_fallidos = (usuario.intentos_fallidos || 0) + 1;
+    if (usuario.intentos_fallidos >= appState.maxIntentos) {
+      usuario.bloqueado = true;
+      registrarAuditoria(usuario.id, "LOGIN_LOCKOUT", `Bloqueado por ${appState.maxIntentos} intentos fallidos`);
+      return { exito: false, motivo: "bloqueo_por_intentos", usuario };
+    }
+    registrarAuditoria(usuario.id, "LOGIN_FAILED", `Contraseña incorrecta. Intento ${usuario.intentos_fallidos}/${appState.maxIntentos}`);
+    return { exito: false, motivo: "credenciales_invalidas", intentosRestantes: appState.maxIntentos - usuario.intentos_fallidos };
+  }
+
+  usuario.intentos_fallidos = 0;
+  usuario.bloqueado = false;
+  usuario.ultimo_acceso = new Date().toISOString();
+
+  const sesion = crearSesion(usuario);
+  registrarAuditoria(usuario.id, "LOGIN_SUCCESS", `Login exitoso. Rol: ${usuario.rol}`);
+
+  return {
+    exito: true,
+    usuario,
+    sesion,
+    forzar_cambio_password: usuario.forzar_cambio_password
+  };
+}
+
+function actualizarIndicadorIntentos() {
+  const cont = document.getElementById('attemptsIndicator');
+  if (!cont) return;
+  cont.innerHTML = '';
+  if (appState.intentosFallidos === 0) return;
+  for (let i = 0; i < appState.maxIntentos; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'attempt-dot ' + (i < appState.intentosFallidos ? 'used' : 'safe');
+    cont.appendChild(dot);
+  }
+}
+
+function mostrarBloqueoCuenta(segundos) {
+  const bar = document.getElementById('lockoutBar');
+  const msg = document.getElementById('lockoutMsg');
+  if (!bar || !msg) return;
+  bar.style.display = 'block';
+
+  let restantes = segundos;
+  const tick = () => {
+    msg.innerHTML = `Cuenta bloqueada. Espera <strong>${restantes}s</strong> para intentar nuevamente.`;
+    if (restantes <= 0) {
+      bar.style.display = 'none';
+      appState.intentosFallidos = 0;
+      actualizarIndicadorIntentos();
+      document.getElementById('loginButton').disabled = false;
+      document.getElementById('loginButton').innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar';
+      return;
+    }
+    restantes--;
+    appState.lockoutTimer = setTimeout(tick, 1000);
+  };
+  tick();
+}
+
+function setButtonLoading(loading) {
+  const btn = document.getElementById('loginButton');
+  if (loading) {
+    btn.disabled = true;
+    btn.classList.add('btn-loading');
+    btn.innerHTML = '<span style="opacity:0">Verificando...</span>';
+  } else {
+    btn.disabled = false;
+    btn.classList.remove('btn-loading');
+    btn.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar';
+  }
+}
+
+function mostrarPerfilUsuario(resultado) {
+  const { usuario, sesion } = resultado;
+  const cfg = ROLES_CONFIG[usuario.rol];
+
+  if (!cfg) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error de configuración',
+      text: `El rol "${usuario.rol}" no tiene un dashboard configurado`,
+      confirmButtonColor: '#dc3545'
+    });
+    return;
+  }
+
+  Swal.fire({
+    icon: 'success',
+    title: '¡Acceso concedido!',
+    html: `
+      <div style="text-align:left;background:#f0f4ff;border-radius:14px;padding:18px;margin-top:10px;font-size:14px;line-height:2">
+        <p><i class="fas fa-id-badge" style="color:${cfg.color};width:22px;"></i> <strong>${usuario.nombre_completo}</strong></p>
+        <p><i class="fas fa-user-tag" style="color:${cfg.color};width:22px;"></i> ${cfg.icono} ${cfg.label} — ${usuario.cargo}</p>
+        <p><i class="fas fa-envelope" style="color:${cfg.color};width:22px;"></i> ${usuario.correo}</p>
+        <p><i class="fas fa-briefcase" style="color:${cfg.color};width:22px;"></i> ${usuario.area_id}</p>
+      </div>
+      <p style="margin-top:12px;color:#6c757d;font-size:13px;">Redirigiendo a tu panel...</p>
+    `,
+    confirmButtonColor: cfg.color,
+    confirmButtonText: `Ir a mi panel <i class="fas fa-arrow-right" style="margin-left:6px;"></i>`,
+    timer: 2500,
+    timerProgressBar: true,
+    willClose: () => {
+      localStorage.setItem('ultimo_acceso_exitoso', new Date().toISOString());
+      window.location.href = cfg.dashboard;
+    }
+  });
+}
+
+function setupEventListeners() {
+  // Formulario de login
+  document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (appState.bloqueadoHasta && Date.now() < appState.bloqueadoHasta) {
+      const restantes = Math.ceil((appState.bloqueadoHasta - Date.now()) / 1000);
       Swal.fire({
-        icon: 'error',
-        title: 'Error de configuración',
-        text: `El rol "${usuario.rol}" no tiene un dashboard configurado`,
-        confirmButtonColor: '#dc3545'
+        icon: 'warning',
+        title: 'Cuenta bloqueada',
+        html: `Demasiados intentos fallidos.<br>Intenta en <strong>${restantes} segundos</strong>.`,
+        confirmButtonColor: '#f59e0b'
       });
       return;
     }
 
-    Swal.fire({
-      icon: 'success',
-      title: '¡Acceso concedido!',
-      html: `
-        <div style="text-align:left;background:#f0f4ff;border-radius:14px;padding:18px;margin-top:10px;font-size:14px;line-height:2">
-          <p><i class="fas fa-id-badge" style="color:${cfg.color};width:22px;"></i> <strong>${usuario.nombre_completo}</strong></p>
-          <p><i class="fas fa-user-tag" style="color:${cfg.color};width:22px;"></i> ${cfg.icono} ${cfg.label} — ${usuario.cargo}</p>
-          <p><i class="fas fa-envelope" style="color:${cfg.color};width:22px;"></i> ${usuario.correo}</p>
-          <p><i class="fas fa-briefcase" style="color:${cfg.color};width:22px;"></i> ${usuario.area_id}</p>
-        </div>
-        <p style="margin-top:12px;color:#6c757d;font-size:13px;">Redirigiendo a tu panel...</p>
-      `,
-      confirmButtonColor: cfg.color,
-      confirmButtonText: `Ir a mi panel <i class="fas fa-arrow-right" style="margin-left:6px;"></i>`,
-      timer: 2500,
-      timerProgressBar: true,
-      willClose: () => {
-        // Guardar último acceso exitoso
-        localStorage.setItem('ultimo_acceso_exitoso', new Date().toISOString());
-        window.location.href = cfg.dashboard;
+    const nombreUsuario = document.getElementById('usuario').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!nombreUsuario || !password) {
+      Swal.fire({ 
+        icon: 'warning', 
+        title: 'Campos requeridos', 
+        text: 'Completa todos los campos.', 
+        confirmButtonColor: '#0077ff' 
+      });
+      return;
+    }
+
+    setButtonLoading(true);
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Simular proceso
+    
+    const resultado = autenticar(nombreUsuario, password);
+    setButtonLoading(false);
+
+    if (resultado.exito) {
+      appState.intentosFallidos = 0;
+      actualizarIndicadorIntentos();
+      mostrarPerfilUsuario(resultado);
+    } else {
+      appState.intentosFallidos++;
+      actualizarIndicadorIntentos();
+
+      ['usuario','password'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.add('input-error');
+          setTimeout(() => el.classList.remove('input-error'), 600);
+        }
+      });
+
+      switch (resultado.motivo) {
+        case 'credenciales_invalidas':
+          Swal.fire({
+            icon: 'error',
+            title: 'Credenciales incorrectas',
+            html: `Usuario o contraseña inválidos.<br>
+                   <small>Te quedan <strong>${resultado.intentosRestantes || (appState.maxIntentos - appState.intentosFallidos)}</strong> intento(s).</small>`,
+            confirmButtonColor: '#dc3545'
+          });
+          break;
+        case 'cuenta_inactiva':
+          Swal.fire({
+            icon: 'warning',
+            title: 'Cuenta inactiva',
+            html: `La cuenta ha sido desactivada.<br><small>Contacta al administrador.</small>`,
+            confirmButtonColor: '#f59e0b'
+          });
+          break;
+        case 'cuenta_bloqueada':
+        case 'bloqueo_por_intentos':
+          appState.bloqueadoHasta = Date.now() + appState.bloqueoDuracionMs;
+          document.getElementById('loginButton').disabled = true;
+          mostrarBloqueoCuenta(30);
+          Swal.fire({
+            icon: 'error',
+            title: 'Cuenta bloqueada',
+            html: `Superaste el límite de <strong>${appState.maxIntentos} intentos</strong>.<br>
+                   Se desbloqueará en 30 segundos.`,
+            confirmButtonColor: '#dc3545'
+          });
+          break;
+        case 'sin_base_datos':
+          Swal.fire({
+            icon: 'error',
+            title: 'Base de datos no cargada',
+            text: 'Espera a que el sistema cargue completamente',
+            confirmButtonColor: '#dc3545'
+          });
+          break;
       }
-    });
+    }
+  });
+
+  // Toggle de contraseña
+  document.getElementById('togglePassword')?.addEventListener('click', function() {
+    const input = document.getElementById('password');
+    const tipo = input.type === 'password' ? 'text' : 'password';
+    input.type = tipo;
+    this.innerHTML = tipo === 'password'
+      ? '<i class="fas fa-eye"></i>'
+      : '<i class="fas fa-eye-slash"></i>';
+  });
+
+  // Recordar usuario
+  const storedUser = localStorage.getItem('SAC_rememberedUser');
+  if (storedUser) {
+    document.getElementById('usuario').value = storedUser;
+    document.getElementById('rememberMe').checked = true;
   }
 
-  // ... resto de tus funciones existentes (autenticar, registrarAuditoria, etc) ...
-
-  document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // Verificar si ya hay una sesión activa al intentar loguear
-    if (verificarSesionActiva()) {
-      return;
-    }
-
-    // ... resto de tu código de submit existente ...
-    // (mantén toda la lógica de validación y autenticación)
+  document.getElementById('rememberMe')?.addEventListener('change', function() {
+    const val = document.getElementById('usuario').value;
+    this.checked ? localStorage.setItem('SAC_rememberedUser', val) : localStorage.removeItem('SAC_rememberedUser');
   });
 
-  // Protección contra acceso directo sin login
-  document.addEventListener('DOMContentLoaded', () => {
-    // Verificar si ya hay sesión activa al cargar la página
-    if (verificarSesionActiva()) {
-      return;
-    }
-    
-    // Cargar base de datos si no hay sesión activa
-    cargarBaseDeDatos();
-    
-    // Protección adicional: detectar navegación hacia atrás
-    window.addEventListener('pageshow', function(event) {
-      if (event.persisted || (
-        window.performance && 
-        window.performance.navigation.type === 2
-      )) {
-        if (verificarSesionActiva()) {
-          location.reload();
+  // Recuperar contraseña
+  document.getElementById('forgotPassword')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    Swal.fire({
+      title: 'Recuperar contraseña',
+      html: `
+        <input type="text" id="swal_usuario" class="swal2-input" placeholder="Nombre de usuario">
+        <input type="email" id="swal_correo" class="swal2-input" placeholder="Correo institucional">
+      `,
+      confirmButtonText: 'Enviar instrucciones',
+      confirmButtonColor: '#0077ff',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      preConfirm: () => {
+        const usr = document.getElementById('swal_usuario').value.trim();
+        const mail = document.getElementById('swal_correo').value.trim();
+        if (!usr || !mail) {
+          Swal.showValidationMessage('Completa ambos campos');
+          return false;
         }
+        if (!DATABASE) {
+          Swal.showValidationMessage('Base de datos no cargada');
+          return false;
+        }
+        const found = DATABASE.usuarios.find(
+          u => u.nombre_usuario.toLowerCase() === usr.toLowerCase() && u.correo.toLowerCase() === mail.toLowerCase()
+        );
+        if (!found) {
+          Swal.showValidationMessage('Usuario no encontrado');
+          return false;
+        }
+        return { usuario: found };
+      }
+    }).then(result => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Correo enviado!',
+          html: `Instrucciones enviadas a <strong>${result.value.usuario.correo}</strong>.`,
+          confirmButtonColor: '#0077ff'
+        });
       }
     });
   });
 
-  // Función para cerrar sesión desde cualquier página
+  // Cerrar sesión desde cualquier página
   window.cerrarSesion = function(motivo = null) {
     sessionStorage.removeItem('session_SAC');
     localStorage.removeItem('session_SAC_permanent');
@@ -660,29 +969,45 @@
       localStorage.setItem('logout_motivo', motivo);
     }
     
-    // Redirigir al login con mensaje
     window.location.href = 'index.html?logout=1';
   };
 
-  // Manejar mensaje de cierre de sesión en login
-  document.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('logout') === '1') {
-      const motivo = localStorage.getItem('logout_motivo');
-      if (motivo) {
-        Swal.fire({
-          icon: 'info',
-          title: 'Sesión cerrada',
-          text: motivo === 'expired' ? 'Tu sesión expiró. Por favor inicia sesión nuevamente.' : 'Sesión cerrada correctamente',
-          confirmButtonColor: '#1e3a8a'
-        });
-        localStorage.removeItem('logout_motivo');
+  // Manejar mensaje de cierre de sesión
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('logout') === '1') {
+    const motivo = localStorage.getItem('logout_motivo');
+    if (motivo) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Sesión cerrada',
+        text: motivo === 'expired' ? 'Tu sesión expiró. Por favor inicia sesión nuevamente.' : 'Sesión cerrada correctamente',
+        confirmButtonColor: '#1e3a8a'
+      });
+      localStorage.removeItem('logout_motivo');
+    }
+    history.replaceState({}, document.title, 'index.html');
+  }
+}
+
+// ===== INICIALIZACIÓN PRINCIPAL (ÚNICO EVENTO DOMContentLoaded) =====
+document.addEventListener('DOMContentLoaded', async () => {
+  // 1. Verificar sesión activa PRIMERO
+  if (verificarSesionActiva()) {
+    return;
+  }
+  
+  // 2. Cargar base de datos
+  await cargarBaseDeDatos();
+  
+  // 3. Protección contra navegación hacia atrás
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+      if (verificarSesionActiva()) {
+        location.reload();
       }
-      
-      // Limpiar parámetro de URL
-      history.replaceState({}, document.title, 'index.html');
     }
   });
-  </script>
+});
+</script>
 </body>
 </html>
