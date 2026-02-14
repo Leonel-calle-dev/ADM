@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Sistema de Gestión del Campus</title>
-   
-  <script src="validacion.js"></script>
-
+  
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
@@ -56,45 +54,6 @@
       min-height: 100vh;
       overflow-x: hidden;
       color: white;
-    }
-
-    /* Loading screen */
-    .loading-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-800) 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-
-    .loading-screen.hidden {
-      display: none;
-    }
-
-    .loading-spinner {
-      width: 60px;
-      height: 60px;
-      border: 5px solid rgba(59, 130, 246, 0.3);
-      border-top-color: var(--navy-400);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .loading-text {
-      margin-top: 20px;
-      color: var(--navy-300);
-      font-size: 18px;
-      font-weight: 600;
     }
 
     .dashboard {
@@ -878,6 +837,7 @@
     }
 
     @media (max-width: 900px) {
+      /* Ocultar sidebar por defecto en móvil */
       .sidebar {
         transform: translateX(-100%);
         width: 280px;
@@ -887,10 +847,12 @@
         transform: translateX(0);
       }
       
+      /* Mostrar toggle solo en móvil */
       .sidebar-toggle-btn {
         display: flex;
       }
       
+      /* Reorganizar header para móvil */
       .header {
         display: flex;
         flex-wrap: nowrap;
@@ -918,6 +880,7 @@
         gap: 12px;
       }
       
+      /* Ajustar contenido principal */
       .main-content {
         margin-left: 0 !important;
       }
@@ -1017,6 +980,7 @@
         font-size: 10px;
       }
 
+      /* Botones del dashboard en columna en móvil */
       .dashboard-buttons-grid {
         grid-template-columns: 1fr;
         max-width: 100%;
@@ -1104,12 +1068,6 @@
   </style>
 </head>
 <body>
-  <!-- LOADING SCREEN -->
-  <div class="loading-screen" id="loadingScreen">
-    <div class="loading-spinner"></div>
-    <div class="loading-text">Cargando dashboard...</div>
-  </div>
-
   <div class="dashboard">
     <!-- BACKDROP PARA SIDEBAR EN MÓVIL -->
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
@@ -1122,10 +1080,10 @@
       </div>
 
       <div class="user-profile" id="userProfile">
-        <div class="user-avatar" id="userAvatar">?</div>
+        <div class="user-avatar" id="userAvatar">J</div>
         <div class="user-info">
           <h3 id="userName">Cargando...</h3>
-          <p id="userRole">Rol: Cargando...</p>
+          <p id="userRole">Rol: -</p>
           <span class="user-badge" id="userBadge">-</span>
         </div>
       </div>
@@ -1182,14 +1140,17 @@
     <!-- MAIN CONTENT -->
     <main class="main-content">
       <header class="header">
+        <!-- BOTÓN DE TOGGLE PARA MÓVIL -->
         <button id="sidebarToggle" class="sidebar-toggle-btn">
           <i class="fas fa-bars"></i>
         </button>
         
+        <!-- TÍTULO PARA DESKTOP -->
         <div class="header-left">
           <h1 id="pageTitle">Dashboard</h1>
         </div>
         
+        <!-- TÍTULO CENTRADO PARA MÓVIL -->
         <div class="header-center">
           <h1 id="pageTitleMobile">Dashboard</h1>
         </div>
@@ -1197,7 +1158,7 @@
         <div class="header-right">
           <div class="notification-bell">
             <i class="fas fa-bell"></i>
-            <span class="notification-badge" id="notificationBadge">0</span>
+            <span class="notification-badge">3</span>
           </div>
           <button class="logout-btn" id="logoutBtnMobile">
             <i class="fas fa-sign-out-alt"></i> Salir
@@ -1206,16 +1167,20 @@
       </header>
 
       <div class="container">
+        <!-- PAGE TITLE -->
         <div class="page-title">
           <h2 id="sectionTitle">Dashboard - Panel de Control</h2>
           <p>Gestiona y registra todas las actividades de mantenimiento del campus</p>
         </div>
 
+        <!-- STATS CARDS -->
         <div class="stats-grid" id="statsGrid">
           <!-- Stats will be populated by JavaScript -->
         </div>
 
+        <!-- CONTENT GRID -->
         <div class="content-grid">
+          <!-- MAIN CONTENT AREA -->
           <div class="card" id="mainContent">
             <div class="card-header">
               <i class="fas fa-tachometer-alt"></i>
@@ -1246,6 +1211,7 @@
             </div>
           </div>
 
+          <!-- SIDEBAR CONTENT -->
           <div class="card">
             <div class="card-header">
               <i class="fas fa-clock"></i>
@@ -1253,10 +1219,7 @@
             </div>
             <div class="card-body" style="max-height: 550px; overflow-y: auto;">
               <div id="recentActivities">
-                <div class="empty-state" style="padding: 30px 0;">
-                  <i class="fas fa-inbox" style="font-size: 48px; opacity: 0.6;"></i>
-                  <h3>Cargando actividades...</h3>
-                </div>
+                <!-- Activities will be populated by JavaScript -->
               </div>
             </div>
           </div>
@@ -1266,181 +1229,506 @@
   </div>
 
   <script>
-    // ===== CONFIGURACIÓN INICIAL =====
     const DB_PATH = 'data2.json';
     let DATABASE = null;
     let currentUser = null;
 
-    // Secciones del dashboard
+    // SECTION TEMPLATES
     const sections = {
-      dashboard: { 
-        title: 'Dashboard - Panel de Control', 
-        cardTitle: 'Resumen General', 
-        content: '<div class="empty-state"><i class="fas fa-chart-line"></i><h3>Bienvenido al Sistema de Gestión</h3><p>Selecciona una sección del menú para registrar actividades o ver reportes</p><div class="dashboard-buttons-grid"><button class="btn btn-primary" onclick="navigateTo(\'audiovisual\')"><i class="fas fa-video"></i> Audiovisual</button><button class="btn btn-primary" onclick="navigateTo(\'inmuebles\')"><i class="fas fa-building"></i> Inmuebles</button><button class="btn btn-primary" onclick="navigateTo(\'electricidad\')"><i class="fas fa-bolt"></i> Electricidad</button><button class="btn btn-primary" onclick="navigateTo(\'cerraduras\')"><i class="fas fa-lock"></i> Cerraduras</button></div></div>' 
+      dashboard: {
+        title: 'Dashboard - Panel de Control',
+        cardTitle: 'Resumen General',
+        content: `
+          <div class="empty-state">
+            <i class="fas fa-chart-line"></i>
+            <h3>Bienvenido al Sistema de Gestión</h3>
+            <p>Selecciona una sección del menú para registrar actividades o ver reportes de mantenimiento del campus</p>
+            <div class="dashboard-buttons-grid">
+              <button class="btn btn-primary" onclick="navigateTo('audiovisual')">
+                <i class="fas fa-video"></i> Audiovisual
+              </button>
+              <button class="btn btn-primary" onclick="navigateTo('inmuebles')">
+                <i class="fas fa-building"></i> Inmuebles
+              </button>
+              <button class="btn btn-primary" onclick="navigateTo('electricidad')">
+                <i class="fas fa-bolt"></i> Electricidad
+              </button>
+              <button class="btn btn-primary" onclick="navigateTo('cerraduras')">
+                <i class="fas fa-lock"></i> Cerraduras
+              </button>
+            </div>
+          </div>
+        `
       },
-      audiovisual: { title: 'Mantenimiento Audiovisual', cardTitle: 'Registrar Mantenimiento de Equipos', content: '<form id="audiovisualForm"><div class="form-group"><label><i class="fas fa-tag"></i> Título de la Actividad *</label><input type="text" class="form-control" id="titulo_audiovisual" placeholder="Ej: Reparación de proyector Epson - Aula 204" required></div><div class="form-group"><label><i class="fas fa-tasks"></i> Tipo de Mantenimiento *</label><select class="form-control" id="tipo_mantenimiento_audiovisual" required><option value="">Seleccione...</option><option value="TMANT-001">Correctivo</option><option value="TMANT-002">Correctivo de Emergencia</option><option value="TMANT-003">Preventivo</option><option value="TMANT-004">Preventivo Rutinario</option><option value="TMANT-005">Predictivo</option></select></div><div class="form-group"><label><i class="fas fa-map-marker-alt"></i> Lugar *</label><input type="text" class="form-control" id="lugar_audiovisual" placeholder="Ej: Aula 204 - Bloque B" required></div><div class="form-group"><label><i class="fas fa-align-left"></i> Descripción *</label><textarea class="form-control" id="descripcion_audiovisual" placeholder="Describa el problema y la solución aplicada..." required></textarea></div><div class="form-group"><label><i class="fas fa-tools"></i> Materiales Utilizados (separados por comas)</label><input type="text" class="form-control" id="materiales_audiovisual" placeholder="Ej: Lámpara Epson ELPLP78, Paño microfibra, Soplador de aire"></div><div class="form-group"><label><i class="fas fa-stopwatch"></i> Duración (horas)</label><input type="number" class="form-control" id="duracion_audiovisual" placeholder="Ej: 2.5" min="0" step="0.25" value="1"></div><div class="form-group"><label><i class="fas fa-exclamation-triangle"></i> Prioridad *</label><select class="form-control" id="prioridad_audiovisual" required><option value="baja">Baja</option><option value="media" selected>Media</option><option value="alta">Alta</option></select></div><button type="submit" class="btn btn-primary btn-block"><i class="fas fa-save"></i> Registrar Actividad</button></form>' },
-      inmuebles: { title: 'Reportar Fallas de Inmuebles', cardTitle: 'Registrar Falla en Inmueble', content: '<form id="inmueblesForm"><div class="form-group"><label><i class="fas fa-tag"></i> Título de la Falla *</label><input type="text" class="form-control" id="titulo_inmuebles" placeholder="Ej: Reparación de sillas rotas - Aula 101" required></div><div class="form-group"><label><i class="fas fa-tasks"></i> Tipo de Mantenimiento *</label><select class="form-control" id="tipo_mantenimiento_inmuebles" required><option value="">Seleccione...</option><option value="TMANT-001">Correctivo</option><option value="TMANT-003">Preventivo</option><option value="TMANT-004">Preventivo Rutinario</option></select></div><div class="form-group"><label><i class="fas fa-map-marker-alt"></i> Ubicación *</label><input type="text" class="form-control" id="lugar_inmuebles" placeholder="Ej: Bloque A - Aulas 101 a 108" required></div><div class="form-group"><label><i class="fas fa-align-left"></i> Descripción de la Falla *</label><textarea class="form-control" id="descripcion_inmuebles" placeholder="Describa el daño y las reparaciones realizadas..." required></textarea></div><div class="form-group"><label><i class="fas fa-tools"></i> Materiales Utilizados</label><input type="text" class="form-control" id="materiales_inmuebles" placeholder="Ej: Soldadura eléctrica, Pernos M8, Llave de tuercas"></div><div class="form-group"><label><i class="fas fa-exclamation-triangle"></i> Prioridad *</label><select class="form-control" id="prioridad_inmuebles" required><option value="baja">Baja</option><option value="media" selected>Media</option><option value="alta">Alta</option></select></div><button type="submit" class="btn btn-primary btn-block"><i class="fas fa-save"></i> Reportar Falla</button></form>' },
-      electricidad: { title: 'Reportar Fallas Eléctricas', cardTitle: 'Registrar Falla Eléctrica', content: '<form id="electricidadForm"><div class="form-group"><label><i class="fas fa-tag"></i> Título de la Falla *</label><input type="text" class="form-control" id="titulo_electricidad" placeholder="Ej: Reemplazo de interruptores quemados - Aula 310" required></div><div class="form-group"><label><i class="fas fa-tasks"></i> Tipo de Mantenimiento *</label><select class="form-control" id="tipo_mantenimiento_electricidad" required><option value="">Seleccione...</option><option value="TMANT-001">Correctivo</option><option value="TMANT-002">Correctivo de Emergencia</option><option value="TMANT-003">Preventivo</option></select></div><div class="form-group"><label><i class="fas fa-map-marker-alt"></i> Ubicación *</label><input type="text" class="form-control" id="lugar_electricidad" placeholder="Ej: Aula 310 - Bloque D Piso 3" required></div><div class="form-group"><label><i class="fas fa-align-left"></i> Descripción del Problema *</label><textarea class="form-control" id="descripcion_electricidad" placeholder="Describa la falla eléctrica y las reparaciones realizadas..." required></textarea></div><div class="form-group"><label><i class="fas fa-tools"></i> Materiales Utilizados</label><input type="text" class="form-control" id="materiales_electricidad" placeholder="Ej: Interruptor termomagnético 16A x3, Destornillador dieléctrico"></div><div class="form-group"><label><i class="fas fa-exclamation-triangle"></i> Prioridad *</label><select class="form-control" id="prioridad_electricidad" required><option value="baja">Baja</option><option value="media">Media</option><option value="alta" selected>Alta</option></select></div><button type="submit" class="btn btn-primary btn-block"><i class="fas fa-save"></i> Reportar Falla Eléctrica</button></form>' },
-      cerraduras: { title: 'Reportar Cerraduras en Mal Estado', cardTitle: 'Registrar Problema de Cerradura', content: '<form id="cerradurasForm"><div class="form-group"><label><i class="fas fa-tag"></i> Título del Reporte *</label><input type="text" class="form-control" id="titulo_cerraduras" placeholder="Ej: Reparación de cerradura rígida - Puerta A-105" required></div><div class="form-group"><label><i class="fas fa-tasks"></i> Tipo de Mantenimiento *</label><select class="form-control" id="tipo_mantenimiento_cerraduras" required><option value="">Seleccione...</option><option value="TMANT-001">Correctivo</option><option value="TMANT-003">Preventivo</option></select></div><div class="form-group"><label><i class="fas fa-map-marker-alt"></i> Ubicación *</label><input type="text" class="form-control" id="lugar_cerraduras" placeholder="Ej: Puerta A-105 - Bloque A" required></div><div class="form-group"><label><i class="fas fa-align-left"></i> Descripción del Problema *</label><textarea class="form-control" id="descripcion_cerraduras" placeholder="Describa el estado de la cerradura y la reparación realizada..." required></textarea></div><div class="form-group"><label><i class="fas fa-tools"></i> Materiales Utilizados</label><input type="text" class="form-control" id="materiales_cerraduras" placeholder="Ej: Cilindro nuevo, Lubricante, Juego de llaves"></div><div class="form-group"><label><i class="fas fa-exclamation-triangle"></i> Prioridad *</label><select class="form-control" id="prioridad_cerraduras" required><option value="baja">Baja</option><option value="media" selected>Media</option><option value="alta">Alta</option></select></div><button type="submit" class="btn btn-primary btn-block"><i class="fas fa-save"></i> Reportar Cerradura</button></form>' },
-      actividades: { title: 'Mis Actividades', cardTitle: 'Lista de Actividades', content: '<div id="activitiesList"><div class="empty-state"><i class="fas fa-tasks"></i><h3>Cargando actividades...</h3><p>Tus actividades registradas aparecerán aquí</p></div></div>' }
+      audiovisual: {
+        title: 'Mantenimiento Audiovisual',
+        cardTitle: 'Registrar Mantenimiento de Equipos',
+        content: `
+          <form id="audiovisualForm">
+            <div class="form-group">
+              <label><i class="fas fa-tag"></i> Título de la Actividad *</label>
+              <input type="text" class="form-control" id="titulo_audiovisual" 
+                placeholder="Ej: Reparación de proyector Epson - Aula 204" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-tasks"></i> Tipo de Mantenimiento *</label>
+              <select class="form-control" id="tipo_mantenimiento_audiovisual" required>
+                <option value="">Seleccione...</option>
+                <option value="TMANT-001">Correctivo</option>
+                <option value="TMANT-002">Correctivo de Emergencia</option>
+                <option value="TMANT-003">Preventivo</option>
+                <option value="TMANT-004">Preventivo Rutinario</option>
+                <option value="TMANT-005">Predictivo</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-map-marker-alt"></i> Lugar *</label>
+              <input type="text" class="form-control" id="lugar_audiovisual" 
+                placeholder="Ej: Aula 204 - Bloque B" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-align-left"></i> Descripción *</label>
+              <textarea class="form-control" id="descripcion_audiovisual" 
+                placeholder="Describa el problema y la solución aplicada..." required></textarea>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-tools"></i> Materiales Utilizados (separados por comas)</label>
+              <input type="text" class="form-control" id="materiales_audiovisual" 
+                placeholder="Ej: Lámpara Epson ELPLP78, Paño microfibra, Soplador de aire">
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-stopwatch"></i> Duración (horas)</label>
+              <input type="number" class="form-control" id="duracion_audiovisual" 
+                placeholder="Ej: 2.5" min="0" step="0.25" value="1">
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-exclamation-triangle"></i> Prioridad *</label>
+              <select class="form-control" id="prioridad_audiovisual" required>
+                <option value="baja">Baja</option>
+                <option value="media" selected>Media</option>
+                <option value="alta">Alta</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              <i class="fas fa-save"></i> Registrar Actividad
+            </button>
+          </form>
+        `
+      },
+      inmuebles: {
+        title: 'Reportar Fallas de Inmuebles',
+        cardTitle: 'Registrar Falla en Inmueble',
+        content: `
+          <form id="inmueblesForm">
+            <div class="form-group">
+              <label><i class="fas fa-tag"></i> Título de la Falla *</label>
+              <input type="text" class="form-control" id="titulo_inmuebles" 
+                placeholder="Ej: Reparación de sillas rotas - Aula 101" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-tasks"></i> Tipo de Mantenimiento *</label>
+              <select class="form-control" id="tipo_mantenimiento_inmuebles" required>
+                <option value="">Seleccione...</option>
+                <option value="TMANT-001">Correctivo</option>
+                <option value="TMANT-003">Preventivo</option>
+                <option value="TMANT-004">Preventivo Rutinario</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-map-marker-alt"></i> Ubicación *</label>
+              <input type="text" class="form-control" id="lugar_inmuebles" 
+                placeholder="Ej: Bloque A - Aulas 101 a 108" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-align-left"></i> Descripción de la Falla *</label>
+              <textarea class="form-control" id="descripcion_inmuebles" 
+                placeholder="Describa el daño y las reparaciones realizadas..." required></textarea>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-tools"></i> Materiales Utilizados</label>
+              <input type="text" class="form-control" id="materiales_inmuebles" 
+                placeholder="Ej: Soldadura eléctrica, Pernos M8, Llave de tuercas">
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-exclamation-triangle"></i> Prioridad *</label>
+              <select class="form-control" id="prioridad_inmuebles" required>
+                <option value="baja">Baja</option>
+                <option value="media" selected>Media</option>
+                <option value="alta">Alta</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              <i class="fas fa-save"></i> Reportar Falla
+            </button>
+          </form>
+        `
+      },
+      electricidad: {
+        title: 'Reportar Fallas Eléctricas',
+        cardTitle: 'Registrar Falla Eléctrica',
+        content: `
+          <form id="electricidadForm">
+            <div class="form-group">
+              <label><i class="fas fa-tag"></i> Título de la Falla *</label>
+              <input type="text" class="form-control" id="titulo_electricidad" 
+                placeholder="Ej: Reemplazo de interruptores quemados - Aula 310" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-tasks"></i> Tipo de Mantenimiento *</label>
+              <select class="form-control" id="tipo_mantenimiento_electricidad" required>
+                <option value="">Seleccione...</option>
+                <option value="TMANT-001">Correctivo</option>
+                <option value="TMANT-002">Correctivo de Emergencia</option>
+                <option value="TMANT-003">Preventivo</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-map-marker-alt"></i> Ubicación *</label>
+              <input type="text" class="form-control" id="lugar_electricidad" 
+                placeholder="Ej: Aula 310 - Bloque D Piso 3" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-align-left"></i> Descripción del Problema *</label>
+              <textarea class="form-control" id="descripcion_electricidad" 
+                placeholder="Describa la falla eléctrica y las reparaciones realizadas..." required></textarea>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-tools"></i> Materiales Utilizados</label>
+              <input type="text" class="form-control" id="materiales_electricidad" 
+                placeholder="Ej: Interruptor termomagnético 16A x3, Destornillador dieléctrico">
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-exclamation-triangle"></i> Prioridad *</label>
+              <select class="form-control" id="prioridad_electricidad" required>
+                <option value="baja">Baja</option>
+                <option value="media">Media</option>
+                <option value="alta" selected>Alta</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              <i class="fas fa-save"></i> Reportar Falla Eléctrica
+            </button>
+          </form>
+        `
+      },
+      cerraduras: {
+        title: 'Reportar Cerraduras en Mal Estado',
+        cardTitle: 'Registrar Problema de Cerradura',
+        content: `
+          <form id="cerradurasForm">
+            <div class="form-group">
+              <label><i class="fas fa-tag"></i> Título del Reporte *</label>
+              <input type="text" class="form-control" id="titulo_cerraduras" 
+                placeholder="Ej: Reparación de cerradura rígida - Puerta A-105" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-tasks"></i> Tipo de Mantenimiento *</label>
+              <select class="form-control" id="tipo_mantenimiento_cerraduras" required>
+                <option value="">Seleccione...</option>
+                <option value="TMANT-001">Correctivo</option>
+                <option value="TMANT-003">Preventivo</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-map-marker-alt"></i> Ubicación *</label>
+              <input type="text" class="form-control" id="lugar_cerraduras" 
+                placeholder="Ej: Puerta A-105 - Bloque A" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-align-left"></i> Descripción del Problema *</label>
+              <textarea class="form-control" id="descripcion_cerraduras" 
+                placeholder="Describa el estado de la cerradura y la reparación realizada..." required></textarea>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-tools"></i> Materiales Utilizados</label>
+              <input type="text" class="form-control" id="materiales_cerraduras" 
+                placeholder="Ej: Cilindro nuevo, Lubricante, Juego de llaves">
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-exclamation-triangle"></i> Prioridad *</label>
+              <select class="form-control" id="prioridad_cerraduras" required>
+                <option value="baja">Baja</option>
+                <option value="media" selected>Media</option>
+                <option value="alta">Alta</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              <i class="fas fa-save"></i> Reportar Cerradura
+            </button>
+          </form>
+        `
+      },
+      actividades: {
+        title: 'Mis Actividades',
+        cardTitle: 'Lista de Actividades',
+        content: `
+          <div id="activitiesList">
+            <div class="empty-state">
+              <i class="fas fa-tasks"></i>
+              <h3>Cargando actividades...</h3>
+              <p>Tus actividades registradas aparecerán aquí</p>
+            </div>
+          </div>
+        `
+      }
     };
 
-    // ===== FUNCIONES PRINCIPALES =====
-    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', async () => {
+      await cargarBaseDeDatos();
+      checkSession();
+      loadStats();
+      loadRecentActivities();
+      setupEventListeners();
+      checkScreenSize();
+    });
+
     async function cargarBaseDeDatos() {
       try {
-        console.log('📂 Intentando cargar base de datos...');
         const respuesta = await fetch(DB_PATH);
-        if (!respuesta.ok) throw new Error(`No se pudo cargar ${DB_PATH}`);
+        if (!respuesta.ok) {
+          throw new Error(`No se pudo cargar ${DB_PATH}`);
+        }
         DATABASE = await respuesta.json();
-        console.log('✅ Base de datos cargada exitosamente:', DATABASE);
-        return true;
+        console.log('✅ Base de datos cargada');
       } catch (error) {
         console.error('❌ Error al cargar base de datos:', error);
-        Swal.fire({ 
-          icon: 'error', 
-          title: 'Error al cargar datos', 
-          text: 'No se pudo cargar la base de datos. Verifica que el archivo data2.json exista.', 
-          confirmButtonColor: '#dc3545' 
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo cargar la base de datos',
+          confirmButtonColor: '#dc3545'
         });
-        return false;
       }
     }
 
-    function verificarSesion() {
-      console.log('🔍 Verificando sesión...');
-      
-      // Buscar en sessionStorage primero
-      let sessionData = sessionStorage.getItem('session_SAC');
-      console.log('SessionStorage:', sessionData ? 'Encontrado' : 'No encontrado');
-      
-      // Si no hay en sessionStorage, buscar en localStorage
+    function checkSession() {
+      const sessionData = sessionStorage.getItem('session_SAC');
       if (!sessionData) {
-        sessionData = localStorage.getItem('session_SAC');
-        console.log('LocalStorage:', sessionData ? 'Encontrado' : 'No encontrado');
-        
-        // Si se encuentra en localStorage, copiar a sessionStorage
-        if (sessionData) {
-          sessionStorage.setItem('session_SAC', sessionData);
-        }
+        window.location.href = 'index.html';
+        return;
       }
+
+      currentUser = JSON.parse(sessionData);
       
-      if (!sessionData) {
-        console.log('❌ No hay sesión activa');
-        return null;
-      }
+      // Update user profile in sidebar
+      document.getElementById('userName').textContent = currentUser.nombre_completo;
+      document.getElementById('userRole').textContent = `Rol: ${currentUser.rol}`;
+      document.getElementById('userBadge').textContent = currentUser.cargo;
       
-      try {
-        const session = JSON.parse(sessionData);
-        console.log('✅ Sesión encontrada:', session);
-        
-        // Verificar si la sesión ha expirado
-        if (session.expira) {
-          const ahora = new Date();
-          const expira = new Date(session.expira);
-          if (ahora > expira) {
-            console.log('⏰ Sesión expirada');
-            return null;
+      // Set avatar initial
+      const avatar = currentUser.nombre_completo.charAt(0);
+      document.querySelector('.user-avatar').textContent = avatar;
+      document.getElementById('userAvatar').textContent = avatar;
+    }
+
+    function setupEventListeners() {
+      // Menu navigation
+      document.querySelectorAll('.menu-item').forEach(item => {
+        item.addEventListener('click', function() {
+          const section = this.getAttribute('data-section');
+          if (section) {
+            navigateTo(section);
+            // Update active menu item
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+            closeSidebar();
           }
-        }
+        });
+      });
+
+      // Logout
+      document.getElementById('logoutBtn')?.addEventListener('click', logout);
+      document.getElementById('logoutBtnMobile')?.addEventListener('click', logout);
+
+      // Sidebar toggle
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      const sidebar = document.querySelector('.sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      
+      if (sidebarToggle && sidebar && backdrop) {
+        sidebarToggle.addEventListener('click', () => {
+          sidebar.classList.toggle('active');
+          backdrop.classList.toggle('active');
+        });
         
-        return session;
-      } catch (e) {
-        console.error('❌ Error al parsear sesión:', e);
-        return null;
+        backdrop.addEventListener('click', closeSidebar);
       }
     }
 
-    function cargarDatosUsuario(session) {
-      console.log('👤 Cargando datos del usuario...');
-      
-      if (!DATABASE || !DATABASE.usuarios) {
-        console.error('❌ Base de datos no cargada');
-        return false;
+    function closeSidebar() {
+      if (window.innerWidth <= 900) {
+        const sidebar = document.querySelector('.sidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        if (sidebar) sidebar.classList.remove('active');
+        if (backdrop) backdrop.classList.remove('active');
       }
-      
-      // Buscar usuario por ID o username
-      const usuario = DATABASE.usuarios.find(u => 
-        u.id === session.id || 
-        u.id === session.usuario_id || 
-        u.username === session.username
-      );
-      
-      if (!usuario) {
-        console.error('❌ Usuario no encontrado en la base de datos');
-        return false;
+    }
+
+    function attachFormListeners() {
+      const av = document.getElementById('audiovisualForm');
+      if (av) {
+        av.addEventListener('submit', e => {
+          e.preventDefault();
+          registrarActividad('audiovisual');
+        });
       }
+
+      const inm = document.getElementById('inmueblesForm');
+      if (inm) {
+        inm.addEventListener('submit', e => {
+          e.preventDefault();
+          registrarActividad('inmuebles');
+        });
+      }
+
+      const elec = document.getElementById('electricidadForm');
+      if (elec) {
+        elec.addEventListener('submit', e => {
+          e.preventDefault();
+          registrarActividad('electricidad');
+        });
+      }
+
+      const cer = document.getElementById('cerradurasForm');
+      if (cer) {
+        cer.addEventListener('submit', e => {
+          e.preventDefault();
+          registrarActividad('cerraduras');
+        });
+      }
+    }
+
+    function navigateTo(section) {
+      if (!sections[section]) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Sección no encontrada',
+          text: 'La sección solicitada no existe',
+          confirmButtonColor: '#f59e0b'
+        });
+        return;
+      }
+
+      // Update page title
+      const pageTitle = document.getElementById('pageTitle');
+      const pageTitleMobile = document.getElementById('pageTitleMobile');
+      const sectionTitle = document.getElementById('sectionTitle');
+      const cardTitle = document.getElementById('cardTitle');
       
-      console.log('✅ Usuario encontrado:', usuario);
-      currentUser = usuario;
+      if (pageTitle) pageTitle.textContent = sections[section].title.split(' - ')[0];
+      if (pageTitleMobile) pageTitleMobile.textContent = sections[section].title.split(' - ')[0];
+      if (sectionTitle) sectionTitle.textContent = sections[section].title;
+      if (cardTitle) cardTitle.textContent = sections[section].cardTitle;
       
-      // Actualizar UI con datos del usuario
-      document.getElementById('userName').textContent = usuario.nombre_completo || session.nombre_completo || 'Usuario';
-      document.getElementById('userRole').textContent = `Rol: ${usuario.rol || session.rol || '-'}`;
-      document.getElementById('userBadge').textContent = usuario.cargo || session.cargo || '-';
-      
-      // Actualizar avatar
-      const nombreInicial = (usuario.nombre_completo || session.nombre_completo || 'U').charAt(0).toUpperCase();
-      document.getElementById('userAvatar').textContent = nombreInicial;
-      
-      return true;
+      // Update content
+      document.getElementById('dashboardContent').innerHTML = sections[section].content;
+      attachFormListeners();
+
+      // Load activities if needed
+      if (section === 'actividades') {
+        loadActivitiesList();
+      }
     }
 
     function loadStats() {
-      console.log('📊 Cargando estadísticas...');
       const statsGrid = document.getElementById('statsGrid');
-      if (!statsGrid || !DATABASE || !currentUser) {
-        console.log('⚠️ No se pueden cargar estadísticas');
-        return;
-      }
+      if (!statsGrid || !DATABASE || !currentUser) return;
       
+      // Get user's activities
       const userActivities = DATABASE.actividades.filter(act => act.usuario_id === currentUser.id);
+      
+      // Count by category
       const audiovisualCount = userActivities.filter(a => a.categoria_id === 'CAT-001').length;
       const inmueblesCount = userActivities.filter(a => a.categoria_id === 'CAT-002').length;
       const electricidadCount = userActivities.filter(a => a.categoria_id === 'CAT-004').length;
+      
+      // Count pending activities
       const pendingCount = userActivities.filter(a => a.estado === 'enviado').length;
       
-      console.log(`📈 Estadísticas: Audiovisual=${audiovisualCount}, Inmuebles=${inmueblesCount}, Electricidad=${electricidadCount}, Pendientes=${pendingCount}`);
-      
       statsGrid.innerHTML = `
-        <div class="stat-card audiovisual"><div class="stat-card-header"><div><div class="stat-card-value">${audiovisualCount}</div><div class="stat-card-label">Equipos Audiovisuales</div></div><div class="stat-card-icon audiovisual"><i class="fas fa-video"></i></div></div></div>
-        <div class="stat-card inmuebles"><div class="stat-card-header"><div><div class="stat-card-value">${inmueblesCount}</div><div class="stat-card-label">Fallas Inmuebles</div></div><div class="stat-card-icon inmuebles"><i class="fas fa-building"></i></div></div></div>
-        <div class="stat-card electricidad"><div class="stat-card-header"><div><div class="stat-card-value">${electricidadCount}</div><div class="stat-card-label">Fallas Eléctricas</div></div><div class="stat-card-icon electricidad"><i class="fas fa-bolt"></i></div></div></div>
-        <div class="stat-card cerraduras"><div class="stat-card-header"><div><div class="stat-card-value">${pendingCount}</div><div class="stat-card-label">Pendientes de Aprobación</div></div><div class="stat-card-icon cerraduras"><i class="fas fa-clock"></i></div></div></div>
+        <div class="stat-card audiovisual">
+          <div class="stat-card-header">
+            <div>
+              <div class="stat-card-value">${audiovisualCount}</div>
+              <div class="stat-card-label">Equipos Audiovisuales</div>
+            </div>
+            <div class="stat-card-icon audiovisual">
+              <i class="fas fa-video"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="stat-card inmuebles">
+          <div class="stat-card-header">
+            <div>
+              <div class="stat-card-value">${inmueblesCount}</div>
+              <div class="stat-card-label">Fallas Inmuebles</div>
+            </div>
+            <div class="stat-card-icon inmuebles">
+              <i class="fas fa-building"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="stat-card electricidad">
+          <div class="stat-card-header">
+            <div>
+              <div class="stat-card-value">${electricidadCount}</div>
+              <div class="stat-card-label">Fallas Eléctricas</div>
+            </div>
+            <div class="stat-card-icon electricidad">
+              <i class="fas fa-bolt"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="stat-card cerraduras">
+          <div class="stat-card-header">
+            <div>
+              <div class="stat-card-value">${pendingCount}</div>
+              <div class="stat-card-label">Pendientes de Aprobación</div>
+            </div>
+            <div class="stat-card-icon cerraduras">
+              <i class="fas fa-clock"></i>
+            </div>
+          </div>
+        </div>
       `;
       
+      // Update activities count badge
       const activitiesCount = document.getElementById('activitiesCount');
       if (activitiesCount) activitiesCount.textContent = userActivities.length;
-      
-      const notificationBadge = document.getElementById('notificationBadge');
-      if (notificationBadge) notificationBadge.textContent = pendingCount;
     }
 
     function loadRecentActivities() {
-      console.log('🕐 Cargando actividades recientes...');
       const container = document.getElementById('recentActivities');
       if (!container || !DATABASE || !currentUser) return;
       
       const userActivities = DATABASE.actividades
         .filter(act => act.usuario_id === currentUser.id)
-        .sort((a, b) => new Date(b.fecha_envio || b.created_at) - new Date(a.fecha_envio || a.created_at))
+        .sort((a, b) => new Date(b.fecha_envio) - new Date(a.fecha_envio))
         .slice(0, 10);
-      
+
       if (userActivities.length === 0) {
-        container.innerHTML = '<div class="empty-state" style="padding: 30px 0;"><i class="fas fa-inbox" style="font-size: 48px; opacity: 0.6;"></i><h3>No hay actividades recientes</h3><p>Registra tu primera actividad para verla aquí</p></div>';
+        container.innerHTML = `
+          <div class="empty-state" style="padding: 30px 0;">
+            <i class="fas fa-inbox" style="font-size: 48px; opacity: 0.6;"></i>
+            <h3>No hay actividades recientes</h3>
+            <p>Registra tu primera actividad para verla aquí</p>
+          </div>
+        `;
         return;
       }
-      
+
       let html = '';
       userActivities.forEach(act => {
         const categoria = DATABASE.categorias_mantenimiento.find(c => c.id === act.categoria_id);
-        const iconColor = categoria?.color || '#3b82f6';
-        const icon = categoria?.icono || '🔧';
         
         html += `
           <div class="activity-item">
-            <div class="activity-icon" style="background: ${iconColor}20; color: ${iconColor}; border: 2px solid ${iconColor}40;">
-              ${icon}
+            <div class="activity-icon" style="background: ${categoria?.color}20; color: ${categoria?.color}; border: 2px solid ${categoria?.color}40;">
+              ${categoria?.icono || '🔧'}
             </div>
             <div class="activity-info">
               <div class="activity-title">${act.titulo}</div>
@@ -1455,9 +1743,8 @@
           </div>
         `;
       });
-      
+
       container.innerHTML = html;
-      console.log(`✅ ${userActivities.length} actividades recientes cargadas`);
     }
 
     function loadActivitiesList() {
@@ -1466,14 +1753,36 @@
       
       const userActivities = DATABASE.actividades
         .filter(act => act.usuario_id === currentUser.id)
-        .sort((a, b) => new Date(b.fecha_envio || b.created_at) - new Date(a.fecha_envio || a.created_at));
-      
+        .sort((a, b) => new Date(b.fecha_envio) - new Date(a.fecha_envio));
+
       if (userActivities.length === 0) {
-        container.innerHTML = '<div class="empty-state"><i class="fas fa-tasks" style="font-size: 64px; opacity: 0.6;"></i><h3>No hay actividades registradas</h3><p>Comienza registrando tu primera actividad de mantenimiento</p><button class="btn btn-primary" onclick="navigateTo(\'audiovisual\')" style="margin-top: 20px;"><i class="fas fa-plus"></i> Registrar Actividad</button></div>';
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-tasks" style="font-size: 64px; opacity: 0.6;"></i>
+            <h3>No hay actividades registradas</h3>
+            <p>Comienza registrando tu primera actividad de mantenimiento</p>
+            <button class="btn btn-primary" onclick="navigateTo('audiovisual')" style="margin-top: 20px;">
+              <i class="fas fa-plus"></i> Registrar Actividad
+            </button>
+          </div>
+        `;
         return;
       }
-      
-      let html = '<div style="overflow-x: auto;"><table><thead><tr><th>Actividad</th><th>Fecha</th><th>Duración</th><th>Estado</th></tr></thead><tbody>';
+
+      let html = `
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Actividad</th>
+                <th>Fecha</th>
+                <th>Duración</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
       userActivities.forEach(act => {
         html += `
           <tr>
@@ -1485,90 +1794,24 @@
             </td>
             <td style="color: var(--navy-200);">${act.fecha_actividad}</td>
             <td style="color: var(--navy-200);">${act.duracion_horas} horas</td>
-            <td><span class="activity-status status-${act.estado}">${act.estado}</span></td>
+            <td>
+              <span class="activity-status status-${act.estado}">${act.estado}</span>
+            </td>
           </tr>
         `;
       });
-      html += '</tbody></table></div>';
+
+      html += `
+            </tbody>
+          </table>
+        </div>
+      `;
+
       container.innerHTML = html;
     }
 
-    function setupEventListeners() {
-      document.querySelectorAll('.menu-item').forEach(item => {
-        item.addEventListener('click', function() {
-          const section = this.getAttribute('data-section');
-          if (section) {
-            navigateTo(section);
-            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-            this.classList.add('active');
-            closeSidebar();
-          }
-        });
-      });
-      
-      document.getElementById('logoutBtn')?.addEventListener('click', logout);
-      document.getElementById('logoutBtnMobile')?.addEventListener('click', logout);
-      
-      const sidebarToggle = document.getElementById('sidebarToggle');
-      const sidebar = document.querySelector('.sidebar');
-      const backdrop = document.getElementById('sidebarBackdrop');
-      
-      if (sidebarToggle && sidebar && backdrop) {
-        sidebarToggle.addEventListener('click', () => {
-          sidebar.classList.toggle('active');
-          backdrop.classList.toggle('active');
-        });
-        
-        backdrop.addEventListener('click', closeSidebar);
-      }
-      
-      attachFormListeners();
-    }
-
-    function closeSidebar() {
-      if (window.innerWidth <= 900) {
-        const sidebar = document.querySelector('.sidebar');
-        const backdrop = document.getElementById('sidebarBackdrop');
-        if (sidebar) sidebar.classList.remove('active');
-        if (backdrop) backdrop.classList.remove('active');
-      }
-    }
-
-    function attachFormListeners() {
-      ['audiovisual', 'inmuebles', 'electricidad', 'cerraduras'].forEach(tipo => {
-        const form = document.getElementById(`${tipo}Form`);
-        if (form) {
-          form.addEventListener('submit', e => {
-            e.preventDefault();
-            registrarActividad(tipo);
-          });
-        }
-      });
-    }
-
-    function navigateTo(section) {
-      if (!sections[section]) {
-        Swal.fire({ icon: 'warning', title: 'Sección no encontrada', text: 'La sección solicitada no existe', confirmButtonColor: '#f59e0b' });
-        return;
-      }
-      
-      const pageTitle = document.getElementById('pageTitle');
-      const pageTitleMobile = document.getElementById('pageTitleMobile');
-      const sectionTitle = document.getElementById('sectionTitle');
-      const cardTitle = document.getElementById('cardTitle');
-      
-      if (pageTitle) pageTitle.textContent = sections[section].title.split(' - ')[0];
-      if (pageTitleMobile) pageTitleMobile.textContent = sections[section].title.split(' - ')[0];
-      if (sectionTitle) sectionTitle.textContent = sections[section].title;
-      if (cardTitle) cardTitle.textContent = sections[section].cardTitle;
-      
-      document.getElementById('dashboardContent').innerHTML = sections[section].content;
-      attachFormListeners();
-      
-      if (section === 'actividades') loadActivitiesList();
-    }
-
     async function registrarActividad(tipo) {
+      // Get form data
       const formData = {
         titulo: document.getElementById(`titulo_${tipo}`).value,
         tipo_mantenimiento: document.getElementById(`tipo_mantenimiento_${tipo}`).value,
@@ -1578,20 +1821,36 @@
         duracion: parseFloat(document.getElementById(`duracion_${tipo}`).value) || 1,
         prioridad: document.getElementById(`prioridad_${tipo}`).value
       };
-      
+
+      // Validate
       if (!formData.titulo || !formData.tipo_mantenimiento || !formData.lugar || !formData.descripcion) {
-        Swal.fire({ icon: 'warning', title: 'Campos incompletos', text: 'Por favor complete todos los campos obligatorios', confirmButtonColor: '#f59e0b' });
+        Swal.fire({
+          icon: 'warning',
+          title: 'Campos incompletos',
+          text: 'Por favor complete todos los campos obligatorios',
+          confirmButtonColor: '#f59e0b'
+        });
         return;
       }
-      
+
+      // Determine category based on tipo
       let categoria_id;
       switch(tipo) {
-        case 'audiovisual': categoria_id = 'CAT-001'; break;
-        case 'inmuebles': categoria_id = 'CAT-002'; break;
-        case 'electricidad': categoria_id = 'CAT-004'; break;
-        case 'cerraduras': categoria_id = 'CAT-002'; break;
+        case 'audiovisual':
+          categoria_id = 'CAT-001';
+          break;
+        case 'inmuebles':
+          categoria_id = 'CAT-002';
+          break;
+        case 'electricidad':
+          categoria_id = 'CAT-004';
+          break;
+        case 'cerraduras':
+          categoria_id = 'CAT-002';
+          break;
       }
-      
+
+      // Create new activity
       const nuevaActividad = {
         id: `ACT-${String(DATABASE.actividades.length + 1).padStart(3, '0')}`,
         titulo: formData.titulo,
@@ -1618,41 +1877,53 @@
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       };
-      
+
+      // Add to database (in memory only)
       DATABASE.actividades.push(nuevaActividad);
-      
-      Swal.fire({ 
-        icon: 'success', 
-        title: 'Actividad Registrada', 
-        html: '<div style="text-align: center;"><i class="fas fa-check-circle" style="font-size: 48px; color: #10b981; margin-bottom: 15px;"></i><h3 style="color: white; margin-bottom: 10px;">¡Actividad registrada exitosamente!</h3><p style="color: var(--navy-300);">Tu actividad está pendiente de aprobación por el Administrador</p></div>', 
-        confirmButtonColor: '#10b981', 
-        confirmButtonText: 'Aceptar' 
+
+      // Show success message
+      Swal.fire({
+        icon: 'success',
+        title: 'Actividad Registrada',
+        html: `<div style="text-align: center;">
+          <i class="fas fa-check-circle" style="font-size: 48px; color: #10b981; margin-bottom: 15px;"></i>
+          <h3 style="color: white; margin-bottom: 10px;">¡Actividad registrada exitosamente!</h3>
+          <p style="color: var(--navy-300);">Tu actividad está pendiente de aprobación por el Administrador</p>
+        </div>`,
+        confirmButtonColor: '#10b981',
+        confirmButtonText: 'Aceptar'
       });
-      
+
+      // Reset form
       document.getElementById(`${tipo}Form`).reset();
+
+      // Reload stats and activities
       loadStats();
       loadRecentActivities();
-      navigateTo('actividades');
       
+      // Navigate to activities list
+      navigateTo('actividades');
       document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
       document.querySelector('.menu-item[data-section="actividades"]').classList.add('active');
     }
 
     function logout() {
-      Swal.fire({ 
-        title: '¿Cerrar sesión?', 
-        html: '<div style="text-align: center; color: var(--navy-300);"><i class="fas fa-sign-out-alt" style="font-size: 48px; color: #ef4444; margin-bottom: 15px;"></i><p>¿Estás seguro de que deseas cerrar sesión?</p></div>', 
-        showCancelButton: true, 
-        confirmButtonColor: '#ef4444', 
-        cancelButtonColor: '#64748b', 
-        confirmButtonText: 'Sí, cerrar sesión', 
-        cancelButtonText: 'Cancelar', 
-        background: 'var(--navy-800)', 
-        color: 'white' 
+      Swal.fire({
+        title: '¿Cerrar sesión?',
+        html: `<div style="text-align: center; color: var(--navy-300);">
+          <i class="fas fa-sign-out-alt" style="font-size: 48px; color: #ef4444; margin-bottom: 15px;"></i>
+          <p>¿Estás seguro de que deseas cerrar sesión?</p>
+        </div>`,
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#64748b',
+        confirmButtonText: 'Sí, cerrar sesión',
+        cancelButtonText: 'Cancelar',
+        background: 'var(--navy-800)',
+        color: 'white'
       }).then((result) => {
         if (result.isConfirmed) {
           sessionStorage.removeItem('session_SAC');
-          localStorage.removeItem('session_SAC');
           window.location.href = 'index.html';
         }
       });
@@ -1671,76 +1942,8 @@
       }
     }
 
-    // ===== INICIALIZACIÓN =====
-    async function init() {
-      console.log('🚀 Iniciando dashboard...');
-      
-      // Verificar sesión
-      const session = verificarSesion();
-      if (!session) {
-        console.log('❌ Sin sesión válida. Redirigiendo al login...');
-        Swal.fire({
-          icon: 'warning',
-          title: 'Sesión no encontrada',
-          text: 'Por favor inicia sesión para continuar',
-          confirmButtonColor: '#3b82f6'
-        }).then(() => {
-          window.location.href = 'index.html';
-        });
-        return;
-      }
-      
-      // Cargar base de datos
-      const dbLoaded = await cargarBaseDeDatos();
-      if (!dbLoaded) {
-        document.getElementById('loadingScreen').classList.add('hidden');
-        return;
-      }
-      
-      // Cargar datos del usuario
-      const userLoaded = cargarDatosUsuario(session);
-      if (!userLoaded) {
-        document.getElementById('loadingScreen').classList.add('hidden');
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al cargar usuario',
-          text: 'No se pudieron cargar los datos del usuario',
-          confirmButtonColor: '#dc3545'
-        }).then(() => {
-          window.location.href = 'index.html';
-        });
-        return;
-      }
-      
-      // Cargar estadísticas y actividades
-      loadStats();
-      loadRecentActivities();
-      
-      // Setup event listeners
-      setupEventListeners();
-      checkScreenSize();
-      
-      // Ocultar loading screen
-      document.getElementById('loadingScreen').classList.add('hidden');
-      console.log('✅ Dashboard inicializado correctamente');
-    }
-
-    // Ejecutar al cargar la página
-    document.addEventListener('DOMContentLoaded', init);
     window.addEventListener('load', checkScreenSize);
     window.addEventListener('resize', checkScreenSize);
-
-    // Manejar navegación con caché
-    window.addEventListener('pageshow', function(event) {
-      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-        const session = verificarSesion();
-        if (session) {
-          location.reload();
-        } else {
-          window.location.href = 'index.html';
-        }
-      }
-    });
   </script>
 </body>
 </html>
