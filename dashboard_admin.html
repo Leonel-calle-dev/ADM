@@ -1599,7 +1599,7 @@
 
       let html = '';
       filteredUsers.forEach(user => {
-        const area = DATABASE.areas.find(a => a.id === user.area_id);
+        //const area = DATABASE.areas.find(a => a.id === user.area_id);
         const initials = user.nombre_completo.split(' ').map(n => n[0]).join('').substring(0, 2);
         const roleBadge = getRoleBadge(user.rol);
 
@@ -1615,7 +1615,6 @@
               </div>
             </td>
             <td><span class="badge ${roleBadge.class}">${roleBadge.text}</span></td>
-            <td>${area ? area.nombre : 'Sin área'}</td>
             <td>${user.telefono || 'N/A'}</td>
             <td><span class="badge ${user.activo ? 'badge-activo' : 'badge-inactivo'}">${user.activo ? 'Activo' : 'Inactivo'}</span></td>
             <td>
