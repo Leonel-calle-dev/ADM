@@ -1344,10 +1344,52 @@
 
     // Initialize
     document.addEventListener('DOMContentLoaded', async () => {
+      // Verificar sesión válida
+      const sessionData = sessionStorage.getItem('session_SAC');
+      if (!sessionData) {
+        // No hay sesión, redirigir al login
+        window.location.replace('index.html');
+        return;
+      }
+
+      try {
+        const session = JSON.parse(sessionData);
+        const ahora = new Date();
+        const expira = new Date(session.expira);
+        
+        // Verificar si la sesión expiró
+        if (ahora >= expira) {
+          sessionStorage.removeItem('session_SAC');
+          localStorage.removeItem('session_SAC_permanent');
+          localStorage.setItem('logout_motivo', 'expired');
+          window.location.replace('index.html?logout=1');
+          return;
+        }
+
+        // Verificar que sea administrador
+        if (session.rol !== 'administrador') {
+          sessionStorage.removeItem('session_SAC');
+          localStorage.removeItem('session_SAC_permanent');
+          alert('Acceso denegado: Esta página es solo para administradores');
+          window.location.replace('index.html');
+          return;
+        }
+      } catch (e) {
+        console.error('Error al verificar sesión:', e);
+        window.location.replace('index.html');
+        return;
+      }
+
       await loadDatabase();
       initAdmin();
       setupEventListeners();
       loadDashboard();
+
+      // Prevenir volver atrás después de cerrar sesión
+      window.history.pushState(null, '', window.location.href);
+      window.addEventListener('popstate', function() {
+        window.history.pushState(null, '', window.location.href);
+      });
     });
 
     async function loadDatabase() {
@@ -2190,7 +2232,15 @@
         color: 'white'
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = 'index.html';
+          // Limpiar todas las sesiones
+          sessionStorage.removeItem('session_SAC');
+          localStorage.removeItem('session_SAC_permanent');
+          
+          // Guardar motivo de logout
+          localStorage.setItem('logout_motivo', 'manual');
+          
+          // Prevenir que el navegador vuelva a esta página
+          window.location.replace('index.html?logout=1');
         }
       });
     }
