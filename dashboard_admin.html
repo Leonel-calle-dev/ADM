@@ -1173,12 +1173,6 @@
                 <option value="tecnico_sistemas">Técnico de Sistemas Esenciales</option>
               </select>
             </div>
-            <div class="form-group">
-              <label><i class="fas fa-building"></i> Área *</label>
-              <select class="form-control" id="userArea" required>
-                <!-- Areas will be populated dynamically -->
-              </select>
-            </div>
           </div>
 
           <div class="form-row">
@@ -1671,7 +1665,6 @@
         document.getElementById('userUsername').value = user.nombre_usuario;
         document.getElementById('userEmail').value = user.correo;
         document.getElementById('userRole').value = user.rol;
-        document.getElementById('userArea').value = user.area_id;
         document.getElementById('userPhone').value = user.telefono || '';
         document.getElementById('userCargo').value = user.cargo || '';
         document.getElementById('userActive').checked = user.activo;
@@ -1697,7 +1690,6 @@
       const username = document.getElementById('userUsername').value;
       const email = document.getElementById('userEmail').value;
       const rol = document.getElementById('userRole').value;
-      const area = document.getElementById('userArea').value;
       const phone = document.getElementById('userPhone').value;
       const cargo = document.getElementById('userCargo').value;
       const password = document.getElementById('userPassword').value;
@@ -1728,7 +1720,6 @@
             nombre_usuario: username,
             correo: email,
             rol: rol,
-            area_id: area,
             cargo: cargo,
             especialidad: specialty,
             telefono: phone,
@@ -1750,7 +1741,6 @@
           password: password,
           password_hash: `$2b$10$${btoa(password)}...`,
           rol: rol,
-          area_id: area,
           cargo: cargo,
           especialidad: specialty,
           telefono: phone,
