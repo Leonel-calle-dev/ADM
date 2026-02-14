@@ -1,1 +1,1151 @@
+{
+  "_info": {
+    "nombre": "Base de Datos — Sistema de Control y Seguimiento",
+    "unidad": "Unidad de Administración del Campus",
+    "version": "2.0.0",
+    "fecha_creacion": "2025-02-13",
+    "fecha_actualizacion": "2025-02-13",
+    "modulos": [
+      "M1 - Usuarios y Autenticación",
+      "M2 - Registro de Actividades",
+      "M3 - Seguimiento y Supervisión",
+      "M4 - Reportes",
+      "M5 - Repositorio de Evidencias",
+      "M6 - Configuración y Auditoría"
+    ]
+  },
 
+  "usuarios": [
+    {
+      "id": "USR-001",
+      "nombre_completo": "Carlos Ramírez Mendoza",
+      "nombre_usuario": "c.ramirez",
+      "correo": "c.ramirez@campus.edu.bo",
+      "password": "Admin2025#",
+      "password_hash": "$2b$10$xK9mLpQr3TvWzN8uA1eJdO...",
+      "rol": "administrador",
+      "area_id": "AREA-001",
+      "cargo": "Director de Administración",
+      "especialidad": null,
+      "telefono": "591-71234567",
+      "foto_perfil": "uploads/perfiles/USR-001.jpg",
+      "activo": true,
+      "forzar_cambio_password": false,
+      "intentos_fallidos": 0,
+      "bloqueado": false,
+      "fecha_registro": "2025-01-10T08:00:00Z",
+      "ultimo_acceso": "2025-02-13T07:45:22Z",
+      "created_at": "2025-01-10T08:00:00Z",
+      "updated_at": "2025-02-13T07:45:22Z"
+    },
+    {
+      "id": "USR-002",
+      "nombre_completo": "María Elena Quispe Choque",
+      "nombre_usuario": "m.quispe",
+      "correo": "m.quispe@campus.edu.bo",
+      "password": "Super2025#",
+      "password_hash": "$2b$10$aR7nKpMs4UwXzO9vB2fLeP...",
+      "rol": "supervisor",
+      "area_id": "AREA-002",
+      "cargo": "Jefa de Infraestructura y Mantenimiento",
+      "especialidad": null,
+      "telefono": "591-72345678",
+      "foto_perfil": "uploads/perfiles/USR-002.jpg",
+      "activo": true,
+      "forzar_cambio_password": false,
+      "intentos_fallidos": 0,
+      "bloqueado": false,
+      "fecha_registro": "2025-01-10T08:30:00Z",
+      "ultimo_acceso": "2025-02-13T08:10:05Z",
+      "created_at": "2025-01-10T08:30:00Z",
+      "updated_at": "2025-02-13T08:10:05Z"
+    },
+    {
+      "id": "USR-003",
+      "nombre_completo": "Jorge Luis Mamani Flores",
+      "nombre_usuario": "j.mamani",
+      "correo": "j.mamani@campus.edu.bo",
+      "password": "Personal25#",
+      "password_hash": "$2b$10$bS8oLqNt5VxYaP0wC3gMfQ...",
+      "rol": "personal",
+      "area_id": "AREA-002",
+      "cargo": "Técnico Audiovisual y Tecnológico",
+      "especialidad": "audiovisual_tecnologico",
+      "telefono": "591-73456789",
+      "foto_perfil": null,
+      "activo": true,
+      "forzar_cambio_password": true,
+      "intentos_fallidos": 0,
+      "bloqueado": false,
+      "fecha_registro": "2025-01-15T09:00:00Z",
+      "ultimo_acceso": "2025-02-12T16:30:00Z",
+      "created_at": "2025-01-15T09:00:00Z",
+      "updated_at": "2025-02-12T16:30:00Z"
+    },
+    {
+      "id": "USR-004",
+      "nombre_completo": "Ana Patricia Torrez Vidal",
+      "nombre_usuario": "a.torrez",
+      "correo": "a.torrez@campus.edu.bo",
+      "password": "Personal25#",
+      "password_hash": "$2b$10$cT9pMrOu6WyZbQ1xD4hNgR...",
+      "rol": "personal",
+      "area_id": "AREA-003",
+      "cargo": "Técnica en Fontanería y Electricidad",
+      "especialidad": "fontaneria_electricidad",
+      "telefono": "591-74567890",
+      "foto_perfil": "uploads/perfiles/USR-004.jpg",
+      "activo": true,
+      "forzar_cambio_password": false,
+      "intentos_fallidos": 0,
+      "bloqueado": false,
+      "fecha_registro": "2025-01-15T09:15:00Z",
+      "ultimo_acceso": "2025-02-13T09:00:00Z",
+      "created_at": "2025-01-15T09:15:00Z",
+      "updated_at": "2025-02-13T09:00:00Z"
+    },
+    {
+      "id": "USR-005",
+      "nombre_completo": "Roberto Condori Apaza",
+      "nombre_usuario": "r.condori",
+      "correo": "r.condori@campus.edu.bo",
+      "password": "Visor2025#",
+      "password_hash": "$2b$10$dU0qNsOv7XzAcR2yE5iOhS...",
+      "rol": "visor",
+      "area_id": "AREA-001",
+      "cargo": "Auditor Interno",
+      "especialidad": null,
+      "telefono": "591-75678901",
+      "foto_perfil": null,
+      "activo": true,
+      "forzar_cambio_password": false,
+      "intentos_fallidos": 0,
+      "bloqueado": false,
+      "fecha_registro": "2025-01-20T10:00:00Z",
+      "ultimo_acceso": "2025-02-10T11:00:00Z",
+      "created_at": "2025-01-20T10:00:00Z",
+      "updated_at": "2025-02-10T11:00:00Z"
+    },
+    {
+      "id": "USR-006",
+      "nombre_completo": "Pedro Villarroel Ticona",
+      "nombre_usuario": "p.villarroel",
+      "correo": "p.villarroel@campus.edu.bo",
+      "password": "Personal25#",
+      "password_hash": "$2b$10$eV1rOtPw8YaAcS3zF6jPhT...",
+      "rol": "personal",
+      "area_id": "AREA-002",
+      "cargo": "Técnico en Mobiliario e Inmuebles",
+      "especialidad": "mobiliario_inmuebles",
+      "telefono": "591-76789012",
+      "foto_perfil": null,
+      "activo": true,
+      "forzar_cambio_password": false,
+      "intentos_fallidos": 0,
+      "bloqueado": false,
+      "fecha_registro": "2025-01-15T09:30:00Z",
+      "ultimo_acceso": "2025-02-13T07:00:00Z",
+      "created_at": "2025-01-15T09:30:00Z",
+      "updated_at": "2025-02-13T07:00:00Z"
+    },
+    {
+      "id": "USR-007",
+      "nombre_completo": "Lucía Fernández Chura",
+      "nombre_usuario": "l.fernandez",
+      "correo": "l.fernandez@campus.edu.bo",
+      "password": "Personal25#",
+      "password_hash": "$2b$10$fW2sQuQx9ZbBdT4aG7kQiU...",
+      "rol": "personal",
+      "area_id": "AREA-004",
+      "cargo": "Técnica en Señalética y Mantenimiento Integral",
+      "especialidad": "señaletica_integral",
+      "telefono": "591-77890123",
+      "foto_perfil": null,
+      "activo": true,
+      "forzar_cambio_password": false,
+      "intentos_fallidos": 0,
+      "bloqueado": false,
+      "fecha_registro": "2025-01-15T09:45:00Z",
+      "ultimo_acceso": "2025-02-13T06:45:00Z",
+      "created_at": "2025-01-15T09:45:00Z",
+      "updated_at": "2025-02-13T06:45:00Z"
+    }
+  ],
+
+  "sesiones": [
+    {
+      "id": "SES-001",
+      "usuario_id": "USR-001",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "ip_origen": "192.168.1.105",
+      "dispositivo": "Chrome 120 / Windows 11",
+      "activa": true,
+      "fecha_inicio": "2025-02-13T07:45:22Z",
+      "fecha_expiracion": "2025-02-13T19:45:22Z",
+      "created_at": "2025-02-13T07:45:22Z"
+    }
+  ],
+
+  "recuperacion_password": [
+    {
+      "id": "RPASS-001",
+      "usuario_id": "USR-003",
+      "token": "f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8",
+      "usado": false,
+      "fecha_expiracion": "2025-02-14T10:00:00Z",
+      "created_at": "2025-02-13T10:00:00Z"
+    }
+  ],
+
+  "areas": [
+    {
+      "id": "AREA-001",
+      "nombre": "Dirección Administrativa",
+      "descripcion": "Área de dirección y coordinación general del campus",
+      "responsable_id": "USR-001",
+      "activo": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "AREA-002",
+      "nombre": "Infraestructura y Mantenimiento",
+      "descripcion": "Audiovisual, tecnología y mobiliario del campus",
+      "responsable_id": "USR-002",
+      "activo": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "AREA-003",
+      "nombre": "Servicios Técnicos",
+      "descripcion": "Fontanería, agua potable y electricidad del campus",
+      "responsable_id": "USR-002",
+      "activo": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "AREA-004",
+      "nombre": "Señalética y Servicios Generales",
+      "descripcion": "Señalética, organización espacial y rondas de inspección diaria",
+      "responsable_id": "USR-002",
+      "activo": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  ],
+
+  "categorias_mantenimiento": [
+    {
+      "id": "CAT-001",
+      "nombre": "Audiovisual y Tecnológico",
+      "descripcion": "Proyectores, sistemas de sonido, firmware y conectividad",
+      "icono": "📽️",
+      "color": "#6366f1",
+      "responsable_especialidad": "audiovisual_tecnologico",
+      "activo": true
+    },
+    {
+      "id": "CAT-002",
+      "nombre": "Mobiliario e Inmuebles",
+      "descripcion": "Sillas, mesas, estructuras, pintura y elementos físicos de las aulas",
+      "icono": "🪑",
+      "color": "#f59e0b",
+      "responsable_especialidad": "mobiliario_inmuebles",
+      "activo": true
+    },
+    {
+      "id": "CAT-003",
+      "nombre": "Fontanería y Agua",
+      "descripcion": "Tuberías, grifería, drenajes, tanques y agua potable",
+      "icono": "🚿",
+      "color": "#0ea5e9",
+      "responsable_especialidad": "fontaneria_electricidad",
+      "activo": true
+    },
+    {
+      "id": "CAT-004",
+      "nombre": "Electricidad",
+      "descripcion": "Tableros eléctricos, luminarias, interruptores y puesta a tierra",
+      "icono": "⚡",
+      "color": "#eab308",
+      "responsable_especialidad": "fontaneria_electricidad",
+      "activo": true
+    },
+    {
+      "id": "CAT-005",
+      "nombre": "Señalética y Organización Espacial",
+      "descripcion": "Placas de identificación, señalética de evacuación y organización de espacios",
+      "icono": "🪧",
+      "color": "#10b981",
+      "responsable_especialidad": "señaletica_integral",
+      "activo": true
+    },
+    {
+      "id": "CAT-006",
+      "nombre": "Mantenimiento Integral",
+      "descripcion": "Rondas de inspección diaria, emergencias generales y revisión global del campus",
+      "icono": "🏫",
+      "color": "#64748b",
+      "responsable_especialidad": "señaletica_integral",
+      "activo": true
+    }
+  ],
+
+  "tipos_mantenimiento": [
+    {
+      "id": "TMANT-001",
+      "nombre": "Correctivo",
+      "descripcion": "Atención a fallas ya ocurridas según reporte",
+      "icono": "🛠️",
+      "color": "#ef4444",
+      "urgencia": "alta",
+      "frecuencia_referencia": "Según reporte de falla"
+    },
+    {
+      "id": "TMANT-002",
+      "nombre": "Correctivo de Emergencia",
+      "descripcion": "Atención inmediata 24/7 a fallas críticas",
+      "icono": "🚨",
+      "color": "#dc2626",
+      "urgencia": "critica",
+      "frecuencia_referencia": "Inmediato (24/7)"
+    },
+    {
+      "id": "TMANT-003",
+      "nombre": "Preventivo",
+      "descripcion": "Mantenimiento programado para evitar fallas futuras",
+      "icono": "🔧",
+      "color": "#2563eb",
+      "urgencia": "media",
+      "frecuencia_referencia": "Mensual / Trimestral / Semestral / Anual"
+    },
+    {
+      "id": "TMANT-004",
+      "nombre": "Preventivo Rutinario",
+      "descripcion": "Inspecciones y rondas periódicas del estado general",
+      "icono": "👁️",
+      "color": "#0ea5e9",
+      "urgencia": "baja",
+      "frecuencia_referencia": "Diario / Semanal"
+    },
+    {
+      "id": "TMANT-005",
+      "nombre": "Predictivo",
+      "descripcion": "Monitoreo y análisis para anticipar fallas antes de que ocurran",
+      "icono": "📊",
+      "color": "#8b5cf6",
+      "urgencia": "media",
+      "frecuencia_referencia": "Continuo / Semanal / Trimestral / Semestral / Anual"
+    }
+  ],
+
+  "tareas_catalogo": [
+    {
+      "id": "TAREA-001", "categoria_id": "CAT-001", "tipo_mantenimiento_id": "TMANT-001",
+      "nombre": "Reparación de proyectores con fallas",
+      "descripcion": "Diagnóstico y reparación de proyectores con fallas de encendido, imagen o conexión",
+      "frecuencia": "Según reporte de falla", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-002", "categoria_id": "CAT-001", "tipo_mantenimiento_id": "TMANT-001",
+      "nombre": "Reemplazo de lámparas quemadas",
+      "descripcion": "Cambio de lámparas de proyectores agotadas o con falla",
+      "frecuencia": "Según reporte de falla", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-003", "categoria_id": "CAT-001", "tipo_mantenimiento_id": "TMANT-001",
+      "nombre": "Corrección de fallas en sistema de sonido",
+      "descripcion": "Diagnóstico y reparación de micrófonos, amplificadores y parlantes",
+      "frecuencia": "Según reporte de falla", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-004", "categoria_id": "CAT-001", "tipo_mantenimiento_id": "TMANT-003",
+      "nombre": "Limpieza de lentes y ventilación de equipos",
+      "descripcion": "Limpieza de lentes y rejillas de proyectores para evitar sobrecalentamiento",
+      "frecuencia": "Mensual", "frecuencia_tipo": "mensual", "activo": true
+    },
+    {
+      "id": "TAREA-005", "categoria_id": "CAT-001", "tipo_mantenimiento_id": "TMANT-003",
+      "nombre": "Actualización de firmware",
+      "descripcion": "Actualización del software interno de proyectores y equipos de sonido",
+      "frecuencia": "Trimestral", "frecuencia_tipo": "trimestral", "activo": true
+    },
+    {
+      "id": "TAREA-006", "categoria_id": "CAT-001", "tipo_mantenimiento_id": "TMANT-003",
+      "nombre": "Verificación de conexiones y cables",
+      "descripcion": "Revisión del estado de cables HDMI, VGA, USB y conectores de audio en aulas",
+      "frecuencia": "Mensual", "frecuencia_tipo": "mensual", "activo": true
+    },
+    {
+      "id": "TAREA-007", "categoria_id": "CAT-001", "tipo_mantenimiento_id": "TMANT-005",
+      "nombre": "Monitoreo del estado de lámparas (horas de uso)",
+      "descripcion": "Registro y control de horas acumuladas de uso de cada lámpara de proyector",
+      "frecuencia": "Continuo / Semanal", "frecuencia_tipo": "semanal", "activo": true
+    },
+    {
+      "id": "TAREA-008", "categoria_id": "CAT-001", "tipo_mantenimiento_id": "TMANT-005",
+      "nombre": "Análisis de temperatura de equipos en uso prolongado",
+      "descripcion": "Medición de temperatura de proyectores en sesiones largas para detectar riesgos",
+      "frecuencia": "Continuo / Semanal", "frecuencia_tipo": "semanal", "activo": true
+    },
+    {
+      "id": "TAREA-009", "categoria_id": "CAT-002", "tipo_mantenimiento_id": "TMANT-001",
+      "nombre": "Reparación de sillas y mesas rotas",
+      "descripcion": "Reparación de mobiliario con patas sueltas, asientos dañados o estructuras fracturadas",
+      "frecuencia": "Según reporte de daño", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-010", "categoria_id": "CAT-002", "tipo_mantenimiento_id": "TMANT-001",
+      "nombre": "Fijación de tornillería suelta",
+      "descripcion": "Ajuste y reemplazo de tornillos y sujetadores en mobiliario y estructuras",
+      "frecuencia": "Según reporte de daño", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-011", "categoria_id": "CAT-002", "tipo_mantenimiento_id": "TMANT-001",
+      "nombre": "Cambio de bisagras dañadas",
+      "descripcion": "Reemplazo de bisagras de puertas, armarios y muebles con falla o desgaste",
+      "frecuencia": "Según reporte de daño", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-012", "categoria_id": "CAT-002", "tipo_mantenimiento_id": "TMANT-003",
+      "nombre": "Lijado y pintura programada de aulas",
+      "descripcion": "Preparación y aplicación de pintura en paredes y puertas según cronograma",
+      "frecuencia": "Semestral", "frecuencia_tipo": "semestral", "activo": true
+    },
+    {
+      "id": "TAREA-013", "categoria_id": "CAT-002", "tipo_mantenimiento_id": "TMANT-003",
+      "nombre": "Revisión estructural de mobiliario",
+      "descripcion": "Inspección de la integridad estructural de mesas, sillas y armarios de todo el campus",
+      "frecuencia": "Anual", "frecuencia_tipo": "anual", "activo": true
+    },
+    {
+      "id": "TAREA-014", "categoria_id": "CAT-002", "tipo_mantenimiento_id": "TMANT-003",
+      "nombre": "Lubricación de bisagras y ruedas",
+      "descripcion": "Aplicación de lubricante en bisagras de puertas y ruedas de mobiliario rodante",
+      "frecuencia": "Semestral", "frecuencia_tipo": "semestral", "activo": true
+    },
+    {
+      "id": "TAREA-015", "categoria_id": "CAT-002", "tipo_mantenimiento_id": "TMANT-005",
+      "nombre": "Inspección visual para detectar desgaste temprano",
+      "descripcion": "Revisión periódica del estado del mobiliario para identificar deterioro anticipado",
+      "frecuencia": "Trimestral", "frecuencia_tipo": "trimestral", "activo": true
+    },
+    {
+      "id": "TAREA-016", "categoria_id": "CAT-003", "tipo_mantenimiento_id": "TMANT-001",
+      "nombre": "Reparación de fugas visibles",
+      "descripcion": "Localización y reparación de fugas en tuberías y accesorios sanitarios",
+      "frecuencia": "Según reporte de falla", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-017", "categoria_id": "CAT-003", "tipo_mantenimiento_id": "TMANT-001",
+      "nombre": "Desatasco de drenajes",
+      "descripcion": "Limpieza y desobstrucción de desagües, sifones y colectores",
+      "frecuencia": "Según reporte de falla", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-018", "categoria_id": "CAT-003", "tipo_mantenimiento_id": "TMANT-001",
+      "nombre": "Reemplazo de griferías con goteo",
+      "descripcion": "Cambio de llaves y grifos que presenten goteo continuo o falla en el corte",
+      "frecuencia": "Según reporte de falla", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-019", "categoria_id": "CAT-003", "tipo_mantenimiento_id": "TMANT-003",
+      "nombre": "Verificación de presión y calidad del agua",
+      "descripcion": "Medición de presión en puntos críticos y verificación de calidad potable",
+      "frecuencia": "Mensual", "frecuencia_tipo": "mensual", "activo": true
+    },
+    {
+      "id": "TAREA-020", "categoria_id": "CAT-003", "tipo_mantenimiento_id": "TMANT-003",
+      "nombre": "Limpieza de tanques de almacenamiento",
+      "descripcion": "Vaciado, limpieza interior y desinfección de cisternas y tanques elevados",
+      "frecuencia": "Semestral", "frecuencia_tipo": "semestral", "activo": true
+    },
+    {
+      "id": "TAREA-021", "categoria_id": "CAT-003", "tipo_mantenimiento_id": "TMANT-003",
+      "nombre": "Revisión de válvulas y sellos",
+      "descripcion": "Inspección y ajuste de válvulas de corte, flotador y sellos de inodoros",
+      "frecuencia": "Mensual", "frecuencia_tipo": "mensual", "activo": true
+    },
+    {
+      "id": "TAREA-022", "categoria_id": "CAT-003", "tipo_mantenimiento_id": "TMANT-005",
+      "nombre": "Monitoreo de consumo anómalo de agua (posibles fugas ocultas)",
+      "descripcion": "Análisis de medidores para detectar incrementos inusuales que indiquen fugas ocultas",
+      "frecuencia": "Trimestral", "frecuencia_tipo": "trimestral", "activo": true
+    },
+    {
+      "id": "TAREA-023", "categoria_id": "CAT-004", "tipo_mantenimiento_id": "TMANT-001",
+      "nombre": "Reparación de cortocircuitos",
+      "descripcion": "Diagnóstico y corrección de cortocircuitos en instalaciones eléctricas",
+      "frecuencia": "Según reporte de falla", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-024", "categoria_id": "CAT-004", "tipo_mantenimiento_id": "TMANT-001",
+      "nombre": "Reemplazo de interruptores y enchufes quemados",
+      "descripcion": "Cambio de interruptores y tomacorrientes dañados por sobrecarga",
+      "frecuencia": "Según reporte de falla", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-025", "categoria_id": "CAT-004", "tipo_mantenimiento_id": "TMANT-001",
+      "nombre": "Restauración de alumbrado tras falla",
+      "descripcion": "Restitución del sistema de iluminación en zonas sin luz por falla eléctrica",
+      "frecuencia": "Según reporte de falla", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-026", "categoria_id": "CAT-004", "tipo_mantenimiento_id": "TMANT-003",
+      "nombre": "Verificación de puestas a tierra",
+      "descripcion": "Medición de resistencia de tierra en tableros y equipos para garantizar protección",
+      "frecuencia": "Trimestral", "frecuencia_tipo": "trimestral", "activo": true
+    },
+    {
+      "id": "TAREA-027", "categoria_id": "CAT-004", "tipo_mantenimiento_id": "TMANT-003",
+      "nombre": "Limpieza de tableros eléctricos",
+      "descripcion": "Soplado, limpieza y revisión de conexiones en tableros de distribución eléctrica",
+      "frecuencia": "Semestral", "frecuencia_tipo": "semestral", "activo": true
+    },
+    {
+      "id": "TAREA-028", "categoria_id": "CAT-004", "tipo_mantenimiento_id": "TMANT-003",
+      "nombre": "Prueba de funcionamiento de luminarias",
+      "descripcion": "Verificación del encendido e intensidad de todas las luminarias del campus",
+      "frecuencia": "Trimestral", "frecuencia_tipo": "trimestral", "activo": true
+    },
+    {
+      "id": "TAREA-029", "categoria_id": "CAT-004", "tipo_mantenimiento_id": "TMANT-005",
+      "nombre": "Termografía eléctrica para detectar puntos calientes",
+      "descripcion": "Uso de cámara termográfica para identificar conexiones con temperatura anormal",
+      "frecuencia": "Semestral", "frecuencia_tipo": "semestral", "activo": true
+    },
+    {
+      "id": "TAREA-030", "categoria_id": "CAT-005", "tipo_mantenimiento_id": "TMANT-001",
+      "nombre": "Reposición de placas rotas, desprendidas o vandalizadas",
+      "descripcion": "Reemplazo de señalética dañada o vandalizadas en todo el campus",
+      "frecuencia": "Según reporte o auditoría", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-031", "categoria_id": "CAT-005", "tipo_mantenimiento_id": "TMANT-001",
+      "nombre": "Corrección de señalética mal instalada",
+      "descripcion": "Corrección de placas en posición incorrecta o con información errónea",
+      "frecuencia": "Según reporte o auditoría", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-032", "categoria_id": "CAT-005", "tipo_mantenimiento_id": "TMANT-001",
+      "nombre": "Actualización ante cambios de numeración o nomenclatura",
+      "descripcion": "Actualización de placas de aulas y oficinas ante cambios administrativos",
+      "frecuencia": "Según reporte o auditoría", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-033", "categoria_id": "CAT-005", "tipo_mantenimiento_id": "TMANT-003",
+      "nombre": "Instalación inicial de señalética en nuevas aulas",
+      "descripcion": "Montaje de señalética completa en espacios nuevos o remodelados",
+      "frecuencia": "Semestral / según obra", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-034", "categoria_id": "CAT-005", "tipo_mantenimiento_id": "TMANT-003",
+      "nombre": "Limpieza y conservación de vinilos y placas",
+      "descripcion": "Limpieza de señalética vinílica y placas para preservar visibilidad",
+      "frecuencia": "Semestral", "frecuencia_tipo": "semestral", "activo": true
+    },
+    {
+      "id": "TAREA-035", "categoria_id": "CAT-005", "tipo_mantenimiento_id": "TMANT-003",
+      "nombre": "Verificación de visibilidad y legibilidad",
+      "descripcion": "Revisión de que toda la señalética sea claramente visible y legible",
+      "frecuencia": "Anual", "frecuencia_tipo": "anual", "activo": true
+    },
+    {
+      "id": "TAREA-036", "categoria_id": "CAT-005", "tipo_mantenimiento_id": "TMANT-003",
+      "nombre": "Actualización normativa (señalética de evacuación)",
+      "descripcion": "Revisión y actualización de señalética de rutas de evacuación según normativa",
+      "frecuencia": "Anual", "frecuencia_tipo": "anual", "activo": true
+    },
+    {
+      "id": "TAREA-037", "categoria_id": "CAT-005", "tipo_mantenimiento_id": "TMANT-005",
+      "nombre": "Auditoría de desgaste por exposición solar y tráfico humano",
+      "descripcion": "Evaluación periódica del deterioro de señalética exterior",
+      "frecuencia": "Anual", "frecuencia_tipo": "anual", "activo": true
+    },
+    {
+      "id": "TAREA-038", "categoria_id": "CAT-006", "tipo_mantenimiento_id": "TMANT-002",
+      "nombre": "Atención inmediata a emergencias (fuga grave, falla eléctrica crítica)",
+      "descripcion": "Respuesta de emergencia 24/7 ante situaciones de riesgo inmediato",
+      "frecuencia": "Inmediato (24/7)", "frecuencia_tipo": "bajo_demanda", "activo": true
+    },
+    {
+      "id": "TAREA-039", "categoria_id": "CAT-006", "tipo_mantenimiento_id": "TMANT-004",
+      "nombre": "Rondas diarias de inspección visual en aulas",
+      "descripcion": "Recorrido diario por todas las aulas para detectar fallas visibles",
+      "frecuencia": "Diario", "frecuencia_tipo": "diario", "activo": true
+    },
+    {
+      "id": "TAREA-040", "categoria_id": "CAT-006", "tipo_mantenimiento_id": "TMANT-004",
+      "nombre": "Ronda semanal de inspección en áreas comunes",
+      "descripcion": "Revisión semanal de pasillos, baños, patios y áreas comunes del campus",
+      "frecuencia": "Semanal", "frecuencia_tipo": "semanal", "activo": true
+    }
+  ],
+
+  "actividades": [
+    {
+      "id": "ACT-001",
+      "titulo": "Reparación de proyector Epson — Aula 204",
+      "descripcion": "El proyector presentaba imagen parpadeante y apagados intempestivos. Se diagnosticó lámpara próxima a agotar vida útil (2800 hrs registradas de 3000 máx). Se realizó reemplazo de lámpara y limpieza de lentes y ventilación.",
+      "tarea_id": "TAREA-001",
+      "categoria_id": "CAT-001",
+      "tipo_mantenimiento_id": "TMANT-001",
+      "area_id": "AREA-002",
+      "usuario_id": "USR-003",
+      "fecha_actividad": "2025-02-12",
+      "hora_inicio": "08:00",
+      "hora_fin": "10:30",
+      "duracion_horas": 2.5,
+      "lugar": "Aula 204 — Bloque B",
+      "estado": "aprobado",
+      "prioridad": "alta",
+      "materiales_usados": ["Lámpara Epson ELPLP78", "Paño microfibra", "Soplador de aire"],
+      "observacion_empleado": "Se reemplazó lámpara y limpió sistema de ventilación. Se recomienda monitoreo mensual del resto de proyectores.",
+      "observacion_supervisor": "Trabajo bien ejecutado. Registrar en bitácora de horas de lámparas.",
+      "supervisor_id": "USR-002",
+      "fecha_envio": "2025-02-12T10:45:00Z",
+      "fecha_revision": "2025-02-12T14:00:00Z",
+      "evidencias": ["EVI-001", "EVI-002"],
+      "created_at": "2025-02-12T07:55:00Z",
+      "updated_at": "2025-02-12T14:00:00Z"
+    },
+    {
+      "id": "ACT-002",
+      "titulo": "Corrección de falla en sistema de sonido — Auditorio Principal",
+      "descripcion": "Se reportó ausencia de audio en micrófono inalámbrico durante evento. Se identificó falla en receptor de la base. Se reemplazó receptor y realizó prueba completa del sistema.",
+      "tarea_id": "TAREA-003",
+      "categoria_id": "CAT-001",
+      "tipo_mantenimiento_id": "TMANT-001",
+      "area_id": "AREA-002",
+      "usuario_id": "USR-003",
+      "fecha_actividad": "2025-02-13",
+      "hora_inicio": "07:00",
+      "hora_fin": "09:00",
+      "duracion_horas": 2.0,
+      "lugar": "Auditorio Principal",
+      "estado": "enviado",
+      "prioridad": "alta",
+      "materiales_usados": ["Receptor inalámbrico Shure", "Pilas AA", "Cable XLR"],
+      "observacion_empleado": "Sistema restaurado a tiempo para el evento de las 10:00. Receptor antiguo enviado a revisión técnica.",
+      "observacion_supervisor": null,
+      "supervisor_id": null,
+      "fecha_envio": "2025-02-13T09:15:00Z",
+      "fecha_revision": null,
+      "evidencias": ["EVI-003", "EVI-004"],
+      "created_at": "2025-02-13T06:55:00Z",
+      "updated_at": "2025-02-13T09:15:00Z"
+    },
+    {
+      "id": "ACT-003",
+      "titulo": "Reparación de 8 sillas rotas — Aulas 101 a 108",
+      "descripcion": "Se atendió reporte de mobiliario deteriorado en Bloque A. Se repararon 8 sillas con patas sueltas o rotas: soldadura en 5, cambio de perno en 3 y ajuste general de tornillería.",
+      "tarea_id": "TAREA-009",
+      "categoria_id": "CAT-002",
+      "tipo_mantenimiento_id": "TMANT-001",
+      "area_id": "AREA-002",
+      "usuario_id": "USR-006",
+      "fecha_actividad": "2025-02-11",
+      "hora_inicio": "08:00",
+      "hora_fin": "12:00",
+      "duracion_horas": 4.0,
+      "lugar": "Bloque A — Aulas 101 a 108",
+      "estado": "aprobado",
+      "prioridad": "media",
+      "materiales_usados": ["Soldadura eléctrica", "Pernos M8 x6", "Llave de tuercas", "Sellador epoxi"],
+      "observacion_empleado": "8 sillas reparadas. 2 sillas con daño estructural severo: se recomienda darlas de baja.",
+      "observacion_supervisor": "Aprobado. Elevar solicitud de baja para las 2 sillas irrecuperables.",
+      "supervisor_id": "USR-002",
+      "fecha_envio": "2025-02-11T12:30:00Z",
+      "fecha_revision": "2025-02-11T15:00:00Z",
+      "evidencias": ["EVI-005", "EVI-006"],
+      "created_at": "2025-02-11T07:55:00Z",
+      "updated_at": "2025-02-11T15:00:00Z"
+    },
+    {
+      "id": "ACT-004",
+      "titulo": "Reparación de fuga de agua — Baños Bloque C",
+      "descripcion": "Se atendió reporte urgente de fuga en tubería bajo lavabo de baño varones Bloque C. Unión PVC fisurada. Se cortó suministro, reemplazó segmento de tubería y restableció el servicio.",
+      "tarea_id": "TAREA-016",
+      "categoria_id": "CAT-003",
+      "tipo_mantenimiento_id": "TMANT-001",
+      "area_id": "AREA-003",
+      "usuario_id": "USR-004",
+      "fecha_actividad": "2025-02-12",
+      "hora_inicio": "09:30",
+      "hora_fin": "11:45",
+      "duracion_horas": 2.25,
+      "lugar": "Baño Varones — Bloque C Planta Baja",
+      "estado": "aprobado",
+      "prioridad": "alta",
+      "materiales_usados": ["Tubo PVC 1/2\" x 50cm", "Codos PVC x2", "Pegamento PVC", "Teflón"],
+      "observacion_empleado": "Fuga corregida. Conexiones adyacentes revisadas, en buen estado.",
+      "observacion_supervisor": "Buen trabajo. Monitorear el sector 3 días.",
+      "supervisor_id": "USR-002",
+      "fecha_envio": "2025-02-12T12:00:00Z",
+      "fecha_revision": "2025-02-12T14:30:00Z",
+      "evidencias": ["EVI-007", "EVI-008"],
+      "created_at": "2025-02-12T09:25:00Z",
+      "updated_at": "2025-02-12T14:30:00Z"
+    },
+    {
+      "id": "ACT-005",
+      "titulo": "Reemplazo de interruptores quemados — Aula 310",
+      "descripcion": "Tablero local del aula 310 con interruptores con quemaduras y olor a plástico. Se cortó suministro, reemplazaron 3 interruptores termomagnéticos y verificó cableado del circuito.",
+      "tarea_id": "TAREA-024",
+      "categoria_id": "CAT-004",
+      "tipo_mantenimiento_id": "TMANT-001",
+      "area_id": "AREA-003",
+      "usuario_id": "USR-004",
+      "fecha_actividad": "2025-02-13",
+      "hora_inicio": "08:00",
+      "hora_fin": "10:30",
+      "duracion_horas": 2.5,
+      "lugar": "Aula 310 — Bloque D Piso 3",
+      "estado": "observado",
+      "prioridad": "alta",
+      "materiales_usados": ["Interruptor termomagnético 16A x3", "Destornillador dieléctrico", "Multímetro"],
+      "observacion_empleado": "Interruptores reemplazados. Cableado en buen estado. Aula habilitada.",
+      "observacion_supervisor": "Registrar en bitácora eléctrica y programar termografía en ese sector este mes.",
+      "supervisor_id": "USR-002",
+      "fecha_envio": "2025-02-13T10:45:00Z",
+      "fecha_revision": "2025-02-13T12:00:00Z",
+      "evidencias": ["EVI-009", "EVI-010"],
+      "created_at": "2025-02-13T07:55:00Z",
+      "updated_at": "2025-02-13T12:00:00Z"
+    },
+    {
+      "id": "ACT-006",
+      "titulo": "Reposición de señalética dañada — Pasillo Principal y Escaleras",
+      "descripcion": "Se detectaron 6 placas de señalética desprendidas o vandalizadas en pasillo principal y escalera de emergencia. Se instalaron 4 placas nuevas y repararon 2 con adhesivo industrial.",
+      "tarea_id": "TAREA-030",
+      "categoria_id": "CAT-005",
+      "tipo_mantenimiento_id": "TMANT-001",
+      "area_id": "AREA-004",
+      "usuario_id": "USR-007",
+      "fecha_actividad": "2025-02-13",
+      "hora_inicio": "07:00",
+      "hora_fin": "09:30",
+      "duracion_horas": 2.5,
+      "lugar": "Pasillo Principal y Escaleras — Edificio Central",
+      "estado": "enviado",
+      "prioridad": "media",
+      "materiales_usados": ["Placas señalética x4", "Adhesivo industrial", "Nivel de burbuja", "Taco fisher x8"],
+      "observacion_empleado": "6 señaléticas atendidas. Se recomienda reemplazar 3 placas más en pasillo lateral con decoloración.",
+      "observacion_supervisor": null,
+      "supervisor_id": null,
+      "fecha_envio": "2025-02-13T09:45:00Z",
+      "fecha_revision": null,
+      "evidencias": ["EVI-011", "EVI-012"],
+      "created_at": "2025-02-13T06:55:00Z",
+      "updated_at": "2025-02-13T09:45:00Z"
+    },
+    {
+      "id": "ACT-007",
+      "titulo": "Ronda diaria de inspección — Aulas Bloque A y B",
+      "descripcion": "Recorrido de inspección visual por 24 aulas de bloques A y B. Estado de mobiliario, iluminación, proyectores, puertas y ventanas. Detectadas 2 luminarias fundidas en A-106 y grifo con goteo en B-Baño.",
+      "tarea_id": "TAREA-039",
+      "categoria_id": "CAT-006",
+      "tipo_mantenimiento_id": "TMANT-004",
+      "area_id": "AREA-004",
+      "usuario_id": "USR-007",
+      "fecha_actividad": "2025-02-13",
+      "hora_inicio": "06:30",
+      "hora_fin": "08:00",
+      "duracion_horas": 1.5,
+      "lugar": "Bloques A y B — Todas las plantas",
+      "estado": "aprobado",
+      "prioridad": "baja",
+      "materiales_usados": [],
+      "observacion_empleado": "2 luminarias fundidas en A-106 y grifo con goteo en baño B-Planta baja. Ambos reportados.",
+      "observacion_supervisor": "Ronda correctamente registrada. Fallas derivadas a técnicos correspondientes.",
+      "supervisor_id": "USR-002",
+      "fecha_envio": "2025-02-13T08:10:00Z",
+      "fecha_revision": "2025-02-13T09:00:00Z",
+      "evidencias": ["EVI-013"],
+      "created_at": "2025-02-13T06:25:00Z",
+      "updated_at": "2025-02-13T09:00:00Z"
+    },
+    {
+      "id": "ACT-008",
+      "titulo": "Monitoreo de horas de uso — Lámparas proyectores Bloque B",
+      "descripcion": "Lectura de horas acumuladas en 12 proyectores del Bloque B. Se identificaron 2 proyectores con lámparas próximas al límite: B-208 (2680 hrs) y B-211 (2730 hrs de 3000 máx).",
+      "tarea_id": "TAREA-007",
+      "categoria_id": "CAT-001",
+      "tipo_mantenimiento_id": "TMANT-005",
+      "area_id": "AREA-002",
+      "usuario_id": "USR-003",
+      "fecha_actividad": "2025-02-10",
+      "hora_inicio": "14:00",
+      "hora_fin": "16:00",
+      "duracion_horas": 2.0,
+      "lugar": "Bloque B — Aulas 201 a 212",
+      "estado": "aprobado",
+      "prioridad": "media",
+      "materiales_usados": [],
+      "observacion_empleado": "B-208 (2680 hrs) y B-211 (2730 hrs) requieren reemplazo de lámpara próximamente.",
+      "observacion_supervisor": "Aprobado. Solicitar lámparas de repuesto al almacén esta semana.",
+      "supervisor_id": "USR-002",
+      "fecha_envio": "2025-02-10T16:15:00Z",
+      "fecha_revision": "2025-02-10T17:00:00Z",
+      "evidencias": ["EVI-014", "EVI-015"],
+      "created_at": "2025-02-10T13:55:00Z",
+      "updated_at": "2025-02-10T17:00:00Z"
+    }
+  ],
+
+  "bitacora_equipos": [
+    {
+      "id": "BIT-001",
+      "equipo": "Proyector Epson EB-X41",
+      "codigo_equipo": "PROY-B208",
+      "ubicacion": "Aula B-208",
+      "horas_uso_lampara": 2680,
+      "horas_limite_lampara": 3000,
+      "porcentaje_vida_util": 89.3,
+      "ultima_lectura": "2025-02-10",
+      "estado_lampara": "advertencia",
+      "proximo_reemplazo_estimado": "2025-03-10",
+      "actividad_referencia": "ACT-008"
+    },
+    {
+      "id": "BIT-002",
+      "equipo": "Proyector Epson EB-X41",
+      "codigo_equipo": "PROY-B211",
+      "ubicacion": "Aula B-211",
+      "horas_uso_lampara": 2730,
+      "horas_limite_lampara": 3000,
+      "porcentaje_vida_util": 91.0,
+      "ultima_lectura": "2025-02-10",
+      "estado_lampara": "critico",
+      "proximo_reemplazo_estimado": "2025-02-28",
+      "actividad_referencia": "ACT-008"
+    }
+  ],
+
+  "evidencias": [
+    {
+      "id": "EVI-001", "actividad_id": "ACT-001", "usuario_id": "USR-003",
+      "nombre_original": "proyector_b204_antes.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-001_EVI-001.jpg",
+      "tipo_archivo": "image/jpeg", "tamaño_bytes": 2457600,
+      "descripcion": "Estado del proyector antes de la intervención",
+      "miniatura": "evidencias/thumbs/ACT-001_EVI-001_thumb.jpg",
+      "created_at": "2025-02-12T08:30:00Z"
+    },
+    {
+      "id": "EVI-002", "actividad_id": "ACT-001", "usuario_id": "USR-003",
+      "nombre_original": "proyector_b204_lampara_nueva.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-001_EVI-002.jpg",
+      "tipo_archivo": "image/jpeg", "tamaño_bytes": 2150400,
+      "descripcion": "Proyector con lámpara nueva instalada",
+      "miniatura": "evidencias/thumbs/ACT-001_EVI-002_thumb.jpg",
+      "created_at": "2025-02-12T10:20:00Z"
+    },
+    {
+      "id": "EVI-003", "actividad_id": "ACT-002", "usuario_id": "USR-003",
+      "nombre_original": "receptor_dañado_auditorio.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-002_EVI-003.jpg",
+      "tipo_archivo": "image/jpeg", "tamaño_bytes": 1843200,
+      "descripcion": "Receptor inalámbrico con falla — quemado internamente",
+      "miniatura": "evidencias/thumbs/ACT-002_EVI-003_thumb.jpg",
+      "created_at": "2025-02-13T07:30:00Z"
+    },
+    {
+      "id": "EVI-004", "actividad_id": "ACT-002", "usuario_id": "USR-003",
+      "nombre_original": "sistema_audio_auditorio_ok.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-002_EVI-004.jpg",
+      "tipo_archivo": "image/jpeg", "tamaño_bytes": 2097152,
+      "descripcion": "Sistema de audio restaurado y operativo",
+      "miniatura": "evidencias/thumbs/ACT-002_EVI-004_thumb.jpg",
+      "created_at": "2025-02-13T08:50:00Z"
+    },
+    {
+      "id": "EVI-005", "actividad_id": "ACT-003", "usuario_id": "USR-006",
+      "nombre_original": "sillas_dañadas_bloque_a.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-003_EVI-005.jpg",
+      "tipo_archivo": "image/jpeg", "tamaño_bytes": 3145728,
+      "descripcion": "Sillas con daños antes de la reparación",
+      "miniatura": "evidencias/thumbs/ACT-003_EVI-005_thumb.jpg",
+      "created_at": "2025-02-11T08:30:00Z"
+    },
+    {
+      "id": "EVI-006", "actividad_id": "ACT-003", "usuario_id": "USR-006",
+      "nombre_original": "sillas_reparadas_bloque_a.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-003_EVI-006.jpg",
+      "tipo_archivo": "image/jpeg", "tamaño_bytes": 2621440,
+      "descripcion": "Sillas reparadas listas para uso",
+      "miniatura": "evidencias/thumbs/ACT-003_EVI-006_thumb.jpg",
+      "created_at": "2025-02-11T11:50:00Z"
+    },
+    {
+      "id": "EVI-007", "actividad_id": "ACT-004", "usuario_id": "USR-004",
+      "nombre_original": "fuga_tuberia_bloque_c_antes.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-004_EVI-007.jpg",
+      "tipo_archivo": "image/jpeg", "tamaño_bytes": 2359296,
+      "descripcion": "Fuga visible en tubería PVC bajo lavabo",
+      "miniatura": "evidencias/thumbs/ACT-004_EVI-007_thumb.jpg",
+      "created_at": "2025-02-12T09:45:00Z"
+    },
+    {
+      "id": "EVI-008", "actividad_id": "ACT-004", "usuario_id": "USR-004",
+      "nombre_original": "tuberia_reparada_bloque_c.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-004_EVI-008.jpg",
+      "tipo_archivo": "image/jpeg", "tamaño_bytes": 2097152,
+      "descripcion": "Tubería reparada y sellada correctamente",
+      "miniatura": "evidencias/thumbs/ACT-004_EVI-008_thumb.jpg",
+      "created_at": "2025-02-12T11:40:00Z"
+    },
+    {
+      "id": "EVI-009", "actividad_id": "ACT-005", "usuario_id": "USR-004",
+      "nombre_original": "interruptores_quemados_aula310.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-005_EVI-009.jpg",
+      "tipo_archivo": "image/jpeg", "tamaño_bytes": 1835008,
+      "descripcion": "Interruptores termomagnéticos con quemaduras visibles",
+      "miniatura": "evidencias/thumbs/ACT-005_EVI-009_thumb.jpg",
+      "created_at": "2025-02-13T08:20:00Z"
+    },
+    {
+      "id": "EVI-010", "actividad_id": "ACT-005", "usuario_id": "USR-004",
+      "nombre_original": "tablero_electrico_aula310_ok.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-005_EVI-010.jpg",
+      "tipo_archivo": "image/jpeg", "tamaño_bytes": 2097152,
+      "descripcion": "Tablero eléctrico con nuevos interruptores instalados",
+      "miniatura": "evidencias/thumbs/ACT-005_EVI-010_thumb.jpg",
+      "created_at": "2025-02-13T10:20:00Z"
+    },
+    {
+      "id": "EVI-011", "actividad_id": "ACT-006", "usuario_id": "USR-007",
+      "nombre_original": "señaletica_dañada_pasillo.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-006_EVI-011.jpg",
+      "tipo_archivo": "image/jpeg", "tamaño_bytes": 1572864,
+      "descripcion": "Placas de señalética desprendidas y vandalizadas",
+      "miniatura": "evidencias/thumbs/ACT-006_EVI-011_thumb.jpg",
+      "created_at": "2025-02-13T07:15:00Z"
+    },
+    {
+      "id": "EVI-012", "actividad_id": "ACT-006", "usuario_id": "USR-007",
+      "nombre_original": "señaletica_nueva_instalada.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-006_EVI-012.jpg",
+      "tipo_archivo": "image/jpeg", "tamaño_bytes": 1835008,
+      "descripcion": "Nueva señalética instalada correctamente",
+      "miniatura": "evidencias/thumbs/ACT-006_EVI-012_thumb.jpg",
+      "created_at": "2025-02-13T09:30:00Z"
+    },
+    {
+      "id": "EVI-013", "actividad_id": "ACT-007", "usuario_id": "USR-007",
+      "nombre_original": "hoja_ronda_inspeccion_20250213.pdf",
+      "nombre_almacenado": "evidencias/2025/02/ACT-007_EVI-013.pdf",
+      "tipo_archivo": "application/pdf", "tamaño_bytes": 409600,
+      "descripcion": "Formulario de ronda de inspección diaria firmado",
+      "miniatura": null,
+      "created_at": "2025-02-13T08:05:00Z"
+    },
+    {
+      "id": "EVI-014", "actividad_id": "ACT-008", "usuario_id": "USR-003",
+      "nombre_original": "bitacora_horas_lampara_bloqueB.xlsx",
+      "nombre_almacenado": "evidencias/2025/02/ACT-008_EVI-014.xlsx",
+      "tipo_archivo": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "tamaño_bytes": 204800,
+      "descripcion": "Planilla de horas de uso de lámparas — proyectores Bloque B",
+      "miniatura": null,
+      "created_at": "2025-02-10T15:50:00Z"
+    },
+    {
+      "id": "EVI-015", "actividad_id": "ACT-008", "usuario_id": "USR-003",
+      "nombre_original": "pantalla_menu_horas_B211.jpg",
+      "nombre_almacenado": "evidencias/2025/02/ACT-008_EVI-015.jpg",
+      "tipo_archivo": "image/jpeg", "tamaño_bytes": 1048576,
+      "descripcion": "Menú de diagnóstico del proyector B-211 mostrando 2730 horas",
+      "miniatura": "evidencias/thumbs/ACT-008_EVI-015_thumb.jpg",
+      "created_at": "2025-02-10T15:30:00Z"
+    }
+  ],
+
+  "notificaciones": [
+    {
+      "id": "NOTI-001", "destinatario_id": "USR-002", "remitente_id": "USR-003",
+      "tipo": "nueva_actividad",
+      "titulo": "Nueva actividad enviada para revisión",
+      "mensaje": "Jorge Mamani envió 'Corrección de falla en sistema de sonido — Auditorio Principal' para su aprobación.",
+      "actividad_id": "ACT-002", "leida": false,
+      "fecha_envio": "2025-02-13T09:15:00Z", "created_at": "2025-02-13T09:15:00Z"
+    },
+    {
+      "id": "NOTI-002", "destinatario_id": "USR-003", "remitente_id": "USR-002",
+      "tipo": "actividad_aprobada",
+      "titulo": "Tu actividad fue aprobada",
+      "mensaje": "'Reparación de proyector Epson - Aula 204' fue aprobada. Registrar en bitácora de lámparas.",
+      "actividad_id": "ACT-001", "leida": true,
+      "fecha_envio": "2025-02-12T14:00:00Z", "created_at": "2025-02-12T14:00:00Z"
+    },
+    {
+      "id": "NOTI-003", "destinatario_id": "USR-004", "remitente_id": "USR-002",
+      "tipo": "actividad_observada",
+      "titulo": "Observación en tu actividad",
+      "mensaje": "'Reemplazo de interruptores — Aula 310': programar termografía eléctrica en ese sector este mes.",
+      "actividad_id": "ACT-005", "leida": false,
+      "fecha_envio": "2025-02-13T12:00:00Z", "created_at": "2025-02-13T12:00:00Z"
+    },
+    {
+      "id": "NOTI-004", "destinatario_id": "USR-002", "remitente_id": "USR-007",
+      "tipo": "nueva_actividad",
+      "titulo": "Nueva actividad enviada para revisión",
+      "mensaje": "Lucía Fernández envió 'Reposición de señalética dañada — Pasillo Principal' para su aprobación.",
+      "actividad_id": "ACT-006", "leida": false,
+      "fecha_envio": "2025-02-13T09:45:00Z", "created_at": "2025-02-13T09:45:00Z"
+    },
+    {
+      "id": "NOTI-005", "destinatario_id": "USR-001", "remitente_id": "USR-002",
+      "tipo": "alerta_predictivo",
+      "titulo": "⚠️ Alerta: Lámparas próximas a agotarse",
+      "mensaje": "Proyectores PROY-B208 (89%) y PROY-B211 (91%) tienen lámparas próximas al límite. Solicitar reposición urgente.",
+      "actividad_id": "ACT-008", "leida": false,
+      "fecha_envio": "2025-02-10T17:05:00Z", "created_at": "2025-02-10T17:05:00Z"
+    }
+  ],
+
+  "reportes": [
+    {
+      "id": "REP-001",
+      "titulo": "Reporte Semanal — Infraestructura y Mantenimiento — Semana 07/2025",
+      "tipo": "semanal",
+      "area_id": "AREA-002",
+      "generado_por": "USR-002",
+      "periodo_inicio": "2025-02-10",
+      "periodo_fin": "2025-02-16",
+      "estado": "generado",
+      "formato": "pdf",
+      "ruta_archivo": "reportes/2025/02/REP-001.pdf",
+      "actividades_incluidas": ["ACT-001", "ACT-002", "ACT-003", "ACT-008"],
+      "resumen": {
+        "total_actividades": 4,
+        "aprobadas": 2,
+        "enviadas": 1,
+        "observadas": 0,
+        "borradores": 0,
+        "horas_totales": 10.5,
+        "personal_activo": 2,
+        "por_categoria": {
+          "Audiovisual y Tecnológico": 3,
+          "Mobiliario e Inmuebles": 1
+        },
+        "por_tipo_mantenimiento": {
+          "Correctivo": 2,
+          "Preventivo": 0,
+          "Predictivo": 1,
+          "Emergencia": 0
+        }
+      },
+      "enviado_por_correo": true,
+      "correos_destinatarios": ["c.ramirez@campus.edu.bo", "m.quispe@campus.edu.bo"],
+      "fecha_generacion": "2025-02-13T18:00:00Z",
+      "created_at": "2025-02-13T18:00:00Z"
+    }
+  ],
+
+  "programacion_reportes": [
+    {
+      "id": "PROG-001",
+      "nombre": "Reporte Semanal Automático — Infraestructura y Mantenimiento",
+      "tipo": "semanal", "area_id": "AREA-002",
+      "dia_envio": "viernes", "hora_envio": "18:00", "formato": "pdf", "activo": true,
+      "correos_destinatarios": ["c.ramirez@campus.edu.bo", "m.quispe@campus.edu.bo"],
+      "proxima_ejecucion": "2025-02-14T18:00:00Z", "created_at": "2025-01-10T09:00:00Z"
+    },
+    {
+      "id": "PROG-002",
+      "nombre": "Reporte Mensual General — Todos los Departamentos",
+      "tipo": "mensual", "area_id": null,
+      "dia_envio": "1", "hora_envio": "07:00", "formato": "pdf", "activo": true,
+      "correos_destinatarios": ["c.ramirez@campus.edu.bo"],
+      "proxima_ejecucion": "2025-03-01T07:00:00Z", "created_at": "2025-01-10T09:00:00Z"
+    },
+    {
+      "id": "PROG-003",
+      "nombre": "Alerta Semanal — Equipos con lámparas próximas al límite",
+      "tipo": "semanal", "area_id": "AREA-002",
+      "dia_envio": "lunes", "hora_envio": "07:00", "formato": "pdf", "activo": true,
+      "correos_destinatarios": ["m.quispe@campus.edu.bo", "j.mamani@campus.edu.bo"],
+      "proxima_ejecucion": "2025-02-17T07:00:00Z", "created_at": "2025-01-10T09:00:00Z"
+    }
+  ],
+
+  "configuracion": {
+    "sistema": {
+      "nombre_institucion": "Campus Universitario",
+      "nombre_unidad": "Unidad de Administración del Campus",
+      "logo": "assets/logo_campus.png",
+      "color_primario": "#2563eb",
+      "zona_horaria": "America/La_Paz",
+      "idioma": "es",
+      "moneda": "BOB"
+    },
+    "sesiones": {
+      "duracion_sesion_horas": 12,
+      "max_intentos_fallidos": 5,
+      "bloqueo_segundos": 30,
+      "forzar_https": true
+    },
+    "archivos": {
+      "tamaño_maximo_mb": 20,
+      "tipos_permitidos": ["jpg", "jpeg", "png", "gif", "pdf", "docx", "xlsx", "mp4", "zip"],
+      "almacenamiento": "local",
+      "ruta_base": "uploads/"
+    },
+    "notificaciones": {
+      "correo_habilitado": true,
+      "servidor_smtp": "smtp.campus.edu.bo",
+      "puerto_smtp": 587,
+      "correo_remitente": "sistema@campus.edu.bo",
+      "nombre_remitente": "Sistema de Seguimiento Administrativo"
+    },
+    "recordatorios": {
+      "habilitado": true,
+      "dias_sin_registro_alerta": 3,
+      "hora_recordatorio_diario": "17:00"
+    }
+  },
+
+  "auditoria": [
+    {
+      "id": "AUD-001", "usuario_id": "USR-001", "accion": "CREATE_USER",
+      "modulo": "usuarios", "entidad_id": "USR-003",
+      "detalle": "Creó el usuario j.mamani — Técnico Audiovisual y Tecnológico",
+      "ip": "192.168.1.105", "navegador": "Chrome 120 / Windows 11",
+      "fecha": "2025-01-15T09:00:00Z"
+    },
+    {
+      "id": "AUD-002", "usuario_id": "USR-003", "accion": "LOGIN_SUCCESS",
+      "modulo": "autenticacion", "entidad_id": "USR-003",
+      "detalle": "Inicio de sesión exitoso",
+      "ip": "192.168.1.210", "navegador": "Firefox 121 / Android",
+      "fecha": "2025-02-12T07:50:00Z"
+    },
+    {
+      "id": "AUD-003", "usuario_id": "USR-003", "accion": "CREATE_ACTIVITY",
+      "modulo": "actividades", "entidad_id": "ACT-001",
+      "detalle": "Registró: 'Reparación de proyector Epson - Aula 204' [CAT: Audiovisual | TIPO: Correctivo]",
+      "ip": "192.168.1.210", "navegador": "Firefox 121 / Android",
+      "fecha": "2025-02-12T07:55:00Z"
+    },
+    {
+      "id": "AUD-004", "usuario_id": "USR-002", "accion": "APPROVE_ACTIVITY",
+      "modulo": "seguimiento", "entidad_id": "ACT-001",
+      "detalle": "Aprobó 'Reparación de proyector Epson - Aula 204' de j.mamani",
+      "ip": "192.168.1.101", "navegador": "Chrome 120 / Windows 10",
+      "fecha": "2025-02-12T14:00:00Z"
+    },
+    {
+      "id": "AUD-005", "usuario_id": "USR-002", "accion": "OBSERVE_ACTIVITY",
+      "modulo": "seguimiento", "entidad_id": "ACT-005",
+      "detalle": "Marcó como observada 'Reemplazo de interruptores — Aula 310' de a.torrez",
+      "ip": "192.168.1.101", "navegador": "Chrome 120 / Windows 10",
+      "fecha": "2025-02-13T12:00:00Z"
+    },
+    {
+      "id": "AUD-006", "usuario_id": "USR-001", "accion": "GENERATE_REPORT",
+      "modulo": "reportes", "entidad_id": "REP-001",
+      "detalle": "Generó reporte semanal de Infraestructura — Semana 07/2025",
+      "ip": "192.168.1.105", "navegador": "Chrome 120 / Windows 11",
+      "fecha": "2025-02-13T18:00:00Z"
+    }
+  ]
+}
