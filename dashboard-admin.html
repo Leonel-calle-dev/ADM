@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Administrativo - Campus Universitario</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            color: #f1f5f9;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title h1 {
+            font-size: 1.875rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.025em;
+        }
+
+        .header-title p {
+            color: #94a3b8;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-top: 0.25rem;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(30, 41, 59, 0.5);
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .admin-avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+        }
+
+        .admin-info h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .admin-info p {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            background: rgba(30, 41, 59, 0.5);
+            padding: 0.5rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            color: #94a3b8;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(6, 182, 212, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            color: #e2e8f0;
+            font-size: 0.875rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.25rem;
+            height: 1.25rem;
+            color: #64748b;
+        }
+
+        .btn-primary {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(6, 182, 212, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 10px 15px -3px rgba(6, 182, 212, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .data-table {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.5) 100%);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem 1.5rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            font-size: 0.875rem;
+        }
+
+        tbody tr {
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover {
+            background: rgba(30, 41, 59, 0.3);
+        }
+
+        .user-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            color: white;
+        }
+
+        .user-info h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .user-info p {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid;
+        }
+
+        .badge-admin {
+            background: rgba(168, 85, 247, 0.1);
+            color: #c084fc;
+            border-color: rgba(168, 85, 247, 0.2);
+        }
+
+        .badge-audiovisual {
+            background: rgba(99, 102, 241, 0.1);
+            color: #818cf8;
+            border-color: rgba(99, 102, 241, 0.2);
+        }
+
+        .badge-integral {
+            background: rgba(6, 182, 212, 0.1);
+            color: #22d3ee;
+            border-color: rgba(6, 182, 212, 0.2);
+        }
+
+        .badge-sistemas {
+            background: rgba(16, 185, 129, 0.1);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .badge-activo {
+            background: rgba(16, 185, 129, 0.1);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .badge-inactivo {
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .badge-aprobado {
+            background: rgba(16, 185, 129, 0.1);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .badge-enviado {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+
+        .badge-borrador {
+            background: rgba(251, 191, 36, 0.1);
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.2);
+        }
+
+        .badge-observado {
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            background: rgba(51, 65, 85, 0.5);
+            border: 1px solid #475569;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-icon:hover {
+            background: #475569;
+        }
+
+        .btn-icon svg {
+            width: 1rem;
+            height: 1rem;
+            color: #e2e8f0;
+        }
+
+        .btn-edit:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+        }
+
+        .btn-delete:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 1rem;
+            border: 1px solid #334155;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #e2e8f0;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .btn-close:hover {
+            color: #e2e8f0;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            color: #e2e8f0;
+            font-size: 0.875rem;
+            font-family: inherit;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #06b6d4;
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+
+        .form-select option {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+
+        .btn-secondary {
+            padding: 0.75rem 1.5rem;
+            background: rgba(51, 65, 85, 0.5);
+            color: #e2e8f0;
+            border: 1px solid #475569;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #475569;
+        }
+
+        .btn-danger {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.5);
+        }
+
+        .kpis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.5) 100%);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .kpi-icon {
+            width: 2rem;
+            height: 2rem;
+        }
+
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .kpi-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .kpi-description {
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .action-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+
+            .data-table {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 800px;
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            color: #64748b;
+        }
+
+        .empty-state svg {
+            width: 4rem;
+            height: 4rem;
+            margin: 0 auto 1rem;
+            opacity: 0.5;
+        }
+
+        .icon-sm {
+            width: 1rem;
+            height: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <h1>Dashboard Administrativo</h1>
+                <p>Gestión de usuarios y actividades del campus</p>
+            </div>
+            <div class="admin-profile">
+                <div class="admin-avatar" id="adminAvatar"></div>
+                <div class="admin-info">
+                    <h3 id="adminName">Cargando...</h3>
+                    <p id="adminRole">Administrador</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Container -->
+    <div class="container">
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('usuarios')">
+                <svg style="width: 1rem; height: 1rem; display: inline; vertical-align: middle; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                Usuarios
+            </button>
+            <button class="tab" onclick="switchTab('actividades')">
+                <svg style="width: 1rem; height: 1rem; display: inline; vertical-align: middle; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                </svg>
+                Actividades
+            </button>
+            <button class="tab" onclick="switchTab('estadisticas')">
+                <svg style="width: 1rem; height: 1rem; display: inline; vertical-align: middle; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                Estadísticas
+            </button>
+        </div>
+
+        <!-- Tab: Usuarios -->
+        <div id="tab-usuarios" class="tab-content active">
+            <div class="action-bar">
+                <div class="search-box">
+                    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <input type="text" id="searchUsers" placeholder="Buscar usuarios..." oninput="filterUsers()">
+                </div>
+                <button class="btn-primary" onclick="openUserModal('new')">
+                    <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    Nuevo Usuario
+                </button>
+            </div>
+
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Rol</th>
+                            <th>Área</th>
+                            <th>Teléfono</th>
+                            <th>Estado</th>
+                            <th>Último Acceso</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- Se llenará dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab: Actividades -->
+        <div id="tab-actividades" class="tab-content">
+            <div class="action-bar">
+                <div class="search-box">
+                    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <input type="text" id="searchActivities" placeholder="Buscar actividades..." oninput="filterActivities()">
+                </div>
+                <button class="btn-primary" onclick="openActivityModal('new')">
+                    <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    Nueva Actividad
+                </button>
+            </div>
+
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Actividad</th>
+                            <th>Usuario</th>
+                            <th>Categoría</th>
+                            <th>Fecha</th>
+                            <th>Duración</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activitiesTableBody">
+                        <!-- Se llenará dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab: Estadísticas -->
+        <div id="tab-estadisticas" class="tab-content">
+            <div class="kpis" id="kpisContainer"></div>
+            
+            <div class="data-table" style="margin-top: 2rem;">
+                <div style="padding: 1.5rem;">
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #e2e8f0; margin-bottom: 1rem;">Resumen de Actividades</h3>
+                    <div id="statsContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Usuario -->
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="userModalTitle">Nuevo Usuario</h3>
+                <button class="btn-close" onclick="closeUserModal()">
+                    <svg style="width: 1.5rem; height: 1.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="userForm">
+                    <input type="hidden" id="userId">
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nombre Completo *</label>
+                        <input type="text" id="userFullName" class="form-input" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Nombre de Usuario *</label>
+                            <input type="text" id="userUsername" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Correo Electrónico *</label>
+                            <input type="email" id="userEmail" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Rol *</label>
+                            <select id="userRole" class="form-select" required onchange="updateSpecialty()">
+                                <option value="">Seleccionar rol...</option>
+                                <option value="administrador">Administrador</option>
+                                <option value="tecnico_audiovisual">Técnico Audiovisual</option>
+                                <option value="tecnico_integral">Técnico Integral</option>
+                                <option value="tecnico_sistemas">Técnico de Sistemas Esenciales</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Área *</label>
+                            <select id="userArea" class="form-select" required>
+                                <!-- Se llenará dinámicamente -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Teléfono</label>
+                            <input type="tel" id="userPhone" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Cargo</label>
+                            <input type="text" id="userCargo" class="form-input">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Contraseña <span id="passwordLabel">(Opcional para edición)</span></label>
+                        <input type="password" id="userPassword" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="userActive" checked>
+                            <label class="form-label" style="margin: 0;">Usuario Activo</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeUserModal()">Cancelar</button>
+                <button class="btn-primary" onclick="saveUser()">Guardar Usuario</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Actividad -->
+    <div class="modal" id="activityModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="activityModalTitle">Nueva Actividad</h3>
+                <button class="btn-close" onclick="closeActivityModal()">
+                    <svg style="width: 1.5rem; height: 1.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="activityForm">
+                    <input type="hidden" id="activityId">
+                    
+                    <div class="form-group">
+                        <label class="form-label">Título *</label>
+                        <input type="text" id="activityTitle" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Descripción *</label>
+                        <textarea id="activityDescription" class="form-textarea" required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Usuario Asignado *</label>
+                            <select id="activityUser" class="form-select" required>
+                                <!-- Se llenará dinámicamente -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Categoría *</label>
+                            <select id="activityCategory" class="form-select" required>
+                                <!-- Se llenará dinámicamente -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Tipo Mantenimiento *</label>
+                            <select id="activityType" class="form-select" required>
+                                <!-- Se llenará dinámicamente -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Área *</label>
+                            <select id="activityArea" class="form-select" required>
+                                <!-- Se llenará dinámicamente -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Fecha *</label>
+                            <input type="date" id="activityDate" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Duración (horas) *</label>
+                            <input type="number" id="activityDuration" class="form-input" step="0.5" min="0" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Hora Inicio</label>
+                            <input type="time" id="activityTimeStart" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Hora Fin</label>
+                            <input type="time" id="activityTimeEnd" class="form-input">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Lugar</label>
+                        <input type="text" id="activityLocation" class="form-input">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Estado *</label>
+                            <select id="activityStatus" class="form-select" required>
+                                <option value="borrador">Borrador</option>
+                                <option value="enviado">Enviado</option>
+                                <option value="aprobado">Aprobado</option>
+                                <option value="observado">Observado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Prioridad *</label>
+                            <select id="activityPriority" class="form-select" required>
+                                <option value="baja">Baja</option>
+                                <option value="media">Media</option>
+                                <option value="alta">Alta</option>
+                                <option value="critica">Crítica</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Observaciones del Supervisor</label>
+                        <textarea id="activityObservation" class="form-textarea"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeActivityModal()">Cancelar</button>
+                <button class="btn-primary" onclick="saveActivity()">Guardar Actividad</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Confirmación Eliminar -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirmar Eliminación</h3>
+            </div>
+            <div class="modal-body">
+                <p id="deleteMessage" style="color: #94a3b8;"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeDeleteModal()">Cancelar</button>
+                <button class="btn-danger" onclick="confirmDelete()">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variable global para almacenar los datos
+        let databaseData = null;
+        let currentEditId = null;
+        let deleteType = null;
+        let deleteId = null;
+
+        // Cargar datos desde el archivo JSON
+        async function loadData() {
+            try {
+                const response = await fetch('data2.json');
+                databaseData = await response.json();
+                initializeDashboard();
+            } catch (error) {
+                console.error('Error al cargar los datos:', error);
+                alert('Error al cargar la base de datos. Por favor, asegúrese de que el archivo data2.json está disponible.');
+            }
+        }
+
+        // Inicializar el dashboard
+        function initializeDashboard() {
+            if (!databaseData) return;
+
+            // Cargar información del administrador
+            const admin = databaseData.usuarios.find(u => u.rol === 'administrador');
+            if (admin) {
+                const initials = admin.nombre_completo.split(' ').map(n => n[0]).join('').substring(0, 2);
+                document.getElementById('adminAvatar').textContent = initials;
+                document.getElementById('adminName').textContent = admin.nombre_completo;
+            }
+
+            // Poblar selectores
+            populateSelects();
+            
+            // Renderizar tablas
+            renderUsers();
+            renderActivities();
+            renderStatistics();
+        }
+
+        // Poblar selectores de formularios
+        function populateSelects() {
+            // Poblar áreas en formulario de usuario
+            const userAreaSelect = document.getElementById('userArea');
+            userAreaSelect.innerHTML = '<option value="">Seleccionar área...</option>';
+            databaseData.areas.forEach(area => {
+                const option = document.createElement('option');
+                option.value = area.id;
+                option.textContent = area.nombre;
+                userAreaSelect.appendChild(option);
+            });
+
+            // Poblar usuarios en formulario de actividad
+            const activityUserSelect = document.getElementById('activityUser');
+            activityUserSelect.innerHTML = '<option value="">Seleccionar usuario...</option>';
+            databaseData.usuarios.forEach(user => {
+                const option = document.createElement('option');
+                option.value = user.id;
+                option.textContent = `${user.nombre_completo} (${user.rol})`;
+                activityUserSelect.appendChild(option);
+            });
+
+            // Poblar categorías
+            const activityCategorySelect = document.getElementById('activityCategory');
+            activityCategorySelect.innerHTML = '<option value="">Seleccionar categoría...</option>';
+            databaseData.categorias_mantenimiento.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat.id;
+                option.textContent = cat.nombre;
+                activityCategorySelect.appendChild(option);
+            });
+
+            // Poblar tipos de mantenimiento
+            const activityTypeSelect = document.getElementById('activityType');
+            activityTypeSelect.innerHTML = '<option value="">Seleccionar tipo...</option>';
+            databaseData.tipos_mantenimiento.forEach(tipo => {
+                const option = document.createElement('option');
+                option.value = tipo.id;
+                option.textContent = tipo.nombre;
+                activityTypeSelect.appendChild(option);
+            });
+
+            // Poblar áreas en formulario de actividad
+            const activityAreaSelect = document.getElementById('activityArea');
+            activityAreaSelect.innerHTML = '<option value="">Seleccionar área...</option>';
+            databaseData.areas.forEach(area => {
+                const option = document.createElement('option');
+                option.value = area.id;
+                option.textContent = area.nombre;
+                activityAreaSelect.appendChild(option);
+            });
+        }
+
+        // Actualizar especialidad según rol
+        function updateSpecialty() {
+            const rol = document.getElementById('userRole').value;
+            const specialtyMap = {
+                'administrador': 'gestion_integral',
+                'tecnico_audiovisual': 'audiovisual',
+                'tecnico_integral': 'integral_general',
+                'tecnico_sistemas': 'sistemas_esenciales'
+            };
+            return specialtyMap[rol] || '';
+        }
+
+        // Cambiar de tab
+        function switchTab(tabName) {
+            // Actualizar botones
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.closest('.tab').classList.add('active');
+
+            // Actualizar contenido
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+        }
+
+        // FUNCIONES DE USUARIOS
+        function renderUsers() {
+            const tbody = document.getElementById('usersTableBody');
+            const searchTerm = document.getElementById('searchUsers').value.toLowerCase();
+            
+            let html = '';
+            const filteredUsers = databaseData.usuarios.filter(user => {
+                return user.nombre_completo.toLowerCase().includes(searchTerm) ||
+                       user.correo.toLowerCase().includes(searchTerm) ||
+                       user.rol.toLowerCase().includes(searchTerm);
+            });
+
+            filteredUsers.forEach(user => {
+                const area = databaseData.areas.find(a => a.id === user.area_id);
+                const initials = user.nombre_completo.split(' ').map(n => n[0]).join('').substring(0, 2);
+                const roleBadge = getRoleBadge(user.rol);
+                const lastAccess = user.ultimo_acceso ? new Date(user.ultimo_acceso).toLocaleDateString('es-ES') : 'Nunca';
+
+                html += `
+                    <tr>
+                        <td>
+                            <div class="user-cell">
+                                <div class="user-avatar">${initials}</div>
+                                <div class="user-info">
+                                    <h4>${user.nombre_completo}</h4>
+                                    <p>${user.correo}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="badge ${roleBadge.class}">${roleBadge.text}</span></td>
+                        <td>${area ? area.nombre : 'Sin área'}</td>
+                        <td>${user.telefono || 'N/A'}</td>
+                        <td><span class="badge ${user.activo ? 'badge-activo' : 'badge-inactivo'}">${user.activo ? 'Activo' : 'Inactivo'}</span></td>
+                        <td>${lastAccess}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit" onclick='editUser(${JSON.stringify(user).replace(/'/g, "&apos;")})' title="Editar">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                </button>
+                                <button class="btn-icon btn-delete" onclick="openDeleteModal('user', '${user.id}', '${user.nombre_completo}')" title="Eliminar">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            if (html === '') {
+                html = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 3rem; color: #64748b;">
+                            No se encontraron usuarios
+                        </td>
+                    </tr>
+                `;
+            }
+
+            tbody.innerHTML = html;
+        }
+
+        function getRoleBadge(rol) {
+            const badges = {
+                'administrador': { class: 'badge-admin', text: 'Administrador' },
+                'tecnico_audiovisual': { class: 'badge-audiovisual', text: 'Téc. Audiovisual' },
+                'tecnico_integral': { class: 'badge-integral', text: 'Téc. Integral' },
+                'tecnico_sistemas': { class: 'badge-sistemas', text: 'Téc. Sistemas' }
+            };
+            return badges[rol] || { class: 'badge-integral', text: rol };
+        }
+
+        function filterUsers() {
+            renderUsers();
+        }
+
+        function openUserModal(mode, user = null) {
+            currentEditId = user ? user.id : null;
+            
+            if (mode === 'new') {
+                document.getElementById('userModalTitle').textContent = 'Nuevo Usuario';
+                document.getElementById('userForm').reset();
+                document.getElementById('userId').value = '';
+                document.getElementById('userActive').checked = true;
+                document.getElementById('passwordLabel').textContent = '*';
+                document.getElementById('userPassword').required = true;
+            } else {
+                document.getElementById('userModalTitle').textContent = 'Editar Usuario';
+                document.getElementById('userId').value = user.id;
+                document.getElementById('userFullName').value = user.nombre_completo;
+                document.getElementById('userUsername').value = user.nombre_usuario;
+                document.getElementById('userEmail').value = user.correo;
+                document.getElementById('userRole').value = user.rol;
+                document.getElementById('userArea').value = user.area_id;
+                document.getElementById('userPhone').value = user.telefono || '';
+                document.getElementById('userCargo').value = user.cargo || '';
+                document.getElementById('userActive').checked = user.activo;
+                document.getElementById('passwordLabel').textContent = '(Dejar en blanco para mantener)';
+                document.getElementById('userPassword').required = false;
+            }
+            
+            document.getElementById('userModal').classList.add('active');
+        }
+
+        function closeUserModal() {
+            document.getElementById('userModal').classList.remove('active');
+            currentEditId = null;
+        }
+
+        function editUser(user) {
+            openUserModal('edit', user);
+        }
+
+        function saveUser() {
+            const id = document.getElementById('userId').value;
+            const fullName = document.getElementById('userFullName').value;
+            const username = document.getElementById('userUsername').value;
+            const email = document.getElementById('userEmail').value;
+            const rol = document.getElementById('userRole').value;
+            const area = document.getElementById('userArea').value;
+            const phone = document.getElementById('userPhone').value;
+            const cargo = document.getElementById('userCargo').value;
+            const password = document.getElementById('userPassword').value;
+            const active = document.getElementById('userActive').checked;
+
+            if (!fullName || !username || !email || !rol || !area) {
+                alert('Por favor, complete todos los campos obligatorios');
+                return;
+            }
+
+            if (!id && !password) {
+                alert('La contraseña es obligatoria para nuevos usuarios');
+                return;
+            }
+
+            const now = new Date().toISOString();
+            const specialty = updateSpecialty();
+
+            if (id) {
+                // Editar usuario existente
+                const userIndex = databaseData.usuarios.findIndex(u => u.id === id);
+                if (userIndex !== -1) {
+                    databaseData.usuarios[userIndex] = {
+                        ...databaseData.usuarios[userIndex],
+                        nombre_completo: fullName,
+                        nombre_usuario: username,
+                        correo: email,
+                        rol: rol,
+                        area_id: area,
+                        cargo: cargo,
+                        especialidad: specialty,
+                        telefono: phone,
+                        activo: active,
+                        updated_at: now
+                    };
+
+                    if (password) {
+                        databaseData.usuarios[userIndex].password = password;
+                        databaseData.usuarios[userIndex].password_hash = `$2b$10$${btoa(password)}...`;
+                    }
+                }
+            } else {
+                // Crear nuevo usuario
+                const newId = `USR-${String(databaseData.usuarios.length + 1).padStart(3, '0')}`;
+                const newUser = {
+                    id: newId,
+                    nombre_completo: fullName,
+                    nombre_usuario: username,
+                    correo: email,
+                    password: password,
+                    password_hash: `$2b$10$${btoa(password)}...`,
+                    rol: rol,
+                    area_id: area,
+                    cargo: cargo,
+                    especialidad: specialty,
+                    telefono: phone,
+                    foto_perfil: null,
+                    activo: active,
+                    forzar_cambio_password: false,
+                    intentos_fallidos: 0,
+                    bloqueado: false,
+                    fecha_registro: now,
+                    ultimo_acceso: null,
+                    created_at: now,
+                    updated_at: now
+                };
+                databaseData.usuarios.push(newUser);
+            }
+
+            // Guardar cambios (en una implementación real, esto haría una petición al servidor)
+            saveDataToFile();
+            
+            closeUserModal();
+            renderUsers();
+            alert(id ? 'Usuario actualizado correctamente' : 'Usuario creado correctamente');
+        }
+
+        // FUNCIONES DE ACTIVIDADES
+        function renderActivities() {
+            const tbody = document.getElementById('activitiesTableBody');
+            const searchTerm = document.getElementById('searchActivities').value.toLowerCase();
+            
+            let html = '';
+            const filteredActivities = databaseData.actividades.filter(activity => {
+                return activity.titulo.toLowerCase().includes(searchTerm) ||
+                       activity.descripcion.toLowerCase().includes(searchTerm);
+            });
+
+            filteredActivities.forEach(activity => {
+                const user = databaseData.usuarios.find(u => u.id === activity.usuario_id);
+                const categoria = databaseData.categorias_mantenimiento.find(c => c.id === activity.categoria_id);
+                const date = new Date(activity.fecha_actividad).toLocaleDateString('es-ES');
+
+                html += `
+                    <tr>
+                        <td>
+                            <div style="max-width: 300px;">
+                                <h4 style="font-size: 0.875rem; font-weight: 600; color: #e2e8f0; margin-bottom: 0.25rem;">${activity.titulo}</h4>
+                                <p style="font-size: 0.75rem; color: #64748b; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${activity.descripcion}</p>
+                            </div>
+                        </td>
+                        <td>${user ? user.nombre_completo : 'N/A'}</td>
+                        <td>${categoria ? categoria.nombre : 'N/A'}</td>
+                        <td>${date}</td>
+                        <td>${activity.duracion_horas}h</td>
+                        <td><span class="badge badge-${activity.estado}">${activity.estado.charAt(0).toUpperCase() + activity.estado.slice(1)}</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit" onclick='editActivity(${JSON.stringify(activity).replace(/'/g, "&apos;")})' title="Editar">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                </button>
+                                <button class="btn-icon btn-delete" onclick="openDeleteModal('activity', '${activity.id}', '${activity.titulo}')" title="Eliminar">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            if (html === '') {
+                html = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 3rem; color: #64748b;">
+                            No se encontraron actividades
+                        </td>
+                    </tr>
+                `;
+            }
+
+            tbody.innerHTML = html;
+        }
+
+        function filterActivities() {
+            renderActivities();
+        }
+
+        function openActivityModal(mode, activity = null) {
+            currentEditId = activity ? activity.id : null;
+            
+            if (mode === 'new') {
+                document.getElementById('activityModalTitle').textContent = 'Nueva Actividad';
+                document.getElementById('activityForm').reset();
+                document.getElementById('activityId').value = '';
+                document.getElementById('activityDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('activityStatus').value = 'borrador';
+                document.getElementById('activityPriority').value = 'media';
+            } else {
+                document.getElementById('activityModalTitle').textContent = 'Editar Actividad';
+                document.getElementById('activityId').value = activity.id;
+                document.getElementById('activityTitle').value = activity.titulo;
+                document.getElementById('activityDescription').value = activity.descripcion;
+                document.getElementById('activityUser').value = activity.usuario_id;
+                document.getElementById('activityCategory').value = activity.categoria_id;
+                document.getElementById('activityType').value = activity.tipo_mantenimiento_id;
+                document.getElementById('activityArea').value = activity.area_id;
+                document.getElementById('activityDate').value = activity.fecha_actividad;
+                document.getElementById('activityDuration').value = activity.duracion_horas;
+                document.getElementById('activityTimeStart').value = activity.hora_inicio || '';
+                document.getElementById('activityTimeEnd').value = activity.hora_fin || '';
+                document.getElementById('activityLocation').value = activity.lugar || '';
+                document.getElementById('activityStatus').value = activity.estado;
+                document.getElementById('activityPriority').value = activity.prioridad;
+                document.getElementById('activityObservation').value = activity.observacion_supervisor || '';
+            }
+            
+            document.getElementById('activityModal').classList.add('active');
+        }
+
+        function closeActivityModal() {
+            document.getElementById('activityModal').classList.remove('active');
+            currentEditId = null;
+        }
+
+        function editActivity(activity) {
+            openActivityModal('edit', activity);
+        }
+
+        function saveActivity() {
+            const id = document.getElementById('activityId').value;
+            const titulo = document.getElementById('activityTitle').value;
+            const descripcion = document.getElementById('activityDescription').value;
+            const usuario = document.getElementById('activityUser').value;
+            const categoria = document.getElementById('activityCategory').value;
+            const tipo = document.getElementById('activityType').value;
+            const area = document.getElementById('activityArea').value;
+            const fecha = document.getElementById('activityDate').value;
+            const duracion = parseFloat(document.getElementById('activityDuration').value);
+            const horaInicio = document.getElementById('activityTimeStart').value;
+            const horaFin = document.getElementById('activityTimeEnd').value;
+            const lugar = document.getElementById('activityLocation').value;
+            const estado = document.getElementById('activityStatus').value;
+            const prioridad = document.getElementById('activityPriority').value;
+            const observacion = document.getElementById('activityObservation').value;
+
+            if (!titulo || !descripcion || !usuario || !categoria || !tipo || !area || !fecha || !duracion) {
+                alert('Por favor, complete todos los campos obligatorios');
+                return;
+            }
+
+            const now = new Date().toISOString();
+            const admin = databaseData.usuarios.find(u => u.rol === 'administrador');
+
+            if (id) {
+                // Editar actividad existente
+                const activityIndex = databaseData.actividades.findIndex(a => a.id === id);
+                if (activityIndex !== -1) {
+                    databaseData.actividades[activityIndex] = {
+                        ...databaseData.actividades[activityIndex],
+                        titulo: titulo,
+                        descripcion: descripcion,
+                        usuario_id: usuario,
+                        categoria_id: categoria,
+                        tipo_mantenimiento_id: tipo,
+                        area_id: area,
+                        fecha_actividad: fecha,
+                        duracion_horas: duracion,
+                        hora_inicio: horaInicio,
+                        hora_fin: horaFin,
+                        lugar: lugar,
+                        estado: estado,
+                        prioridad: prioridad,
+                        observacion_supervisor: observacion,
+                        supervisor_id: admin ? admin.id : null,
+                        updated_at: now
+                    };
+                }
+            } else {
+                // Crear nueva actividad
+                const newId = `ACT-${String(databaseData.actividades.length + 1).padStart(3, '0')}`;
+                const newActivity = {
+                    id: newId,
+                    titulo: titulo,
+                    descripcion: descripcion,
+                    tarea_id: null,
+                    categoria_id: categoria,
+                    tipo_mantenimiento_id: tipo,
+                    area_id: area,
+                    usuario_id: usuario,
+                    fecha_actividad: fecha,
+                    hora_inicio: horaInicio,
+                    hora_fin: horaFin,
+                    duracion_horas: duracion,
+                    lugar: lugar,
+                    estado: estado,
+                    prioridad: prioridad,
+                    materiales_usados: [],
+                    observacion_empleado: null,
+                    observacion_supervisor: observacion,
+                    supervisor_id: admin ? admin.id : null,
+                    fecha_envio: estado === 'enviado' || estado === 'aprobado' ? now : null,
+                    fecha_revision: estado === 'aprobado' ? now : null,
+                    evidencias: [],
+                    created_at: now,
+                    updated_at: now
+                };
+                databaseData.actividades.push(newActivity);
+            }
+
+            // Guardar cambios
+            saveDataToFile();
+            
+            closeActivityModal();
+            renderActivities();
+            renderStatistics();
+            alert(id ? 'Actividad actualizada correctamente' : 'Actividad creada correctamente');
+        }
+
+        // FUNCIONES DE ESTADÍSTICAS
+        function renderStatistics() {
+            const activities = databaseData.actividades;
+            const total = activities.length;
+            const aprobadas = activities.filter(a => a.estado === 'aprobado').length;
+            const enviadas = activities.filter(a => a.estado === 'enviado').length;
+            const borradores = activities.filter(a => a.estado === 'borrador').length;
+            const observadas = activities.filter(a => a.estado === 'observado').length;
+            const completionRate = total > 0 ? Math.round((aprobadas / total) * 100) : 0;
+
+            const kpisHTML = `
+                <div class="kpi-card" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.5) 100%);">
+                    <div class="kpi-header">
+                        <svg class="kpi-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #06b6d4;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <div class="kpi-value" style="color: #06b6d4;">${total}</div>
+                    </div>
+                    <div class="kpi-label">Total Actividades</div>
+                    <div class="kpi-description">Registradas en el sistema</div>
+                </div>
+
+                <div class="kpi-card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(15, 23, 42, 0.5) 100%);">
+                    <div class="kpi-header">
+                        <svg class="kpi-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #34d399;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div class="kpi-value" style="color: #34d399;">${aprobadas}</div>
+                    </div>
+                    <div class="kpi-label">Aprobadas</div>
+                    <div class="kpi-description">${completionRate}% del total</div>
+                </div>
+
+                <div class="kpi-card" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(15, 23, 42, 0.5) 100%);">
+                    <div class="kpi-header">
+                        <svg class="kpi-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #60a5fa;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div class="kpi-value" style="color: #60a5fa;">${enviadas}</div>
+                    </div>
+                    <div class="kpi-label">En Revisión</div>
+                    <div class="kpi-description">Pendientes de aprobar</div>
+                </div>
+
+                <div class="kpi-card" style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(15, 23, 42, 0.5) 100%);">
+                    <div class="kpi-header">
+                        <svg class="kpi-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #fbbf24;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                        </svg>
+                        <div class="kpi-value" style="color: #fbbf24;">${borradores}</div>
+                    </div>
+                    <div class="kpi-label">Borradores</div>
+                    <div class="kpi-description">Sin enviar</div>
+                </div>
+
+                <div class="kpi-card" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(15, 23, 42, 0.5) 100%);">
+                    <div class="kpi-header">
+                        <svg class="kpi-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #818cf8;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <div class="kpi-value" style="color: #818cf8;">${databaseData.usuarios.length}</div>
+                    </div>
+                    <div class="kpi-label">Usuarios</div>
+                    <div class="kpi-description">Personal registrado</div>
+                </div>
+            `;
+
+            document.getElementById('kpisContainer').innerHTML = kpisHTML;
+
+            // Estadísticas por categoría
+            const categoryCounts = {};
+            activities.forEach(activity => {
+                const cat = databaseData.categorias_mantenimiento.find(c => c.id === activity.categoria_id);
+                if (cat) {
+                    if (!categoryCounts[cat.nombre]) {
+                        categoryCounts[cat.nombre] = 0;
+                    }
+                    categoryCounts[cat.nombre]++;
+                }
+            });
+
+            let statsHTML = '<h4 style="font-size: 1rem; font-weight: 600; color: #e2e8f0; margin-bottom: 1rem;">Actividades por Categoría</h4>';
+            statsHTML += '<div style="display: grid; gap: 0.75rem;">';
+            
+            for (const [category, count] of Object.entries(categoryCounts)) {
+                const percentage = Math.round((count / total) * 100);
+                statsHTML += `
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="font-size: 0.875rem; color: #94a3b8;">${category}</span>
+                            <span style="font-size: 0.875rem; font-weight: 600; color: #e2e8f0;">${count} (${percentage}%)</span>
+                        </div>
+                        <div style="width: 100%; height: 0.5rem; background: rgba(51, 65, 85, 0.5); border-radius: 9999px; overflow: hidden;">
+                            <div style="width: ${percentage}%; height: 100%; background: linear-gradient(90deg, #06b6d4 0%, #3b82f6 100%); border-radius: 9999px;"></div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            statsHTML += '</div>';
+            document.getElementById('statsContent').innerHTML = statsHTML;
+        }
+
+        // FUNCIONES DE ELIMINACIÓN
+        function openDeleteModal(type, id, name) {
+            deleteType = type;
+            deleteId = id;
+            
+            const message = type === 'user' 
+                ? `¿Está seguro de que desea eliminar al usuario "${name}"? Esta acción no se puede deshacer.`
+                : `¿Está seguro de que desea eliminar la actividad "${name}"? Esta acción no se puede deshacer.`;
+            
+            document.getElementById('deleteMessage').textContent = message;
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('active');
+            deleteType = null;
+            deleteId = null;
+        }
+
+        function confirmDelete() {
+            if (deleteType === 'user') {
+                databaseData.usuarios = databaseData.usuarios.filter(u => u.id !== deleteId);
+                renderUsers();
+            } else if (deleteType === 'activity') {
+                databaseData.actividades = databaseData.actividades.filter(a => a.id !== deleteId);
+                renderActivities();
+                renderStatistics();
+            }
+            
+            saveDataToFile();
+            closeDeleteModal();
+            alert('Elemento eliminado correctamente');
+        }
+
+        // Función para guardar datos (simulación - en producción haría una petición al servidor)
+        function saveDataToFile() {
+            // En una implementación real, esto haría una petición POST al servidor
+            // Por ahora, solo guardamos en localStorage como backup
+            try {
+                localStorage.setItem('campusData', JSON.stringify(databaseData));
+                console.log('Datos guardados en localStorage');
+            } catch (error) {
+                console.error('Error al guardar datos:', error);
+            }
+        }
+
+        // Cerrar modales al hacer clic fuera
+        document.getElementById('userModal').addEventListener('click', function(e) {
+            if (e.target === this) closeUserModal();
+        });
+
+        document.getElementById('activityModal').addEventListener('click', function(e) {
+            if (e.target === this) closeActivityModal();
+        });
+
+        document.getElementById('deleteModal').addEventListener('click', function(e) {
+            if (e.target === this) closeDeleteModal();
+        });
+
+        // Iniciar la aplicación
+        loadData();
+    </script>
+</body>
+</html>
