@@ -135,10 +135,10 @@
       font-size: 18px;
       z-index: 2;
     }
-
+    
     .input-field input {
       width: 100%;
-      padding: 16px 15px 16px 48px;
+      padding: 16px 48px 16px 48px; /* CORREGIDO: padding simétrico */
       border: none;
       border-radius: 14px;
       outline: none;
@@ -155,7 +155,7 @@
       font-weight: 400;
       opacity: 1;
     }
-
+    
     .input-field input:focus {
       box-shadow: 0 0 0 3px rgba(0, 225, 255, 0.35), 0 0 12px rgba(0, 225, 255, 0.25);
       background: rgba(255, 255, 255, 1);
@@ -172,12 +172,13 @@
       color: rgba(255, 255, 255, 0.7);
       cursor: pointer;
       font-size: 18px;
-      padding: 5px;
+      padding: 5px 8px; /* CORREGIDO: padding horizontal */
       z-index: 3;
       transition: all 0.3s ease;
       width: auto;
       margin-top: 0;
       box-shadow: none;
+      line-height: 1;
     }
     
     .toggle-password:hover {
