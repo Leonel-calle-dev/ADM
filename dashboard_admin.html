@@ -1490,32 +1490,32 @@
      // });
 
       // Populate users for activities
-      const userSelect = document.getElementById('activityUser');
-      if (userSelect) {
-        userSelect.innerHTML = '<option value="">Seleccionar...</option>';
-        DATABASE.usuarios.forEach(user => {
-          userSelect.innerHTML += `<option value="${user.id}">${user.nombre_completo} (${user.rol})</option>`;
-        });
-      }
+    //   const userSelect = document.getElementById('activityUser');
+    //   if (userSelect) {
+    //     userSelect.innerHTML = '<option value="">Seleccionar...</option>';
+    //     DATABASE.usuarios.forEach(user => {
+    //       userSelect.innerHTML += `<option value="${user.id}">${user.nombre_completo} (${user.rol})</option>`;
+    //     });
+    //   }
 
-      // Populate categories
-      const categorySelect = document.getElementById('activityCategory');
-      if (categorySelect) {
-        categorySelect.innerHTML = '<option value="">Seleccionar...</option>';
-        DATABASE.categorias_mantenimiento.forEach(cat => {
-          categorySelect.innerHTML += `<option value="${cat.id}">${cat.nombre}</option>`;
-        });
-      }
+    //   // Populate categories
+    //   const categorySelect = document.getElementById('activityCategory');
+    //   if (categorySelect) {
+    //     categorySelect.innerHTML = '<option value="">Seleccionar...</option>';
+    //     DATABASE.categorias_mantenimiento.forEach(cat => {
+    //       categorySelect.innerHTML += `<option value="${cat.id}">${cat.nombre}</option>`;
+    //     });
+    //   }
 
-      // Populate maintenance types
-      const typeSelect = document.getElementById('activityType');
-      if (typeSelect) {
-        typeSelect.innerHTML = '<option value="">Seleccionar...</option>';
-        DATABASE.tipos_mantenimiento.forEach(tipo => {
-          typeSelect.innerHTML += `<option value="${tipo.id}">${tipo.nombre}</option>`;
-        });
-      }
-    }
+    //   // Populate maintenance types
+    //   const typeSelect = document.getElementById('activityType');
+    //   if (typeSelect) {
+    //     typeSelect.innerHTML = '<option value="">Seleccionar...</option>';
+    //     DATABASE.tipos_mantenimiento.forEach(tipo => {
+    //       typeSelect.innerHTML += `<option value="${tipo.id}">${tipo.nombre}</option>`;
+    //     });
+    //   }
+    // }
 
     function loadDashboard() {
       const totalUsers = DATABASE.usuarios.length;
