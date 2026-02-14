@@ -895,21 +895,127 @@
     }
 
     /* ========== RESPONSIVE ========== */
+    .mobile-header {
+      display: none;
+      background: linear-gradient(90deg, var(--navy-900), var(--navy-800));
+      padding: 15px 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      border-bottom: 2px solid var(--navy-600);
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mobile-header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .menu-toggle {
+      background: none;
+      border: none;
+      color: var(--navy-300);
+      font-size: 24px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+
+    .menu-toggle:hover {
+      background: rgba(59, 130, 246, 0.2);
+      color: white;
+    }
+
+    .mobile-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .mobile-header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mobile-notification {
+      position: relative;
+      color: var(--navy-300);
+      font-size: 20px;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .mobile-logout {
+      background: linear-gradient(90deg, var(--danger), #dc2626);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 999;
+    }
+
+    .sidebar-overlay.active {
+      display: block;
+    }
+
     @media (max-width: 900px) {
+      .mobile-header {
+        display: flex;
+      }
+
+      .header {
+        display: none;
+      }
+
       .sidebar {
         transform: translateX(-100%);
+        z-index: 1000;
       }
+      
       .sidebar.active {
         transform: translateX(0);
       }
+      
       .main-content {
         margin-left: 0;
       }
+      
       .form-row {
         grid-template-columns: 1fr;
       }
+      
       .stats-grid {
         grid-template-columns: 1fr;
+      }
+
+      .action-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-box {
+        max-width: 100%;
       }
     }
 
@@ -917,21 +1023,65 @@
       .container {
         padding: 25px 15px;
       }
-      .header {
-        padding: 15px 20px;
+
+      .page-title h2 {
+        font-size: 28px;
       }
-      .action-bar {
-        flex-direction: column;
-        align-items: stretch;
+
+      .page-title p {
+        font-size: 16px;
       }
-      .search-box {
-        max-width: 100%;
+
+      .stat-card {
+        padding: 25px 20px;
+      }
+
+      .stat-card-value {
+        font-size: 36px;
+      }
+
+      .modal-content {
+        max-width: 95%;
+      }
+
+      .mobile-title {
+        font-size: 16px;
+      }
+
+      .data-table {
+        font-size: 14px;
+      }
+
+      table th, table td {
+        padding: 12px 10px;
+        font-size: 13px;
       }
     }
   </style>
 </head>
 <body>
   <div class="dashboard">
+    <!-- MOBILE HEADER (Solo visible en móviles) -->
+    <div class="mobile-header">
+      <div class="mobile-header-left">
+        <button class="menu-toggle" id="menuToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <span class="mobile-title" id="mobilePageTitle">Dashboard</span>
+      </div>
+      <div class="mobile-header-right">
+        <div class="mobile-notification">
+          <i class="fas fa-bell"></i>
+        </div>
+        <button class="mobile-logout" id="mobileLogoutBtn">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- SIDEBAR OVERLAY -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-header">
@@ -943,7 +1093,7 @@
         <div class="user-avatar" id="userAvatar">A</div>
         <div class="user-info">
           <h3 id="userName">Cargando...</h3>
-          <p id="userEmail">admin@campus.edu</p>
+          <p id="userEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4627222b2f280625272b36333568232233">[email&#160;protected]</a></p>
           <span class="user-badge">ADMINISTRADOR</span>
         </div>
       </div>
@@ -1048,7 +1198,6 @@
                   <tr>
                     <th>Usuario</th>
                     <th>Rol</th>
-                    <th>Área</th>
                     <th>Teléfono</th>
                     <th>Estado</th>
                     <th>Acciones</th>
@@ -1174,10 +1323,8 @@
               </select>
             </div>
             <div class="form-group">
-              <label><i class="fas fa-building"></i> Área *</label>
-              <select class="form-control" id="userArea" required>
-                <!-- Areas will be populated dynamically -->
-              </select>
+              <label><i class="fas fa-briefcase"></i> Cargo</label>
+              <input type="text" class="form-control" id="userCargo">
             </div>
           </div>
 
@@ -1187,14 +1334,9 @@
               <input type="tel" class="form-control" id="userPhone">
             </div>
             <div class="form-group">
-              <label><i class="fas fa-briefcase"></i> Cargo</label>
-              <input type="text" class="form-control" id="userCargo">
+              <label><i class="fas fa-lock"></i> Contraseña <span id="passwordLabel">*</span></label>
+              <input type="password" class="form-control" id="userPassword">
             </div>
-          </div>
-
-          <div class="form-group">
-            <label><i class="fas fa-lock"></i> Contraseña <span id="passwordLabel">*</span></label>
-            <input type="password" class="form-control" id="userPassword">
           </div>
 
           <div class="form-group">
@@ -1262,27 +1404,20 @@
               </select>
             </div>
             <div class="form-group">
-              <label><i class="fas fa-building"></i> Área *</label>
-              <select class="form-control" id="activityArea" required>
-                <!-- Areas will be populated dynamically -->
-              </select>
+              <label><i class="fas fa-calendar"></i> Fecha *</label>
+              <input type="date" class="form-control" id="activityDate" required>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label><i class="fas fa-calendar"></i> Fecha *</label>
-              <input type="date" class="form-control" id="activityDate" required>
-            </div>
-            <div class="form-group">
               <label><i class="fas fa-clock"></i> Duración (horas) *</label>
               <input type="number" class="form-control" id="activityDuration" step="0.5" min="0" required>
             </div>
-          </div>
-
-          <div class="form-group">
-            <label><i class="fas fa-map-marker-alt"></i> Lugar</label>
-            <input type="text" class="form-control" id="activityLocation">
+            <div class="form-group">
+              <label><i class="fas fa-map-marker-alt"></i> Lugar</label>
+              <input type="text" class="form-control" id="activityLocation">
+            </div>
           </div>
 
           <div class="form-row">
@@ -1335,7 +1470,7 @@
     </div>
   </div>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     const DB_PATH = 'data2.json';
     let DATABASE = null;
     let currentAdmin = null;
@@ -1419,7 +1554,6 @@
         document.getElementById('userEmail').textContent = currentAdmin.correo;
         document.getElementById('userAvatar').textContent = initials;
       }
-      //populateSelects();
     }
 
     function setupEventListeners() {
@@ -1431,6 +1565,8 @@
             navigateToSection(section);
             document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
             this.classList.add('active');
+            // Cerrar sidebar en móvil después de seleccionar
+            closeMobileSidebar();
           }
         });
       });
@@ -1438,10 +1574,25 @@
       // Logout buttons
       document.getElementById('logoutBtn').addEventListener('click', logout);
       document.getElementById('logoutBtnMobile').addEventListener('click', logout);
+      document.getElementById('mobileLogoutBtn').addEventListener('click', logout);
+
+      // Mobile menu toggle
+      document.getElementById('menuToggle').addEventListener('click', toggleMobileSidebar);
+      document.getElementById('sidebarOverlay').addEventListener('click', closeMobileSidebar);
 
       // Search filters
       document.getElementById('searchUsers')?.addEventListener('input', filterUsers);
       document.getElementById('searchActivities')?.addEventListener('input', filterActivities);
+    }
+
+    function toggleMobileSidebar() {
+      document.querySelector('.sidebar').classList.toggle('active');
+      document.getElementById('sidebarOverlay').classList.toggle('active');
+    }
+
+    function closeMobileSidebar() {
+      document.querySelector('.sidebar').classList.remove('active');
+      document.getElementById('sidebarOverlay').classList.remove('active');
     }
 
     function navigateToSection(section) {
@@ -1458,7 +1609,16 @@
         'actividades': 'Gestión de Actividades',
         'estadisticas': 'Estadísticas del Sistema'
       };
+      
+      const shortTitles = {
+        'dashboard': 'Dashboard',
+        'usuarios': 'Usuarios',
+        'actividades': 'Actividades',
+        'estadisticas': 'Estadísticas'
+      };
+      
       document.getElementById('pageTitle').textContent = titles[section] || 'Panel Administrativo';
+      document.getElementById('mobilePageTitle').textContent = shortTitles[section] || 'Panel';
       
       // Load section data
       switch(section) {
@@ -1476,46 +1636,6 @@
           break;
       }
     }
-
-   // function populateSelects() {
-      // Populate areas
-     // const areaSelects = [document.getElementById('userArea'), document.getElementById('activityArea')];
-      //areaSelects.forEach(select => {
-        //if (select) {
-          //select.innerHTML = '<option value="">Seleccionar...</option>';
-          //DATABASE.areas.forEach(area => {
-            //select.innerHTML += `<option value="${area.id}">${area.nombre}</option>`;
-          //});
-        //}
-     // });
-
-      // Populate users for activities
-    //   const userSelect = document.getElementById('activityUser');
-    //   if (userSelect) {
-    //     userSelect.innerHTML = '<option value="">Seleccionar...</option>';
-    //     DATABASE.usuarios.forEach(user => {
-    //       userSelect.innerHTML += `<option value="${user.id}">${user.nombre_completo} (${user.rol})</option>`;
-    //     });
-    //   }
-
-    //   // Populate categories
-    //   const categorySelect = document.getElementById('activityCategory');
-    //   if (categorySelect) {
-    //     categorySelect.innerHTML = '<option value="">Seleccionar...</option>';
-    //     DATABASE.categorias_mantenimiento.forEach(cat => {
-    //       categorySelect.innerHTML += `<option value="${cat.id}">${cat.nombre}</option>`;
-    //     });
-    //   }
-
-    //   // Populate maintenance types
-    //   const typeSelect = document.getElementById('activityType');
-    //   if (typeSelect) {
-    //     typeSelect.innerHTML = '<option value="">Seleccionar...</option>';
-    //     DATABASE.tipos_mantenimiento.forEach(tipo => {
-    //       typeSelect.innerHTML += `<option value="${tipo.id}">${tipo.nombre}</option>`;
-    //     });
-    //   }
-    // }
 
     function loadDashboard() {
       const totalUsers = DATABASE.usuarios.length;
@@ -1605,7 +1725,6 @@
 
       let html = '';
       filteredUsers.forEach(user => {
-        const area = DATABASE.areas.find(a => a.id === user.area_id);
         const initials = user.nombre_completo.split(' ').map(n => n[0]).join('').substring(0, 2);
         const roleBadge = getRoleBadge(user.rol);
 
@@ -1621,7 +1740,6 @@
               </div>
             </td>
             <td><span class="badge ${roleBadge.class}">${roleBadge.text}</span></td>
-            <td>${area ? area.nombre : 'Sin área'}</td>
             <td>${user.telefono || 'N/A'}</td>
             <td><span class="badge ${user.activo ? 'badge-activo' : 'badge-inactivo'}">${user.activo ? 'Activo' : 'Inactivo'}</span></td>
             <td>
@@ -1638,7 +1756,7 @@
         `;
       });
 
-      document.getElementById('usersTableBody').innerHTML = html || '<tr><td colspan="6" style="text-align: center; padding: 40px; color: var(--navy-300);">No se encontraron usuarios</td></tr>';
+      document.getElementById('usersTableBody').innerHTML = html || '<tr><td colspan="5" style="text-align: center; padding: 40px; color: var(--navy-300);">No se encontraron usuarios</td></tr>';
     }
 
     function getRoleBadge(rol) {
@@ -1671,7 +1789,6 @@
         document.getElementById('userUsername').value = user.nombre_usuario;
         document.getElementById('userEmail').value = user.correo;
         document.getElementById('userRole').value = user.rol;
-        document.getElementById('userArea').value = user.area_id;
         document.getElementById('userPhone').value = user.telefono || '';
         document.getElementById('userCargo').value = user.cargo || '';
         document.getElementById('userActive').checked = user.activo;
@@ -1697,13 +1814,12 @@
       const username = document.getElementById('userUsername').value;
       const email = document.getElementById('userEmail').value;
       const rol = document.getElementById('userRole').value;
-      const area = document.getElementById('userArea').value;
       const phone = document.getElementById('userPhone').value;
       const cargo = document.getElementById('userCargo').value;
       const password = document.getElementById('userPassword').value;
       const active = document.getElementById('userActive').checked;
 
-      if (!fullName || !username || !email || !rol || !area) {
+      if (!fullName || !username || !email || !rol) {
         Swal.fire({
           icon: 'warning',
           title: 'Campos incompletos',
@@ -1728,7 +1844,6 @@
             nombre_usuario: username,
             correo: email,
             rol: rol,
-            area_id: area,
             cargo: cargo,
             especialidad: specialty,
             telefono: phone,
@@ -1750,7 +1865,6 @@
           password: password,
           password_hash: `$2b$10$${btoa(password)}...`,
           rol: rol,
-          area_id: area,
           cargo: cargo,
           especialidad: specialty,
           telefono: phone,
@@ -1877,6 +1991,25 @@
       currentEditId = activity ? activity.id : null;
       uploadedImage = null;
       
+      // Poblar selectores
+      const userSelect = document.getElementById('activityUser');
+      userSelect.innerHTML = '<option value="">Seleccionar...</option>';
+      DATABASE.usuarios.forEach(user => {
+        userSelect.innerHTML += `<option value="${user.id}">${user.nombre_completo} (${user.rol})</option>`;
+      });
+
+      const categorySelect = document.getElementById('activityCategory');
+      categorySelect.innerHTML = '<option value="">Seleccionar...</option>';
+      DATABASE.categorias_mantenimiento.forEach(cat => {
+        categorySelect.innerHTML += `<option value="${cat.id}">${cat.nombre}</option>`;
+      });
+
+      const typeSelect = document.getElementById('activityType');
+      typeSelect.innerHTML = '<option value="">Seleccionar...</option>';
+      DATABASE.tipos_mantenimiento.forEach(tipo => {
+        typeSelect.innerHTML += `<option value="${tipo.id}">${tipo.nombre}</option>`;
+      });
+      
       if (mode === 'new') {
         document.getElementById('activityModalTitle').innerHTML = '<i class="fas fa-plus"></i> Nueva Actividad';
         document.getElementById('activityForm').reset();
@@ -1890,7 +2023,6 @@
         document.getElementById('activityUser').value = activity.usuario_id;
         document.getElementById('activityCategory').value = activity.categoria_id;
         document.getElementById('activityType').value = activity.tipo_mantenimiento_id;
-        document.getElementById('activityArea').value = activity.area_id;
         document.getElementById('activityDate').value = activity.fecha_actividad;
         document.getElementById('activityDuration').value = activity.duracion_horas;
         document.getElementById('activityLocation').value = activity.lugar || '';
@@ -1932,7 +2064,6 @@
       const usuario = document.getElementById('activityUser').value;
       const categoria = document.getElementById('activityCategory').value;
       const tipo = document.getElementById('activityType').value;
-      const area = document.getElementById('activityArea').value;
       const fecha = document.getElementById('activityDate').value;
       const duracion = parseFloat(document.getElementById('activityDuration').value);
       const lugar = document.getElementById('activityLocation').value;
@@ -1940,7 +2071,7 @@
       const prioridad = document.getElementById('activityPriority').value;
       const observacion = document.getElementById('activityObservation').value;
 
-      if (!titulo || !descripcion || !usuario || !categoria || !tipo || !area || !fecha || !duracion) {
+      if (!titulo || !descripcion || !usuario || !categoria || !tipo || !fecha || !duracion) {
         Swal.fire({
           icon: 'warning',
           title: 'Campos incompletos',
@@ -1965,7 +2096,6 @@
             usuario_id: usuario,
             categoria_id: categoria,
             tipo_mantenimiento_id: tipo,
-            area_id: area,
             fecha_actividad: fecha,
             duracion_horas: duracion,
             lugar: lugar,
@@ -2002,7 +2132,6 @@
           tarea_id: null,
           categoria_id: categoria,
           tipo_mantenimiento_id: tipo,
-          area_id: area,
           usuario_id: usuario,
           fecha_actividad: fecha,
           hora_inicio: "08:00",
@@ -2073,7 +2202,6 @@
         const user = DATABASE.usuarios.find(u => u.id === act.usuario_id);
         const categoria = DATABASE.categorias_mantenimiento.find(c => c.id === act.categoria_id);
         const tipo = DATABASE.tipos_mantenimiento.find(t => t.id === act.tipo_mantenimiento_id);
-        const area = DATABASE.areas.find(a => a.id === act.area_id);
 
         return {
           'ID': act.id,
@@ -2082,7 +2210,6 @@
           'Usuario': user ? user.nombre_completo : 'N/A',
           'Categoría': categoria ? categoria.nombre : 'N/A',
           'Tipo Mantenimiento': tipo ? tipo.nombre : 'N/A',
-          'Área': area ? area.nombre : 'N/A',
           'Fecha': act.fecha_actividad,
           'Duración (hrs)': act.duracion_horas,
           'Lugar': act.lugar || 'N/A',
@@ -2105,7 +2232,6 @@
         { wch: 25 }, // Usuario
         { wch: 25 }, // Categoría
         { wch: 20 }, // Tipo
-        { wch: 25 }, // Área
         { wch: 12 }, // Fecha
         { wch: 12 }, // Duración
         { wch: 25 }, // Lugar
@@ -2237,13 +2363,4 @@
           localStorage.removeItem('session_SAC_permanent');
           
           // Guardar motivo de logout
-          localStorage.setItem('logout_motivo', 'manual');
-          
-          // Prevenir que el navegador vuelva a esta página
-          window.location.replace('index.html?logout=1');
-        }
-      });
-    }
-  </script>
-</body>
-</html>
+          localS
