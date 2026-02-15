@@ -1879,7 +1879,7 @@
         document.getElementById('activityUser').value = activity.usuario_id;
         document.getElementById('activityCategory').value = activity.categoria_id;
         document.getElementById('activityType').value = activity.tipo_mantenimiento_id;
-        document.getElementById('activityArea').value = activity.area_id;
+       
         document.getElementById('activityDate').value = activity.fecha_actividad;
         document.getElementById('activityDuration').value = activity.duracion_horas;
         document.getElementById('activityLocation').value = activity.lugar || '';
@@ -1921,7 +1921,7 @@
       const usuario = document.getElementById('activityUser').value;
       const categoria = document.getElementById('activityCategory').value;
       const tipo = document.getElementById('activityType').value;
-      const area = document.getElementById('activityArea').value;
+    
       const fecha = document.getElementById('activityDate').value;
       const duracion = parseFloat(document.getElementById('activityDuration').value);
       const lugar = document.getElementById('activityLocation').value;
@@ -1954,7 +1954,6 @@
             usuario_id: usuario,
             categoria_id: categoria,
             tipo_mantenimiento_id: tipo,
-            area_id: area,
             fecha_actividad: fecha,
             duracion_horas: duracion,
             lugar: lugar,
@@ -1991,7 +1990,6 @@
           tarea_id: null,
           categoria_id: categoria,
           tipo_mantenimiento_id: tipo,
-          area_id: area,
           usuario_id: usuario,
           fecha_actividad: fecha,
           hora_inicio: "08:00",
@@ -2062,7 +2060,7 @@
         const user = DATABASE.usuarios.find(u => u.id === act.usuario_id);
         const categoria = DATABASE.categorias_mantenimiento.find(c => c.id === act.categoria_id);
         const tipo = DATABASE.tipos_mantenimiento.find(t => t.id === act.tipo_mantenimiento_id);
-        const area = DATABASE.areas.find(a => a.id === act.area_id);
+        
 
         return {
           'ID': act.id,
@@ -2071,7 +2069,6 @@
           'Usuario': user ? user.nombre_completo : 'N/A',
           'Categoría': categoria ? categoria.nombre : 'N/A',
           'Tipo Mantenimiento': tipo ? tipo.nombre : 'N/A',
-          'Área': area ? area.nombre : 'N/A',
           'Fecha': act.fecha_actividad,
           'Duración (hrs)': act.duracion_horas,
           'Lugar': act.lugar || 'N/A',
