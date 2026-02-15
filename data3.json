@@ -73,7 +73,7 @@
     {
       "id": "USR-003",
       "nombre_completo": "German Filemon Ayaviri Negrete",
-      "nombre_usuario": "german.ayaviri",
+      "nombre_usuario": "german",
       "correo": "gerfile12@gmail.com",
       "password": "Personal2026#",
       "rol": "responsable_audiovisual",
@@ -129,7 +129,7 @@
     {
       "id": "USR-006",
       "nombre_completo": "Roger Leonel Chui Calle",
-      "nombre_usuario": "roger.chui",
+      "nombre_usuario": "roger",
       "correo": "roger4214001@gmail.com",
       "password": "Personal2026#",
       "rol": "responsable_audiovisual",
@@ -798,6 +798,52 @@
       "created_at": "2026-02-13T07:55:00Z",
       "updated_at": "2026-02-13T14:00:00Z"
     },
+    "id": "ACT-00",
+      "titulo": "Reparación de PC - Aula F-1",
+      "descripcion": "La pc presentaba problema de inicio ya que no fucionaba el disco SSD por mal estado. Se realizo la limpieza y cambio de disco SSD y clonar el sistema operativo.",
+      "tarea_id": "TAREA-012",
+      "categoria_id": "CAT-001",
+      "tipo_mantenimiento_id": "TMANT-001",
+      "usuario_id": "USR-006",
+      "fecha_actividad": "2026-02-13",
+      "hora_inicio": "08:00",
+      "hora_fin": "10:30",
+      "duracion_horas": 2.5,
+      "lugar": "Aula F-1 — Bloque F",
+      "estado": "aprobado",
+      "prioridad": "alta",
+      "materiales_usados": [
+        {
+          "nombre": "Disco SSD",
+          "cantidad": 1,
+          "unidad": "pieza"
+        },
+        {
+          "nombre": "Paño microfibra",
+          "cantidad": 1,
+          "unidad": "pieza"
+        },
+        {
+          "nombre": "Soplador de aire",
+          "cantidad": 1,
+          "unidad": "pieza"
+        },
+        {
+          "nombre": "Brochas",
+          "cantidad": 1,
+          "unidad": "pieza"
+        }
+      ],
+      "observacion_empleado": "Se reemplazó lámpara y limpió sistema de ventilación. Se recomienda monitoreo mensual del resto de proyectores.",
+      "observacion_supervisor": "Trabajo bien ejecutado. Registrar en bitácora de horas de lámparas.",
+      "supervisor_id": "USR-001",
+      "fecha_envio": "2026-02-13T10:45:00Z",
+      "fecha_revision": "2026-02-13T14:00:00Z",
+      "evidencias": ["EVI-001", "EVI-002"],
+      "created_at": "2026-02-13T07:55:00Z",
+      "updated_at": "2026-02-13T14:00:00Z"
+    },
+    
     {
       "id": "ACT-002",
       "titulo": "Apertura diaria de aulas — Bloque A",
