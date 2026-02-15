@@ -515,6 +515,12 @@
     }
 
     /* ========== FORM STYLES ========== */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
     .form-group {
       margin-bottom: 25px;
     }
@@ -535,7 +541,7 @@
       font-size: 18px;
     }
 
-    .form-control {
+    .form-control, .form-select {
       width: 100%;
       padding: 16px 20px;
       border: 2px solid rgba(59, 130, 246, 0.3);
@@ -553,7 +559,7 @@
       font-weight: 400;
     }
 
-    .form-control:focus {
+    .form-control:focus, .form-select:focus {
       outline: none;
       border-color: var(--navy-400);
       box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
@@ -922,7 +928,12 @@
         padding: 25px 15px;
       }
       
-      .form-control {
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      
+      .form-control, .form-select {
         padding: 14px 18px;
         font-size: 15px;
       }
@@ -1223,7 +1234,7 @@
     let DATABASE = null;
     let currentUser = null;
 
-    // SECTION TEMPLATES
+    // SECTION TEMPLATES - FORMULARIOS ADAPTADOS AL JSON
     const sections = {
       dashboard: {
         title: 'Dashboard - Panel de Control',
@@ -1252,7 +1263,7 @@
       },
       audiovisual: {
         title: 'Mantenimiento Audiovisual',
-        cardTitle: 'Registrar Mantenimiento de Equipos',
+        cardTitle: 'Registrar Mantenimiento de Equipos Audiovisuales',
         content: `
           <form id="audiovisualForm">
             <div class="form-group">
@@ -1260,141 +1271,217 @@
               <input type="text" class="form-control" id="titulo_audiovisual" 
                 placeholder="Ej: Reparación de proyector Epson - Aula 204" required>
             </div>
-            <div class="form-group">
-              <label><i class="fas fa-tasks"></i> Tipo de Mantenimiento *</label>
-              <select class="form-control" id="tipo_mantenimiento_audiovisual" required>
-                <option value="">Seleccione...</option>
-                <option value="TMANT-001">Correctivo</option>
-                <option value="TMANT-002">Correctivo de Emergencia</option>
-                <option value="TMANT-003">Preventivo</option>
-                <option value="TMANT-004">Preventivo Rutinario</option>
-                <option value="TMANT-005">Predictivo</option>
-              </select>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label><i class="fas fa-list"></i> Tipo de Mantenimiento *</label>
+                <select class="form-select" id="tipo_mantenimiento_audiovisual" required>
+                  <option value="">Seleccione...</option>
+                  <option value="TMANT-001">Correctivo</option>
+                  <option value="TMANT-002">Correctivo de Emergencia</option>
+                  <option value="TMANT-003">Preventivo</option>
+                  <option value="TMANT-004">Preventivo Rutinario</option>
+                  <option value="TMANT-005">Predictivo</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label><i class="fas fa-exclamation-triangle"></i> Prioridad *</label>
+                <select class="form-select" id="prioridad_audiovisual" required>
+                  <option value="baja">Baja</option>
+                  <option value="media" selected>Media</option>
+                  <option value="alta">Alta</option>
+                </select>
+              </div>
             </div>
+            
             <div class="form-group">
-              <label><i class="fas fa-map-marker-alt"></i> Lugar *</label>
+              <label><i class="fas fa-map-marker-alt"></i> Lugar / Ubicación *</label>
               <input type="text" class="form-control" id="lugar_audiovisual" 
                 placeholder="Ej: Aula 204 - Bloque B" required>
             </div>
+            
             <div class="form-group">
               <label><i class="fas fa-align-left"></i> Descripción *</label>
               <textarea class="form-control" id="descripcion_audiovisual" 
-                placeholder="Describa el problema y la solución aplicada..." required></textarea>
+                placeholder="Describa el problema detectado y la solución aplicada..." required></textarea>
             </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label><i class="fas fa-clock"></i> Hora de Inicio</label>
+                <input type="time" class="form-control" id="hora_inicio_audiovisual" value="08:00">
+              </div>
+              
+              <div class="form-group">
+                <label><i class="fas fa-stopwatch"></i> Duración (horas)</label>
+                <input type="number" class="form-control" id="duracion_audiovisual" 
+                  placeholder="Ej: 2.5" min="0" step="0.25" value="1">
+              </div>
+            </div>
+            
             <div class="form-group">
               <label><i class="fas fa-tools"></i> Materiales Utilizados (separados por comas)</label>
               <input type="text" class="form-control" id="materiales_audiovisual" 
                 placeholder="Ej: Lámpara Epson ELPLP78, Paño microfibra, Soplador de aire">
             </div>
+            
             <div class="form-group">
-              <label><i class="fas fa-stopwatch"></i> Duración (horas)</label>
-              <input type="number" class="form-control" id="duracion_audiovisual" 
-                placeholder="Ej: 2.5" min="0" step="0.25" value="1">
+              <label><i class="fas fa-sticky-note"></i> Observación del Empleado</label>
+              <textarea class="form-control" id="observacion_audiovisual" 
+                placeholder="Observaciones adicionales, recomendaciones, etc."></textarea>
             </div>
-            <div class="form-group">
-              <label><i class="fas fa-exclamation-triangle"></i> Prioridad *</label>
-              <select class="form-control" id="prioridad_audiovisual" required>
-                <option value="baja">Baja</option>
-                <option value="media" selected>Media</option>
-                <option value="alta">Alta</option>
-              </select>
-            </div>
+            
             <button type="submit" class="btn btn-primary btn-block">
-              <i class="fas fa-save"></i> Registrar Actividad
+              <i class="fas fa-save"></i> Registrar Actividad Audiovisual
             </button>
           </form>
         `
       },
       inmuebles: {
         title: 'Reportar Fallas de Inmuebles',
-        cardTitle: 'Registrar Falla en Inmueble',
+        cardTitle: 'Registrar Mantenimiento de Inmuebles (Mobiliario, Estructuras, Pintura)',
         content: `
           <form id="inmueblesForm">
             <div class="form-group">
-              <label><i class="fas fa-tag"></i> Título de la Falla *</label>
+              <label><i class="fas fa-tag"></i> Título de la Actividad *</label>
               <input type="text" class="form-control" id="titulo_inmuebles" 
                 placeholder="Ej: Reparación de sillas rotas - Aula 101" required>
             </div>
-            <div class="form-group">
-              <label><i class="fas fa-tasks"></i> Tipo de Mantenimiento *</label>
-              <select class="form-control" id="tipo_mantenimiento_inmuebles" required>
-                <option value="">Seleccione...</option>
-                <option value="TMANT-001">Correctivo</option>
-                <option value="TMANT-003">Preventivo</option>
-                <option value="TMANT-004">Preventivo Rutinario</option>
-              </select>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label><i class="fas fa-list"></i> Tipo de Mantenimiento *</label>
+                <select class="form-select" id="tipo_mantenimiento_inmuebles" required>
+                  <option value="">Seleccione...</option>
+                  <option value="TMANT-001">Correctivo</option>
+                  <option value="TMANT-003">Preventivo</option>
+                  <option value="TMANT-004">Preventivo Rutinario</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label><i class="fas fa-exclamation-triangle"></i> Prioridad *</label>
+                <select class="form-select" id="prioridad_inmuebles" required>
+                  <option value="baja">Baja</option>
+                  <option value="media" selected>Media</option>
+                  <option value="alta">Alta</option>
+                </select>
+              </div>
             </div>
+            
             <div class="form-group">
               <label><i class="fas fa-map-marker-alt"></i> Ubicación *</label>
               <input type="text" class="form-control" id="lugar_inmuebles" 
                 placeholder="Ej: Bloque A - Aulas 101 a 108" required>
             </div>
+            
             <div class="form-group">
-              <label><i class="fas fa-align-left"></i> Descripción de la Falla *</label>
+              <label><i class="fas fa-align-left"></i> Descripción *</label>
               <textarea class="form-control" id="descripcion_inmuebles" 
                 placeholder="Describa el daño y las reparaciones realizadas..." required></textarea>
             </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label><i class="fas fa-clock"></i> Hora de Inicio</label>
+                <input type="time" class="form-control" id="hora_inicio_inmuebles" value="08:00">
+              </div>
+              
+              <div class="form-group">
+                <label><i class="fas fa-stopwatch"></i> Duración (horas)</label>
+                <input type="number" class="form-control" id="duracion_inmuebles" 
+                  placeholder="Ej: 1.5" min="0" step="0.25" value="1">
+              </div>
+            </div>
+            
             <div class="form-group">
               <label><i class="fas fa-tools"></i> Materiales Utilizados</label>
               <input type="text" class="form-control" id="materiales_inmuebles" 
                 placeholder="Ej: Soldadura eléctrica, Pernos M8, Llave de tuercas">
             </div>
+            
             <div class="form-group">
-              <label><i class="fas fa-exclamation-triangle"></i> Prioridad *</label>
-              <select class="form-control" id="prioridad_inmuebles" required>
-                <option value="baja">Baja</option>
-                <option value="media" selected>Media</option>
-                <option value="alta">Alta</option>
-              </select>
+              <label><i class="fas fa-sticky-note"></i> Observación del Empleado</label>
+              <textarea class="form-control" id="observacion_inmuebles" 
+                placeholder="Observaciones adicionales, recomendaciones, etc."></textarea>
             </div>
+            
             <button type="submit" class="btn btn-primary btn-block">
-              <i class="fas fa-save"></i> Reportar Falla
+              <i class="fas fa-save"></i> Reportar Falla de Inmueble
             </button>
           </form>
         `
       },
       electricidad: {
         title: 'Reportar Fallas Eléctricas',
-        cardTitle: 'Registrar Falla Eléctrica',
+        cardTitle: 'Registrar Mantenimiento Eléctrico',
         content: `
           <form id="electricidadForm">
             <div class="form-group">
-              <label><i class="fas fa-tag"></i> Título de la Falla *</label>
+              <label><i class="fas fa-tag"></i> Título de la Actividad *</label>
               <input type="text" class="form-control" id="titulo_electricidad" 
                 placeholder="Ej: Reemplazo de interruptores quemados - Aula 310" required>
             </div>
-            <div class="form-group">
-              <label><i class="fas fa-tasks"></i> Tipo de Mantenimiento *</label>
-              <select class="form-control" id="tipo_mantenimiento_electricidad" required>
-                <option value="">Seleccione...</option>
-                <option value="TMANT-001">Correctivo</option>
-                <option value="TMANT-002">Correctivo de Emergencia</option>
-                <option value="TMANT-003">Preventivo</option>
-              </select>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label><i class="fas fa-list"></i> Tipo de Mantenimiento *</label>
+                <select class="form-select" id="tipo_mantenimiento_electricidad" required>
+                  <option value="">Seleccione...</option>
+                  <option value="TMANT-001">Correctivo</option>
+                  <option value="TMANT-002">Correctivo de Emergencia</option>
+                  <option value="TMANT-003">Preventivo</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label><i class="fas fa-exclamation-triangle"></i> Prioridad *</label>
+                <select class="form-select" id="prioridad_electricidad" required>
+                  <option value="baja">Baja</option>
+                  <option value="media">Media</option>
+                  <option value="alta" selected>Alta</option>
+                </select>
+              </div>
             </div>
+            
             <div class="form-group">
               <label><i class="fas fa-map-marker-alt"></i> Ubicación *</label>
               <input type="text" class="form-control" id="lugar_electricidad" 
                 placeholder="Ej: Aula 310 - Bloque D Piso 3" required>
             </div>
+            
             <div class="form-group">
-              <label><i class="fas fa-align-left"></i> Descripción del Problema *</label>
+              <label><i class="fas fa-align-left"></i> Descripción *</label>
               <textarea class="form-control" id="descripcion_electricidad" 
                 placeholder="Describa la falla eléctrica y las reparaciones realizadas..." required></textarea>
             </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label><i class="fas fa-clock"></i> Hora de Inicio</label>
+                <input type="time" class="form-control" id="hora_inicio_electricidad" value="08:00">
+              </div>
+              
+              <div class="form-group">
+                <label><i class="fas fa-stopwatch"></i> Duración (horas)</label>
+                <input type="number" class="form-control" id="duracion_electricidad" 
+                  placeholder="Ej: 2.0" min="0" step="0.25" value="1">
+              </div>
+            </div>
+            
             <div class="form-group">
               <label><i class="fas fa-tools"></i> Materiales Utilizados</label>
               <input type="text" class="form-control" id="materiales_electricidad" 
                 placeholder="Ej: Interruptor termomagnético 16A x3, Destornillador dieléctrico">
             </div>
+            
             <div class="form-group">
-              <label><i class="fas fa-exclamation-triangle"></i> Prioridad *</label>
-              <select class="form-control" id="prioridad_electricidad" required>
-                <option value="baja">Baja</option>
-                <option value="media">Media</option>
-                <option value="alta" selected>Alta</option>
-              </select>
+              <label><i class="fas fa-sticky-note"></i> Observación del Empleado</label>
+              <textarea class="form-control" id="observacion_electricidad" 
+                placeholder="Observaciones adicionales, recomendaciones, etc."></textarea>
             </div>
+            
             <button type="submit" class="btn btn-primary btn-block">
               <i class="fas fa-save"></i> Reportar Falla Eléctrica
             </button>
@@ -1403,54 +1490,81 @@
       },
       cerraduras: {
         title: 'Reportar Cerraduras en Mal Estado',
-        cardTitle: 'Registrar Problema de Cerradura',
+        cardTitle: 'Registrar Mantenimiento de Cerraduras y Puertas',
         content: `
           <form id="cerradurasForm">
             <div class="form-group">
-              <label><i class="fas fa-tag"></i> Título del Reporte *</label>
+              <label><i class="fas fa-tag"></i> Título de la Actividad *</label>
               <input type="text" class="form-control" id="titulo_cerraduras" 
                 placeholder="Ej: Reparación de cerradura rígida - Puerta A-105" required>
             </div>
-            <div class="form-group">
-              <label><i class="fas fa-tasks"></i> Tipo de Mantenimiento *</label>
-              <select class="form-control" id="tipo_mantenimiento_cerraduras" required>
-                <option value="">Seleccione...</option>
-                <option value="TMANT-001">Correctivo</option>
-                <option value="TMANT-003">Preventivo</option>
-              </select>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label><i class="fas fa-list"></i> Tipo de Mantenimiento *</label>
+                <select class="form-select" id="tipo_mantenimiento_cerraduras" required>
+                  <option value="">Seleccione...</option>
+                  <option value="TMANT-001">Correctivo</option>
+                  <option value="TMANT-003">Preventivo</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label><i class="fas fa-exclamation-triangle"></i> Prioridad *</label>
+                <select class="form-select" id="prioridad_cerraduras" required>
+                  <option value="baja">Baja</option>
+                  <option value="media" selected>Media</option>
+                  <option value="alta">Alta</option>
+                </select>
+              </div>
             </div>
+            
             <div class="form-group">
               <label><i class="fas fa-map-marker-alt"></i> Ubicación *</label>
               <input type="text" class="form-control" id="lugar_cerraduras" 
                 placeholder="Ej: Puerta A-105 - Bloque A" required>
             </div>
+            
             <div class="form-group">
-              <label><i class="fas fa-align-left"></i> Descripción del Problema *</label>
+              <label><i class="fas fa-align-left"></i> Descripción *</label>
               <textarea class="form-control" id="descripcion_cerraduras" 
                 placeholder="Describa el estado de la cerradura y la reparación realizada..." required></textarea>
             </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label><i class="fas fa-clock"></i> Hora de Inicio</label>
+                <input type="time" class="form-control" id="hora_inicio_cerraduras" value="08:00">
+              </div>
+              
+              <div class="form-group">
+                <label><i class="fas fa-stopwatch"></i> Duración (horas)</label>
+                <input type="number" class="form-control" id="duracion_cerraduras" 
+                  placeholder="Ej: 0.75" min="0" step="0.25" value="1">
+              </div>
+            </div>
+            
             <div class="form-group">
               <label><i class="fas fa-tools"></i> Materiales Utilizados</label>
               <input type="text" class="form-control" id="materiales_cerraduras" 
                 placeholder="Ej: Cilindro nuevo, Lubricante, Juego de llaves">
             </div>
+            
             <div class="form-group">
-              <label><i class="fas fa-exclamation-triangle"></i> Prioridad *</label>
-              <select class="form-control" id="prioridad_cerraduras" required>
-                <option value="baja">Baja</option>
-                <option value="media" selected>Media</option>
-                <option value="alta">Alta</option>
-              </select>
+              <label><i class="fas fa-sticky-note"></i> Observación del Empleado</label>
+              <textarea class="form-control" id="observacion_cerraduras" 
+                placeholder="Observaciones adicionales, recomendaciones, etc."></textarea>
             </div>
+            
             <button type="submit" class="btn btn-primary btn-block">
-              <i class="fas fa-save"></i> Reportar Cerradura
+              <i class="fas fa-save"></i> Reportar Problema de Cerradura
             </button>
           </form>
         `
       },
       actividades: {
         title: 'Mis Actividades',
-        cardTitle: 'Lista de Actividades',
+        cardTitle: 'Lista de Actividades Registradas',
         content: `
           <div id="activitiesList">
             <div class="empty-state">
@@ -1902,6 +2016,7 @@
               <div class="activity-meta">
                 <span><i class="fas fa-calendar"></i> ${act.fecha_actividad}</span>
                 <span><i class="fas fa-clock"></i> ${act.duracion_horas}h</span>
+                <span><i class="fas fa-map-marker-alt"></i> ${act.lugar.substring(0, 15)}${act.lugar.length > 15 ? '...' : ''}</span>
               </div>
               <div style="margin-top: 10px;">
                 <span class="activity-status status-${act.estado}">${act.estado}</span>
@@ -1941,6 +2056,7 @@
           <table>
             <thead>
               <tr>
+                <th>ID</th>
                 <th>Actividad</th>
                 <th>Fecha</th>
                 <th>Duración</th>
@@ -1954,6 +2070,7 @@
       userActivities.forEach(act => {
         html += `
           <tr>
+            <td style="color: var(--navy-300); font-weight: 600;">${act.id}</td>
             <td>
               <div style="font-weight: 600; color: white; margin-bottom: 4px;">${act.titulo}</div>
               <div style="font-size: 13px; color: var(--navy-300);">
@@ -1984,6 +2101,10 @@
     }
 
     function generarIdActividad() {
+      if (!DATABASE || !DATABASE.actividades || DATABASE.actividades.length === 0) {
+        return 'ACT-001';
+      }
+      
       const maxId = Math.max(...DATABASE.actividades.map(a => {
         const num = parseInt(a.id.replace('ACT-', ''));
         return isNaN(num) ? 0 : num;
@@ -1993,24 +2114,77 @@
       return `ACT-${String(nuevoNumero).padStart(3, '0')}`;
     }
 
-    async function registrarActividad(tipo) {
-      // Get form data
-      const formData = {
-        titulo: document.getElementById(`titulo_${tipo}`).value,
-        tipo_mantenimiento: document.getElementById(`tipo_mantenimiento_${tipo}`).value,
-        lugar: document.getElementById(`lugar_${tipo}`).value,
-        descripcion: document.getElementById(`descripcion_${tipo}`).value,
-        materiales: document.getElementById(`materiales_${tipo}`).value,
-        duracion: parseFloat(document.getElementById(`duracion_${tipo}`).value) || 1,
-        prioridad: document.getElementById(`prioridad_${tipo}`).value
-      };
+    function registrarActividad(tipo) {
+      // Validar que la base de datos esté cargada
+      if (!DATABASE) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'La base de datos no está cargada',
+          confirmButtonColor: '#dc3545'
+        });
+        return;
+      }
 
-      // Validate
+      // Get form data según el tipo
+      let formData = {};
+      
+      if (tipo === 'audiovisual') {
+        formData = {
+          titulo: document.getElementById('titulo_audiovisual')?.value,
+          tipo_mantenimiento: document.getElementById('tipo_mantenimiento_audiovisual')?.value,
+          lugar: document.getElementById('lugar_audiovisual')?.value,
+          descripcion: document.getElementById('descripcion_audiovisual')?.value,
+          hora_inicio: document.getElementById('hora_inicio_audiovisual')?.value || '08:00',
+          duracion: parseFloat(document.getElementById('duracion_audiovisual')?.value) || 1,
+          materiales: document.getElementById('materiales_audiovisual')?.value,
+          prioridad: document.getElementById('prioridad_audiovisual')?.value,
+          observacion: document.getElementById('observacion_audiovisual')?.value
+        };
+      } else if (tipo === 'inmuebles') {
+        formData = {
+          titulo: document.getElementById('titulo_inmuebles')?.value,
+          tipo_mantenimiento: document.getElementById('tipo_mantenimiento_inmuebles')?.value,
+          lugar: document.getElementById('lugar_inmuebles')?.value,
+          descripcion: document.getElementById('descripcion_inmuebles')?.value,
+          hora_inicio: document.getElementById('hora_inicio_inmuebles')?.value || '08:00',
+          duracion: parseFloat(document.getElementById('duracion_inmuebles')?.value) || 1,
+          materiales: document.getElementById('materiales_inmuebles')?.value,
+          prioridad: document.getElementById('prioridad_inmuebles')?.value,
+          observacion: document.getElementById('observacion_inmuebles')?.value
+        };
+      } else if (tipo === 'electricidad') {
+        formData = {
+          titulo: document.getElementById('titulo_electricidad')?.value,
+          tipo_mantenimiento: document.getElementById('tipo_mantenimiento_electricidad')?.value,
+          lugar: document.getElementById('lugar_electricidad')?.value,
+          descripcion: document.getElementById('descripcion_electricidad')?.value,
+          hora_inicio: document.getElementById('hora_inicio_electricidad')?.value || '08:00',
+          duracion: parseFloat(document.getElementById('duracion_electricidad')?.value) || 1,
+          materiales: document.getElementById('materiales_electricidad')?.value,
+          prioridad: document.getElementById('prioridad_electricidad')?.value,
+          observacion: document.getElementById('observacion_electricidad')?.value
+        };
+      } else if (tipo === 'cerraduras') {
+        formData = {
+          titulo: document.getElementById('titulo_cerraduras')?.value,
+          tipo_mantenimiento: document.getElementById('tipo_mantenimiento_cerraduras')?.value,
+          lugar: document.getElementById('lugar_cerraduras')?.value,
+          descripcion: document.getElementById('descripcion_cerraduras')?.value,
+          hora_inicio: document.getElementById('hora_inicio_cerraduras')?.value || '08:00',
+          duracion: parseFloat(document.getElementById('duracion_cerraduras')?.value) || 1,
+          materiales: document.getElementById('materiales_cerraduras')?.value,
+          prioridad: document.getElementById('prioridad_cerraduras')?.value,
+          observacion: document.getElementById('observacion_cerraduras')?.value
+        };
+      }
+
+      // Validate required fields
       if (!formData.titulo || !formData.tipo_mantenimiento || !formData.lugar || !formData.descripcion) {
         Swal.fire({
           icon: 'warning',
           title: 'Campos incompletos',
-          text: 'Por favor complete todos los campos obligatorios',
+          text: 'Por favor complete todos los campos obligatorios (*)',
           confirmButtonColor: '#f59e0b'
         });
         return;
@@ -2029,11 +2203,22 @@
           categoria_id = 'CAT-004';
           break;
         case 'cerraduras':
-          categoria_id = 'CAT-002';
+          categoria_id = 'CAT-002'; // Cerraduras también pertenece a inmuebles
           break;
+        default:
+          categoria_id = 'CAT-002';
       }
 
-      // Create new activity
+      // Calcular hora_fin aproximada (hora_inicio + duración)
+      const horaInicio = formData.hora_inicio;
+      const duracionHoras = formData.duracion;
+      const [horas, minutos] = horaInicio.split(':').map(Number);
+      const totalMinutos = horas * 60 + minutos + duracionHoras * 60;
+      const horaFinHoras = Math.floor(totalMinutos / 60) % 24;
+      const horaFinMinutos = totalMinutos % 60;
+      const horaFin = `${String(horaFinHoras).padStart(2, '0')}:${String(horaFinMinutos).padStart(2, '0')}`;
+
+      // Create new activity with all JSON fields
       const nuevaActividad = {
         id: generarIdActividad(),
         titulo: formData.titulo,
@@ -2043,14 +2228,14 @@
         tipo_mantenimiento_id: formData.tipo_mantenimiento,
         usuario_id: currentUser.id,
         fecha_actividad: new Date().toISOString().split('T')[0],
-        hora_inicio: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
-        hora_fin: null,
+        hora_inicio: formData.hora_inicio,
+        hora_fin: horaFin,
         duracion_horas: formData.duracion,
         lugar: formData.lugar,
         estado: "enviado",
         prioridad: formData.prioridad,
         materiales_usados: formData.materiales ? formData.materiales.split(',').map(m => m.trim()) : [],
-        observacion_empleado: formData.descripcion,
+        observacion_empleado: formData.observacion || formData.descripcion,
         observacion_supervisor: null,
         supervisor_id: null,
         fecha_envio: new Date().toISOString(),
@@ -2078,7 +2263,28 @@
       });
 
       // Reset form
-      document.getElementById(`${tipo}Form`).reset();
+      const formId = `${tipo}Form`;
+      const form = document.getElementById(formId);
+      if (form) form.reset();
+
+      // Restaurar valores por defecto en algunos campos
+      if (tipo === 'audiovisual') {
+        document.getElementById('hora_inicio_audiovisual').value = '08:00';
+        document.getElementById('duracion_audiovisual').value = '1';
+        document.getElementById('prioridad_audiovisual').value = 'media';
+      } else if (tipo === 'inmuebles') {
+        document.getElementById('hora_inicio_inmuebles').value = '08:00';
+        document.getElementById('duracion_inmuebles').value = '1';
+        document.getElementById('prioridad_inmuebles').value = 'media';
+      } else if (tipo === 'electricidad') {
+        document.getElementById('hora_inicio_electricidad').value = '08:00';
+        document.getElementById('duracion_electricidad').value = '1';
+        document.getElementById('prioridad_electricidad').value = 'alta';
+      } else if (tipo === 'cerraduras') {
+        document.getElementById('hora_inicio_cerraduras').value = '08:00';
+        document.getElementById('duracion_cerraduras').value = '1';
+        document.getElementById('prioridad_cerraduras').value = 'media';
+      }
 
       // Reload stats and activities
       loadStats();
@@ -2087,7 +2293,8 @@
       // Navigate to activities list
       navigateTo('actividades');
       document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-      document.querySelector('.menu-item[data-section="actividades"]').classList.add('active');
+      const actividadesMenuItem = document.querySelector('.menu-item[data-section="actividades"]');
+      if (actividadesMenuItem) actividadesMenuItem.classList.add('active');
     }
 
     function logout() {
