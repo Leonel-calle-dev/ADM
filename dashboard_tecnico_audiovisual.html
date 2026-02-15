@@ -221,6 +221,12 @@
       border-bottom: 2px solid var(--indigo-600);
     }
 
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
     .header-left h1 {
       font-size: 26px;
       color: white;
@@ -235,10 +241,73 @@
       font-size: 28px;
     }
 
+    .header-center {
+      display: none;
+      text-align: center;
+      flex: 1;
+      margin: 0 15px;
+    }
+
+    .header-center h1 {
+      font-size: 22px;
+      color: white;
+      font-weight: 700;
+      margin: 0;
+    }
+
     .header-right {
       display: flex;
       align-items: center;
       gap: 20px;
+    }
+
+    /* ========== SIDEBAR TOGGLE BUTTON ========== */
+    .sidebar-toggle-btn {
+      display: none; /* Oculto por defecto en desktop */
+      background: rgba(99, 102, 241, 0.2);
+      border: 2px solid var(--indigo-400);
+      color: white;
+      font-size: 20px;
+      width: 45px;
+      height: 45px;
+      border-radius: 12px;
+      cursor: pointer;
+      padding: 0;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+    
+    .sidebar-toggle-btn:hover {
+      background: rgba(99, 102, 241, 0.3);
+      transform: scale(1.05);
+      border-color: var(--indigo-300);
+    }
+    
+    .sidebar-toggle-btn i {
+      transition: transform 0.3s ease;
+    }
+    
+    .sidebar-toggle-btn.active i {
+      transform: rotate(90deg);
+    }
+
+    /* Backdrop del sidebar en móvil */
+    .sidebar-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      cursor: pointer;
+      display: none;
+    }
+
+    .sidebar-backdrop.active {
+      display: block;
     }
 
     .logout-btn {
@@ -684,6 +753,12 @@
     }
 
     @media (max-width: 900px) {
+      /* Mostrar botón toggle solo en móvil */
+      .sidebar-toggle-btn {
+        display: flex;
+      }
+
+      /* Ocultar sidebar por defecto en móvil */
       .sidebar {
         transform: translateX(-100%);
       }
@@ -696,12 +771,50 @@
         margin-left: 0;
       }
       
+      /* Reorganizar header para móvil */
+      .header {
+        padding: 15px 20px;
+      }
+      
+      .header-left h1 {
+        display: none;
+      }
+      
+      .header-center {
+        display: block;
+      }
+      
+      .header-center h1 {
+        font-size: 18px;
+      }
+      
       .tasks-grid {
         grid-template-columns: 1fr;
       }
       
       .stats-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .container {
+        padding: 25px 20px;
+      }
+
+      .page-title h2 {
+        font-size: 28px;
+      }
+
+      .page-title p {
+        font-size: 15px;
+      }
+
+      .card-header {
+        padding: 18px 20px;
+        font-size: 18px;
+      }
+
+      .card-body {
+        padding: 25px 20px;
       }
     }
 
@@ -717,13 +830,39 @@
       .card-body {
         padding: 20px;
       }
+
+      .header {
+        padding: 12px 15px;
+      }
+
+      .sidebar-toggle-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+      }
+
+      .logout-btn {
+        padding: 8px 14px;
+        font-size: 13px;
+      }
+
+      .page-title h2 {
+        font-size: 24px;
+      }
+
+      .stat-card-value {
+        font-size: 30px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="dashboard">
+    <!-- BACKDROP PARA SIDEBAR EN MÓVIL -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
     <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <h1>🎬 Audiovisual</h1>
         <div class="subtitle">MANTENIMIENTO</div>
@@ -778,11 +917,21 @@
     <main class="main-content">
       <header class="header">
         <div class="header-left">
+          <!-- BOTÓN DE TOGGLE PARA SIDEBAR -->
+          <button id="sidebarToggle" class="sidebar-toggle-btn">
+            <i class="fas fa-bars"></i>
+          </button>
           <h1>
             <i class="fas fa-video"></i>
             <span id="pageTitle">Dashboard Audiovisual</span>
           </h1>
         </div>
+        
+        <!-- TÍTULO CENTRADO PARA MÓVIL -->
+        <div class="header-center">
+          <h1 id="pageTitleMobile">Dashboard Audiovisual</h1>
+        </div>
+        
         <div class="header-right">
           <button class="logout-btn" id="logoutBtnMobile">
             <i class="fas fa-sign-out-alt"></i> Salir
@@ -874,12 +1023,68 @@
             navigateTo(section);
             document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
             this.classList.add('active');
+            closeSidebar();
           }
         });
       });
 
       document.getElementById('logoutBtn')?.addEventListener('click', logout);
       document.getElementById('logoutBtnMobile')?.addEventListener('click', logout);
+
+      // Sidebar toggle (solo funciona en móvil)
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      
+      if (sidebarToggle && sidebar && backdrop) {
+        sidebarToggle.addEventListener('click', () => {
+          // Solo toggle en móvil (pantallas <= 900px)
+          if (window.innerWidth <= 900) {
+            sidebar.classList.toggle('active');
+            backdrop.classList.toggle('active');
+            sidebarToggle.classList.toggle('active');
+          }
+        });
+        
+        backdrop.addEventListener('click', closeSidebar);
+      }
+
+      // Ajustar sidebar en cambio de tamaño de ventana
+      window.addEventListener('resize', handleResize);
+    }
+
+    function handleResize() {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      const toggle = document.getElementById('sidebarToggle');
+      
+      // Si cambiamos a desktop, asegurar que sidebar esté visible y sin clases activas
+      if (window.innerWidth > 900) {
+        if (sidebar) sidebar.classList.remove('active');
+        if (backdrop) backdrop.classList.remove('active');
+        if (toggle) toggle.classList.remove('active');
+      }
+    }
+
+    function closeSidebar() {
+      // Solo cerrar en móvil
+      if (window.innerWidth <= 900) {
+        const sidebar = document.getElementById('sidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        const toggle = document.getElementById('sidebarToggle');
+        
+        if (sidebar) sidebar.classList.remove('active');
+        if (backdrop) backdrop.classList.remove('active');
+        if (toggle) toggle.classList.remove('active');
+      }
+    }
+
+    function updatePageTitle(title) {
+      const pageTitle = document.getElementById('pageTitle');
+      const pageTitleMobile = document.getElementById('pageTitleMobile');
+      
+      if (pageTitle) pageTitle.textContent = title;
+      if (pageTitleMobile) pageTitleMobile.textContent = title;
     }
 
     function loadStats() {
@@ -951,37 +1156,36 @@
 
     function navigateTo(section) {
       const mainContent = document.getElementById('mainContent');
-      const pageTitle = document.getElementById('pageTitle');
       const sectionTitle = document.getElementById('sectionTitle');
 
       switch(section) {
         case 'dashboard':
-          pageTitle.textContent = 'Dashboard Audiovisual';
+          updatePageTitle('Dashboard Audiovisual');
           sectionTitle.textContent = 'Panel de Control - Mantenimiento Audiovisual';
           renderDashboard();
           break;
         case 'tareas':
-          pageTitle.textContent = 'Tareas Asignadas';
+          updatePageTitle('Tareas Asignadas');
           sectionTitle.textContent = 'Tareas del Plan de Trabajo - Audiovisual';
           renderTareas();
           break;
         case 'registrar':
-          pageTitle.textContent = 'Registrar Actividad';
+          updatePageTitle('Registrar Actividad');
           sectionTitle.textContent = 'Registro de Mantenimiento Audiovisual';
           renderFormulario();
           break;
         case 'actividades':
-          pageTitle.textContent = 'Mis Actividades';
+          updatePageTitle('Mis Actividades');
           sectionTitle.textContent = 'Historial de Actividades Registradas';
           renderActividades();
           break;
         case 'equipos':
-          pageTitle.textContent = 'Equipos Audiovisuales';
+          updatePageTitle('Equipos Audiovisuales');
           sectionTitle.textContent = 'Inventario de Equipos del Campus';
           renderEquipos();
           break;
         case 'perfil':
-          pageTitle.textContent = 'Mi Perfil';
+          updatePageTitle('Mi Perfil');
           sectionTitle.textContent = 'Información del Usuario';
           renderPerfil();
           break;
