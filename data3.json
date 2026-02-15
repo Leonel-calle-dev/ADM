@@ -21,7 +21,7 @@
       "nombre_completo": "Jorge Arroyo Zabala",
       "nombre_usuario": "jorgez",
       "correo": "profe@gmail.com",
-      "password": "Admin2026#",
+      "password_hash": "$2b$10$xK9mLpQr3TvWzN8uA1eJdO...",
       "rol": "administrador",
       "cargo": "Administrador del Campus Universitario",
       "area_responsabilidad": "Coordinación General y Supervisión",
@@ -49,7 +49,7 @@
       "nombre_completo": "Lubdin Santos Gadiel",
       "nombre_usuario": "lubdin",
       "correo": "lubdin@gmail.com",
-      "password": "Personal2026#",
+      "password_hash": "$2b$10$aR7nKpMs4UwXzO9vB2fLeP...",
       "rol": "personal_apoyo_aulas",
       "cargo": "Personal de Apoyo - Atención de Aulas",
       "area_responsabilidad": "Operación y Control de Aulas",
@@ -75,7 +75,7 @@
       "nombre_completo": "German Filemon Ayaviri Negrete",
       "nombre_usuario": "german.ayaviri",
       "correo": "gerfile12@gmail.com",
-      "password": "Personal2026#",
+      "password_hash": "$2b$10$bS8oLqNt5VxYaP0wC3gMfQ...",
       "rol": "responsable_audiovisual",
       "cargo": "Responsable de Mantenimiento Audiovisual",
       "area_responsabilidad": "Equipos Audiovisuales y Tecnológicos",
@@ -103,7 +103,7 @@
       "nombre_completo": "Joel Salas",
       "nombre_usuario": "joel",
       "correo": "joelsalas@gmail.com",
-      "password": "Personal2026#",
+      "password_hash": "$2b$10$cT9pMrOu6WyZbQ1xD4hNgR...",
       "rol": "responsable_mantenimientos",
       "cargo": "Responsable de Mantenimientos",
       "area_responsabilidad": "Infraestructura, Electricidad y Fontanería",
@@ -131,7 +131,7 @@
       "nombre_completo": "Roger Leonel Chui Calle",
       "nombre_usuario": "roger.chui",
       "correo": "roger4214001@gmail.com",
-      "password": "Personal2026#",
+      "password_hash": "$2b$10$bS8oLqNt5VxYaP0wC3gMfQ...",
       "rol": "responsable_audiovisual",
       "cargo": "Responsable de Mantenimiento Audiovisual",
       "area_responsabilidad": "Equipos Audiovisuales y Tecnológicos",
@@ -159,7 +159,7 @@
       "nombre_completo": "Duglas Alpire Añes",
       "nombre_usuario": "duglas.an",
       "correo": "duglas.alpire@campus.edu.bo",
-      "password": "Personal2026#",
+      "password_hash": "$2b$10$e5nM8qR1tU2vW3xY4zA5bC6...",
       "rol": "personal_apoyo_aulas",
       "cargo": "Personal de Apoyo - Atención de Aulas",
       "area_responsabilidad": "Operación y Control de Aulas",
@@ -185,7 +185,7 @@
       "nombre_completo": "Henry Cordero Balcazar",
       "nombre_usuario": "henry.cb",
       "correo": "henry.cordero@campus.edu.bo",
-      "password": "Personal2026#",
+      "password_hash": "$2b$10$f6oN9rS2uV3xX4yZ5aB6cD7...",
       "rol": "personal_apoyo_aulas",
       "cargo": "Personal de Apoyo - Atención de Aulas",
       "area_responsabilidad": "Operación y Control de Aulas",
@@ -267,13 +267,20 @@
     {
       "id": "SES-001",
       "usuario_id": "USR-001",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-      "ip_origen": "192.168.1.105",
-      "dispositivo": "Chrome 120 / Windows 11",
       "activa": true,
       "fecha_inicio": "2026-02-14T07:45:22Z",
-      "fecha_expiracion": "2026-02-14T19:45:22Z",
-      "created_at": "2026-02-14T07:45:22Z"
+      "fecha_expiracion": "2026-02-14T19:45:22Z"
+    }
+  ],
+  "recuperacion_password": [
+    {
+      "id": "RPASS-001",
+      "usuario_id": "USR-003",
+      "token": "f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8",
+      "correo": "gerfile12@gmail.com",
+      "usado": false,
+      "fecha_creacion": "2026-02-14T10:00:00Z",
+      "fecha_expiracion": "2026-02-15T10:00:00Z"
     }
   ],
   "categorias_mantenimiento": [
@@ -861,16 +868,13 @@
       "updated_at": "2026-02-14T14:30:00Z"
     },
     {
-      "id": "ACT-00",
+      "id": "ACT-004",
       "titulo": "Reparación de PC - Aula F-1",
       "descripcion": "La pc presentaba problema de inicio ya que no fucionaba el disco SSD por mal estado. Se realizo la limpieza y cambio de disco SSD y clonar el sistema operativo.",
       "tarea_id": "TAREA-012",
       "categoria_id": "CAT-001",
       "tipo_mantenimiento_id": "TMANT-001",
       "usuario_id": "USR-006",
-      "fecha_actividad": "2026-02-13",
-      "hora_inicio": "08:00",
-      "hora_fin": "10:30",
       "duracion_horas": 2.5,
       "lugar": "Aula F-1 — Bloque F",
       "estado": "aprobado",
@@ -890,20 +894,15 @@
           "nombre": "Soplador de aire",
           "cantidad": 1,
           "unidad": "pieza"
-        },
-        {
-          "nombre": "Brochas",
-          "cantidad": 1,
-          "unidad": "pieza"
         }
       ],
-      "observacion_empleado": "Se reemplazó lámpara y limpió sistema de ventilación. Se recomienda monitoreo mensual del resto de proyectores.",
-      "observacion_supervisor": "Trabajo bien ejecutado. Registrar en bitácora de horas de lámparas.",
+      "observacion_empleado": "Se reemplazó el disco SSD y desemplovado del PC. Se recomienda mantenimiento semanal.",
+      "observacion_supervisor": "Trabajo bien ejecutado. Modificar la cantidad del inventario del componente que se reemplazo.",
       "supervisor_id": "USR-001",
-      "fecha_envio": "2026-02-13T10:45:00Z",
+      "fecha_registro": "2026-02-13T10:45:00Z",
       "fecha_revision": "2026-02-13T14:00:00Z",
       "evidencias": ["EVI-001", "EVI-002"],
-      "created_at": "2026-02-13T07:55:00Z",
+      "created_at": "2026-02-13T10:45:00Z",
       "updated_at": "2026-02-13T14:00:00Z"
     }
   ],
