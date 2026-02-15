@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <title>Login - Sistema de Gestión del Campus</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <script src="valiacion.js"></script>
   
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -488,8 +486,9 @@
       © 2026 · Campus Universitario · Todos los derechos reservados
     </div>
   </footer>
+  
   <script>
-// ===== CONFIGURACIÓN INICIAL (DEBE ESTAR AL INICIO) =====
+// ===== CONFIGURACIÓN INICIAL =====
 const DB_PATH = 'data3.json';
 let DATABASE = null;
 
@@ -502,26 +501,26 @@ const ROLES_CONFIG = {
     dashboard: "dashboard_admin.html",
     color: "#1e3a8a"
   },
-  tecnico_sistemas: {
-    label: "Técnico Sistemas Esenciales",
-    icono: "🟣",
-    clase: "role-tecnico_sistemas",
-    dashboard: "dashboard_tecnico_sistemas.html",
-    color: "#a855f7"
+  responsable_audiovisual: {
+    label: "Responsable Audiovisual",
+    icono: "🎬",
+    clase: "role-responsable_audiovisual",
+    dashboard: "dashboard-audiovisual.html",
+    color: "#6366f1"
   },
-  tecnico_audiovisual: {
-    label: "Técnico Audiovisual",
-    icono: "🟢",
-    clase: "role-tecnico_audiovisual",
-    dashboard: "dashboard_tecnico_audiovisual.html",
-    color: "#10b981"
-  },
-  tecnico_integral: {
-    label: "Técnico Integral",
-    icono: "🟡",
-    clase: "role-tecnico_integral",
-    dashboard: "dashboard_tecnico_integral.html",
+  responsable_mantenimientos: {
+    label: "Responsable de Mantenimientos",
+    icono: "🔧",
+    clase: "role-responsable_mantenimientos",
+    dashboard: "dashboard_mantenimientos.html",
     color: "#f59e0b"
+  },
+  personal_apoyo_aulas: {
+    label: "Personal de Apoyo Aulas",
+    icono: "🚪",
+    clase: "role-personal_apoyo_aulas",
+    dashboard: "dashboard_apoyo_aulas.html",
+    color: "#3b82f6"
   }
 };
 
@@ -537,26 +536,7 @@ const appState = {
   }
 };
 
-// ===== FUNCIONES PRINCIPALES (DEBEN ESTAR DEFINIDAS ANTES DE USARSE) =====
-function verificarSesionActiva() {
-  const sessionData = sessionStorage.getItem('session_SAC');
-  if (sessionData) {
-    try {
-      const session = JSON.parse(sessionData);
-      const ahora = new Date();
-      const expira = new Date(session.expira);
-      
-      if (ahora < expira && ROLES_CONFIG[session.rol]) {
-        window.location.href = ROLES_CONFIG[session.rol].dashboard;
-        return true;
-      }
-    } catch (e) {
-      console.error("Error al verificar sesión:", e);
-    }
-  }
-  return false;
-}
-
+// ===== FUNCIONES PRINCIPALES =====
 async function cargarBaseDeDatos() {
   try {
     mostrarEstadoCarga(true);
@@ -568,16 +548,13 @@ async function cargarBaseDeDatos() {
 
     DATABASE = await respuesta.json();
 
-    // Inicializar estructuras si no existen
     if (!DATABASE.sesiones) DATABASE.sesiones = [];
     if (!DATABASE.auditoria) DATABASE.auditoria = [];
-    if (!DATABASE.recuperacion_password) DATABASE.recuperacion_password = [];
 
     console.log(`✅ Base de datos cargada correctamente`);
     console.log(`👤 ${DATABASE.usuarios.length} usuarios encontrados`);
 
     mostrarEstadoCarga(false);
-    setupEventListeners(); // Configurar eventos después de cargar DB
 
   } catch (error) {
     mostrarEstadoCarga(false);
@@ -614,23 +591,6 @@ function mostrarEstadoCarga(cargando) {
   }
 }
 
-function registrarAuditoria(usuarioId, accion, detalle) {
-  if (!DATABASE) return;
-  
-  const registro = {
-    id: `AUD-${String(DATABASE.auditoria.length + 1).padStart(3,'0')}`,
-    usuario_id: usuarioId,
-    accion: accion,
-    modulo: "autenticacion",
-    detalle: detalle,
-    ip: "192.168.1.1",
-    navegador: navigator.userAgent,
-    fecha: new Date().toISOString()
-  };
-  DATABASE.auditoria.push(registro);
-  console.log(`[AUDITORÍA] ${accion} | ${detalle}`);
-}
-
 function crearSesion(usuario) {
   const token = btoa(`${usuario.id}:${usuario.nombre_usuario}:${Date.now()}`);
   const sesion = {
@@ -645,14 +605,16 @@ function crearSesion(usuario) {
 
   const sessionData = {
     sesion_id: sesion.id,
+    id: usuario.id,
     usuario_id: usuario.id,
     nombre_completo: usuario.nombre_completo,
     nombre_usuario: usuario.nombre_usuario,
     correo: usuario.correo,
     rol: usuario.rol,
     cargo: usuario.cargo,
-    area_id: usuario.area_id,
+    area_responsabilidad: usuario.area_responsabilidad,
     especialidad: usuario.especialidad,
+    telefono: usuario.telefono,
     token: token,
     expira: sesion.fecha_expiracion,
     login_time: new Date().toISOString()
@@ -673,32 +635,41 @@ function autenticar(nombreUsuario, password) {
   );
 
   if (!usuario) {
-    registrarAuditoria(null, "LOGIN_FAILED", `Usuario '${nombreUsuario}' no existe`);
+    console.log(`❌ Usuario '${nombreUsuario}' no encontrado`);
     return { exito: false, motivo: "credenciales_invalidas" };
   }
 
   if (!usuario.activo) {
-    registrarAuditoria(usuario.id, "LOGIN_BLOCKED", `Cuenta inactiva: ${usuario.nombre_usuario}`);
+    console.log(`❌ Cuenta inactiva: ${usuario.nombre_usuario}`);
     return { exito: false, motivo: "cuenta_inactiva", usuario };
   }
 
   if (usuario.bloqueado) {
-    registrarAuditoria(usuario.id, "LOGIN_BLOCKED", `Cuenta bloqueada: ${usuario.nombre_usuario}`);
+    console.log(`❌ Cuenta bloqueada: ${usuario.nombre_usuario}`);
     return { exito: false, motivo: "cuenta_bloqueada", usuario };
   }
 
-  // Validar contraseña con el JSON
-  const passwordValida = password === usuario.password;
+  // Validar contraseña - comparación con password_hash si existe, sino con password
+  const passwordValida = usuario.password_hash 
+    ? btoa(password) === usuario.password_hash.split('$').pop() // Simulación simple
+    : password === (usuario.password || 'Personal2026#'); // Fallback
+
+  console.log(`🔐 Validando contraseña para ${usuario.nombre_usuario}:`);
+  console.log(`   Password ingresado: ${password}`);
+  console.log(`   Password esperado: ${usuario.password || 'Personal2026#'}`);
+  console.log(`   Resultado: ${passwordValida ? '✅ VÁLIDA' : '❌ INVÁLIDA'}`);
 
   if (!passwordValida) {
     usuario.intentos_fallidos = (usuario.intentos_fallidos || 0) + 1;
     if (usuario.intentos_fallidos >= appState.maxIntentos) {
       usuario.bloqueado = true;
-      registrarAuditoria(usuario.id, "LOGIN_LOCKOUT", `Bloqueado por ${appState.maxIntentos} intentos fallidos`);
       return { exito: false, motivo: "bloqueo_por_intentos", usuario };
     }
-    registrarAuditoria(usuario.id, "LOGIN_FAILED", `Contraseña incorrecta. Intento ${usuario.intentos_fallidos}/${appState.maxIntentos}`);
-    return { exito: false, motivo: "credenciales_invalidas", intentosRestantes: appState.maxIntentos - usuario.intentos_fallidos };
+    return { 
+      exito: false, 
+      motivo: "credenciales_invalidas", 
+      intentosRestantes: appState.maxIntentos - usuario.intentos_fallidos 
+    };
   }
 
   usuario.intentos_fallidos = 0;
@@ -706,7 +677,7 @@ function autenticar(nombreUsuario, password) {
   usuario.ultimo_acceso = new Date().toISOString();
 
   const sesion = crearSesion(usuario);
-  registrarAuditoria(usuario.id, "LOGIN_SUCCESS", `Login exitoso. Rol: ${usuario.rol}`);
+  console.log(`✅ Login exitoso. Rol: ${usuario.rol}`);
 
   return {
     exito: true,
@@ -784,9 +755,9 @@ function mostrarPerfilUsuario(resultado) {
     html: `
       <div style="text-align:left;background:#f0f4ff;border-radius:14px;padding:18px;margin-top:10px;font-size:14px;line-height:2">
         <p><i class="fas fa-id-badge" style="color:${cfg.color};width:22px;"></i> <strong>${usuario.nombre_completo}</strong></p>
-        <p><i class="fas fa-user-tag" style="color:${cfg.color};width:22px;"></i> ${cfg.icono} ${cfg.label} — ${usuario.cargo}</p>
+        <p><i class="fas fa-user-tag" style="color:${cfg.color};width:22px;"></i> ${cfg.icono} ${cfg.label}</p>
+        <p><i class="fas fa-briefcase" style="color:${cfg.color};width:22px;"></i> ${usuario.cargo}</p>
         <p><i class="fas fa-envelope" style="color:${cfg.color};width:22px;"></i> ${usuario.correo}</p>
-        <p><i class="fas fa-briefcase" style="color:${cfg.color};width:22px;"></i> ${usuario.area_id}</p>
       </div>
       <p style="margin-top:12px;color:#6c757d;font-size:13px;">Redirigiendo a tu panel...</p>
     `,
@@ -831,7 +802,7 @@ function setupEventListeners() {
     }
 
     setButtonLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Simular proceso
+    await new Promise(resolve => setTimeout(resolve, 800));
     
     const resultado = autenticar(nombreUsuario, password);
     setButtonLoading(false);
@@ -961,55 +932,13 @@ function setupEventListeners() {
       }
     });
   });
-
-  // Cerrar sesión desde cualquier página
-  window.cerrarSesion = function(motivo = null) {
-    sessionStorage.removeItem('session_SAC');
-    localStorage.removeItem('session_SAC_permanent');
-    
-    if (motivo) {
-      localStorage.setItem('logout_motivo', motivo);
-    }
-    
-    window.location.href = 'index.html?logout=1';
-  };
-
-  // Manejar mensaje de cierre de sesión
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('logout') === '1') {
-    const motivo = localStorage.getItem('logout_motivo');
-    if (motivo) {
-      Swal.fire({
-        icon: 'info',
-        title: 'Sesión cerrada',
-        text: motivo === 'expired' ? 'Tu sesión expiró. Por favor inicia sesión nuevamente.' : 'Sesión cerrada correctamente',
-        confirmButtonColor: '#1e3a8a'
-      });
-      localStorage.removeItem('logout_motivo');
-    }
-    history.replaceState({}, document.title, 'index.html');
-  }
 }
 
-// ===== INICIALIZACIÓN PRINCIPAL (ÚNICO EVENTO DOMContentLoaded) =====
+// ===== INICIALIZACIÓN =====
 document.addEventListener('DOMContentLoaded', async () => {
-  // 1. Verificar sesión activa PRIMERO
-  if (verificarSesionActiva()) {
-    return;
-  }
-  
-  // 2. Cargar base de datos
   await cargarBaseDeDatos();
-  
-  // 3. Protección contra navegación hacia atrás
-  window.addEventListener('pageshow', function(event) {
-    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-      if (verificarSesionActiva()) {
-        location.reload();
-      }
-    }
-  });
+  setupEventListeners();
 });
-</script>
+  </script>
 </body>
 </html>
