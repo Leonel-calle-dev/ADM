@@ -27,7 +27,7 @@
       display: flex;
       flex-direction: column;
       background: linear-gradient(135deg, rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
-                  url("img/uap_mural.jpeg") no-repeat center center/cover;
+                  url("img/uap-mural.jpeg") no-repeat center center/cover;
       background-attachment: fixed;
       color: #fff;
     }
@@ -373,7 +373,7 @@
 <body>
   <div class="main-content">
     <div class="login-container">
-      <img src="img/Logo-adm.png">
+      <img src="img/Logo-adm.png" alt="Logo Campus">
       <h2>Bienvenido</h2>
       <p>Sistema de Gestión del Campus</p>
 
@@ -526,10 +526,17 @@
       const password = document.getElementById('password').value;
       const rememberMe = document.getElementById('rememberMe').checked;
 
-      // Buscar usuario - verificar tanto password como password_hash para compatibilidad
+      // Verificar si hay contraseñas actualizadas en localStorage
+      const passwordUpdates = JSON.parse(localStorage.getItem('password_updates') || '{}');
+
+      // Buscar usuario - verificar tanto password original como actualizada
       const user = DATABASE.usuarios.find(u => {
         const usernameMatch = u.nombre_usuario === username || u.correo === username;
-        const passwordMatch = u.password === password || (u.password_hash && u.password === password);
+        
+        // Verificar contraseña actualizada primero
+        const updatedPassword = passwordUpdates[u.nombre_usuario];
+        const passwordMatch = (updatedPassword && updatedPassword === password) || u.password === password;
+        
         return usernameMatch && passwordMatch && u.activo === true;
       });
 
@@ -626,10 +633,20 @@
         return;
       }
 
-      // Generar token de recuperación
-      const token = generateToken();
+      // Generar token de recuperación con datos codificados
       const expiracion = new Date();
       expiracion.setHours(expiracion.getHours() + 1); // 1 hora de validez
+
+      // Crear payload con datos del usuario
+      const payload = {
+        usuario_id: user.id,
+        correo: user.correo,
+        nombre_usuario: user.nombre_usuario,
+        exp: expiracion.getTime()
+      };
+
+      // Codificar payload en base64
+      const token = btoa(JSON.stringify(payload)) + '.' + generateToken().substring(0, 32);
 
       // Simular envío de correo (en producción, esto sería una llamada a backend)
       // Detectar si estamos en GitHub Pages o local
@@ -647,9 +664,12 @@
           <p style="font-weight: 600; color: #0077ff; margin: 15px 0;">${email}</p>
           <div style="background: #f0f0f0; padding: 15px; border-radius: 10px; margin-top: 15px; text-align: left; word-break: break-all;">
             <p style="color: #333; font-size: 12px; margin-bottom: 8px;"><strong>Enlace de recuperación:</strong></p>
-            <p style="color: #0077ff; font-size: 11px;">${recoveryLink}</p>
+            <a href="${recoveryLink}" target="_blank" style="color: #0077ff; font-size: 11px; word-break: break-all;">${recoveryLink}</a>
           </div>
           <p style="margin-top: 15px; font-size: 13px; color: #666;">El enlace expira en 1 hora</p>
+          <p style="margin-top: 10px; font-size: 12px; color: #999;">
+            <i class="fas fa-mouse-pointer"></i> Click en el enlace para abrirlo
+          </p>
         `,
         confirmButtonColor: '#0077ff',
         confirmButtonText: 'Entendido'
