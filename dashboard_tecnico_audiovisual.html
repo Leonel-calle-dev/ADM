@@ -1332,17 +1332,7 @@
                     placeholder="Ej: Mantenimiento preventivo de proyectores - Bloque B" required>
                 </div>
 
-                <div class="form-group">
-                  <label>
-                    <i class="fas fa-calendar-day"></i>
-                    Fecha de Actividad
-                    <span class="required">*</span>
-                  </label>
-                  <input type="date" class="form-control" id="fecha_actividad" 
-                    value="${new Date().toISOString().split('T')[0]}" required>
-                </div>
-
-                <div class="form-group">
+                <div class="form-group full-width">
                   <label>
                     <i class="fas fa-map-marker-alt"></i>
                     Lugar
@@ -1350,22 +1340,6 @@
                   </label>
                   <input type="text" class="form-control" id="lugar" 
                     placeholder="Ej: Aulas B-201, B-202, C-301" required>
-                </div>
-
-                <div class="form-group">
-                  <label>
-                    <i class="fas fa-clock"></i>
-                    Hora de Inicio
-                  </label>
-                  <input type="time" class="form-control" id="hora_inicio" value="08:00">
-                </div>
-
-                <div class="form-group">
-                  <label>
-                    <i class="fas fa-clock"></i>
-                    Hora de Fin
-                  </label>
-                  <input type="time" class="form-control" id="hora_fin" value="10:00">
                 </div>
 
                 <div class="form-group full-width">
@@ -1419,6 +1393,13 @@
                   placeholder="Recomendaciones, próximos mantenimientos sugeridos, etc."></textarea>
               </div>
 
+              <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 12px; padding: 15px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 10px; color: var(--indigo-300); font-size: 14px;">
+                  <i class="fas fa-info-circle" style="font-size: 18px;"></i>
+                  <span>La fecha y hora se registrarán automáticamente al enviar el formulario</span>
+                </div>
+              </div>
+
               <button type="submit" class="btn btn-primary btn-block">
                 <i class="fas fa-save"></i>
                 Registrar Actividad
@@ -1452,10 +1433,7 @@
       const formData = {
         tarea_id: document.getElementById('tarea_id').value,
         titulo: document.getElementById('titulo').value,
-        fecha_actividad: document.getElementById('fecha_actividad').value,
         lugar: document.getElementById('lugar').value,
-        hora_inicio: document.getElementById('hora_inicio').value,
-        hora_fin: document.getElementById('hora_fin').value,
         descripcion: document.getElementById('descripcion').value,
         materiales_texto: document.getElementById('materiales_texto').value,
         prioridad: document.getElementById('prioridad').value,
@@ -1477,6 +1455,10 @@
       // Get tarea info
       const tarea = DATABASE.tareas_catalogo.find(t => t.id === formData.tarea_id);
 
+      // Generar timestamp actual
+      const ahora = new Date();
+      const fechaRegistro = ahora.toISOString();
+
       // Create activity object
       const nuevaActividad = {
         id: `ACT-${String(DATABASE.actividades.length + 1).padStart(3, '0')}`,
@@ -1486,9 +1468,6 @@
         categoria_id: 'CAT-001',
         tipo_mantenimiento_id: tarea.tipo_mantenimiento_id,
         usuario_id: currentUser.id,
-        fecha_actividad: formData.fecha_actividad,
-        hora_inicio: formData.hora_inicio,
-        hora_fin: formData.hora_fin,
         duracion_horas: formData.duracion_horas,
         lugar: formData.lugar,
         estado: 'enviado',
@@ -1502,15 +1481,27 @@
         observacion_empleado: formData.observaciones || formData.descripcion,
         observacion_supervisor: null,
         supervisor_id: null,
-        fecha_envio: new Date().toISOString(),
+        fecha_registro: fechaRegistro,
         fecha_revision: null,
         evidencias: [],
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        created_at: fechaRegistro,
+        updated_at: fechaRegistro
       };
 
       // Add to database (in memory)
       DATABASE.actividades.push(nuevaActividad);
+
+      // Formatear fecha y hora para mostrar
+      const fechaHora = new Date(fechaRegistro);
+      const fechaFormateada = fechaHora.toLocaleDateString('es-BO', { 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric' 
+      });
+      const horaFormateada = fechaHora.toLocaleTimeString('es-BO', { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      });
 
       // Show success
       Swal.fire({
@@ -1520,7 +1511,15 @@
           <div style="text-align: center;">
             <i class="fas fa-check-circle" style="font-size: 48px; color: #10b981; margin-bottom: 15px;"></i>
             <p style="color: white; margin-bottom: 10px;">La actividad ha sido registrada correctamente</p>
-            <p style="color: var(--indigo-300); font-size: 14px;">Estado: Pendiente de aprobación</p>
+            <div style="background: rgba(99, 102, 241, 0.2); border-radius: 10px; padding: 15px; margin-top: 15px;">
+              <div style="color: var(--indigo-300); font-size: 14px; margin-bottom: 8px;">
+                <i class="fas fa-calendar"></i> ${fechaFormateada}
+              </div>
+              <div style="color: var(--indigo-300); font-size: 14px;">
+                <i class="fas fa-clock"></i> ${horaFormateada}
+              </div>
+            </div>
+            <p style="color: var(--indigo-300); font-size: 14px; margin-top: 15px;">Estado: Pendiente de aprobación</p>
           </div>
         `,
         confirmButtonColor: '#6366f1',
@@ -1581,7 +1580,7 @@
                 <thead>
                   <tr>
                     <th>Actividad</th>
-                    <th>Fecha</th>
+                    <th>Fecha y Hora</th>
                     <th>Lugar</th>
                     <th>Duración</th>
                     <th>Estado</th>
@@ -1590,13 +1589,27 @@
                 <tbody>
                   ${userActivities.map(act => {
                     const tarea = DATABASE.tareas_catalogo.find(t => t.id === act.tarea_id);
+                    const fechaRegistro = new Date(act.fecha_registro || act.created_at);
+                    const fechaFormateada = fechaRegistro.toLocaleDateString('es-BO', { 
+                      day: '2-digit', 
+                      month: '2-digit', 
+                      year: 'numeric' 
+                    });
+                    const horaFormateada = fechaRegistro.toLocaleTimeString('es-BO', { 
+                      hour: '2-digit', 
+                      minute: '2-digit' 
+                    });
+                    
                     return `
                       <tr>
                         <td>
                           <div style="font-weight: 600; color: white; margin-bottom: 4px;">${act.titulo}</div>
                           ${tarea ? `<div style="font-size: 12px; color: var(--indigo-300);">${tarea.nombre}</div>` : ''}
                         </td>
-                        <td style="color: var(--navy-200);">${act.fecha_actividad}</td>
+                        <td>
+                          <div style="color: var(--navy-200); font-weight: 500;">${fechaFormateada}</div>
+                          <div style="color: var(--indigo-300); font-size: 13px;">${horaFormateada}</div>
+                        </td>
                         <td style="color: var(--navy-200);">${act.lugar}</td>
                         <td style="color: var(--navy-200);">${act.duracion_horas}h</td>
                         <td>
