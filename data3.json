@@ -818,6 +818,49 @@
       "updated_at": "2026-02-14T07:45:00Z"
     },
     {
+      "id": "ACT-001",
+      "titulo": "Reparación de proyector Epson — Aula 204",
+      "descripcion": "La pc no iniciaba por lo cual se realizo la verificacion del estado del SSD. Se procedio al cambio de SSD y clonado del sistema operativo para su funcionamiento optimo.",
+      "tarea_id": "TAREA-012",
+      "categoria_id": "CAT-001",
+      "tipo_mantenimiento_id": "TMANT-001",
+      "usuario_id": "USR-003",
+      "duracion_horas": 2.5,
+      "lugar": "Aula F-1 — Bloque F",
+      "estado": "aprobado",
+      "prioridad": "alta",
+      "materiales_usados": [
+        {
+          "nombre": "Disco SSD",
+          "cantidad": 1,
+          "unidad": "pieza"
+        },
+        {
+          "nombre": "Paño microfibra",
+          "cantidad": 1,
+          "unidad": "pieza"
+        },
+        {
+          "nombre": "Soplador de aire",
+          "cantidad": 1,
+          "unidad": "pieza"
+        }
+        {
+          "nombre": "Desarmadores",
+          "cantidad": 1,
+          "unidad": "pieza"
+        }
+      ],
+      "observacion_empleado": "Se reemplazó disco SSD que estaba fallando. Se recomienda monitoreo mensual del resto de PCs.",
+      "observacion_supervisor": "Trabajo bien ejecutado. Registrar cambio pieza.",
+      "supervisor_id": "USR-001",
+      "fecha_registro": "2026-02-13T10:45:00Z",
+      "fecha_revision": "2026-02-13T14:00:00Z",
+      "evidencias": ["EVI-001", "EVI-002"],
+      "created_at": "2026-02-13T10:45:00Z",
+      "updated_at": "2026-02-13T14:00:00Z"
+    },
+    {
       "id": "ACT-003",
       "titulo": "Reparación de fuga de agua — Baños Bloque C",
       "descripcion": "Se atendió reporte urgente de fuga en tubería bajo lavabo de baño varones Bloque C. Unión PVC fisurada. Se cortó suministro, reemplazó segmento de tubería y restableció el servicio.",
