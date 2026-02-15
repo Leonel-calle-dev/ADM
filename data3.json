@@ -824,7 +824,7 @@
       "tarea_id": "TAREA-012",
       "categoria_id": "CAT-001",
       "tipo_mantenimiento_id": "TMANT-001",
-      "usuario_id": "USR-003",
+      "usuario_id": "USR-006",
       "duracion_horas": 2.5,
       "lugar": "Aula F-1 — Bloque F",
       "estado": "aprobado",
