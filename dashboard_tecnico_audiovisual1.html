@@ -23,15 +23,15 @@
     }
 
     :root {
-      --navy-900: #0f172a; /* Azul marino muy oscuro */
-      --navy-800: #1e293b; /* Azul marino oscuro */
-      --navy-700: #1e3a8a; /* Azul marino profundo */
-      --navy-600: #1d4ed8; /* Azul marino intenso */
-      --navy-500: #2563eb; /* Azul marino brillante */
-      --navy-400: #3b82f6; /* Azul marino claro */
-      --navy-300: #60a5fa; /* Azul marino muy claro */
-      --navy-200: #93c5fd; /* Azul marino suave */
-      --navy-100: #bfdbfe; /* Azul marino claro */
+      --navy-900: #0f172a;
+      --navy-800: #1e293b;
+      --navy-700: #1e3a8a;
+      --navy-600: #1d4ed8;
+      --navy-500: #2563eb;
+      --navy-400: #3b82f6;
+      --navy-300: #60a5fa;
+      --navy-200: #93c5fd;
+      --navy-100: #bfdbfe;
       --gray-100: #f1f5f9;
       --gray-200: #e2e8f0;
       --gray-300: #cbd5e1;
@@ -259,6 +259,22 @@
       color: white;
       font-weight: 700;
       letter-spacing: -0.5px;
+      text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+    }
+
+    .header-center {
+      display: none;
+      text-align: center;
+      flex: 1;
+      margin: 0 15px;
+    }
+
+    .header-center h1 {
+      font-size: 22px;
+      color: white;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin: 0;
       text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
     }
 
@@ -495,6 +511,7 @@
 
     .card-body {
       padding: 35px;
+      overflow-x: auto;
     }
 
     /* ========== FORM STYLES ========== */
@@ -654,7 +671,19 @@
       border: 1px solid rgba(245, 158, 11, 0.3);
     }
 
+    .status-enviado {
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
     .status-approved {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .status-aprobado {
       background: rgba(16, 185, 129, 0.15);
       color: #10b981;
       border: 1px solid rgba(16, 185, 129, 0.3);
@@ -664,6 +693,12 @@
       background: rgba(59, 130, 246, 0.15);
       color: #3b82f6;
       border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .status-observado {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
     }
 
     /* ========== TABLE STYLES ========== */
@@ -726,60 +761,144 @@
       line-height: 1.6;
     }
 
+    /* Grid de botones en empty state */
+    .dashboard-buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      max-width: 500px;
+      margin: 30px auto 0;
+    }
+
+    /* ========== SIDEBAR TOGGLE BUTTON ========== */
+    .sidebar-toggle-btn {
+      display: none;
+      background: rgba(30, 58, 138, 0.9);
+      border: 2px solid var(--navy-400);
+      color: white;
+      font-size: 24px;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      cursor: pointer;
+      z-index: 1001;
+      padding: 0;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .sidebar-toggle-btn:hover {
+      background: rgba(59, 130, 246, 0.9);
+      transform: scale(1.05);
+      color: white;
+    }
+    
+    .sidebar-toggle-btn i {
+      transition: transform 0.3s ease;
+    }
+    
+    .sidebar-toggle-btn.active i {
+      transform: rotate(90deg);
+    }
+
+    /* Backdrop del sidebar en móvil */
+    .sidebar-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      cursor: pointer;
+      display: none;
+    }
+
+    .sidebar-backdrop.active {
+      display: block;
+    }
+
     /* ========== RESPONSIVE ========== */
     @media (max-width: 1100px) {
       .content-grid {
         grid-template-columns: 1fr;
       }
-      
       .container {
         padding: 30px 25px;
       }
-      
       .header {
         padding: 20px 30px;
       }
-      
       .header-left h1 {
         font-size: 24px;
       }
     }
 
     @media (max-width: 900px) {
+      /* Ocultar sidebar por defecto en móvil */
       .sidebar {
         transform: translateX(-100%);
         width: 280px;
       }
+      
       .sidebar.active {
         transform: translateX(0);
       }
-      .main-content {
-        margin-left: 0;
+      
+      /* Mostrar toggle solo en móvil */
+      .sidebar-toggle-btn {
+        display: flex;
       }
+      
+      /* Reorganizar header para móvil */
+      .header {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 20px;
+        gap: 12px;
+      }
+      
+      .header-left {
+        display: none;
+      }
+      
+      .header-center {
+        display: block;
+        flex: 1;
+        text-align: center;
+        margin: 0;
+      }
+      
+      .header-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 12px;
+      }
+      
+      /* Ajustar contenido principal */
+      .main-content {
+        margin-left: 0 !important;
+      }
+      
       .container {
         padding: 25px 20px;
       }
+      
       .stats-grid {
         grid-template-columns: 1fr;
       }
+      
       .page-title h2 {
         font-size: 30px;
       }
-    }
-
-    @media (max-width: 500px) {
-      .header {
-        flex-direction: column;
-        gap: 15px;
-        padding: 15px;
-      }
-      
-      .page-title h2 {
-        font-size: 26px;
-      }
       
       .page-title p {
-        font-size: 15px;
+        font-size: 16px;
       }
       
       .stat-card {
@@ -790,35 +909,171 @@
         font-size: 36px;
       }
       
+      .stat-card-label {
+        font-size: 15px;
+      }
+      
       .card-header {
-        padding: 20px;
+        padding: 20px 15px;
         font-size: 19px;
       }
       
       .card-body {
-        padding: 25px;
+        padding: 25px 15px;
       }
       
       .form-control {
         padding: 14px 18px;
+        font-size: 15px;
       }
       
       .btn {
-        padding: 14px 25px;
+        padding: 14px 22px;
         font-size: 15px;
+      }
+      
+      table {
+        font-size: 14px;
+      }
+      
+      table th, table td {
+        padding: 12px 10px;
+      }
+      
+      .activity-item {
+        padding: 15px;
+        gap: 15px;
+      }
+      
+      .activity-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+      }
+      
+      .activity-title {
+        font-size: 15px;
+      }
+      
+      .activity-meta {
+        font-size: 13px;
+        gap: 12px;
+      }
+      
+      .activity-status {
+        padding: 5px 12px;
+        font-size: 12px;
+      }
+      
+      .logout-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+      
+      .logout-btn i {
+        font-size: 16px;
+      }
+      
+      .notification-badge {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+      }
+
+      /* Botones del dashboard en columna en móvil */
+      .dashboard-buttons-grid {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+      }
+    }
+    
+    @media (max-width: 500px) {
+      .header {
+        padding: 12px 15px;
+        gap: 10px;
+      }
+      
+      .sidebar-toggle-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 22px;
+      }
+      
+      .header-center h1 {
+        font-size: 18px;
+      }
+      
+      .notification-bell {
+        font-size: 20px;
+      }
+      
+      .notification-badge {
+        top: -6px;
+        right: -6px;
+        width: 18px;
+        height: 18px;
+        font-size: 9px;
+      }
+      
+      .logout-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+      }
+      
+      .page-title h2 {
+        font-size: 26px;
+      }
+      
+      .page-title p {
+        font-size: 15px;
+      }
+      
+      .stat-card-value {
+        font-size: 32px;
+      }
+      
+      .stat-card-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 32px;
+      }
+      
+      .card-header {
+        padding: 18px 12px;
+        font-size: 17px;
+      }
+      
+      .btn {
+        padding: 12px 18px;
+        font-size: 14px;
+      }
+      
+      .activity-title {
+        font-size: 14px;
+        word-break: break-word;
+      }
+      
+      .empty-state i {
+        font-size: 54px;
+      }
+      
+      .empty-state h3 {
+        font-size: 22px;
+      }
+      
+      .empty-state p {
+        font-size: 14px;
       }
     }
   </style>
 </head>
 <body>
   <div class="dashboard">
+    <!-- BACKDROP PARA SIDEBAR EN MÓVIL -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
     <!-- SIDEBAR -->
     <aside class="sidebar">
-      <div class="sidebar-header">
-        <h1>🔧 Campus Maintenance</h1>
-        <div class="subtitle">Sistema de Gestión del Campus</div>
-      </div>
-
       <div class="user-profile" id="userProfile">
         <div class="user-avatar" id="userAvatar">J</div>
         <div class="user-info">
@@ -838,7 +1093,6 @@
           <div class="menu-item" data-section="audiovisual">
             <i class="fas fa-video"></i>
             <span>Audiovisual</span>
-            <span class="badge">Nuevo</span>
           </div>
           <div class="menu-item" data-section="inmuebles">
             <i class="fas fa-building"></i>
@@ -880,14 +1134,22 @@
     <!-- MAIN CONTENT -->
     <main class="main-content">
       <header class="header">
+        <!-- BOTÓN DE TOGGLE PARA MÓVIL -->
+        <button id="sidebarToggle" class="sidebar-toggle-btn">
+          <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- TÍTULO PARA DESKTOP -->
         <div class="header-left">
           <h1 id="pageTitle">Dashboard</h1>
         </div>
+        
+        <!-- TÍTULO CENTRADO PARA MÓVIL -->
+        <div class="header-center">
+          <h1 id="pageTitleMobile">Dashboard</h1>
+        </div>
+        
         <div class="header-right">
-          <div class="notification-bell">
-            <i class="fas fa-bell"></i>
-            <span class="notification-badge">3</span>
-          </div>
           <button class="logout-btn" id="logoutBtnMobile">
             <i class="fas fa-sign-out-alt"></i> Salir
           </button>
@@ -920,7 +1182,7 @@
                   <i class="fas fa-chart-line"></i>
                   <h3>Bienvenido al Sistema de Gestión</h3>
                   <p>Selecciona una sección del menú para registrar actividades o ver reportes de mantenimiento del campus</p>
-                  <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; max-width: 500px; margin: 0 auto;">
+                  <div class="dashboard-buttons-grid">
                     <button class="btn btn-primary" onclick="navigateTo('audiovisual')">
                       <i class="fas fa-video"></i> Audiovisual
                     </button>
@@ -971,7 +1233,7 @@
             <i class="fas fa-chart-line"></i>
             <h3>Bienvenido al Sistema de Gestión</h3>
             <p>Selecciona una sección del menú para registrar actividades o ver reportes de mantenimiento del campus</p>
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; max-width: 500px; margin: 0 auto;">
+            <div class="dashboard-buttons-grid">
               <button class="btn btn-primary" onclick="navigateTo('audiovisual')">
                 <i class="fas fa-video"></i> Audiovisual
               </button>
@@ -1198,6 +1460,103 @@
             </div>
           </div>
         `
+      },
+      perfil: {
+        title: 'Mi Perfil',
+        cardTitle: 'Información del Usuario',
+        content: `
+          <div style="max-width: 600px; margin: 0 auto;">
+            <div style="text-align: center; margin-bottom: 40px;">
+              <div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--navy-500), var(--navy-600)); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 48px; margin: 0 auto 20px; box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4); border: 4px solid var(--navy-400);" id="profileAvatar">U</div>
+              <h3 style="font-size: 28px; color: white; margin-bottom: 8px;" id="profileName">Usuario</h3>
+              <p style="color: var(--navy-300); font-size: 16px;" id="profileRole">Rol del usuario</p>
+            </div>
+            
+            <div style="background: rgba(30, 58, 138, 0.3); border-radius: 16px; padding: 30px; border: 1px solid rgba(59, 130, 246, 0.3);">
+              <h4 style="color: var(--navy-200); font-size: 18px; margin-bottom: 25px; border-bottom: 2px solid rgba(59, 130, 246, 0.3); padding-bottom: 12px;">
+                <i class="fas fa-info-circle" style="margin-right: 8px; color: var(--navy-400);"></i> Información Personal
+              </h4>
+              
+              <div style="display: grid; gap: 20px;">
+                <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(15, 23, 42, 0.5); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                  <div style="width: 45px; height: 45px; background: rgba(59, 130, 246, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--navy-400); font-size: 20px;">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <div style="flex: 1;">
+                    <div style="color: var(--navy-400); font-size: 13px; margin-bottom: 4px;">Nombre Completo</div>
+                    <div style="color: white; font-weight: 600; font-size: 15px;" id="profileFullName">-</div>
+                  </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(15, 23, 42, 0.5); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                  <div style="width: 45px; height: 45px; background: rgba(59, 130, 246, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--navy-400); font-size: 20px;">
+                    <i class="fas fa-id-badge"></i>
+                  </div>
+                  <div style="flex: 1;">
+                    <div style="color: var(--navy-400); font-size: 13px; margin-bottom: 4px;">Usuario</div>
+                    <div style="color: white; font-weight: 600; font-size: 15px;" id="profileUsername">-</div>
+                  </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(15, 23, 42, 0.5); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                  <div style="width: 45px; height: 45px; background: rgba(59, 130, 246, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--navy-400); font-size: 20px;">
+                    <i class="fas fa-briefcase"></i>
+                  </div>
+                  <div style="flex: 1;">
+                    <div style="color: var(--navy-400); font-size: 13px; margin-bottom: 4px;">Cargo</div>
+                    <div style="color: white; font-weight: 600; font-size: 15px;" id="profileCargo">-</div>
+                  </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(15, 23, 42, 0.5); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                  <div style="width: 45px; height: 45px; background: rgba(59, 130, 246, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--navy-400); font-size: 20px;">
+                    <i class="fas fa-shield-alt"></i>
+                  </div>
+                  <div style="flex: 1;">
+                    <div style="color: var(--navy-400); font-size: 13px; margin-bottom: 4px;">Rol</div>
+                    <div style="color: white; font-weight: 600; font-size: 15px;" id="profileRolDetalle">-</div>
+                  </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(15, 23, 42, 0.5); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                  <div style="width: 45px; height: 45px; background: rgba(59, 130, 246, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--navy-400); font-size: 20px;">
+                    <i class="fas fa-phone"></i>
+                  </div>
+                  <div style="flex: 1;">
+                    <div style="color: var(--navy-400); font-size: 13px; margin-bottom: 4px;">Teléfono</div>
+                    <div style="color: white; font-weight: 600; font-size: 15px;" id="profileTelefono">-</div>
+                  </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(15, 23, 42, 0.5); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                  <div style="width: 45px; height: 45px; background: rgba(59, 130, 246, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--navy-400); font-size: 20px;">
+                    <i class="fas fa-envelope"></i>
+                  </div>
+                  <div style="flex: 1;">
+                    <div style="color: var(--navy-400); font-size: 13px; margin-bottom: 4px;">Correo</div>
+                    <div style="color: white; font-weight: 600; font-size: 15px;" id="profileCorreo">-</div>
+                  </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(15, 23, 42, 0.5); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                  <div style="width: 45px; height: 45px; background: rgba(59, 130, 246, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--navy-400); font-size: 20px;">
+                    <i class="fas fa-calendar-alt"></i>
+                  </div>
+                  <div style="flex: 1;">
+                    <div style="color: var(--navy-400); font-size: 13px; margin-bottom: 4px;">Último Acceso</div>
+                    <div style="color: white; font-weight: 600; font-size: 15px;" id="profileUltimoAcceso">-</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div style="margin-top: 30px; text-align: center;">
+              <button class="btn btn-primary" onclick="logout()" style="background: linear-gradient(90deg, var(--danger), #dc2626);">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+              </button>
+            </div>
+          </div>
+        `
       }
     };
 
@@ -1208,6 +1567,7 @@
       loadStats();
       loadRecentActivities();
       setupEventListeners();
+      checkScreenSize();
     });
 
     async function cargarBaseDeDatos() {
@@ -1240,11 +1600,22 @@
       
       // Update user profile in sidebar
       document.getElementById('userName').textContent = currentUser.nombre_completo;
-      document.getElementById('userRole').textContent = `Rol: ${currentUser.rol}`;
+      
+      // Formatear rol para mostrarlo más amigable
+      const rolMap = {
+        'administrador': 'Administrador',
+        'tecnico_audiovisual': 'Técnico Audiovisual',
+        'tecnico_sistemas': 'Técnico de Sistemas',
+        'tecnico_integral': 'Técnico Integral',
+        'personal_apoyo_aulas': 'Personal de Apoyo',
+        'responsable_mantenimientos': 'Responsable de Mantenimientos'
+      };
+      
+      document.getElementById('userRole').textContent = `Rol: ${rolMap[currentUser.rol] || currentUser.rol}`;
       document.getElementById('userBadge').textContent = currentUser.cargo;
       
       // Set avatar initial
-      const avatar = currentUser.nombre_completo.charAt(0);
+      const avatar = currentUser.nombre_completo.charAt(0).toUpperCase();
       document.querySelector('.user-avatar').textContent = avatar;
       document.getElementById('userAvatar').textContent = avatar;
     }
@@ -1254,55 +1625,76 @@
       document.querySelectorAll('.menu-item').forEach(item => {
         item.addEventListener('click', function() {
           const section = this.getAttribute('data-section');
-          navigateTo(section);
-          
-          // Update active menu item
-          document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-          this.classList.add('active');
+          if (section) {
+            navigateTo(section);
+            // Update active menu item
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+            closeSidebar();
+          }
         });
       });
 
       // Logout
-      document.getElementById('logoutBtn').addEventListener('click', logout);
-      document.getElementById('logoutBtnMobile').addEventListener('click', logout);
+      document.getElementById('logoutBtn')?.addEventListener('click', logout);
+      document.getElementById('logoutBtnMobile')?.addEventListener('click', logout);
 
-      // Form submissions
-      function attachFormListeners() {
+      // Sidebar toggle
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      const sidebar = document.querySelector('.sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      
+      if (sidebarToggle && sidebar && backdrop) {
+        sidebarToggle.addEventListener('click', () => {
+          sidebar.classList.toggle('active');
+          backdrop.classList.toggle('active');
+        });
+        
+        backdrop.addEventListener('click', closeSidebar);
+      }
+    }
 
-        const av = document.getElementById('audiovisualForm');
-        if (av) {
-            av.addEventListener('submit', e => {
-            e.preventDefault();
-            registrarActividad('audiovisual');
-            });
-        }
+    function closeSidebar() {
+      if (window.innerWidth <= 900) {
+        const sidebar = document.querySelector('.sidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        if (sidebar) sidebar.classList.remove('active');
+        if (backdrop) backdrop.classList.remove('active');
+      }
+    }
 
-        const inm = document.getElementById('inmueblesForm');
-        if (inm) {
-            inm.addEventListener('submit', e => {
-            e.preventDefault();
-            registrarActividad('inmuebles');
-            });
-        }
+    function attachFormListeners() {
+      const av = document.getElementById('audiovisualForm');
+      if (av) {
+        av.addEventListener('submit', e => {
+          e.preventDefault();
+          registrarActividad('audiovisual');
+        });
+      }
 
-        const elec = document.getElementById('electricidadForm');
-        if (elec) {
-            elec.addEventListener('submit', e => {
-            e.preventDefault();
-            registrarActividad('electricidad');
-            });
-        }
+      const inm = document.getElementById('inmueblesForm');
+      if (inm) {
+        inm.addEventListener('submit', e => {
+          e.preventDefault();
+          registrarActividad('inmuebles');
+        });
+      }
 
-        const cer = document.getElementById('cerradurasForm');
-        if (cer) {
-            cer.addEventListener('submit', e => {
-            e.preventDefault();
-            registrarActividad('cerraduras');
-            });
-        }
+      const elec = document.getElementById('electricidadForm');
+      if (elec) {
+        elec.addEventListener('submit', e => {
+          e.preventDefault();
+          registrarActividad('electricidad');
+        });
+      }
 
-        }
-
+      const cer = document.getElementById('cerradurasForm');
+      if (cer) {
+        cer.addEventListener('submit', e => {
+          e.preventDefault();
+          registrarActividad('cerraduras');
+        });
+      }
     }
 
     function navigateTo(section) {
@@ -1317,22 +1709,96 @@
       }
 
       // Update page title
-      document.getElementById('sectionTitle').textContent = sections[section].title;
-      document.getElementById('pageTitle').textContent = sections[section].title.split(' - ')[0];
-      document.getElementById('cardTitle').textContent = sections[section].cardTitle;
+      const pageTitle = document.getElementById('pageTitle');
+      const pageTitleMobile = document.getElementById('pageTitleMobile');
+      const sectionTitle = document.getElementById('sectionTitle');
+      const cardTitle = document.getElementById('cardTitle');
+      
+      if (pageTitle) pageTitle.textContent = sections[section].title.split(' - ')[0];
+      if (pageTitleMobile) pageTitleMobile.textContent = sections[section].title.split(' - ')[0];
+      if (sectionTitle) sectionTitle.textContent = sections[section].title;
+      if (cardTitle) cardTitle.textContent = sections[section].cardTitle;
+      
+      // Show/hide stats grid - Solo mostrar en dashboard
+      const statsGrid = document.getElementById('statsGrid');
+      if (statsGrid) {
+        if (section === 'dashboard') {
+          statsGrid.style.display = 'grid';
+        } else {
+          statsGrid.style.display = 'none';
+        }
+      }
       
       // Update content
       document.getElementById('dashboardContent').innerHTML = sections[section].content;
       attachFormListeners();
 
-      // Load activities if needed
+      // Load specific section data
       if (section === 'actividades') {
         loadActivitiesList();
+      } else if (section === 'perfil') {
+        loadProfileData();
+      }
+    }
+    
+    function loadProfileData() {
+      if (!currentUser) return;
+      
+      // Actualizar avatar
+      const profileAvatar = document.getElementById('profileAvatar');
+      if (profileAvatar) {
+        profileAvatar.textContent = currentUser.nombre_completo.charAt(0).toUpperCase();
+      }
+      
+      // Actualizar nombre y rol en el encabezado
+      const profileName = document.getElementById('profileName');
+      if (profileName) profileName.textContent = currentUser.nombre_completo;
+      
+      const profileRole = document.getElementById('profileRole');
+      if (profileRole) profileRole.textContent = currentUser.cargo;
+      
+      // Actualizar detalles
+      const profileFullName = document.getElementById('profileFullName');
+      if (profileFullName) profileFullName.textContent = currentUser.nombre_completo;
+      
+      const profileUsername = document.getElementById('profileUsername');
+      if (profileUsername) profileUsername.textContent = currentUser.nombre_usuario;
+      
+      const profileCargo = document.getElementById('profileCargo');
+      if (profileCargo) profileCargo.textContent = currentUser.cargo;
+      
+      const profileRolDetalle = document.getElementById('profileRolDetalle');
+      if (profileRolDetalle) {
+        const rolesMap = {
+          'administrador': 'Administrador',
+          'tecnico_audiovisual': 'Técnico Audiovisual',
+          'tecnico_sistemas': 'Técnico de Sistemas Esenciales',
+          'tecnico_integral': 'Técnico Integral',
+          'personal_apoyo_aulas': 'Personal de Apoyo - Atención de Aulas',
+          'responsable_mantenimientos': 'Responsable de Mantenimientos'
+        };
+        profileRolDetalle.textContent = rolesMap[currentUser.rol] || currentUser.rol;
+      }
+      
+      const profileTelefono = document.getElementById('profileTelefono');
+      if (profileTelefono) profileTelefono.textContent = currentUser.telefono || 'No registrado';
+      
+      const profileCorreo = document.getElementById('profileCorreo');
+      if (profileCorreo) profileCorreo.textContent = currentUser.correo;
+      
+      const profileUltimoAcceso = document.getElementById('profileUltimoAcceso');
+      if (profileUltimoAcceso) {
+        const fecha = new Date(currentUser.ultimo_acceso);
+        profileUltimoAcceso.textContent = fecha.toLocaleString('es-ES', {
+          dateStyle: 'medium',
+          timeStyle: 'short'
+        }) || 'No registrado';
       }
     }
 
     function loadStats() {
       const statsGrid = document.getElementById('statsGrid');
+      if (!statsGrid || !DATABASE || !currentUser) return;
       
       // Get user's activities
       const userActivities = DATABASE.actividades.filter(act => act.usuario_id === currentUser.id);
@@ -1342,7 +1808,7 @@
       const inmueblesCount = userActivities.filter(a => a.categoria_id === 'CAT-002').length;
       const electricidadCount = userActivities.filter(a => a.categoria_id === 'CAT-004').length;
       
-      // Count pending activities
+      // Count pending activities (enviado)
       const pendingCount = userActivities.filter(a => a.estado === 'enviado').length;
       
       statsGrid.innerHTML = `
@@ -1396,11 +1862,14 @@
       `;
       
       // Update activities count badge
-      document.getElementById('activitiesCount').textContent = userActivities.length;
+      const activitiesCount = document.getElementById('activitiesCount');
+      if (activitiesCount) activitiesCount.textContent = userActivities.length;
     }
 
     function loadRecentActivities() {
       const container = document.getElementById('recentActivities');
+      if (!container || !DATABASE || !currentUser) return;
+      
       const userActivities = DATABASE.actividades
         .filter(act => act.usuario_id === currentUser.id)
         .sort((a, b) => new Date(b.fecha_envio) - new Date(a.fecha_envio))
@@ -1419,14 +1888,14 @@
 
       let html = '';
       userActivities.forEach(act => {
-        // Get category info
         const categoria = DATABASE.categorias_mantenimiento.find(c => c.id === act.categoria_id);
-        const tipoMantenimiento = DATABASE.tipos_mantenimiento.find(t => t.id === act.tipo_mantenimiento_id);
+        const icono = categoria?.icono || '🔧';
+        const color = categoria?.color || '#3b82f6';
         
         html += `
           <div class="activity-item">
-            <div class="activity-icon" style="background: ${categoria?.color}20; color: ${categoria?.color}; border: 2px solid ${categoria?.color}40;">
-              ${categoria?.icono || '🔧'}
+            <div class="activity-icon" style="background: ${color}20; color: ${color}; border: 2px solid ${color}40;">
+              ${icono}
             </div>
             <div class="activity-info">
               <div class="activity-title">${act.titulo}</div>
@@ -1436,9 +1905,6 @@
               </div>
               <div style="margin-top: 10px;">
                 <span class="activity-status status-${act.estado}">${act.estado}</span>
-                <span style="margin-left: 12px; font-size: 13px; color: var(--navy-400);">
-                  ${tipoMantenimiento?.nombre || 'Sin tipo'}
-                </span>
               </div>
             </div>
           </div>
@@ -1450,6 +1916,8 @@
 
     function loadActivitiesList() {
       const container = document.getElementById('activitiesList');
+      if (!container || !DATABASE || !currentUser) return;
+      
       const userActivities = DATABASE.actividades
         .filter(act => act.usuario_id === currentUser.id)
         .sort((a, b) => new Date(b.fecha_envio) - new Date(a.fecha_envio));
@@ -1476,6 +1944,7 @@
                 <th>Actividad</th>
                 <th>Fecha</th>
                 <th>Duración</th>
+                <th>Prioridad</th>
                 <th>Estado</th>
               </tr>
             </thead>
@@ -1483,7 +1952,6 @@
       `;
 
       userActivities.forEach(act => {
-        const categoria = DATABASE.categorias_mantenimiento.find(c => c.id === act.categoria_id);
         html += `
           <tr>
             <td>
@@ -1494,6 +1962,11 @@
             </td>
             <td style="color: var(--navy-200);">${act.fecha_actividad}</td>
             <td style="color: var(--navy-200);">${act.duracion_horas} horas</td>
+            <td>
+              <span style="color: ${act.prioridad === 'alta' ? '#ef4444' : act.prioridad === 'media' ? '#f59e0b' : '#10b981'}; font-weight: 600;">
+                ${act.prioridad.charAt(0).toUpperCase() + act.prioridad.slice(1)}
+              </span>
+            </td>
             <td>
               <span class="activity-status status-${act.estado}">${act.estado}</span>
             </td>
@@ -1508,6 +1981,16 @@
       `;
 
       container.innerHTML = html;
+    }
+
+    function generarIdActividad() {
+      const maxId = Math.max(...DATABASE.actividades.map(a => {
+        const num = parseInt(a.id.replace('ACT-', ''));
+        return isNaN(num) ? 0 : num;
+      }), 0);
+      
+      const nuevoNumero = maxId + 1;
+      return `ACT-${String(nuevoNumero).padStart(3, '0')}`;
     }
 
     async function registrarActividad(tipo) {
@@ -1537,32 +2020,31 @@
       let categoria_id;
       switch(tipo) {
         case 'audiovisual':
-          categoria_id = 'CAT-001'; // Audiovisual y Tecnológico
+          categoria_id = 'CAT-001';
           break;
         case 'inmuebles':
-          categoria_id = 'CAT-002'; // Mobiliario e Inmuebles
+          categoria_id = 'CAT-002';
           break;
         case 'electricidad':
-          categoria_id = 'CAT-004'; // Electricidad
+          categoria_id = 'CAT-004';
           break;
         case 'cerraduras':
-          categoria_id = 'CAT-002'; // Cerraduras -> Mobiliario e Inmuebles
+          categoria_id = 'CAT-002';
           break;
       }
 
       // Create new activity
       const nuevaActividad = {
-        id: `ACT-${String(DATABASE.actividades.length + 1).padStart(3, '0')}`,
+        id: generarIdActividad(),
         titulo: formData.titulo,
         descripcion: formData.descripcion,
         tarea_id: null,
         categoria_id: categoria_id,
         tipo_mantenimiento_id: formData.tipo_mantenimiento,
-        area_id: currentUser.area_id,
         usuario_id: currentUser.id,
         fecha_actividad: new Date().toISOString().split('T')[0],
-        hora_inicio: "08:00",
-        hora_fin: "10:00",
+        hora_inicio: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
+        hora_fin: null,
         duracion_horas: formData.duracion,
         lugar: formData.lugar,
         estado: "enviado",
@@ -1578,7 +2060,7 @@
         updated_at: new Date().toISOString()
       };
 
-      // Add to database (in memory only - would need backend to persist)
+      // Add to database (in memory only)
       DATABASE.actividades.push(nuevaActividad);
 
       // Show success message
@@ -1589,6 +2071,7 @@
           <i class="fas fa-check-circle" style="font-size: 48px; color: #10b981; margin-bottom: 15px;"></i>
           <h3 style="color: white; margin-bottom: 10px;">¡Actividad registrada exitosamente!</h3>
           <p style="color: var(--navy-300);">Tu actividad está pendiente de aprobación por el Administrador</p>
+          <p style="color: var(--navy-400); margin-top: 10px;"><strong>ID:</strong> ${nuevaActividad.id}</p>
         </div>`,
         confirmButtonColor: '#10b981',
         confirmButtonText: 'Aceptar'
@@ -1628,6 +2111,22 @@
         }
       });
     }
+
+    function checkScreenSize() {
+      const isMobile = window.innerWidth <= 900;
+      const pageTitle = document.getElementById('pageTitle');
+      const pageTitleMobile = document.getElementById('pageTitleMobile');
+      if (isMobile) {
+        if (pageTitle) pageTitle.style.display = 'none';
+        if (pageTitleMobile) pageTitleMobile.style.display = 'block';
+      } else {
+        if (pageTitle) pageTitle.style.display = 'block';
+        if (pageTitleMobile) pageTitleMobile.style.display = 'none';
+      }
+    }
+
+    window.addEventListener('load', checkScreenSize);
+    window.addEventListener('resize', checkScreenSize);
   </script>
 </body>
 </html>
