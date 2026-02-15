@@ -373,7 +373,7 @@
 <body>
   <div class="main-content">
     <div class="login-container">
-      <img src="img/Logo-adm.png" alt="Logo Campus">
+      <img src="img/Logo-adm.png">
       <h2>Bienvenido</h2>
       <p>Sistema de Gestión del Campus</p>
 
@@ -438,7 +438,7 @@
   </div>
 
   <script>
-    const DB_PATH = 'data3.json';
+    const DB_PATH = 'database_mejorada.json';
     let DATABASE = null;
 
     // Cargar base de datos
@@ -526,12 +526,12 @@
       const password = document.getElementById('password').value;
       const rememberMe = document.getElementById('rememberMe').checked;
 
-      // Buscar usuario
-      const user = DATABASE.usuarios.find(u => 
-        (u.nombre_usuario === username || u.correo === username) && 
-        u.password === password &&
-        u.activo === true
-      );
+      // Buscar usuario - verificar tanto password como password_hash para compatibilidad
+      const user = DATABASE.usuarios.find(u => {
+        const usernameMatch = u.nombre_usuario === username || u.correo === username;
+        const passwordMatch = u.password === password || (u.password_hash && u.password === password);
+        return usernameMatch && passwordMatch && u.activo === true;
+      });
 
       if (!user) {
         Swal.fire({
@@ -632,7 +632,11 @@
       expiracion.setHours(expiracion.getHours() + 1); // 1 hora de validez
 
       // Simular envío de correo (en producción, esto sería una llamada a backend)
-      const recoveryLink = `${window.location.origin}/reset-password.html?token=${token}`;
+      // Detectar si estamos en GitHub Pages o local
+      const baseUrl = window.location.hostname.includes('github.io') 
+        ? window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '')
+        : window.location.origin;
+      const recoveryLink = `${baseUrl}/reset-password.html?token=${token}`;
 
       // Mostrar información (en producción, esto se enviaría por correo)
       Swal.fire({
