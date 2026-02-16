@@ -1341,32 +1341,6 @@
       "created_at": "2026-02-14T07:15:00Z"
     }
   ],
-  "notificaciones": [
-    {
-      "id": "NOTI-001",
-      "destinatario_id": "USR-001",
-      "remitente_id": "USR-008",
-      "tipo": "nueva_actividad",
-      "titulo": "Nueva actividad enviada para revisión",
-      "mensaje": "Duglas Alpire envió 'Apertura diaria de aulas — Bloque A' para su aprobación.",
-      "actividad_id": "ACT-002",
-      "leida": false,
-      "fecha_envio": "2026-02-14T07:20:00Z",
-      "created_at": "2026-02-14T07:20:00Z"
-    },
-    {
-      "id": "NOTI-002",
-      "destinatario_id": "USR-001",
-      "remitente_id": "USR-004",
-      "tipo": "nueva_actividad",
-      "titulo": "Nueva actividad enviada para revisión",
-      "mensaje": "Joel Salas envió 'Reparación de fuga de agua — Baños Bloque C' para su aprobación.",
-      "actividad_id": "ACT-003",
-      "leida": false,
-      "fecha_envio": "2026-02-14T12:00:00Z",
-      "created_at": "2026-02-14T12:00:00Z"
-    }
-  ],
   "reportes": [
     {
       "id": "REP-001",
@@ -1400,32 +1374,6 @@
       "correos_destinatarios": ["c.ramirez@campus.edu.bo"],
       "fecha_generacion": "2026-02-14T18:00:00Z",
       "created_at": "2026-02-14T18:00:00Z"
-    }
-  ],
-  "programacion_reportes": [
-    {
-      "id": "PROG-001",
-      "nombre": "Reporte Diario Automático — Operaciones Campus",
-      "tipo": "diario",
-      "dia_envio": null,
-      "hora_envio": "18:00",
-      "formato": "pdf",
-      "activo": true,
-      "correos_destinatarios": ["c.ramirez@campus.edu.bo"],
-      "proxima_ejecucion": "2026-02-15T18:00:00Z",
-      "created_at": "2026-02-14T06:00:00Z"
-    },
-    {
-      "id": "PROG-002",
-      "nombre": "Reporte Semanal — Infraestructura y Mantenimiento",
-      "tipo": "semanal",
-      "dia_envio": "viernes",
-      "hora_envio": "18:00",
-      "formato": "pdf",
-      "activo": true,
-      "correos_destinatarios": ["c.ramirez@campus.edu.bo"],
-      "proxima_ejecucion": "2026-02-21T18:00:00Z",
-      "created_at": "2026-02-14T06:00:00Z"
     }
   ],
   "configuracion": {
@@ -1462,40 +1410,5 @@
       "dias_sin_registro_alerta": 1,
       "hora_recordatorio_diario": "17:30"
     }
-  },
-  "auditoria": [
-    {
-      "id": "AUD-001",
-      "usuario_id": "USR-001",
-      "accion": "SYSTEM_UPDATE",
-      "modulo": "configuracion",
-      "entidad_id": "VERSION-2.2.0",
-      "detalle": "Actualización de base de datos según planes de trabajo específicos por área",
-      "ip": "192.168.1.105",
-      "navegador": "Chrome 120 / Windows 11",
-      "fecha": "2026-02-14T18:00:00Z"
-    },
-    {
-      "id": "AUD-002",
-      "usuario_id": "USR-001",
-      "accion": "APPROVE_ACTIVITY",
-      "modulo": "seguimiento",
-      "entidad_id": "ACT-002",
-      "detalle": "Aprobó 'Apertura diaria de aulas — Bloque A' de Duglas Alpire",
-      "ip": "192.168.1.105",
-      "navegador": "Chrome 120 / Windows 11",
-      "fecha": "2026-02-14T07:45:00Z"
-    },
-    {
-      "id": "AUD-003",
-      "usuario_id": "USR-001",
-      "accion": "APPROVE_ACTIVITY",
-      "modulo": "seguimiento",
-      "entidad_id": "ACT-003",
-      "detalle": "Aprobó 'Reparación de fuga de agua — Baños Bloque C' de Joel Salas",
-      "ip": "192.168.1.105",
-      "navegador": "Chrome 120 / Windows 11",
-      "fecha": "2026-02-14T14:30:00Z"
-    }
-  ]
+  }
 }
