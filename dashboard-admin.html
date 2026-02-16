@@ -775,10 +775,13 @@
                     <span class="nav-icon">⚙️</span>
                     Configuración
                 </a>
-                <a href="#" class="nav-item" onclick="logout()">
+                <a href="#" class="nav-item" onclick= "logout()">
                     <span class="nav-icon">🚪</span>
                     Cerrar Sesión
                 </a>
+                <!-- <button class="nav-item" onclick="logout()">
+                <span class="nav-icon">🚪</span> Cerrar Sesión
+                 </button> -->
             </div>
         </nav>
     </aside>
@@ -791,11 +794,15 @@
                 <h1>Dashboard Administrativo</h1>
                 <p>Resumen general del sistema de gestión del campus</p>
             </div>
-            <button class="btn-exit" onclick="logout()">
+            <!-- <button class="btn-exit" onclick="logout()">
                 <span>🚪</span>
                 Salir
-            </button>
+            </button> -->
+            <button class="btn-exit" onclick="logout()">
+            <span>🚪</span> <i class="fas fa-sign-out-alt"></i> Salir
+          </button>
         </div>
+        
 
         <!-- Dashboard Tab -->
         <div id="tab-dashboard" class="tab-content active">
@@ -2026,60 +2033,60 @@
             }
         }
 
-//        async function logout() {
-//        // 1. Confirmación (Opcional, pero recomendada)
-//        if (!confirm('¿Está seguro que desea cerrar sesión?')) {
-//         return; // Si cancela, no hace nada
-//          }
+       async function logout() {
+       // 1. Confirmación (Opcional, pero recomendada)
+       if (!confirm('¿Está seguro que desea cerrar sesión?')) {
+        return; // Si cancela, no hace nada
+         }
 
-//            try {
-//                        // 2. Avisar al servidor (Importante para invalidar sesiones en el backend)
-//                       // Cambia '/api/logout' por tu ruta real de backend
-//                 await fetch('/api/logout', {
-//                  method: 'POST',
-//                    headers: {
-//                 'Content-Type': 'application/json',
-//                 // Si usas tokens, envíalo en el header para que el servidor sepa quién cierra sesión
-//                 'Authorization': 'Bearer ' + localStorage.getItem('token') 
-//                     },
-//                     credentials: 'include' // Importante si usas cookies de sesión
-//                 });
-//                     } catch (error) {
-//                      console.error('Error al notificar al servidor:', error);
-//                             // Continuamos aunque falle el servidor, para no dejar al usuario atrapado
-//                                 }
+           try {
+                       // 2. Avisar al servidor (Importante para invalidar sesiones en el backend)
+                      // Cambia '/api/logout' por tu ruta real de backend
+                await fetch('/api/logout', {
+                 method: 'POST',
+                   headers: {
+                'Content-Type': 'application/json',
+                // Si usas tokens, envíalo en el header para que el servidor sepa quién cierra sesión
+                'Authorization': 'Bearer ' + localStorage.getItem('token') 
+                    },
+                    credentials: 'include' // Importante si usas cookies de sesión
+                });
+                    } catch (error) {
+                     console.error('Error al notificar al servidor:', error);
+                            // Continuamos aunque falle el servidor, para no dejar al usuario atrapado
+                                }
 
-//     // 3. Limpiar datos locales (Clave para que no recuerde al usuario)
-//     localStorage.removeItem('token');       // Elimina el token de acceso
-//     localStorage.removeItem('usuario');     // Elimina datos del usuario
-//     localStorage.removeItem('refreshToken'); // Si usas refresh tokens
-//     sessionStorage.clear();                 // Limpia cualquier dato de sesión temporal
+    // 3. Limpiar datos locales (Clave para que no recuerde al usuario)
+    localStorage.removeItem('token');       // Elimina el token de acceso
+    localStorage.removeItem('usuario');     // Elimina datos del usuario
+    localStorage.removeItem('refreshToken'); // Si usas refresh tokens
+    sessionStorage.clear();                 // Limpia cualquier dato de sesión temporal
 
-//     // 4. Notificación visual
-//     alert('Sesión cerrada correctamente');
+    // 4. Notificación visual
+    alert('Sesión cerrada correctamente');
 
-//     // 5. Redirección segura
-//     // Usamos 'replace' en lugar de 'href' para que el botón "Atrás" no regrese a la página protegida
-//     window.location.replace('index.html'); 
-// }
+    // 5. Redirección segura
+    // Usamos 'replace' en lugar de 'href' para que el botón "Atrás" no regrese a la página protegida
+    window.location.replace('index.html'); 
+}
 
-function logout() {
-      Swal.fire({
-        title: '¿Cerrar sesión?',
-        text: '¿Estás seguro de que deseas salir?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#ef4444',
-        cancelButtonColor: '#64748b',
-        confirmButtonText: 'Sí, cerrar',
-        cancelButtonText: 'Cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          sessionStorage.removeItem('session_SAC');
-          window.location.href = 'index.html';
-        }
-      });
-    }
+// function logout() {
+//       Swal.fire({
+//         title: '¿Cerrar sesión?',
+//         text: '¿Estás seguro de que deseas salir?',
+//         icon: 'question',
+//         showCancelButton: true,
+//         confirmButtonColor: '#ef4444',
+//         cancelButtonColor: '#64748b',
+//         confirmButtonText: 'Sí, cerrar',
+//         cancelButtonText: 'Cancelar'
+//       }).then((result) => {
+//         if (result.isConfirmed) {
+//           sessionStorage.removeItem('session_SAC');
+//           window.location.href = 'index.html';
+//         }
+//       });
+//     }
 
         // Responsive menu
         window.addEventListener('resize', function() {
