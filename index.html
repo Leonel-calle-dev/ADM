@@ -27,7 +27,7 @@
       display: flex;
       flex-direction: column;
       background: linear-gradient(135deg, rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
-                  url("img/uap-mural.jpeg") no-repeat center center/cover;
+                  url("https://lh3.googleusercontent.com/fife/ALs6j_HMdLowsBDyMH08lSYMP526rzMIMN9wt7jXZZFf8jM6CZZH1ivkEyLEyCmVha1VedXa8c75Sk3RqnW-6Sm-IBSwEOtoJQvc7Esu-RzT0LJ3FuXPBkivVzwM9Q2748XvBIw8aanjN6fyfQeGFhRXoLuZOwf0tpSaOYCECdmCfEk2a6R4-802OCn4S7i1YMb5hM-qd9UdOu47PFFPL06yinWib4KhsmNfD_W7TFo83U_OGEuJZzPbcT7LkKZXC3b_2VgEMe2JS6o7kcb2ry6oRIbOWzqOlFjk61Tlmd-32jBuQWZrn6sy_UJ0a69eYe9uibqkE6pmW9PHP3Gi0BHBTPnvO92uOBJVCWXHOBIegNzBA2uGcx_m-xmDwX4XMuxFK2cqRx3X2vt1E8ElJ4RlFPczag8nWfdC6PtqPJEQU2l7rymXzhiIaE98Q6lyDwzmZIROcddNduoQAljarqmhC_tDzGdFLQATfwVtwFoP1lsJTz_02g2LX8nCAum9oPnR1E_Z5eDu90XBnq_-bvu3dozD7ohKBenK_bmPqCLcbfVkr4TWbg65jy2smsQ6cxqg0lIIFAAwqvU0SZLA0U-hNIE7QGKkwsTLWRvBIXjH4PnGViJf0JokDgRQ3t5FNf7jo3XtbhIXUMGdLOEHmjSqxk_DXinm71dTQH2IdEIkVX_uLFuQJ0h7IamAYO1AE6gcJSbJO08b0sDeAzLIILseimolgNrLHJGmCy3O3SzsolvitUkL8vrYmSRCHRSBZyntsqnhg5VO4DBwc8oBJYUtz2deMX53XJ43Uiui2E4E5V9A8UqL6raacHQfQqbDzVnmOymYwjy6UEmOHNyshpRuFHoQSmTPoDC-OlPvIRF3OUIhnpyaP628spE74uE5inv689gT8ZWIHhRi2Jdj_JJmCcA3e5Xs1ODHF0OHaj7gy4znKZbz-XL6xeR4mETQe8BHzf2GHQDbgDIgieT84MlYNEP_OpzGaKmrL3fpNpDqGQ6IOe4OFzy3uf8d-chcRjr--8Fb9IueJaEzlmJFbor54oJNATKK9J6K6MI2WPmzh48-pfsWLhKNfffOwyFpi6EzUTCE5WTHLGNiYj_aHh3pyN4_KDZlBe8kBsfKwiYyBYwHl_9-B25vDZgZ50kzyNPe9JVpkxW2FphapRaFucNkbfJXsxTXfIS-cuCU-3K_kcuNw0iEAA9HDy6vSAiXHGSX5KWFhpaGwtAoAbmZDf9Hp99elOQ2y3r2bf9lE56OPPvtyK5gvQHRB8U89QxR50DL-9nvYKxUV-3am5qYND1_LXrklWT5fxM9DNIUCbDTjTcl4wMtiRWNmdHTlEW8cspHMrnwmLLLTuEaOgFSDU95aqhUJczV0cnZIhfZ1qM6Ag-FYWOp79RUG9d4lXPWATmtD1G5uIgLqxO8m-3ggULYa3ul9iJ0G2HgDbTR0lAu0m8c1uN-GHCpn1cpwcGPh7e5lf-K9VUBRCEG7Fy1NxEgyuDO4FQZhhxEK3fB5KoEiA2vwN3JaKyfgb7jjaaV_P7nAk_x1f95XwKIjm0zAct0j69srXvRFPhmKjEpTgIEOEs-AydSuz8nkzjJdGTkLznFA_0Lb67owlRMIyZYen5-sBMOkiJd1VVwdURGXbNSmYsA3QbAWF4UqRXHEbno1TgH9eGG8AXXHqsIsY0GWNyj5LAMwDBIa6bRLXjSbKM4T13rmEBG8YWvipHmBEZGbhWV3BvP2ho_m_dYBrw07YU=w1910-h922?auditContext=prefetch") no-repeat center center/cover;
       background-attachment: fixed;
       color: #fff;
     }
@@ -373,7 +373,7 @@
 <body>
   <div class="main-content">
     <div class="login-container">
-      <img src="img/Logo-adm.png" alt="Logo Campus">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Escudo_UAP.png/800px-Escudo_UAP.png" alt="Logo Campus">
       <h2>Bienvenido</h2>
       <p>Sistema de Gestión del Campus</p>
 
@@ -418,9 +418,17 @@
         <i class="fas fa-times"></i>
       </button>
       <h3>Recuperar Contraseña</h3>
-      <p>Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña</p>
+      <p>Ingresa tu usuario y correo electrónico para verificar tu identidad</p>
       
       <form id="recoveryForm">
+        <div class="input-group">
+          <label><i class="fas fa-user"></i> Usuario</label>
+          <div class="input-wrapper">
+            <i class="input-icon fas fa-user"></i>
+            <input type="text" id="recoveryUsername" placeholder="Ingrese su usuario" required autocomplete="username">
+          </div>
+        </div>
+
         <div class="input-group">
           <label><i class="fas fa-envelope"></i> Correo Electrónico</label>
           <div class="input-wrapper">
@@ -430,8 +438,8 @@
         </div>
 
         <button type="submit" class="btn-login">
-          <i class="fas fa-paper-plane"></i>
-          Enviar Enlace
+          <i class="fas fa-key"></i>
+          Generar Enlace de Recuperación
         </button>
       </form>
     </div>
@@ -447,13 +455,14 @@
         const response = await fetch(DB_PATH);
         if (!response.ok) throw new Error('No se pudo cargar la base de datos');
         DATABASE = await response.json();
-        console.log('✅ Base de datos cargada');
+        console.log('✅ Base de datos cargada correctamente');
+        console.log('📊 Usuarios disponibles:', DATABASE.usuarios.length);
       } catch (error) {
         console.error('❌ Error al cargar base de datos:', error);
         Swal.fire({
           icon: 'error',
-          title: 'Error',
-          text: 'No se pudo conectar con el sistema',
+          title: 'Error de Conexión',
+          text: 'No se pudo conectar con el sistema. Verifica que data3.json existe.',
           confirmButtonColor: '#dc3545'
         });
       }
@@ -465,17 +474,17 @@
       if (sessionData) {
         try {
           const session = JSON.parse(sessionData);
-          // Verificar que la sesión no haya expirado
           const now = new Date();
           if (session.expiracion && new Date(session.expiracion) > now) {
-            // Redirigir según el rol
+            console.log('✅ Sesión activa encontrada');
             redirectByRole(session.rol);
             return true;
           } else {
-            // Sesión expirada
+            console.log('⚠️ Sesión expirada, limpiando...');
             sessionStorage.removeItem('session_SAC');
           }
         } catch (error) {
+          console.error('❌ Error al verificar sesión:', error);
           sessionStorage.removeItem('session_SAC');
         }
       }
@@ -526,21 +535,17 @@
       const password = document.getElementById('password').value;
       const rememberMe = document.getElementById('rememberMe').checked;
 
-      // Verificar si hay contraseñas actualizadas en localStorage
-      const passwordUpdates = JSON.parse(localStorage.getItem('password_updates') || '{}');
+      console.log('🔍 Intentando login con usuario:', username);
 
-      // Buscar usuario - verificar tanto password original como actualizada
-      const user = DATABASE.usuarios.find(u => {
-        const usernameMatch = u.nombre_usuario === username || u.correo === username;
-        
-        // Verificar contraseña actualizada primero
-        const updatedPassword = passwordUpdates[u.nombre_usuario];
-        const passwordMatch = (updatedPassword && updatedPassword === password) || u.password === password;
-        
-        return usernameMatch && passwordMatch && u.activo === true;
-      });
+      // Buscar usuario en data3.json
+      const user = DATABASE.usuarios.find(u => 
+        (u.nombre_usuario === username || u.correo === username) && 
+        u.password === password &&
+        u.activo === true
+      );
 
       if (!user) {
+        console.log('❌ Credenciales incorrectas');
         Swal.fire({
           icon: 'error',
           title: 'Credenciales incorrectas',
@@ -552,6 +557,7 @@
 
       // Verificar si está bloqueado
       if (user.bloqueado) {
+        console.log('❌ Usuario bloqueado:', user.nombre_usuario);
         Swal.fire({
           icon: 'error',
           title: 'Cuenta Bloqueada',
@@ -561,11 +567,58 @@
         return;
       }
 
+      console.log('✅ Usuario autenticado:', user.nombre_completo);
+
       // Crear sesión
       const ahora = new Date();
       const expiracion = new Date(ahora.getTime() + 12 * 60 * 60 * 1000); // 12 horas
 
+      // Generar ID de sesión
+      const existingSessions = DATABASE.sesiones || [];
+      const sessionNumber = existingSessions.length + 1;
+      const sessionId = `SES-${String(sessionNumber).padStart(3, '0')}`;
+      
+      const sessionRecord = {
+        id: sessionId,
+        usuario_id: user.id,
+        activa: true,
+        fecha_inicio: ahora.toISOString(),
+        fecha_expiracion: expiracion.toISOString()
+      };
+
+      // Registrar sesión vía Netlify Function UNIFICADA
+      try {
+        const response = await fetch('/.netlify/functions/database-operations', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            action: 'register_session',
+            session_data: sessionRecord
+          })
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log('✅ Sesión registrada en servidor:', result);
+        } else {
+          console.warn('⚠️ No se pudo registrar en servidor, continuando con sesión local');
+        }
+      } catch (error) {
+        console.warn('⚠️ Error al registrar sesión en servidor:', error);
+      }
+
+      // SIMULACIÓN CONSOLA: Mostrar lo que se guardaría en data3.json
+      console.log('═══════════════════════════════════════════════');
+      console.log('📝 REGISTRO EN data3.json -> tabla sesiones:');
+      console.log('═══════════════════════════════════════════════');
+      console.log(JSON.stringify(sessionRecord, null, 2));
+      console.log('═══════════════════════════════════════════════');
+
+      // Crear datos de sesión para sessionStorage
       const sessionData = {
+        session_id: sessionId,
         id: user.id,
         nombre_completo: user.nombre_completo,
         nombre_usuario: user.nombre_usuario,
@@ -580,12 +633,14 @@
         expiracion: expiracion.toISOString()
       };
 
-      // Guardar sesión
+      // Guardar sesión en sessionStorage
       sessionStorage.setItem('session_SAC', JSON.stringify(sessionData));
+      console.log('✅ Sesión guardada en sessionStorage');
 
-      // Si "Recordarme" está activado, guardar en localStorage
+      // Si "Recordarme" está activado, guardar solo el usuario
       if (rememberMe) {
         localStorage.setItem('remember_user', username);
+        console.log('✅ Usuario guardado para recordar');
       } else {
         localStorage.removeItem('remember_user');
       }
@@ -594,7 +649,8 @@
       await Swal.fire({
         icon: 'success',
         title: '¡Bienvenido!',
-        html: `<p style="font-size: 16px; margin-top: 10px;">Hola <strong>${user.nombre_completo}</strong></p>`,
+        html: `<p style="font-size: 16px; margin-top: 10px;">Hola <strong>${user.nombre_completo}</strong></p>
+               <p style="font-size: 14px; color: #666; margin-top: 5px;">${user.cargo}</p>`,
         timer: 2000,
         showConfirmButton: false
       });
@@ -612,65 +668,114 @@
         if (!DATABASE) return;
       }
 
+      const username = document.getElementById('recoveryUsername').value.trim();
       const email = document.getElementById('recoveryEmail').value.trim();
 
-      // Buscar usuario por correo
-      const user = DATABASE.usuarios.find(u => u.correo === email && u.activo === true);
+      console.log('🔍 Buscando usuario para recuperación:', username, email);
+
+      // Buscar usuario por nombre de usuario Y correo (ambos deben coincidir)
+      const user = DATABASE.usuarios.find(u => 
+        u.nombre_usuario === username && 
+        u.correo === email && 
+        u.activo === true
+      );
 
       if (!user) {
-        // Por seguridad, no revelar si el correo existe o no
+        console.log('❌ Usuario no encontrado para recuperación');
         Swal.fire({
-          icon: 'info',
-          title: 'Solicitud Recibida',
-          html: `
-            <p>Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.</p>
-            <p style="margin-top: 10px; font-size: 14px; color: #666;">Revisa tu bandeja de entrada y spam.</p>
-          `,
-          confirmButtonColor: '#0077ff'
+          icon: 'error',
+          title: 'Usuario no encontrado',
+          text: 'El usuario y correo no coinciden o no existen en el sistema',
+          confirmButtonColor: '#dc3545'
         });
-        document.getElementById('recoveryModal').classList.remove('active');
-        document.getElementById('recoveryForm').reset();
         return;
       }
 
-      // Generar token de recuperación con datos codificados
-      const expiracion = new Date();
-      expiracion.setHours(expiracion.getHours() + 1); // 1 hora de validez
+      console.log('✅ Usuario encontrado para recuperación:', user.nombre_completo);
 
-      // Crear payload con datos del usuario
-      const payload = {
+      // Generar token de recuperación
+      const token = generateToken();
+      const ahora = new Date();
+      const expiracion = new Date(ahora.getTime() + 60 * 60 * 1000); // 1 hora
+
+      // Generar ID de recuperación
+      const existingRecoveries = DATABASE.recuperacion_password || [];
+      const recoveryNumber = existingRecoveries.length + 1;
+      const recoveryId = `RPASS-${String(recoveryNumber).padStart(3, '0')}`;
+
+      // Crear objeto de recuperación
+      const recoveryData = {
+        id: recoveryId,
         usuario_id: user.id,
+        token: token,
         correo: user.correo,
-        nombre_usuario: user.nombre_usuario,
-        exp: expiracion.getTime()
+        usado: false,
+        fecha_creacion: ahora.toISOString(),
+        fecha_expiracion: expiracion.toISOString()
       };
 
-      // Codificar payload en base64
-      const token = btoa(JSON.stringify(payload)) + '.' + generateToken().substring(0, 32);
+      // Registrar recuperación vía Netlify Function UNIFICADA
+      try {
+        const response = await fetch('netlify/functions/database-operations.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            action: 'register_recovery',
+            recovery_data: recoveryData
+          })
+        });
 
-      // Simular envío de correo (en producción, esto sería una llamada a backend)
-      // Detectar si estamos en GitHub Pages o local
-      const baseUrl = window.location.hostname.includes('github.io') 
-        ? window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '')
-        : window.location.origin;
+        if (response.ok) {
+          const result = await response.json();
+          console.log('✅ Recuperación registrada en servidor:', result);
+        } else {
+          console.warn('⚠️ No se pudo registrar recuperación en servidor');
+        }
+      } catch (error) {
+        console.warn('⚠️ Error al registrar recuperación:', error);
+      }
+
+      // SIMULACIÓN CONSOLA: Mostrar lo que se guardaría en data3.json
+      console.log('═══════════════════════════════════════════════');
+      console.log('📝 REGISTRO EN data3.json -> tabla recuperacion_password:');
+      console.log('═══════════════════════════════════════════════');
+      console.log(JSON.stringify(recoveryData, null, 2));
+      console.log('═══════════════════════════════════════════════');
+
+      // Generar enlace
+      const baseUrl = window.location.origin;
       const recoveryLink = `${baseUrl}/reset-password.html?token=${token}`;
 
-      // Mostrar información (en producción, esto se enviaría por correo)
+      // Mostrar enlace generado
       Swal.fire({
         icon: 'success',
-        title: 'Enlace Enviado',
+        title: 'Enlace Generado',
         html: `
-          <p>Se ha enviado un enlace de recuperación al correo:</p>
-          <p style="font-weight: 600; color: #0077ff; margin: 15px 0;">${email}</p>
-          <div style="background: #f0f0f0; padding: 15px; border-radius: 10px; margin-top: 15px; text-align: left; word-break: break-all;">
-            <p style="color: #333; font-size: 12px; margin-bottom: 8px;"><strong>Enlace de recuperación:</strong></p>
-            <a href="${recoveryLink}" target="_blank" style="color: #0077ff; font-size: 11px; word-break: break-all;">${recoveryLink}</a>
+          <div style="text-align: left;">
+            <p style="text-align: center; margin-bottom: 20px;">Se ha generado un enlace de recuperación para:</p>
+            <div style="background: #f0f9ff; border: 2px solid #0077ff; border-radius: 10px; padding: 15px; margin-bottom: 15px;">
+              <p style="color: #0077ff; margin: 5px 0;"><i class="fas fa-user"></i> <strong>Usuario:</strong> ${user.nombre_usuario}</p>
+              <p style="color: #0077ff; margin: 5px 0;"><i class="fas fa-envelope"></i> <strong>Correo:</strong> ${user.correo}</p>
+            </div>
+            <div style="background: #f0f0f0; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+              <p style="color: #333; font-size: 12px; margin-bottom: 8px;"><strong>Token generado:</strong></p>
+              <p style="color: #0077ff; font-size: 11px; word-break: break-all; font-family: monospace;">${token}</p>
+            </div>
+            <div style="background: #fff3cd; border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin-bottom: 15px;">
+              <p style="color: #856404; font-size: 12px; margin-bottom: 8px;"><strong>Enlace de recuperación:</strong></p>
+              <a href="${recoveryLink}" target="_blank" style="color: #0077ff; font-size: 11px; word-break: break-all;">${recoveryLink}</a>
+            </div>
+            <p style="text-align: center; margin-top: 15px; font-size: 13px; color: #666;">
+              <i class="fas fa-clock"></i> El enlace expira en 1 hora
+            </p>
+            <p style="text-align: center; margin-top: 10px; font-size: 12px; color: #999;">
+              <i class="fas fa-info-circle"></i> Click en el enlace para abrirlo
+            </p>
           </div>
-          <p style="margin-top: 15px; font-size: 13px; color: #666;">El enlace expira en 1 hora</p>
-          <p style="margin-top: 10px; font-size: 12px; color: #999;">
-            <i class="fas fa-mouse-pointer"></i> Click en el enlace para abrirlo
-          </p>
         `,
+        width: '600px',
         confirmButtonColor: '#0077ff',
         confirmButtonText: 'Entendido'
       });
@@ -681,6 +786,7 @@
 
     // Redirigir según rol
     function redirectByRole(rol) {
+      console.log('🔄 Redirigiendo a dashboard de:', rol);
       switch(rol) {
         case 'administrador':
           window.location.href = 'dashboard-admin.html';
@@ -695,7 +801,7 @@
           window.location.href = 'dashboard-mantenimientos.html';
           break;
         default:
-          window.location.href = 'index.html';
+          window.location.href = 'dashboard.html';
       }
     }
 
@@ -706,8 +812,10 @@
         .join('');
     }
 
-    // Cargar usuario recordado
+    // Inicialización
     window.addEventListener('DOMContentLoaded', async function() {
+      console.log('🚀 Iniciando sistema de login...');
+      
       await loadDatabase();
       
       // Verificar sesión existente
@@ -720,7 +828,10 @@
       if (rememberedUser) {
         document.getElementById('username').value = rememberedUser;
         document.getElementById('rememberMe').checked = true;
+        console.log('✅ Usuario recordado cargado:', rememberedUser);
       }
+
+      console.log('✅ Sistema listo para usar');
     });
   </script>
 </body>
