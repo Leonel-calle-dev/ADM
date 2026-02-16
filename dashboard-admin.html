@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Administrativo - Sistema de Gestión del Campus</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <style>
         * {
             margin: 0;
@@ -25,6 +32,8 @@
             --accent-green: #10b981;
             --accent-red: #ef4444;
             --accent-yellow: #f59e0b;
+            --accent-purple: #8b5cf6;
+            --accent-indigo: #6366f1;
         }
 
         body {
@@ -160,6 +169,7 @@
             font-weight: 500;
             transition: all 0.2s ease;
             margin-bottom: 0.25rem;
+            cursor: pointer;
         }
 
         .nav-item:hover {
@@ -174,6 +184,22 @@
 
         .nav-icon {
             font-size: 1.25rem;
+        }
+
+        /* Sidebar Backdrop */
+        .sidebar-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .sidebar-backdrop.active {
+            display: block;
         }
 
         /* Main Content */
@@ -229,7 +255,7 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.75rem 1.5rem;
-            background: var(--accent-red);
+            background: linear-gradient(90deg, var(--accent-red), #dc2626);
             color: white;
             border: none;
             border-radius: 8px;
@@ -237,12 +263,13 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
         }
 
         .btn-exit:hover {
             background: #dc2626;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
         }
 
         /* Stats Grid */
@@ -349,7 +376,7 @@
 
         .btn-primary {
             padding: 0.625rem 1.25rem;
-            background: var(--accent-blue);
+            background: linear-gradient(90deg, var(--accent-indigo), var(--accent-purple));
             color: white;
             border: none;
             border-radius: 8px;
@@ -357,12 +384,13 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
 
         .btn-primary:hover {
             background: var(--accent-blue-hover);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
         }
 
         .btn-secondary {
@@ -431,7 +459,7 @@
             color: var(--accent-green);
         }
 
-        .status-pendiente {
+        .status-pendiente, .status-enviado {
             background: rgba(245, 158, 11, 0.1);
             color: var(--accent-yellow);
         }
@@ -479,6 +507,10 @@
 
         .btn-icon.danger:hover {
             background: var(--accent-red);
+        }
+
+        .btn-icon.success:hover {
+            background: var(--accent-green);
         }
 
         /* Filters */
@@ -534,6 +566,78 @@
             opacity: 0.5;
         }
 
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quick-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .quick-action:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent-blue);
+            transform: translateY(-4px);
+        }
+
+        .quick-action-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border-radius: 12px;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-blue);
+        }
+
+        .quick-action-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* SweetAlert Custom Styles */
+        .swal2-popup {
+            background: var(--bg-card) !important;
+            border: 2px solid var(--accent-indigo) !important;
+            border-radius: 16px !important;
+        }
+
+        .swal2-title {
+            color: var(--text-primary) !important;
+        }
+
+        .swal2-html-container {
+            color: var(--text-secondary) !important;
+        }
+
+        .swal2-confirm {
+            background: linear-gradient(90deg, var(--accent-indigo), var(--accent-purple)) !important;
+            border-radius: 8px !important;
+        }
+
+        .swal2-cancel {
+            background: var(--bg-hover) !important;
+            border-radius: 8px !important;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .sidebar {
@@ -586,20 +690,6 @@
             }
         }
 
-        /* Loading Animation */
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-        }
-
-        .loading {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-
         /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -619,35 +709,7 @@
             background: var(--accent-blue);
         }
 
-        /* Tabs */
-        .tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .tab {
-            padding: 0.75rem 1.5rem;
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s ease;
-        }
-
-        .tab:hover {
-            color: var(--text-primary);
-        }
-
-        .tab.active {
-            color: var(--accent-blue);
-            border-bottom-color: var(--accent-blue);
-        }
-
+        /* Tab Content */
         .tab-content {
             display: none;
         }
@@ -655,56 +717,12 @@
         .tab-content.active {
             display: block;
         }
-
-        /* Quick Actions */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .quick-action {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1.5rem 1rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            text-decoration: none;
-            color: var(--text-primary);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .quick-action:hover {
-            background: var(--bg-hover);
-            border-color: var(--accent-blue);
-            transform: translateY(-4px);
-        }
-
-        .quick-action-icon {
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            border-radius: 12px;
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--accent-blue);
-        }
-
-        .quick-action-label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
+    <!-- Sidebar Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -716,10 +734,10 @@
         </div>
 
         <div class="user-profile">
-            <div class="user-avatar">JA</div>
+            <div class="user-avatar" id="userAvatar">JA</div>
             <div class="user-info">
-                <h3>Jorge Arroyo Zábala</h3>
-                <p>profe@gmail.com</p>
+                <h3 id="userName">Jorge Arroyo Zábala</h3>
+                <p id="userEmail">profe@gmail.com</p>
                 <span class="user-badge">Administrador</span>
             </div>
         </div>
@@ -727,61 +745,58 @@
         <nav>
             <div class="nav-section">
                 <div class="nav-section-title">Panel de Control</div>
-                <a href="#dashboard" class="nav-item active" onclick="showTab('dashboard')">
+                <div class="nav-item active" data-section="dashboard">
                     <span class="nav-icon">📊</span>
                     Dashboard
-                </a>
+                </div>
             </div>
 
             <div class="nav-section">
                 <div class="nav-section-title">Gestión</div>
-                <a href="#usuarios" class="nav-item" onclick="showTab('usuarios')">
+                <div class="nav-item" data-section="usuarios">
                     <span class="nav-icon">👥</span>
                     Usuarios
-                </a>
-                <a href="#actividades" class="nav-item" onclick="showTab('actividades')">
+                </div>
+                <div class="nav-item" data-section="actividades">
                     <span class="nav-icon">📋</span>
                     Actividades
-                </a>
-                <a href="#equipos" class="nav-item" onclick="showTab('equipos')">
+                </div>
+                <div class="nav-item" data-section="equipos">
                     <span class="nav-icon">💻</span>
                     Equipos
-                </a>
-                <a href="#aulas" class="nav-item" onclick="showTab('aulas')">
+                </div>
+                <div class="nav-item" data-section="aulas">
                     <span class="nav-icon">🏫</span>
                     Aulas
-                </a>
-                <a href="#materiales" class="nav-item" onclick="showTab('materiales')">
+                </div>
+                <div class="nav-item" data-section="materiales">
                     <span class="nav-icon">📦</span>
                     Materiales
-                </a>
+                </div>
             </div>
 
             <div class="nav-section">
                 <div class="nav-section-title">Reportes</div>
-                <a href="#estadisticas" class="nav-item" onclick="showTab('estadisticas')">
+                <div class="nav-item" data-section="estadisticas">
                     <span class="nav-icon">📈</span>
                     Estadísticas
-                </a>
-                <a href="#auditoria" class="nav-item" onclick="showTab('auditoria')">
+                </div>
+                <div class="nav-item" data-section="auditoria">
                     <span class="nav-icon">🔍</span>
                     Auditoría
-                </a>
+                </div>
             </div>
 
             <div class="nav-section">
                 <div class="nav-section-title">Sistema</div>
-                <a href="#configuracion" class="nav-item" onclick="showTab('configuracion')">
+                <div class="nav-item" data-section="configuracion">
                     <span class="nav-icon">⚙️</span>
                     Configuración
-                </a>
-                <a href="#" class="nav-item" onclick= "logout()">
+                </div>
+                <div class="nav-item" id="logoutSidebar">
                     <span class="nav-icon">🚪</span>
                     Cerrar Sesión
-                </a>
-                <!-- <button class="nav-item" onclick="logout()">
-                <span class="nav-icon">🚪</span> Cerrar Sesión
-                 </button> -->
+                </div>
             </div>
         </nav>
     </aside>
@@ -789,64 +804,22 @@
     <!-- Main Content -->
     <main class="main-content" id="mainContent">
         <div class="top-bar">
-            <button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()">☰</button>
+            <button class="menu-toggle" id="menuToggle">☰</button>
             <div class="page-header">
                 <h1>Dashboard Administrativo</h1>
                 <p>Resumen general del sistema de gestión del campus</p>
             </div>
-            <!-- <button class="btn-exit" onclick="logout()">
-                <span>🚪</span>
+            <button class="btn-exit" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
                 Salir
-            </button> -->
-            <button class="btn-exit" onclick="logout()">
-            <span>🚪</span> <i class="fas fa-sign-out-alt"></i> Salir
-          </button>
+            </button>
         </div>
-        
 
         <!-- Dashboard Tab -->
         <div id="tab-dashboard" class="tab-content active">
             <!-- Stats Grid -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div>
-                            <div class="stat-value">7</div>
-                            <div class="stat-label">Total Usuarios</div>
-                        </div>
-                        <div class="stat-icon">👥</div>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div>
-                            <div class="stat-value">5</div>
-                            <div class="stat-label">Total Actividades</div>
-                        </div>
-                        <div class="stat-icon">📋</div>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div>
-                            <div class="stat-value">0</div>
-                            <div class="stat-label">Pendientes</div>
-                        </div>
-                        <div class="stat-icon">🕐</div>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div>
-                            <div class="stat-value">5</div>
-                            <div class="stat-label">Completadas</div>
-                        </div>
-                        <div class="stat-icon">✅</div>
-                    </div>
-                </div>
+            <div class="stats-grid" id="statsGrid">
+                <!-- Stats loaded by JavaScript -->
             </div>
 
             <!-- Quick Actions -->
@@ -858,15 +831,15 @@
                     </h2>
                 </div>
                 <div class="quick-actions">
-                    <div class="quick-action" onclick="showTab('usuarios')">
+                    <div class="quick-action" onclick="showAddUserModal()">
                         <div class="quick-action-icon">➕</div>
                         <div class="quick-action-label">Crear Usuario</div>
                     </div>
-                    <div class="quick-action" onclick="showTab('actividades')">
+                    <div class="quick-action" onclick="showAddActivityModal()">
                         <div class="quick-action-icon">📝</div>
                         <div class="quick-action-label">Nueva Actividad</div>
                     </div>
-                    <div class="quick-action" onclick="showTab('equipos')">
+                    <div class="quick-action" onclick="showAddEquipmentModal()">
                         <div class="quick-action-icon">💻</div>
                         <div class="quick-action-label">Registrar Equipo</div>
                     </div>
@@ -894,1225 +867,1481 @@
                     </h2>
                     <button class="btn-primary" onclick="showTab('actividades')">Ver Todas</button>
                 </div>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Actividad</th>
-                                <th>Usuario</th>
-                                <th>Fecha</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Reparación de fuga de agua — Baños Bloque C</td>
-                                <td>Joel Salas</td>
-                                <td>2026-02-14</td>
-                                <td><span class="status-badge status-aprobado">Aprobado</span></td>
-                            </tr>
-                            <tr>
-                                <td>Instalación de señalética de evacuación — Pasillo Principal</td>
-                                <td>N/A</td>
-                                <td>2026-02-14</td>
-                                <td><span class="status-badge status-aprobado">Aprobado</span></td>
-                            </tr>
-                            <tr>
-                                <td>Apertura diaria de aulas — Bloque A</td>
-                                <td>N/A</td>
-                                <td>2026-02-14</td>
-                                <td><span class="status-badge status-aprobado">Aprobado</span></td>
-                            </tr>
-                            <tr>
-                                <td>Ronda diaria de inspección — Aulas Bloque A y B</td>
-                                <td>Duglas Alpire</td>
-                                <td>2026-02-14</td>
-                                <td><span class="status-badge status-aprobado">Aprobado</span></td>
-                            </tr>
-                            <tr>
-                                <td>Reparación de proyector Epson — Aula 204</td>
-                                <td>German Filemon Ayaviri Negrete</td>
-                                <td>2026-02-13</td>
-                                <td><span class="status-badge status-aprobado">Aprobado</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="table-container" id="recentActivitiesTable">
+                    <!-- Loaded by JavaScript -->
                 </div>
             </div>
         </div>
 
-        <!-- Usuarios Tab -->
-        <div id="tab-usuarios" class="tab-content">
-            <div class="content-card">
-                <div class="card-header">
-                    <h2 class="card-title">
-                        <span class="card-title-icon">👥</span>
-                        Gestión de Usuarios
-                    </h2>
-                    <button class="btn-primary">➕ Nuevo Usuario</button>
-                </div>
-
-                <div class="filters">
-                    <div class="filter-group">
-                        <label class="filter-label">Buscar</label>
-                        <input type="text" class="filter-input" placeholder="Nombre, correo o cargo...">
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Rol</label>
-                        <select class="filter-select">
-                            <option value="">Todos</option>
-                            <option value="administrador">Administrador</option>
-                            <option value="personal_apoyo_aulas">Personal Apoyo Aulas</option>
-                            <option value="responsable_audiovisual">Responsable Audiovisual</option>
-                            <option value="responsable_mantenimientos">Responsable Mantenimientos</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Estado</label>
-                        <select class="filter-select">
-                            <option value="">Todos</option>
-                            <option value="activo">Activo</option>
-                            <option value="inactivo">Inactivo</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Usuario</th>
-                                <th>Correo</th>
-                                <th>Cargo</th>
-                                <th>Rol</th>
-                                <th>Estado</th>
-                                <th>Último Acceso</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Jorge Arroyo Zabala</strong></td>
-                                <td>profe@gmail.com</td>
-                                <td>Administrador del Campus Universitario</td>
-                                <td>Administrador</td>
-                                <td><span class="status-badge status-activo">Activo</span></td>
-                                <td>2026-02-14 07:45</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Ver Permisos">🔐</button>
-                                        <button class="btn-icon danger" title="Eliminar">🗑️</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Lubdin Santos Gadiel</strong></td>
-                                <td>lubdin@gmail.com</td>
-                                <td>Personal de Apoyo - Atención de Aulas</td>
-                                <td>Personal Apoyo Aulas</td>
-                                <td><span class="status-badge status-activo">Activo</span></td>
-                                <td>2026-02-14 08:10</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Ver Permisos">🔐</button>
-                                        <button class="btn-icon danger" title="Eliminar">🗑️</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>German Filemon Ayaviri Negrete</strong></td>
-                                <td>gerfile12@gmail.com</td>
-                                <td>Responsable de Mantenimiento Audiovisual</td>
-                                <td>Responsable Audiovisual</td>
-                                <td><span class="status-badge status-activo">Activo</span></td>
-                                <td>2026-02-14 16:30</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Ver Permisos">🔐</button>
-                                        <button class="btn-icon danger" title="Eliminar">🗑️</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Joel Salas</strong></td>
-                                <td>joelsalas@gmail.com</td>
-                                <td>Responsable de Mantenimientos</td>
-                                <td>Responsable Mantenimientos</td>
-                                <td><span class="status-badge status-activo">Activo</span></td>
-                                <td>2026-02-14 09:00</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Ver Permisos">🔐</button>
-                                        <button class="btn-icon danger" title="Eliminar">🗑️</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Roger Leonel Chui Calle</strong></td>
-                                <td>roger4214001@gmail.com</td>
-                                <td>Responsable de Mantenimiento Audiovisual</td>
-                                <td>Responsable Audiovisual</td>
-                                <td><span class="status-badge status-activo">Activo</span></td>
-                                <td>2026-02-14 16:30</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Ver Permisos">🔐</button>
-                                        <button class="btn-icon danger" title="Eliminar">🗑️</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Duglas Alpire Añes</strong></td>
-                                <td>duglas.alpire@campus.edu.bo</td>
-                                <td>Personal de Apoyo - Atención de Aulas</td>
-                                <td>Personal Apoyo Aulas</td>
-                                <td><span class="status-badge status-activo">Activo</span></td>
-                                <td>-</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Ver Permisos">🔐</button>
-                                        <button class="btn-icon danger" title="Eliminar">🗑️</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Henry Cordero Balcazar</strong></td>
-                                <td>henry.cordero@campus.edu.bo</td>
-                                <td>Personal de Apoyo - Atención de Aulas</td>
-                                <td>Personal Apoyo Aulas</td>
-                                <td><span class="status-badge status-activo">Activo</span></td>
-                                <td>-</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Ver Permisos">🔐</button>
-                                        <button class="btn-icon danger" title="Eliminar">🗑️</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Actividades Tab -->
-        <div id="tab-actividades" class="tab-content">
-            <div class="content-card">
-                <div class="card-header">
-                    <h2 class="card-title">
-                        <span class="card-title-icon">📋</span>
-                        Gestión de Actividades
-                    </h2>
-                    <button class="btn-primary">➕ Nueva Actividad</button>
-                </div>
-
-                <div class="filters">
-                    <div class="filter-group">
-                        <label class="filter-label">Buscar</label>
-                        <input type="text" class="filter-input" placeholder="Título o descripción...">
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Categoría</label>
-                        <select class="filter-select">
-                            <option value="">Todas</option>
-                            <option value="CAT-001">Audiovisual y Tecnológico</option>
-                            <option value="CAT-002">Mobiliario e Inmuebles</option>
-                            <option value="CAT-003">Fontanería y Agua</option>
-                            <option value="CAT-004">Electricidad</option>
-                            <option value="CAT-005">Señalética y Organización</option>
-                            <option value="CAT-007">Operaciones Diarias de Aulas</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Estado</label>
-                        <select class="filter-select">
-                            <option value="">Todos</option>
-                            <option value="aprobado">Aprobado</option>
-                            <option value="pendiente">Pendiente</option>
-                            <option value="observado">Observado</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Prioridad</label>
-                        <select class="filter-select">
-                            <option value="">Todas</option>
-                            <option value="alta">Alta</option>
-                            <option value="media">Media</option>
-                            <option value="baja">Baja</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Título</th>
-                                <th>Categoría</th>
-                                <th>Usuario</th>
-                                <th>Lugar</th>
-                                <th>Duración</th>
-                                <th>Estado</th>
-                                <th>Fecha</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Reparación de proyector Epson — Aula 204</strong></td>
-                                <td>Audiovisual y Tecnológico</td>
-                                <td>German Filemon Ayaviri Negrete</td>
-                                <td>Aula 204 — Bloque B</td>
-                                <td>2.5 hrs</td>
-                                <td><span class="status-badge status-aprobado">Aprobado</span></td>
-                                <td>2026-02-13</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalles">👁️</button>
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Evidencias">📷</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Apertura diaria de aulas — Bloque A</strong></td>
-                                <td>Operaciones Diarias de Aulas</td>
-                                <td>Duglas Alpire Añes</td>
-                                <td>Bloque A — Todas las aulas</td>
-                                <td>0.75 hrs</td>
-                                <td><span class="status-badge status-aprobado">Aprobado</span></td>
-                                <td>2026-02-14</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalles">👁️</button>
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Evidencias">📷</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Reparación de fuga de agua — Baños Bloque C</strong></td>
-                                <td>Fontanería y Agua</td>
-                                <td>Joel Salas</td>
-                                <td>Baño Varones — Bloque C Planta Baja</td>
-                                <td>2.25 hrs</td>
-                                <td><span class="status-badge status-aprobado">Aprobado</span></td>
-                                <td>2026-02-14</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalles">👁️</button>
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Evidencias">📷</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Equipos Tab -->
-        <div id="tab-equipos" class="tab-content">
-            <div class="content-card">
-                <div class="card-header">
-                    <h2 class="card-title">
-                        <span class="card-title-icon">💻</span>
-                        Gestión de Equipos
-                    </h2>
-                    <button class="btn-primary">➕ Nuevo Equipo</button>
-                </div>
-
-                <div class="filters">
-                    <div class="filter-group">
-                        <label class="filter-label">Buscar</label>
-                        <input type="text" class="filter-input" placeholder="Código o modelo...">
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Tipo</label>
-                        <select class="filter-select">
-                            <option value="">Todos</option>
-                            <option value="proyector">Proyector</option>
-                            <option value="computadora">Computadora</option>
-                            <option value="monitor">Monitor</option>
-                            <option value="parlante">Parlante</option>
-                            <option value="ecran">Ecran</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Estado</label>
-                        <select class="filter-select">
-                            <option value="">Todos</option>
-                            <option value="operativo">Operativo</option>
-                            <option value="advertencia">Advertencia</option>
-                            <option value="mantenimiento">Mantenimiento</option>
-                            <option value="fuera_servicio">Fuera de Servicio</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Aula</label>
-                        <select class="filter-select">
-                            <option value="">Todas</option>
-                            <option value="AULA-001">A-101</option>
-                            <option value="AULA-002">B-204</option>
-                            <option value="AULA-003">B-208</option>
-                            <option value="AULA-004">C-301</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Tipo</th>
-                                <th>Marca/Modelo</th>
-                                <th>Aula</th>
-                                <th>Estado</th>
-                                <th>Última Revisión</th>
-                                <th>Próximo Mantenimiento</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>PROY-B204</strong></td>
-                                <td>Proyector</td>
-                                <td>Epson EB-X41</td>
-                                <td>B-204</td>
-                                <td><span class="status-badge status-activo">Operativo</span></td>
-                                <td>2026-02-13</td>
-                                <td>2026-03-13</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalles">👁️</button>
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Historial">📋</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>PROY-B208</strong></td>
-                                <td>Proyector</td>
-                                <td>Epson EB-X41</td>
-                                <td>B-208</td>
-                                <td><span class="status-badge status-pendiente">Advertencia</span></td>
-                                <td>2026-02-10</td>
-                                <td>2026-02-24</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalles">👁️</button>
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Historial">📋</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>PC-C301-01</strong></td>
-                                <td>Computadora</td>
-                                <td>Dell OptiPlex 7090</td>
-                                <td>C-301</td>
-                                <td><span class="status-badge status-activo">Operativo</span></td>
-                                <td>2026-02-01</td>
-                                <td>2026-05-01</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalles">👁️</button>
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Historial">📋</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>MON-C301-01</strong></td>
-                                <td>Monitor</td>
-                                <td>LG 24MK430H</td>
-                                <td>C-301</td>
-                                <td><span class="status-badge status-activo">Operativo</span></td>
-                                <td>2026-02-01</td>
-                                <td>2026-08-01</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalles">👁️</button>
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Historial">📋</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>SPK-B204</strong></td>
-                                <td>Parlante</td>
-                                <td>Logitech Z313</td>
-                                <td>B-204</td>
-                                <td><span class="status-badge status-activo">Operativo</span></td>
-                                <td>2026-02-13</td>
-                                <td>2026-08-13</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalles">👁️</button>
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Historial">📋</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>SCRN-B208</strong></td>
-                                <td>Ecran</td>
-                                <td>Elite Screens M100XWH</td>
-                                <td>B-208</td>
-                                <td><span class="status-badge status-activo">Operativo</span></td>
-                                <td>2026-02-10</td>
-                                <td>2026-08-10</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalles">👁️</button>
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Historial">📋</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Aulas Tab -->
-        <div id="tab-aulas" class="tab-content">
-            <div class="content-card">
-                <div class="card-header">
-                    <h2 class="card-title">
-                        <span class="card-title-icon">🏫</span>
-                        Gestión de Aulas
-                    </h2>
-                    <button class="btn-primary">➕ Nueva Aula</button>
-                </div>
-
-                <div class="filters">
-                    <div class="filter-group">
-                        <label class="filter-label">Buscar</label>
-                        <input type="text" class="filter-input" placeholder="Código o nombre...">
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Bloque</label>
-                        <select class="filter-select">
-                            <option value="">Todos</option>
-                            <option value="A">Bloque A</option>
-                            <option value="B">Bloque B</option>
-                            <option value="C">Bloque C</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Tipo</label>
-                        <select class="filter-select">
-                            <option value="">Todos</option>
-                            <option value="teorica">Teórica</option>
-                            <option value="laboratorio">Laboratorio</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Estado</label>
-                        <select class="filter-select">
-                            <option value="">Todos</option>
-                            <option value="operativa">Operativa</option>
-                            <option value="mantenimiento">Mantenimiento</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Nombre</th>
-                                <th>Bloque</th>
-                                <th>Piso</th>
-                                <th>Capacidad</th>
-                                <th>Tipo</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>A-101</strong></td>
-                                <td>Aula A-101</td>
-                                <td>A</td>
-                                <td>1</td>
-                                <td>40</td>
-                                <td>Teórica</td>
-                                <td><span class="status-badge status-activo">Operativa</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalles">👁️</button>
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Ver Equipos">💻</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>B-204</strong></td>
-                                <td>Aula B-204</td>
-                                <td>B</td>
-                                <td>2</td>
-                                <td>35</td>
-                                <td>Teórica</td>
-                                <td><span class="status-badge status-activo">Operativa</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalles">👁️</button>
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Ver Equipos">💻</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>B-208</strong></td>
-                                <td>Aula B-208</td>
-                                <td>B</td>
-                                <td>2</td>
-                                <td>40</td>
-                                <td>Teórica</td>
-                                <td><span class="status-badge status-activo">Operativa</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalles">👁️</button>
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Ver Equipos">💻</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>C-301</strong></td>
-                                <td>Laboratorio C-301</td>
-                                <td>C</td>
-                                <td>3</td>
-                                <td>25</td>
-                                <td>Laboratorio</td>
-                                <td><span class="status-badge status-activo">Operativa</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalles">👁️</button>
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Ver Equipos">💻</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Materiales Tab -->
-        <div id="tab-materiales" class="tab-content">
-            <div class="content-card">
-                <div class="card-header">
-                    <h2 class="card-title">
-                        <span class="card-title-icon">📦</span>
-                        Inventario de Materiales
-                    </h2>
-                    <button class="btn-primary">➕ Nuevo Material</button>
-                </div>
-
-                <div class="filters">
-                    <div class="filter-group">
-                        <label class="filter-label">Buscar</label>
-                        <input type="text" class="filter-input" placeholder="Nombre o categoría...">
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Categoría</label>
-                        <select class="filter-select">
-                            <option value="">Todas</option>
-                            <option value="Audiovisual">Audiovisual</option>
-                            <option value="Fontanería">Fontanería</option>
-                            <option value="Electricidad">Electricidad</option>
-                            <option value="Mobiliario">Mobiliario</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Estado de Stock</label>
-                        <select class="filter-select">
-                            <option value="">Todos</option>
-                            <option value="disponible">Disponible</option>
-                            <option value="bajo">Stock Bajo</option>
-                            <option value="agotado">Agotado</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Material</th>
-                                <th>Categoría</th>
-                                <th>Stock Actual</th>
-                                <th>Stock Mínimo</th>
-                                <th>Unidad</th>
-                                <th>Precio Unitario</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Lámpara Epson ELPLP78</strong></td>
-                                <td>Audiovisual</td>
-                                <td>3</td>
-                                <td>2</td>
-                                <td>pieza</td>
-                                <td>Bs. 450.00</td>
-                                <td><span class="status-badge status-activo">Disponible</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalles">👁️</button>
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Movimientos">📋</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Tubo PVC 1/2"</strong></td>
-                                <td>Fontanería</td>
-                                <td>25</td>
-                                <td>10</td>
-                                <td>metro</td>
-                                <td>Bs. 12.50</td>
-                                <td><span class="status-badge status-activo">Disponible</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalles">👁️</button>
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Movimientos">📋</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Pegamento PVC</strong></td>
-                                <td>Fontanería</td>
-                                <td>8</td>
-                                <td>5</td>
-                                <td>tubo</td>
-                                <td>Bs. 28.00</td>
-                                <td><span class="status-badge status-activo">Disponible</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn-icon" title="Ver Detalles">👁️</button>
-                                        <button class="btn-icon" title="Editar">✏️</button>
-                                        <button class="btn-icon" title="Movimientos">📋</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Estadísticas Tab -->
-        <div id="tab-estadisticas" class="tab-content">
-            <div class="content-card">
-                <div class="card-header">
-                    <h2 class="card-title">
-                        <span class="card-title-icon">📈</span>
-                        Estadísticas y Reportes
-                    </h2>
-                    <button class="btn-primary">📊 Generar Reporte</button>
-                </div>
-
-                <div class="filters">
-                    <div class="filter-group">
-                        <label class="filter-label">Período</label>
-                        <select class="filter-select">
-                            <option value="hoy">Hoy</option>
-                            <option value="semana">Esta Semana</option>
-                            <option value="mes" selected>Este Mes</option>
-                            <option value="trimestre">Este Trimestre</option>
-                            <option value="año">Este Año</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Tipo de Reporte</label>
-                        <select class="filter-select">
-                            <option value="general">General</option>
-                            <option value="actividades">Por Actividades</option>
-                            <option value="usuarios">Por Usuarios</option>
-                            <option value="equipos">Por Equipos</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Indicadores -->
-                <div style="margin-top: 2rem;">
-                    <h3 style="margin-bottom: 1rem; font-size: 1.125rem;">Indicadores de Desempeño</h3>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-header">
-                                <div>
-                                    <div class="stat-value">100%</div>
-                                    <div class="stat-label">Aulas Habilitadas a Tiempo</div>
-                                </div>
-                                <div class="stat-icon">✅</div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-header">
-                                <div>
-                                    <div class="stat-value">4h</div>
-                                    <div class="stat-label">Tiempo Promedio de Atención</div>
-                                </div>
-                                <div class="stat-icon">⏱️</div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-header">
-                                <div>
-                                    <div class="stat-value">95%</div>
-                                    <div class="stat-label">Equipos Operativos</div>
-                                </div>
-                                <div class="stat-icon">💻</div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-header">
-                                <div>
-                                    <div class="stat-value">15%</div>
-                                    <div class="stat-label">Reducción de Fallas</div>
-                                </div>
-                                <div class="stat-icon">📉</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Reportes Generados -->
-                <div style="margin-top: 2rem;">
-                    <h3 style="margin-bottom: 1rem; font-size: 1.125rem;">Reportes Generados</h3>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Título</th>
-                                    <th>Tipo</th>
-                                    <th>Período</th>
-                                    <th>Generado Por</th>
-                                    <th>Fecha</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>Reporte Diario — Operaciones Campus — 14/02/2026</strong></td>
-                                    <td>Diario</td>
-                                    <td>2026-02-14</td>
-                                    <td>Jorge Arroyo Zabala</td>
-                                    <td>2026-02-14 18:00</td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <button class="btn-icon" title="Ver Reporte">👁️</button>
-                                            <button class="btn-icon" title="Descargar PDF">📥</button>
-                                            <button class="btn-icon" title="Enviar por Correo">📧</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Auditoría Tab -->
-        <div id="tab-auditoria" class="tab-content">
-            <div class="content-card">
-                <div class="card-header">
-                    <h2 class="card-title">
-                        <span class="card-title-icon">🔍</span>
-                        Auditoría del Sistema
-                    </h2>
-                    <button class="btn-primary">📊 Exportar Registros</button>
-                </div>
-
-                <div class="filters">
-                    <div class="filter-group">
-                        <label class="filter-label">Fecha Inicio</label>
-                        <input type="date" class="filter-input" value="2026-02-01">
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Fecha Fin</label>
-                        <input type="date" class="filter-input" value="2026-02-16">
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Usuario</label>
-                        <select class="filter-select">
-                            <option value="">Todos</option>
-                            <option value="USR-001">Jorge Arroyo Zabala</option>
-                            <option value="USR-002">Lubdin Santos Gadiel</option>
-                            <option value="USR-003">German Filemon Ayaviri Negrete</option>
-                            <option value="USR-004">Joel Salas</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Acción</label>
-                        <select class="filter-select">
-                            <option value="">Todas</option>
-                            <option value="login">Inicios de Sesión</option>
-                            <option value="create">Creaciones</option>
-                            <option value="update">Modificaciones</option>
-                            <option value="delete">Eliminaciones</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Fecha/Hora</th>
-                                <th>Usuario</th>
-                                <th>Acción</th>
-                                <th>Módulo</th>
-                                <th>Descripción</th>
-                                <th>IP</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>2026-02-14 16:30:00</td>
-                                <td>German Filemon Ayaviri Negrete</td>
-                                <td>Login</td>
-                                <td>Autenticación</td>
-                                <td>Inicio de sesión exitoso</td>
-                                <td>192.168.1.105</td>
-                            </tr>
-                            <tr>
-                                <td>2026-02-14 14:30:00</td>
-                                <td>Jorge Arroyo Zabala</td>
-                                <td>Update</td>
-                                <td>Actividades</td>
-                                <td>Aprobó actividad ACT-003</td>
-                                <td>192.168.1.100</td>
-                            </tr>
-                            <tr>
-                                <td>2026-02-14 09:00:00</td>
-                                <td>Joel Salas</td>
-                                <td>Login</td>
-                                <td>Autenticación</td>
-                                <td>Inicio de sesión exitoso</td>
-                                <td>192.168.1.103</td>
-                            </tr>
-                            <tr>
-                                <td>2026-02-14 08:10:05</td>
-                                <td>Lubdin Santos Gadiel</td>
-                                <td>Login</td>
-                                <td>Autenticación</td>
-                                <td>Inicio de sesión exitoso</td>
-                                <td>192.168.1.102</td>
-                            </tr>
-                            <tr>
-                                <td>2026-02-14 07:45:22</td>
-                                <td>Jorge Arroyo Zabala</td>
-                                <td>Login</td>
-                                <td>Autenticación</td>
-                                <td>Inicio de sesión exitoso</td>
-                                <td>192.168.1.100</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Configuración Tab -->
-        <div id="tab-configuracion" class="tab-content">
-            <div class="content-card">
-                <div class="card-header">
-                    <h2 class="card-title">
-                        <span class="card-title-icon">⚙️</span>
-                        Configuración del Sistema
-                    </h2>
-                    <button class="btn-primary">💾 Guardar Cambios</button>
-                </div>
-
-                <div style="display: grid; gap: 2rem; margin-top: 1.5rem;">
-                    <!-- Información General -->
-                    <div>
-                        <h3 style="margin-bottom: 1rem; font-size: 1.125rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color);">
-                            Información General
-                        </h3>
-                        <div style="display: grid; gap: 1rem;">
-                            <div class="filter-group">
-                                <label class="filter-label">Nombre de la Institución</label>
-                                <input type="text" class="filter-input" value="Campus Universitario Las Palmas">
-                            </div>
-                            <div class="filter-group">
-                                <label class="filter-label">Nombre de la Unidad</label>
-                                <input type="text" class="filter-input" value="Unidad de Administración del Campus">
-                            </div>
-                            <div class="filter-group">
-                                <label class="filter-label">Zona Horaria</label>
-                                <select class="filter-select">
-                                    <option value="America/La_Paz" selected>America/La_Paz (BOT)</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Configuración de Sesiones -->
-                    <div>
-                        <h3 style="margin-bottom: 1rem; font-size: 1.125rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color);">
-                            Configuración de Sesiones
-                        </h3>
-                        <div style="display: grid; gap: 1rem;">
-                            <div class="filter-group">
-                                <label class="filter-label">Duración de Sesión (horas)</label>
-                                <input type="number" class="filter-input" value="12">
-                            </div>
-                            <div class="filter-group">
-                                <label class="filter-label">Máximo Intentos Fallidos</label>
-                                <input type="number" class="filter-input" value="5">
-                            </div>
-                            <div class="filter-group">
-                                <label class="filter-label">Tiempo de Bloqueo (segundos)</label>
-                                <input type="number" class="filter-input" value="30">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Configuración de Archivos -->
-                    <div>
-                        <h3 style="margin-bottom: 1rem; font-size: 1.125rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color);">
-                            Configuración de Archivos
-                        </h3>
-                        <div style="display: grid; gap: 1rem;">
-                            <div class="filter-group">
-                                <label class="filter-label">Tamaño Máximo de Archivo (MB)</label>
-                                <input type="number" class="filter-input" value="20">
-                            </div>
-                            <div class="filter-group">
-                                <label class="filter-label">Tipos de Archivos Permitidos</label>
-                                <input type="text" class="filter-input" value="jpg, jpeg, png, gif, pdf, docx, xlsx, mp4, zip">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Configuración de Notificaciones -->
-                    <div>
-                        <h3 style="margin-bottom: 1rem; font-size: 1.125rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color);">
-                            Configuración de Notificaciones
-                        </h3>
-                        <div style="display: grid; gap: 1rem;">
-                            <div class="filter-group">
-                                <label class="filter-label">Correo Remitente</label>
-                                <input type="email" class="filter-input" value="sistema@campus.edu.bo">
-                            </div>
-                            <div class="filter-group">
-                                <label class="filter-label">Servidor SMTP</label>
-                                <input type="text" class="filter-input" value="smtp.campus.edu.bo">
-                            </div>
-                            <div class="filter-group">
-                                <label class="filter-label">Puerto SMTP</label>
-                                <input type="number" class="filter-input" value="587">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Gestión de Roles -->
-                    <div>
-                        <h3 style="margin-bottom: 1rem; font-size: 1.125rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color);">
-                            Roles y Permisos
-                        </h3>
-                        <div class="table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Rol</th>
-                                        <th>Descripción</th>
-                                        <th>Nivel de Acceso</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Administrador</strong></td>
-                                        <td>Coordinación general, supervisión y auditoría del sistema</td>
-                                        <td>Nivel 5</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button class="btn-icon" title="Editar Permisos">✏️</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Personal Apoyo Aulas</strong></td>
-                                        <td>Personal de apertura, cierre y operatividad de aulas</td>
-                                        <td>Nivel 2</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button class="btn-icon" title="Editar Permisos">✏️</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Responsable Audiovisual</strong></td>
-                                        <td>Responsable de mantenimiento de equipos audiovisuales</td>
-                                        <td>Nivel 3</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button class="btn-icon" title="Editar Permisos">✏️</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Responsable Mantenimientos</strong></td>
-                                        <td>Responsable de mantenimientos de infraestructura</td>
-                                        <td>Nivel 4</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button class="btn-icon" title="Editar Permisos">✏️</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Other tabs content loaded by JavaScript -->
+        <div id="tab-usuarios" class="tab-content"></div>
+        <div id="tab-actividades" class="tab-content"></div>
+        <div id="tab-equipos" class="tab-content"></div>
+        <div id="tab-aulas" class="tab-content"></div>
+        <div id="tab-materiales" class="tab-content"></div>
+        <div id="tab-estadisticas" class="tab-content"></div>
+        <div id="tab-auditoria" class="tab-content"></div>
+        <div id="tab-configuracion" class="tab-content"></div>
     </main>
 
     <script>
-        // Toggle Sidebar
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
-            
-            if (window.innerWidth <= 1024) {
-                sidebar.classList.toggle('open');
-            } else {
-                sidebar.classList.toggle('collapsed');
-                mainContent.classList.toggle('expanded');
+        const DB_PATH = 'data3.json';
+        let DATABASE = null;
+        let currentUser = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadDatabase();
+            checkSession();
+            loadStats();
+            loadRecentActivities();
+            setupEventListeners();
+        });
+
+        async function loadDatabase() {
+            try {
+                const response = await fetch(DB_PATH);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                DATABASE = await response.json();
+                console.log('✅ Base de datos cargada correctamente');
+            } catch (error) {
+                console.error('❌ Error al cargar base de datos:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error al cargar el sistema',
+                    text: 'No se pudo cargar la base de datos. Verifica que el archivo data3.json esté en la misma carpeta.',
+                    confirmButtonColor: '#ef4444'
+                });
             }
         }
 
-        // Show Tab
+        function checkSession() {
+            const sessionData = sessionStorage.getItem('session_SAC');
+            if (!sessionData) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            currentUser = JSON.parse(sessionData);
+            
+            if (currentUser.rol !== 'administrador') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Acceso Denegado',
+                    text: 'Esta sección es solo para Administradores',
+                    confirmButtonColor: '#f59e0b'
+                }).then(() => {
+                    window.location.href = 'dashboard.html';
+                });
+                return;
+            }
+            
+            document.getElementById('userName').textContent = currentUser.nombre_completo;
+            document.getElementById('userEmail').textContent = currentUser.correo;
+            document.getElementById('userAvatar').textContent = currentUser.nombre_completo.charAt(0);
+        }
+
+        function setupEventListeners() {
+            // Navigation
+            document.querySelectorAll('.nav-item[data-section]').forEach(item => {
+                item.addEventListener('click', function() {
+                    const section = this.getAttribute('data-section');
+                    showTab(section);
+                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    closeSidebar();
+                });
+            });
+
+            // Logout buttons
+            document.getElementById('logoutBtn')?.addEventListener('click', logout);
+            document.getElementById('logoutSidebar')?.addEventListener('click', logout);
+
+            // Sidebar toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            
+            menuToggle?.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) {
+                    sidebar.classList.toggle('open');
+                    backdrop.classList.toggle('active');
+                }
+            });
+            
+            backdrop?.addEventListener('click', closeSidebar);
+            window.addEventListener('resize', handleResize);
+        }
+
+        function handleResize() {
+            if (window.innerWidth > 1024) {
+                document.getElementById('sidebar')?.classList.remove('open');
+                document.getElementById('sidebarBackdrop')?.classList.remove('active');
+            }
+        }
+
+        function closeSidebar() {
+            if (window.innerWidth <= 1024) {
+                document.getElementById('sidebar')?.classList.remove('open');
+                document.getElementById('sidebarBackdrop')?.classList.remove('active');
+            }
+        }
+
+        function loadStats() {
+            if (!DATABASE) return;
+
+            const totalUsuarios = DATABASE.usuarios?.length || 0;
+            const totalActividades = DATABASE.actividades?.length || 0;
+            const pendientes = DATABASE.actividades?.filter(a => a.estado === 'enviado').length || 0;
+            const completadas = DATABASE.actividades?.filter(a => a.estado === 'aprobado').length || 0;
+
+            document.getElementById('statsGrid').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value">${totalUsuarios}</div>
+                            <div class="stat-label">Total Usuarios</div>
+                        </div>
+                        <div class="stat-icon">👥</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value">${totalActividades}</div>
+                            <div class="stat-label">Total Actividades</div>
+                        </div>
+                        <div class="stat-icon">📋</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value">${pendientes}</div>
+                            <div class="stat-label">Pendientes</div>
+                        </div>
+                        <div class="stat-icon">🕐</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value">${completadas}</div>
+                            <div class="stat-label">Completadas</div>
+                        </div>
+                        <div class="stat-icon">✅</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadRecentActivities() {
+            if (!DATABASE) return;
+
+            const recentActivities = DATABASE.actividades?.slice(-5).reverse() || [];
+            
+            const html = recentActivities.length > 0 ? `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Actividad</th>
+                            <th>Usuario</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${recentActivities.map(act => {
+                            const usuario = DATABASE.usuarios.find(u => u.id === act.usuario_id);
+                            return `
+                                <tr>
+                                    <td>${act.titulo}</td>
+                                    <td>${usuario?.nombre_completo || 'N/A'}</td>
+                                    <td>${new Date(act.fecha_registro).toLocaleDateString()}</td>
+                                    <td><span class="status-badge status-${act.estado}">${act.estado}</span></td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>
+                </table>
+            ` : '<div class="empty-state"><div class="empty-state-icon">📋</div><p>No hay actividades registradas</p></div>';
+
+            document.getElementById('recentActivitiesTable').innerHTML = html;
+        }
+
         function showTab(tabName) {
             // Hide all tabs
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             
             // Show selected tab
             const selectedTab = document.getElementById('tab-' + tabName);
             if (selectedTab) {
                 selectedTab.classList.add('active');
-            }
-            
-            // Update nav items
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => item.classList.remove('active'));
-            
-            const activeNavItem = document.querySelector(`.nav-item[onclick="showTab('${tabName}')"]`);
-            if (activeNavItem) {
-                activeNavItem.classList.add('active');
-            }
-            
-            // Close sidebar on mobile
-            if (window.innerWidth <= 1024) {
-                document.getElementById('sidebar').classList.remove('open');
+                
+                // Load content based on tab
+                switch(tabName) {
+                    case 'usuarios':
+                        loadUsuariosTab();
+                        break;
+                    case 'actividades':
+                        loadActividadesTab();
+                        break;
+                    case 'equipos':
+                        loadEquiposTab();
+                        break;
+                    case 'aulas':
+                        loadAulasTab();
+                        break;
+                    case 'materiales':
+                        loadMaterialesTab();
+                        break;
+                    case 'estadisticas':
+                        loadEstadisticasTab();
+                        break;
+                    case 'auditoria':
+                        loadAuditoriaTab();
+                        break;
+                    case 'configuracion':
+                        loadConfiguracionTab();
+                        break;
+                }
             }
         }
 
-       async function logout() {
-       // 1. Confirmación (Opcional, pero recomendada)
-       if (!confirm('¿Está seguro que desea cerrar sesión?')) {
-        return; // Si cancela, no hace nada
-         }
+        // ========== USUARIOS TAB ==========
+        function loadUsuariosTab() {
+            const content = document.getElementById('tab-usuarios');
+            if (!DATABASE) return;
 
-           try {
-                       // 2. Avisar al servidor (Importante para invalidar sesiones en el backend)
-                      // Cambia '/api/logout' por tu ruta real de backend
-                await fetch('/api/logout', {
-                 method: 'POST',
-                   headers: {
-                'Content-Type': 'application/json',
-                // Si usas tokens, envíalo en el header para que el servidor sepa quién cierra sesión
-                'Authorization': 'Bearer ' + localStorage.getItem('token') 
-                    },
-                    credentials: 'include' // Importante si usas cookies de sesión
-                });
-                    } catch (error) {
-                     console.error('Error al notificar al servidor:', error);
-                            // Continuamos aunque falle el servidor, para no dejar al usuario atrapado
-                                }
+            const usuarios = DATABASE.usuarios || [];
 
-    // 3. Limpiar datos locales (Clave para que no recuerde al usuario)
-    localStorage.removeItem('token');       // Elimina el token de acceso
-    localStorage.removeItem('usuario');     // Elimina datos del usuario
-    localStorage.removeItem('refreshToken'); // Si usas refresh tokens
-    sessionStorage.clear();                 // Limpia cualquier dato de sesión temporal
+            content.innerHTML = `
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span class="card-title-icon">👥</span>
+                            Gestión de Usuarios
+                        </h2>
+                        <button class="btn-primary" onclick="showAddUserModal()">
+                            <i class="fas fa-plus"></i> Nuevo Usuario
+                        </button>
+                    </div>
 
-    // 4. Notificación visual
-    alert('Sesión cerrada correctamente');
+                    <div class="filters">
+                        <div class="filter-group">
+                            <label class="filter-label">Buscar</label>
+                            <input type="text" class="filter-input" id="searchUser" placeholder="Nombre, correo o cargo..." onkeyup="filterUsers()">
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Rol</label>
+                            <select class="filter-select" id="filterUserRole" onchange="filterUsers()">
+                                <option value="">Todos</option>
+                                <option value="administrador">Administrador</option>
+                                <option value="personal_apoyo_aulas">Personal Apoyo Aulas</option>
+                                <option value="responsable_audiovisual">Responsable Audiovisual</option>
+                                <option value="responsable_mantenimientos">Responsable Mantenimientos</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Estado</label>
+                            <select class="filter-select" id="filterUserStatus" onchange="filterUsers()">
+                                <option value="">Todos</option>
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
 
-    // 5. Redirección segura
-    // Usamos 'replace' en lugar de 'href' para que el botón "Atrás" no regrese a la página protegida
-    window.location.replace('index.html'); 
-}
+                    <div class="table-container">
+                        <table id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Correo</th>
+                                    <th>Cargo</th>
+                                    <th>Rol</th>
+                                    <th>Estado</th>
+                                    <th>Último Acceso</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                ${usuarios.map(user => `
+                                    <tr data-user-id="${user.id}">
+                                        <td><strong>${user.nombre_completo}</strong></td>
+                                        <td>${user.correo}</td>
+                                        <td>${user.cargo}</td>
+                                        <td>${getRoleName(user.rol)}</td>
+                                        <td><span class="status-badge status-${user.activo ? 'activo' : 'inactivo'}">${user.activo ? 'Activo' : 'Inactivo'}</span></td>
+                                        <td>${user.ultimo_acceso ? new Date(user.ultimo_acceso).toLocaleString() : '-'}</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn-icon" title="Editar" onclick="editUser('${user.id}')"><i class="fas fa-edit"></i></button>
+                                                <button class="btn-icon" title="Permisos" onclick="viewUserPermissions('${user.id}')"><i class="fas fa-lock"></i></button>
+                                                <button class="btn-icon danger" title="Eliminar" onclick="deleteUser('${user.id}')"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
 
-// function logout() {
-//       Swal.fire({
-//         title: '¿Cerrar sesión?',
-//         text: '¿Estás seguro de que deseas salir?',
-//         icon: 'question',
-//         showCancelButton: true,
-//         confirmButtonColor: '#ef4444',
-//         cancelButtonColor: '#64748b',
-//         confirmButtonText: 'Sí, cerrar',
-//         cancelButtonText: 'Cancelar'
-//       }).then((result) => {
-//         if (result.isConfirmed) {
-//           sessionStorage.removeItem('session_SAC');
-//           window.location.href = 'index.html';
-//         }
-//       });
-//     }
+        function getRoleName(rol) {
+            const roles = {
+                'administrador': 'Administrador',
+                'personal_apoyo_aulas': 'Personal Apoyo Aulas',
+                'responsable_audiovisual': 'Responsable Audiovisual',
+                'responsable_mantenimientos': 'Responsable Mantenimientos'
+            };
+            return roles[rol] || rol;
+        }
 
-        // Responsive menu
-        window.addEventListener('resize', function() {
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
+        function filterUsers() {
+            const searchTerm = document.getElementById('searchUser')?.value.toLowerCase() || '';
+            const roleFilter = document.getElementById('filterUserRole')?.value || '';
+            const statusFilter = document.getElementById('filterUserStatus')?.value || '';
+
+            const rows = document.querySelectorAll('#usersTableBody tr');
             
-            if (window.innerWidth > 1024) {
-                sidebar.classList.remove('open');
-                if (!sidebar.classList.contains('collapsed')) {
-                    mainContent.classList.remove('expanded');
+            rows.forEach(row => {
+                const userId = row.getAttribute('data-user-id');
+                const user = DATABASE.usuarios.find(u => u.id === userId);
+                
+                if (!user) return;
+
+                const matchesSearch = searchTerm === '' || 
+                    user.nombre_completo.toLowerCase().includes(searchTerm) ||
+                    user.correo.toLowerCase().includes(searchTerm) ||
+                    user.cargo.toLowerCase().includes(searchTerm);
+
+                const matchesRole = roleFilter === '' || user.rol === roleFilter;
+                const matchesStatus = statusFilter === '' || 
+                    (statusFilter === 'activo' && user.activo) ||
+                    (statusFilter === 'inactivo' && !user.activo);
+
+                row.style.display = matchesSearch && matchesRole && matchesStatus ? '' : 'none';
+            });
+        }
+
+        function showAddUserModal() {
+            const roles = DATABASE.roles || [];
+            
+            Swal.fire({
+                title: 'Crear Nuevo Usuario',
+                html: `
+                    <div style="text-align: left;">
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Nombre Completo *</label>
+                            <input type="text" id="newUserName" class="swal2-input" style="width: 100%; margin: 0;" placeholder="Nombre completo">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Nombre de Usuario *</label>
+                            <input type="text" id="newUserUsername" class="swal2-input" style="width: 100%; margin: 0;" placeholder="usuario">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Correo Electrónico *</label>
+                            <input type="email" id="newUserEmail" class="swal2-input" style="width: 100%; margin: 0;" placeholder="correo@ejemplo.com">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Contraseña *</label>
+                            <input type="password" id="newUserPassword" class="swal2-input" style="width: 100%; margin: 0;" placeholder="Contraseña">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Cargo *</label>
+                            <input type="text" id="newUserCargo" class="swal2-input" style="width: 100%; margin: 0;" placeholder="Cargo del usuario">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Rol *</label>
+                            <select id="newUserRole" class="swal2-input" style="width: 100%; margin: 0;">
+                                <option value="">Seleccione un rol</option>
+                                ${roles.map(r => `<option value="${r.nombre}">${r.descripcion}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Teléfono</label>
+                            <input type="text" id="newUserPhone" class="swal2-input" style="width: 100%; margin: 0;" placeholder="591-12345678">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Área de Responsabilidad</label>
+                            <input type="text" id="newUserArea" class="swal2-input" style="width: 100%; margin: 0;" placeholder="Área de responsabilidad">
+                        </div>
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Crear Usuario',
+                cancelButtonText: 'Cancelar',
+                width: '600px',
+                preConfirm: () => {
+                    const name = document.getElementById('newUserName').value;
+                    const username = document.getElementById('newUserUsername').value;
+                    const email = document.getElementById('newUserEmail').value;
+                    const password = document.getElementById('newUserPassword').value;
+                    const cargo = document.getElementById('newUserCargo').value;
+                    const rol = document.getElementById('newUserRole').value;
+                    const phone = document.getElementById('newUserPhone').value;
+                    const area = document.getElementById('newUserArea').value;
+
+                    if (!name || !username || !email || !password || !cargo || !rol) {
+                        Swal.showValidationMessage('Por favor complete todos los campos obligatorios');
+                        return false;
+                    }
+
+                    return { name, username, email, password, cargo, rol, phone, area };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    createUser(result.value);
+                }
+            });
+        }
+
+        function createUser(userData) {
+            const newUserId = `USR-${String(DATABASE.usuarios.length + 1).padStart(3, '0')}`;
+            const role = DATABASE.roles.find(r => r.nombre === userData.rol);
+            
+            const newUser = {
+                id: newUserId,
+                nombre_completo: userData.name,
+                nombre_usuario: userData.username,
+                correo: userData.email,
+                password: userData.password,
+                rol: userData.rol,
+                cargo: userData.cargo,
+                area_responsabilidad: userData.area || 'N/A',
+                especialidad: role?.nombre || 'general',
+                telefono: userData.phone || 'N/A',
+                foto_perfil: null,
+                activo: true,
+                forzar_cambio_password: true,
+                intentos_fallidos: 0,
+                bloqueado: false,
+                permisos: role?.permisos || [],
+                fecha_registro: new Date().toISOString(),
+                ultimo_acceso: null,
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+            };
+
+            DATABASE.usuarios.push(newUser);
+            
+            Swal.fire({
+                icon: 'success',
+                title: '¡Usuario Creado!',
+                text: `El usuario ${userData.name} ha sido creado exitosamente`,
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                loadUsuariosTab();
+                loadStats();
+            });
+        }
+
+        function editUser(userId) {
+            const user = DATABASE.usuarios.find(u => u.id === userId);
+            if (!user) return;
+
+            const roles = DATABASE.roles || [];
+
+            Swal.fire({
+                title: 'Editar Usuario',
+                html: `
+                    <div style="text-align: left;">
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Nombre Completo *</label>
+                            <input type="text" id="editUserName" class="swal2-input" style="width: 100%; margin: 0;" value="${user.nombre_completo}">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Correo Electrónico *</label>
+                            <input type="email" id="editUserEmail" class="swal2-input" style="width: 100%; margin: 0;" value="${user.correo}">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Cargo *</label>
+                            <input type="text" id="editUserCargo" class="swal2-input" style="width: 100%; margin: 0;" value="${user.cargo}">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Rol *</label>
+                            <select id="editUserRole" class="swal2-input" style="width: 100%; margin: 0;">
+                                ${roles.map(r => `<option value="${r.nombre}" ${r.nombre === user.rol ? 'selected' : ''}>${r.descripcion}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Teléfono</label>
+                            <input type="text" id="editUserPhone" class="swal2-input" style="width: 100%; margin: 0;" value="${user.telefono}">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox" id="editUserActive" ${user.activo ? 'checked' : ''}>
+                                <span style="color: var(--text-primary); font-weight: 600;">Usuario Activo</span>
+                            </label>
+                        </div>
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Guardar Cambios',
+                cancelButtonText: 'Cancelar',
+                width: '600px',
+                preConfirm: () => {
+                    return {
+                        name: document.getElementById('editUserName').value,
+                        email: document.getElementById('editUserEmail').value,
+                        cargo: document.getElementById('editUserCargo').value,
+                        rol: document.getElementById('editUserRole').value,
+                        phone: document.getElementById('editUserPhone').value,
+                        active: document.getElementById('editUserActive').checked
+                    };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    updateUser(userId, result.value);
+                }
+            });
+        }
+
+        function updateUser(userId, userData) {
+            const userIndex = DATABASE.usuarios.findIndex(u => u.id === userId);
+            if (userIndex === -1) return;
+
+            DATABASE.usuarios[userIndex] = {
+                ...DATABASE.usuarios[userIndex],
+                nombre_completo: userData.name,
+                correo: userData.email,
+                cargo: userData.cargo,
+                rol: userData.rol,
+                telefono: userData.phone,
+                activo: userData.active,
+                updated_at: new Date().toISOString()
+            };
+
+            Swal.fire({
+                icon: 'success',
+                title: '¡Usuario Actualizado!',
+                text: 'Los cambios han sido guardados exitosamente',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                loadUsuariosTab();
+            });
+        }
+
+        function viewUserPermissions(userId) {
+            const user = DATABASE.usuarios.find(u => u.id === userId);
+            if (!user) return;
+
+            const permisos = user.permisos || [];
+
+            Swal.fire({
+                title: `Permisos de ${user.nombre_completo}`,
+                html: `
+                    <div style="text-align: left; color: var(--text-primary);">
+                        <p style="margin-bottom: 15px;"><strong>Rol:</strong> ${getRoleName(user.rol)}</p>
+                        <p style="margin-bottom: 10px;"><strong>Permisos asignados:</strong></p>
+                        <ul style="list-style: none; padding: 0;">
+                            ${permisos.length > 0 ? permisos.map(p => `
+                                <li style="padding: 8px; background: rgba(59, 130, 246, 0.1); margin-bottom: 5px; border-radius: 6px;">
+                                    <i class="fas fa-check" style="color: var(--accent-green);"></i> ${formatPermission(p)}
+                                </li>
+                            `).join('') : '<li style="color: var(--text-secondary);">No hay permisos asignados</li>'}
+                        </ul>
+                    </div>
+                `,
+                width: '600px',
+                confirmButtonText: 'Cerrar'
+            });
+        }
+
+        function formatPermission(permission) {
+            const permissions = {
+                'aprobar_actividades': 'Aprobar Actividades',
+                'generar_reportes': 'Generar Reportes',
+                'gestionar_usuarios': 'Gestionar Usuarios',
+                'ver_auditoria': 'Ver Auditoría',
+                'configurar_sistema': 'Configurar Sistema',
+                'registrar_actividades': 'Registrar Actividades',
+                'subir_evidencias': 'Subir Evidencias',
+                'ver_reportes_propios': 'Ver Reportes Propios',
+                'gestionar_equipos': 'Gestionar Equipos',
+                'actualizar_inventario': 'Actualizar Inventario',
+                'solicitar_materiales': 'Solicitar Materiales',
+                'planificar_mantenimientos': 'Planificar Mantenimientos'
+            };
+            return permissions[permission] || permission;
+        }
+
+        function deleteUser(userId) {
+            const user = DATABASE.usuarios.find(u => u.id === userId);
+            if (!user) return;
+
+            Swal.fire({
+                title: '¿Eliminar Usuario?',
+                html: `¿Estás seguro de eliminar a <strong>${user.nombre_completo}</strong>?<br><br>Esta acción no se puede deshacer.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#64748b',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const index = DATABASE.usuarios.findIndex(u => u.id === userId);
+                    DATABASE.usuarios.splice(index, 1);
+                    
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Usuario Eliminado!',
+                        text: 'El usuario ha sido eliminado del sistema',
+                        confirmButtonText: 'Aceptar'
+                    }).then(() => {
+                        loadUsuariosTab();
+                        loadStats();
+                    });
+                }
+            });
+        }
+
+        // ========== ACTIVIDADES TAB ==========
+        function loadActividadesTab() {
+            const content = document.getElementById('tab-actividades');
+            if (!DATABASE) return;
+
+            const actividades = DATABASE.actividades || [];
+
+            content.innerHTML = `
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span class="card-title-icon">📋</span>
+                            Gestión de Actividades
+                        </h2>
+                        <button class="btn-primary" onclick="showAddActivityModal()">
+                            <i class="fas fa-plus"></i> Nueva Actividad
+                        </button>
+                    </div>
+
+                    <div class="filters">
+                        <div class="filter-group">
+                            <label class="filter-label">Buscar</label>
+                            <input type="text" class="filter-input" id="searchActivity" placeholder="Título o descripción..." onkeyup="filterActivities()">
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Categoría</label>
+                            <select class="filter-select" id="filterActivityCategory" onchange="filterActivities()">
+                                <option value="">Todas</option>
+                                ${(DATABASE.categorias_mantenimiento || []).map(c => `<option value="${c.id}">${c.nombre}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Estado</label>
+                            <select class="filter-select" id="filterActivityStatus" onchange="filterActivities()">
+                                <option value="">Todos</option>
+                                <option value="aprobado">Aprobado</option>
+                                <option value="enviado">Enviado</option>
+                                <option value="observado">Observado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Categoría</th>
+                                    <th>Usuario</th>
+                                    <th>Lugar</th>
+                                    <th>Duración</th>
+                                    <th>Estado</th>
+                                    <th>Fecha</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activitiesTableBody">
+                                ${actividades.map(act => {
+                                    const categoria = DATABASE.categorias_mantenimiento.find(c => c.id === act.categoria_id);
+                                    const usuario = DATABASE.usuarios.find(u => u.id === act.usuario_id);
+                                    return `
+                                        <tr data-activity-id="${act.id}">
+                                            <td><strong>${act.titulo}</strong></td>
+                                            <td>${categoria?.nombre || 'N/A'}</td>
+                                            <td>${usuario?.nombre_completo || 'N/A'}</td>
+                                            <td>${act.lugar}</td>
+                                            <td>${act.duracion_horas}h</td>
+                                            <td><span class="status-badge status-${act.estado}">${act.estado}</span></td>
+                                            <td>${new Date(act.fecha_registro).toLocaleDateString()}</td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button class="btn-icon" title="Ver Detalles" onclick="viewActivity('${act.id}')"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn-icon" title="Editar" onclick="editActivity('${act.id}')"><i class="fas fa-edit"></i></button>
+                                                    ${act.estado === 'enviado' ? `<button class="btn-icon success" title="Aprobar" onclick="approveActivity('${act.id}')"><i class="fas fa-check"></i></button>` : ''}
+                                                    <button class="btn-icon danger" title="Eliminar" onclick="deleteActivity('${act.id}')"><i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function filterActivities() {
+            const searchTerm = document.getElementById('searchActivity')?.value.toLowerCase() || '';
+            const categoryFilter = document.getElementById('filterActivityCategory')?.value || '';
+            const statusFilter = document.getElementById('filterActivityStatus')?.value || '';
+
+            const rows = document.querySelectorAll('#activitiesTableBody tr');
+            
+            rows.forEach(row => {
+                const activityId = row.getAttribute('data-activity-id');
+                const activity = DATABASE.actividades.find(a => a.id === activityId);
+                
+                if (!activity) return;
+
+                const matchesSearch = searchTerm === '' || 
+                    activity.titulo.toLowerCase().includes(searchTerm) ||
+                    activity.descripcion.toLowerCase().includes(searchTerm);
+
+                const matchesCategory = categoryFilter === '' || activity.categoria_id === categoryFilter;
+                const matchesStatus = statusFilter === '' || activity.estado === statusFilter;
+
+                row.style.display = matchesSearch && matchesCategory && matchesStatus ? '' : 'none';
+            });
+        }
+
+        function showAddActivityModal() {
+            const usuarios = DATABASE.usuarios.filter(u => u.activo) || [];
+            const categorias = DATABASE.categorias_mantenimiento || [];
+            const tiposMantenimiento = DATABASE.tipos_mantenimiento || [];
+
+            Swal.fire({
+                title: 'Registrar Nueva Actividad',
+                html: `
+                    <div style="text-align: left; max-height: 500px; overflow-y: auto;">
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Título *</label>
+                            <input type="text" id="newActivityTitle" class="swal2-input" style="width: 100%; margin: 0;" placeholder="Título de la actividad">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Descripción *</label>
+                            <textarea id="newActivityDescription" class="swal2-textarea" style="width: 100%; margin: 0; min-height: 100px;" placeholder="Descripción detallada"></textarea>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Asignar a Usuario *</label>
+                            <select id="newActivityUser" class="swal2-input" style="width: 100%; margin: 0;">
+                                <option value="">Seleccione un usuario</option>
+                                ${usuarios.map(u => `<option value="${u.id}">${u.nombre_completo} - ${getRoleName(u.rol)}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Categoría *</label>
+                            <select id="newActivityCategory" class="swal2-input" style="width: 100%; margin: 0;">
+                                <option value="">Seleccione una categoría</option>
+                                ${categorias.map(c => `<option value="${c.id}">${c.nombre}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Tipo de Mantenimiento *</label>
+                            <select id="newActivityType" class="swal2-input" style="width: 100%; margin: 0;">
+                                <option value="">Seleccione un tipo</option>
+                                ${tiposMantenimiento.map(t => `<option value="${t.id}">${t.nombre}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Lugar *</label>
+                            <input type="text" id="newActivityPlace" class="swal2-input" style="width: 100%; margin: 0;" placeholder="Ubicación de la actividad">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Duración (horas)</label>
+                            <input type="number" id="newActivityDuration" class="swal2-input" style="width: 100%; margin: 0;" placeholder="2" min="0" step="0.5">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Prioridad</label>
+                            <select id="newActivityPriority" class="swal2-input" style="width: 100%; margin: 0;">
+                                <option value="baja">Baja</option>
+                                <option value="media" selected>Media</option>
+                                <option value="alta">Alta</option>
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox" id="newActivityNotify">
+                                <span style="color: var(--text-primary); font-weight: 600;">Notificar al usuario asignado</span>
+                            </label>
+                        </div>
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Crear Actividad',
+                cancelButtonText: 'Cancelar',
+                width: '700px',
+                preConfirm: () => {
+                    const title = document.getElementById('newActivityTitle').value;
+                    const description = document.getElementById('newActivityDescription').value;
+                    const userId = document.getElementById('newActivityUser').value;
+                    const categoryId = document.getElementById('newActivityCategory').value;
+                    const typeId = document.getElementById('newActivityType').value;
+                    const place = document.getElementById('newActivityPlace').value;
+                    const duration = document.getElementById('newActivityDuration').value || 2;
+                    const priority = document.getElementById('newActivityPriority').value;
+                    const notify = document.getElementById('newActivityNotify').checked;
+
+                    if (!title || !description || !userId || !categoryId || !typeId || !place) {
+                        Swal.showValidationMessage('Por favor complete todos los campos obligatorios');
+                        return false;
+                    }
+
+                    return { title, description, userId, categoryId, typeId, place, duration, priority, notify };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    createActivity(result.value);
+                }
+            });
+        }
+
+        function createActivity(activityData) {
+            const newActivityId = `ACT-${String(DATABASE.actividades.length + 1).padStart(3, '0')}`;
+            
+            const newActivity = {
+                id: newActivityId,
+                titulo: activityData.title,
+                descripcion: activityData.description,
+                tarea_id: null,
+                categoria_id: activityData.categoryId,
+                tipo_mantenimiento_id: activityData.typeId,
+                usuario_id: activityData.userId,
+                duracion_horas: parseFloat(activityData.duration),
+                lugar: activityData.place,
+                estado: 'enviado',
+                prioridad: activityData.priority,
+                materiales_usados: [],
+                observacion_empleado: null,
+                observacion_supervisor: null,
+                supervisor_id: currentUser.id,
+                fecha_registro: new Date().toISOString(),
+                fecha_revision: null,
+                evidencias: [],
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+            };
+
+            DATABASE.actividades.push(newActivity);
+            
+            let successMessage = `La actividad "${activityData.title}" ha sido creada y asignada exitosamente`;
+            
+            if (activityData.notify) {
+                const usuario = DATABASE.usuarios.find(u => u.id === activityData.userId);
+                if (usuario) {
+                    successMessage += `<br><br><i class="fas fa-envelope"></i> Se enviará una notificación a ${usuario.nombre_completo}`;
                 }
             }
-        });
-
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener('click', function(event) {
-            const sidebar = document.getElementById('sidebar');
-            const menuToggle = document.getElementById('menuToggle');
             
-            if (window.innerWidth <= 1024 && 
-                sidebar.classList.contains('open') && 
-                !sidebar.contains(event.target) && 
-                !menuToggle.contains(event.target)) {
-                sidebar.classList.remove('open');
-            }
-        });
+            Swal.fire({
+                icon: 'success',
+                title: '¡Actividad Creada!',
+                html: successMessage,
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                loadActividadesTab();
+                loadStats();
+                loadRecentActivities();
+            });
+        }
+
+        function viewActivity(activityId) {
+            const activity = DATABASE.actividades.find(a => a.id === activityId);
+            if (!activity) return;
+
+            const categoria = DATABASE.categorias_mantenimiento.find(c => c.id === activity.categoria_id);
+            const tipo = DATABASE.tipos_mantenimiento.find(t => t.id === activity.tipo_mantenimiento_id);
+            const usuario = DATABASE.usuarios.find(u => u.id === activity.usuario_id);
+
+            Swal.fire({
+                title: activity.titulo,
+                html: `
+                    <div style="text-align: left; color: var(--text-primary);">
+                        <div style="background: rgba(59, 130, 246, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                            <p style="margin-bottom: 10px;"><strong>Categoría:</strong> ${categoria?.nombre || 'N/A'}</p>
+                            <p style="margin-bottom: 10px;"><strong>Tipo:</strong> ${tipo?.nombre || 'N/A'}</p>
+                            <p style="margin-bottom: 10px;"><strong>Usuario Asignado:</strong> ${usuario?.nombre_completo || 'N/A'}</p>
+                            <p style="margin-bottom: 10px;"><strong>Lugar:</strong> ${activity.lugar}</p>
+                            <p style="margin-bottom: 10px;"><strong>Duración:</strong> ${activity.duracion_horas}h</p>
+                            <p style="margin-bottom: 0;"><strong>Prioridad:</strong> <span style="color: ${activity.prioridad === 'alta' ? '#ef4444' : activity.prioridad === 'media' ? '#f59e0b' : '#10b981'}">${activity.prioridad.toUpperCase()}</span></p>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <p style="margin-bottom: 5px;"><strong>Descripción:</strong></p>
+                            <p style="color: var(--text-secondary);">${activity.descripcion}</p>
+                        </div>
+                        ${activity.observacion_empleado ? `
+                            <div style="margin-bottom: 15px;">
+                                <p style="margin-bottom: 5px;"><strong>Observaciones del Empleado:</strong></p>
+                                <p style="color: var(--text-secondary);">${activity.observacion_empleado}</p>
+                            </div>
+                        ` : ''}
+                        ${activity.observacion_supervisor ? `
+                            <div style="margin-bottom: 15px;">
+                                <p style="margin-bottom: 5px;"><strong>Observaciones del Supervisor:</strong></p>
+                                <p style="color: var(--text-secondary);">${activity.observacion_supervisor}</p>
+                            </div>
+                        ` : ''}
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color);">
+                            <p style="margin-bottom: 5px;"><strong>Estado:</strong> <span class="status-badge status-${activity.estado}">${activity.estado}</span></p>
+                            <p style="margin-bottom: 5px; color: var(--text-secondary);">Registrado: ${new Date(activity.fecha_registro).toLocaleString()}</p>
+                            ${activity.fecha_revision ? `<p style="color: var(--text-secondary);">Revisado: ${new Date(activity.fecha_revision).toLocaleString()}</p>` : ''}
+                        </div>
+                    </div>
+                `,
+                width: '700px',
+                confirmButtonText: 'Cerrar'
+            });
+        }
+
+        function editActivity(activityId) {
+            const activity = DATABASE.actividades.find(a => a.id === activityId);
+            if (!activity) return;
+
+            const usuarios = DATABASE.usuarios.filter(u => u.activo) || [];
+            const categorias = DATABASE.categorias_mantenimiento || [];
+
+            Swal.fire({
+                title: 'Editar Actividad',
+                html: `
+                    <div style="text-align: left;">
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Título *</label>
+                            <input type="text" id="editActivityTitle" class="swal2-input" style="width: 100%; margin: 0;" value="${activity.titulo}">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Descripción *</label>
+                            <textarea id="editActivityDescription" class="swal2-textarea" style="width: 100%; margin: 0; min-height: 100px;">${activity.descripcion}</textarea>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Lugar *</label>
+                            <input type="text" id="editActivityPlace" class="swal2-input" style="width: 100%; margin: 0;" value="${activity.lugar}">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Duración (horas)</label>
+                            <input type="number" id="editActivityDuration" class="swal2-input" style="width: 100%; margin: 0;" value="${activity.duracion_horas}" min="0" step="0.5">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-primary); font-weight: 600;">Estado</label>
+                            <select id="editActivityStatus" class="swal2-input" style="width: 100%; margin: 0;">
+                                <option value="enviado" ${activity.estado === 'enviado' ? 'selected' : ''}>Enviado</option>
+                                <option value="aprobado" ${activity.estado === 'aprobado' ? 'selected' : ''}>Aprobado</option>
+                                <option value="observado" ${activity.estado === 'observado' ? 'selected' : ''}>Observado</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Guardar Cambios',
+                cancelButtonText: 'Cancelar',
+                width: '600px',
+                preConfirm: () => {
+                    return {
+                        title: document.getElementById('editActivityTitle').value,
+                        description: document.getElementById('editActivityDescription').value,
+                        place: document.getElementById('editActivityPlace').value,
+                        duration: document.getElementById('editActivityDuration').value,
+                        status: document.getElementById('editActivityStatus').value
+                    };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    updateActivity(activityId, result.value);
+                }
+            });
+        }
+
+        function updateActivity(activityId, activityData) {
+            const activityIndex = DATABASE.actividades.findIndex(a => a.id === activityId);
+            if (activityIndex === -1) return;
+
+            DATABASE.actividades[activityIndex] = {
+                ...DATABASE.actividades[activityIndex],
+                titulo: activityData.title,
+                descripcion: activityData.description,
+                lugar: activityData.place,
+                duracion_horas: parseFloat(activityData.duration),
+                estado: activityData.status,
+                updated_at: new Date().toISOString()
+            };
+
+            Swal.fire({
+                icon: 'success',
+                title: '¡Actividad Actualizada!',
+                text: 'Los cambios han sido guardados exitosamente',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                loadActividadesTab();
+                loadStats();
+                loadRecentActivities();
+            });
+        }
+
+        function approveActivity(activityId) {
+            const activity = DATABASE.actividades.find(a => a.id === activityId);
+            if (!activity) return;
+
+            Swal.fire({
+                title: '¿Aprobar Actividad?',
+                html: `¿Deseas aprobar la actividad "<strong>${activity.titulo}</strong>"?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#10b981',
+                cancelButtonColor: '#64748b',
+                confirmButtonText: 'Sí, aprobar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const activityIndex = DATABASE.actividades.findIndex(a => a.id === activityId);
+                    DATABASE.actividades[activityIndex].estado = 'aprobado';
+                    DATABASE.actividades[activityIndex].fecha_revision = new Date().toISOString();
+                    DATABASE.actividades[activityIndex].supervisor_id = currentUser.id;
+                    
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Actividad Aprobada!',
+                        text: 'La actividad ha sido aprobada exitosamente',
+                        confirmButtonText: 'Aceptar'
+                    }).then(() => {
+                        loadActividadesTab();
+                        loadStats();
+                        loadRecentActivities();
+                    });
+                }
+            });
+        }
+
+        function deleteActivity(activityId) {
+            const activity = DATABASE.actividades.find(a => a.id === activityId);
+            if (!activity) return;
+
+            Swal.fire({
+                title: '¿Eliminar Actividad?',
+                html: `¿Estás seguro de eliminar la actividad "<strong>${activity.titulo}</strong>"?<br><br>Esta acción no se puede deshacer.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#64748b',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const index = DATABASE.actividades.findIndex(a => a.id === activityId);
+                    DATABASE.actividades.splice(index, 1);
+                    
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Actividad Eliminada!',
+                        text: 'La actividad ha sido eliminada del sistema',
+                        confirmButtonText: 'Aceptar'
+                    }).then(() => {
+                        loadActividadesTab();
+                        loadStats();
+                        loadRecentActivities();
+                    });
+                }
+            });
+        }
+
+        // ========== EQUIPOS TAB ==========
+        function loadEquiposTab() {
+            const content = document.getElementById('tab-equipos');
+            if (!DATABASE) return;
+
+            const equipos = DATABASE.equipos || [];
+
+            content.innerHTML = `
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span class="card-title-icon">💻</span>
+                            Gestión de Equipos
+                        </h2>
+                        <button class="btn-primary" onclick="showAddEquipmentModal()">
+                            <i class="fas fa-plus"></i> Nuevo Equipo
+                        </button>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Tipo</th>
+                                    <th>Marca/Modelo</th>
+                                    <th>Aula</th>
+                                    <th>Estado</th>
+                                    <th>Última Revisión</th>
+                                    <th>Próximo Mant.</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${equipos.map(eq => {
+                                    const aula = DATABASE.aulas?.find(a => a.id === eq.aula_id);
+                                    return `
+                                        <tr>
+                                            <td><strong>${eq.codigo}</strong></td>
+                                            <td>${eq.tipo_equipo}</td>
+                                            <td>${eq.marca} ${eq.modelo}</td>
+                                            <td>${aula?.codigo || 'N/A'}</td>
+                                            <td><span class="status-badge status-${eq.estado === 'operativo' ? 'activo' : eq.estado === 'advertencia' ? 'enviado' : 'observado'}">${eq.estado}</span></td>
+                                            <td>${eq.ultima_revision ? new Date(eq.ultima_revision).toLocaleDateString() : 'N/A'}</td>
+                                            <td>${eq.proximo_mantenimiento ? new Date(eq.proximo_mantenimiento).toLocaleDateString() : 'N/A'}</td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button class="btn-icon" title="Ver Detalles" onclick="viewEquipment('${eq.id}')"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn-icon" title="Editar" onclick="editEquipment('${eq.id}')"><i class="fas fa-edit"></i></button>
+                                                    <button class="btn-icon danger" title="Eliminar" onclick="deleteEquipment('${eq.id}')"><i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showAddEquipmentModal() {
+            // Implementation for adding equipment
+            Swal.fire({
+                icon: 'info',
+                title: 'Función en Desarrollo',
+                text: 'La función de agregar equipos estará disponible próximamente',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+
+        function viewEquipment(equipmentId) {
+            // Implementation for viewing equipment details
+            const equipment = DATABASE.equipos?.find(e => e.id === equipmentId);
+            if (!equipment) return;
+
+            Swal.fire({
+                title: `${equipment.marca} ${equipment.modelo}`,
+                html: `
+                    <div style="text-align: left; color: var(--text-primary);">
+                        <p><strong>Código:</strong> ${equipment.codigo}</p>
+                        <p><strong>Tipo:</strong> ${equipment.tipo_equipo}</p>
+                        <p><strong>Número de Serie:</strong> ${equipment.numero_serie}</p>
+                        <p><strong>Estado:</strong> <span class="status-badge status-${equipment.estado === 'operativo' ? 'activo' : 'observado'}">${equipment.estado}</span></p>
+                    </div>
+                `,
+                confirmButtonText: 'Cerrar'
+            });
+        }
+
+        function editEquipment(equipmentId) {
+            // Implementation for editing equipment
+            Swal.fire({
+                icon: 'info',
+                title: 'Función en Desarrollo',
+                text: 'La función de editar equipos estará disponible próximamente',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+
+        function deleteEquipment(equipmentId) {
+            // Implementation for deleting equipment
+            Swal.fire({
+                title: '¿Eliminar Equipo?',
+                text: '¿Estás seguro de eliminar este equipo?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#64748b',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            });
+        }
+
+        // ========== AULAS TAB ==========
+        function loadAulasTab() {
+            const content = document.getElementById('tab-aulas');
+            if (!DATABASE) return;
+
+            const aulas = DATABASE.aulas || [];
+
+            content.innerHTML = `
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span class="card-title-icon">🏫</span>
+                            Gestión de Aulas
+                        </h2>
+                        <button class="btn-primary" onclick="showAddRoomModal()">
+                            <i class="fas fa-plus"></i> Nueva Aula
+                        </button>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nombre</th>
+                                    <th>Bloque</th>
+                                    <th>Piso</th>
+                                    <th>Capacidad</th>
+                                    <th>Tipo</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${aulas.map(aula => `
+                                    <tr>
+                                        <td><strong>${aula.codigo}</strong></td>
+                                        <td>${aula.nombre}</td>
+                                        <td>${aula.bloque}</td>
+                                        <td>${aula.piso}</td>
+                                        <td>${aula.capacidad}</td>
+                                        <td>${aula.tipo}</td>
+                                        <td><span class="status-badge status-${aula.estado === 'operativa' ? 'activo' : 'observado'}">${aula.estado}</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn-icon" title="Ver Detalles" onclick="viewRoom('${aula.id}')"><i class="fas fa-eye"></i></button>
+                                                <button class="btn-icon" title="Editar" onclick="editRoom('${aula.id}')"><i class="fas fa-edit"></i></button>
+                                                <button class="btn-icon" title="Ver Equipos" onclick="viewRoomEquipment('${aula.id}')"><i class="fas fa-desktop"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showAddRoomModal() {
+            Swal.fire({
+                icon: 'info',
+                title: 'Función en Desarrollo',
+                text: 'La función de agregar aulas estará disponible próximamente',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+
+        function viewRoom(roomId) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Ver Detalles del Aula',
+                text: 'Esta función estará disponible próximamente',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+
+        function editRoom(roomId) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Editar Aula',
+                text: 'Esta función estará disponible próximamente',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+
+        function viewRoomEquipment(roomId) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Ver Equipos del Aula',
+                text: 'Esta función estará disponible próximamente',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+
+        // ========== MATERIALES TAB ==========
+        function loadMaterialesTab() {
+            const content = document.getElementById('tab-materiales');
+            if (!DATABASE) return;
+
+            const materiales = DATABASE.materiales_inventario || [];
+
+            content.innerHTML = `
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span class="card-title-icon">📦</span>
+                            Inventario de Materiales
+                        </h2>
+                        <button class="btn-primary" onclick="showAddMaterialModal()">
+                            <i class="fas fa-plus"></i> Nuevo Material
+                        </button>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Material</th>
+                                    <th>Categoría</th>
+                                    <th>Stock Actual</th>
+                                    <th>Stock Mínimo</th>
+                                    <th>Unidad</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${materiales.map(mat => `
+                                    <tr>
+                                        <td><strong>${mat.nombre}</strong></td>
+                                        <td>${mat.categoria}</td>
+                                        <td>${mat.stock_actual}</td>
+                                        <td>${mat.stock_minimo}</td>
+                                        <td>${mat.unidad_medida}</td>
+                                        <td>Bs. ${mat.precio_unitario.toFixed(2)}</td>
+                                        <td><span class="status-badge status-${mat.estado === 'disponible' ? 'activo' : 'observado'}">${mat.estado}</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn-icon" title="Ver Detalles" onclick="viewMaterial('${mat.id}')"><i class="fas fa-eye"></i></button>
+                                                <button class="btn-icon" title="Editar" onclick="editMaterial('${mat.id}')"><i class="fas fa-edit"></i></button>
+                                                <button class="btn-icon" title="Movimientos" onclick="viewMaterialMovements('${mat.id}')"><i class="fas fa-history"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showAddMaterialModal() {
+            Swal.fire({
+                icon: 'info',
+                title: 'Función en Desarrollo',
+                text: 'La función de agregar materiales estará disponible próximamente',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+
+        function viewMaterial(materialId) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Ver Material',
+                text: 'Esta función estará disponible próximamente',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+
+        function editMaterial(materialId) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Editar Material',
+                text: 'Esta función estará disponible próximamente',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+
+        function viewMaterialMovements(materialId) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Ver Movimientos',
+                text: 'Esta función estará disponible próximamente',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+
+        // ========== ESTADÍSTICAS TAB ==========
+        function loadEstadisticasTab() {
+            const content = document.getElementById('tab-estadisticas');
+            content.innerHTML = `
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span class="card-title-icon">📈</span>
+                            Estadísticas y Reportes
+                        </h2>
+                        <button class="btn-primary">
+                            <i class="fas fa-file-pdf"></i> Generar Reporte
+                        </button>
+                    </div>
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📊</div>
+                        <p>Las estadísticas y reportes estarán disponibles próximamente</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ========== AUDITORÍA TAB ==========
+        function loadAuditoriaTab() {
+            const content = document.getElementById('tab-auditoria');
+            content.innerHTML = `
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span class="card-title-icon">🔍</span>
+                            Auditoría del Sistema
+                        </h2>
+                        <button class="btn-primary">
+                            <i class="fas fa-download"></i> Exportar Registros
+                        </button>
+                    </div>
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🔍</div>
+                        <p>Los registros de auditoría estarán disponibles próximamente</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ========== CONFIGURACIÓN TAB ==========
+        function loadConfiguracionTab() {
+            const content = document.getElementById('tab-configuracion');
+            content.innerHTML = `
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span class="card-title-icon">⚙️</span>
+                            Configuración del Sistema
+                        </h2>
+                        <button class="btn-primary">
+                            <i class="fas fa-save"></i> Guardar Cambios
+                        </button>
+                    </div>
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚙️</div>
+                        <p>La configuración del sistema estará disponible próximamente</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ========== LOGOUT ==========
+        function logout() {
+            Swal.fire({
+                title: '¿Cerrar sesión?',
+                text: '¿Estás seguro de que deseas salir del sistema?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#64748b',
+                confirmButtonText: '<i class="fas fa-sign-out-alt"></i> Sí, cerrar sesión',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    sessionStorage.removeItem('session_SAC');
+                    window.location.href = 'index.html';
+                }
+            });
+        }
     </script>
 </body>
 </html>
