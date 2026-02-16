@@ -866,44 +866,6 @@
       "evidencias": ["EVI-007", "EVI-008"],
       "created_at": "2026-02-14T12:00:00Z",
       "updated_at": "2026-02-14T14:30:00Z"
-    },
-    {
-      "id": "ACT-004",
-      "titulo": "Reparación de PC - Aula F-1",
-      "descripcion": "La pc presentaba problema de inicio ya que no fucionaba el disco SSD por mal estado. Se realizo la limpieza y cambio de disco SSD y clonar el sistema operativo.",
-      "tarea_id": "TAREA-012",
-      "categoria_id": "CAT-001",
-      "tipo_mantenimiento_id": "TMANT-001",
-      "usuario_id": "USR-006",
-      "duracion_horas": 2.5,
-      "lugar": "Aula F-1 — Bloque F",
-      "estado": "aprobado",
-      "prioridad": "alta",
-      "materiales_usados": [
-        {
-          "nombre": "Disco SSD",
-          "cantidad": 1,
-          "unidad": "pieza"
-        },
-        {
-          "nombre": "Paño microfibra",
-          "cantidad": 1,
-          "unidad": "pieza"
-        },
-        {
-          "nombre": "Soplador de aire",
-          "cantidad": 1,
-          "unidad": "pieza"
-        }
-      ],
-      "observacion_empleado": "Se reemplazó el disco SSD y desemplovado del PC. Se recomienda mantenimiento semanal.",
-      "observacion_supervisor": "Trabajo bien ejecutado. Modificar la cantidad del inventario del componente que se reemplazo.",
-      "supervisor_id": "USR-001",
-      "fecha_registro": "2026-02-13T10:45:00Z",
-      "fecha_revision": "2026-02-13T14:00:00Z",
-      "evidencias": ["EVI-001", "EVI-002"],
-      "created_at": "2026-02-13T10:45:00Z",
-      "updated_at": "2026-02-13T14:00:00Z"
     }
   ],
   "indicadores": [
@@ -1007,46 +969,264 @@
       "activo": true
     }
   ],
-  "equipos_audiovisuales": [
+  "aulas": [
     {
-      "id": "EQUIPO-001",
+      "id": "AULA-001",
+      "codigo": "A-101",
+      "nombre": "Aula A-101",
+      "bloque": "A",
+      "piso": 1,
+      "capacidad": 40,
+      "tipo": "teorica",
+      "estado": "operativa",
+      "observaciones": "Aula equipada con pizarra interactiva",
+      "created_at": "2025-01-10T08:00:00Z",
+      "updated_at": "2026-02-14T08:00:00Z"
+    },
+    {
+      "id": "AULA-002",
+      "codigo": "B-204",
+      "nombre": "Aula B-204",
+      "bloque": "B",
+      "piso": 2,
+      "capacidad": 35,
+      "tipo": "teorica",
+      "estado": "operativa",
+      "observaciones": null,
+      "created_at": "2025-01-10T08:00:00Z",
+      "updated_at": "2026-02-14T08:00:00Z"
+    },
+    {
+      "id": "AULA-003",
+      "codigo": "B-208",
+      "nombre": "Aula B-208",
+      "bloque": "B",
+      "piso": 2,
+      "capacidad": 40,
+      "tipo": "teorica",
+      "estado": "operativa",
+      "observaciones": null,
+      "created_at": "2025-01-10T08:00:00Z",
+      "updated_at": "2026-02-14T08:00:00Z"
+    },
+    {
+      "id": "AULA-004",
+      "codigo": "C-301",
+      "nombre": "Laboratorio C-301",
+      "bloque": "C",
+      "piso": 3,
+      "capacidad": 25,
+      "tipo": "laboratorio",
+      "estado": "operativa",
+      "observaciones": "Laboratorio de cómputo",
+      "created_at": "2025-01-10T08:00:00Z",
+      "updated_at": "2026-02-14T08:00:00Z"
+    }
+  ],
+  "equipos": [
+    {
+      "id": "EQ-001",
       "codigo": "PROY-B204",
-      "tipo": "Proyector",
+      "tipo_equipo": "proyector",
       "marca": "Epson",
       "modelo": "EB-X41",
       "numero_serie": "X9LM012345",
-      "ubicacion": "Aula B-204",
+      "aula_id": "AULA-002",
       "estado": "operativo",
-      "horas_uso_lampara": 320,
-      "horas_limite_lampara": 3000,
-      "porcentaje_vida_util": 10.67,
+      "caracteristicas": {
+        "resolucion": "1024x768 XGA",
+        "brillo": "3600 lumens",
+        "horas_uso_lampara": 320,
+        "horas_limite_lampara": 3000,
+        "vida_util_lampara_porcentaje": 10.67,
+        "tipo_conexion": "HDMI, VGA, USB"
+      },
+      "fecha_adquisicion": "2025-11-15",
       "fecha_instalacion": "2025-11-15",
       "ultima_revision": "2026-02-13",
       "proximo_mantenimiento": "2026-03-13",
       "responsable_id": "USR-003",
+      "garantia_hasta": "2026-11-15",
       "observaciones": "Lámpara reemplazada el 13/02/2026",
       "created_at": "2025-11-15T08:00:00Z",
       "updated_at": "2026-02-13T14:00:00Z"
     },
     {
-      "id": "EQUIPO-002",
+      "id": "EQ-002",
       "codigo": "PROY-B208",
-      "tipo": "Proyector",
+      "tipo_equipo": "proyector",
       "marca": "Epson",
       "modelo": "EB-X41",
       "numero_serie": "X9LM012346",
-      "ubicacion": "Aula B-208",
+      "aula_id": "AULA-003",
       "estado": "advertencia",
-      "horas_uso_lampara": 2680,
-      "horas_limite_lampara": 3000,
-      "porcentaje_vida_util": 89.33,
+      "caracteristicas": {
+        "resolucion": "1024x768 XGA",
+        "brillo": "3600 lumens",
+        "horas_uso_lampara": 2680,
+        "horas_limite_lampara": 3000,
+        "vida_util_lampara_porcentaje": 89.33,
+        "tipo_conexion": "HDMI, VGA, USB"
+      },
+      "fecha_adquisicion": "2025-05-10",
       "fecha_instalacion": "2025-05-10",
       "ultima_revision": "2026-02-10",
       "proximo_mantenimiento": "2026-02-24",
       "responsable_id": "USR-006",
+      "garantia_hasta": "2026-05-10",
       "observaciones": "Lámpara próxima a límite de vida útil. Programar reemplazo",
       "created_at": "2025-05-10T08:00:00Z",
       "updated_at": "2026-02-10T16:00:00Z"
+    },
+    {
+      "id": "EQ-003",
+      "codigo": "PC-C301-01",
+      "tipo_equipo": "computadora",
+      "marca": "Dell",
+      "modelo": "OptiPlex 7090",
+      "numero_serie": "DELL789456",
+      "aula_id": "AULA-004",
+      "estado": "operativo",
+      "caracteristicas": {
+        "procesador": "Intel Core i7-11700",
+        "ram": "16GB DDR4",
+        "almacenamiento": "512GB SSD",
+        "sistema_operativo": "Windows 11 Pro",
+        "tarjeta_grafica": "Intel UHD Graphics 750"
+      },
+      "fecha_adquisicion": "2025-08-20",
+      "fecha_instalacion": "2025-08-25",
+      "ultima_revision": "2026-02-01",
+      "proximo_mantenimiento": "2026-05-01",
+      "responsable_id": "USR-006",
+      "garantia_hasta": "2028-08-20",
+      "observaciones": "PC del instructor",
+      "created_at": "2025-08-25T08:00:00Z",
+      "updated_at": "2026-02-01T10:00:00Z"
+    },
+    {
+      "id": "EQ-004",
+      "codigo": "MON-C301-01",
+      "tipo_equipo": "monitor",
+      "marca": "LG",
+      "modelo": "24MK430H",
+      "numero_serie": "LG24MK001",
+      "aula_id": "AULA-004",
+      "estado": "operativo",
+      "caracteristicas": {
+        "tamano": "24 pulgadas",
+        "resolucion": "1920x1080 Full HD",
+        "tipo_panel": "IPS",
+        "puertos": "HDMI, VGA"
+      },
+      "fecha_adquisicion": "2025-08-20",
+      "fecha_instalacion": "2025-08-25",
+      "ultima_revision": "2026-02-01",
+      "proximo_mantenimiento": "2026-08-01",
+      "responsable_id": "USR-006",
+      "garantia_hasta": "2027-08-20",
+      "observaciones": null,
+      "created_at": "2025-08-25T08:00:00Z",
+      "updated_at": "2026-02-01T10:00:00Z"
+    },
+    {
+      "id": "EQ-005",
+      "codigo": "SPK-B204",
+      "tipo_equipo": "parlante",
+      "marca": "Logitech",
+      "modelo": "Z313",
+      "numero_serie": "LOG2024001",
+      "aula_id": "AULA-002",
+      "estado": "operativo",
+      "caracteristicas": {
+        "potencia": "25W RMS",
+        "sistema": "2.1 (2 satelites + subwoofer)",
+        "conexion": "Jack 3.5mm"
+      },
+      "fecha_adquisicion": "2025-11-15",
+      "fecha_instalacion": "2025-11-15",
+      "ultima_revision": "2026-02-13",
+      "proximo_mantenimiento": "2026-08-13",
+      "responsable_id": "USR-003",
+      "garantia_hasta": "2026-11-15",
+      "observaciones": null,
+      "created_at": "2025-11-15T08:00:00Z",
+      "updated_at": "2026-02-13T14:00:00Z"
+    },
+    {
+      "id": "EQ-006",
+      "codigo": "SCRN-B208",
+      "tipo_equipo": "ecran",
+      "marca": "Elite Screens",
+      "modelo": "Manual Series M100XWH",
+      "numero_serie": "ES100M2024",
+      "aula_id": "AULA-003",
+      "estado": "operativo",
+      "caracteristicas": {
+        "tamano": "100 pulgadas",
+        "formato": "16:9",
+        "tipo": "Manual pull-down",
+        "material": "MaxWhite"
+      },
+      "fecha_adquisicion": "2025-05-10",
+      "fecha_instalacion": "2025-05-12",
+      "ultima_revision": "2026-02-10",
+      "proximo_mantenimiento": "2026-08-10",
+      "responsable_id": "USR-006",
+      "garantia_hasta": "2027-05-10",
+      "observaciones": "Pantalla motorizada para proyección",
+      "created_at": "2025-05-12T08:00:00Z",
+      "updated_at": "2026-02-10T16:00:00Z"
+    }
+  ],
+  "tipos_equipos": [
+    {
+      "id": "TIPO-001",
+      "nombre": "proyector",
+      "descripcion": "Proyectores multimedia",
+      "categoria": "audiovisual",
+      "requiere_mantenimiento_especial": true,
+      "frecuencia_mantenimiento_meses": 3
+    },
+    {
+      "id": "TIPO-002",
+      "nombre": "computadora",
+      "descripcion": "Computadoras de escritorio y laptops",
+      "categoria": "informatica",
+      "requiere_mantenimiento_especial": true,
+      "frecuencia_mantenimiento_meses": 6
+    },
+    {
+      "id": "TIPO-003",
+      "nombre": "monitor",
+      "descripcion": "Monitores y pantallas",
+      "categoria": "audiovisual",
+      "requiere_mantenimiento_especial": false,
+      "frecuencia_mantenimiento_meses": 12
+    },
+    {
+      "id": "TIPO-004",
+      "nombre": "parlante",
+      "descripcion": "Sistemas de audio y parlantes",
+      "categoria": "audiovisual",
+      "requiere_mantenimiento_especial": false,
+      "frecuencia_mantenimiento_meses": 6
+    },
+    {
+      "id": "TIPO-005",
+      "nombre": "ecran",
+      "descripcion": "Pantallas de proyección",
+      "categoria": "audiovisual",
+      "requiere_mantenimiento_especial": false,
+      "frecuencia_mantenimiento_meses": 12
+    },
+    {
+      "id": "TIPO-006",
+      "nombre": "microfono",
+      "descripcion": "Micrófonos y sistemas de amplificación",
+      "categoria": "audiovisual",
+      "requiere_mantenimiento_especial": false,
+      "frecuencia_mantenimiento_meses": 6
     }
   ],
   "materiales_inventario": [
