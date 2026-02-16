@@ -405,8 +405,6 @@
       "nombre": "Apertura diaria de aulas",
       "descripcion": "Verificación de acceso, iluminación básica y estado general al inicio del día",
       "frecuencia": "Diaria",
-      "frecuencia_tipo": "diario",
-      "duracion_estimada_horas": 1.0,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Personal Apoyo Atención de Aulas"
@@ -418,8 +416,6 @@
       "nombre": "Cierre diario de aulas",
       "descripcion": "Verificación de equipos apagados, ventanas cerradas y seguridad al finalizar el día",
       "frecuencia": "Diaria",
-      "frecuencia_tipo": "diario",
-      "duracion_estimada_horas": 1.0,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Personal Apoyo Atención de Aulas"
@@ -431,8 +427,6 @@
       "nombre": "Control de encendido y apagado de equipos",
       "descripcion": "Encendido y apagado de luces, aires acondicionados y equipos básicos",
       "frecuencia": "Diaria",
-      "frecuencia_tipo": "diario",
-      "duracion_estimada_horas": 0.5,
       "requiere_evidencia": false,
       "activo": true,
       "plan_trabajo": "Personal Apoyo Atención de Aulas"
@@ -444,8 +438,6 @@
       "nombre": "Revisión visual de estado de aulas",
       "descripcion": "Verificación de estado de aulas, baños y pasillos",
       "frecuencia": "Diaria",
-      "frecuencia_tipo": "diario",
-      "duracion_estimada_horas": 1.5,
       "requiere_evidencia": false,
       "activo": true,
       "plan_trabajo": "Personal Apoyo Atención de Aulas"
@@ -457,8 +449,6 @@
       "nombre": "Entrega y control de llaves",
       "descripcion": "Registro de entrega y devolución de llaves de aulas",
       "frecuencia": "Diaria",
-      "frecuencia_tipo": "diario",
-      "duracion_estimada_horas": 0.5,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Personal Apoyo Atención de Aulas"
@@ -470,8 +460,6 @@
       "nombre": "Revisión básica de mobiliario",
       "descripcion": "Inspección de sillas, mesas y pizarras. Reporte de daños",
       "frecuencia": "Semanal",
-      "frecuencia_tipo": "semanal",
-      "duracion_estimada_horas": 2.0,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Personal Apoyo Atención de Aulas"
@@ -483,8 +471,6 @@
       "nombre": "Apoyo en reubicación de mobiliario",
       "descripcion": "Traslado y acomodación de mobiliario para eventos especiales",
       "frecuencia": "Semanal",
-      "frecuencia_tipo": "semanal",
-      "duracion_estimada_horas": 3.0,
       "requiere_evidencia": false,
       "activo": true,
       "plan_trabajo": "Personal Apoyo Atención de Aulas"
@@ -496,8 +482,6 @@
       "nombre": "Informe mensual de incidencias - Aulas",
       "descripcion": "Reporte consolidado de observaciones y mejoras detectadas",
       "frecuencia": "Mensual",
-      "frecuencia_tipo": "mensual",
-      "duracion_estimada_horas": 2.0,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Personal Apoyo Atención de Aulas"
@@ -509,8 +493,6 @@
       "nombre": "Pruebas diarias de equipos audiovisuales",
       "descripcion": "Encendido y prueba de sonido, proyección y conectividad",
       "frecuencia": "Diaria",
-      "frecuencia_tipo": "diario",
-      "duracion_estimada_horas": 1.5,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable Mantenimiento Audiovisual"
@@ -522,8 +504,6 @@
       "nombre": "Soporte técnico en clases y eventos",
       "descripcion": "Atención inmediata a fallas técnicas durante actividades académicas",
       "frecuencia": "Diaria",
-      "frecuencia_tipo": "diario",
-      "duracion_estimada_horas": 4.0,
       "requiere_evidencia": false,
       "activo": true,
       "plan_trabajo": "Responsable Mantenimiento Audiovisual"
@@ -535,8 +515,6 @@
       "nombre": "Limpieza superficial de equipos",
       "descripcion": "Limpieza de lentes, pantallas y superficies de equipos",
       "frecuencia": "Diaria",
-      "frecuencia_tipo": "diario",
-      "duracion_estimada_horas": 0.5,
       "requiere_evidencia": false,
       "activo": true,
       "plan_trabajo": "Responsable Mantenimiento Audiovisual"
@@ -548,8 +526,6 @@
       "nombre": "Registro de fallas audiovisuales",
       "descripcion": "Documentación de problemas técnicos y acciones correctivas",
       "frecuencia": "Según ocurrencia",
-      "frecuencia_tipo": "bajo_demanda",
-      "duracion_estimada_horas": 0.5,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable Mantenimiento Audiovisual"
@@ -561,8 +537,6 @@
       "nombre": "Mantenimiento preventivo semanal audiovisual",
       "descripcion": "Limpieza interna, revisión de cables y conexiones",
       "frecuencia": "Semanal",
-      "frecuencia_tipo": "semanal",
-      "duracion_estimada_horas": 3.0,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable Mantenimiento Audiovisual"
@@ -574,8 +548,6 @@
       "nombre": "Verificación de lámparas y controles",
       "descripcion": "Revisión de vida útil de lámparas y estado de controles remotos",
       "frecuencia": "Semanal",
-      "frecuencia_tipo": "semanal",
-      "duracion_estimada_horas": 1.5,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable Mantenimiento Audiovisual"
@@ -587,8 +559,6 @@
       "nombre": "Actualización de inventario audiovisual",
       "descripcion": "Registro y actualización del estado de equipos en sistema",
       "frecuencia": "Semanal",
-      "frecuencia_tipo": "semanal",
-      "duracion_estimada_horas": 2.0,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable Mantenimiento Audiovisual"
@@ -600,8 +570,6 @@
       "nombre": "Informe técnico mensual - Audiovisual",
       "descripcion": "Reporte del estado de equipos y recomendaciones de reemplazo",
       "frecuencia": "Mensual",
-      "frecuencia_tipo": "mensual",
-      "duracion_estimada_horas": 3.0,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable Mantenimiento Audiovisual"
@@ -613,8 +581,6 @@
       "nombre": "Instalación de nuevos equipos audiovisuales",
       "descripcion": "Configuración e instalación de equipos nuevos o reemplazos",
       "frecuencia": "Mensual",
-      "frecuencia_tipo": "mensual",
-      "duracion_estimada_horas": 4.0,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable Mantenimiento Audiovisual"
@@ -626,8 +592,6 @@
       "nombre": "Reparación de proyectores",
       "descripcion": "Diagnóstico y reparación de fallas en proyectores",
       "frecuencia": "Según reporte",
-      "frecuencia_tipo": "bajo_demanda",
-      "duracion_estimada_horas": 2.5,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable Mantenimiento Audiovisual"
@@ -639,8 +603,6 @@
       "nombre": "Reemplazo de lámparas de proyector",
       "descripcion": "Cambio de lámparas agotadas o con falla",
       "frecuencia": "Según reporte",
-      "frecuencia_tipo": "bajo_demanda",
-      "duracion_estimada_horas": 1.0,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable Mantenimiento Audiovisual"
@@ -652,8 +614,6 @@
       "nombre": "Atención de reportes eléctricos",
       "descripcion": "Respuesta a reportes de fallas eléctricas",
       "frecuencia": "Diaria",
-      "frecuencia_tipo": "bajo_demanda",
-      "duracion_estimada_horas": 2.0,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable de Mantenimientos"
@@ -665,8 +625,6 @@
       "nombre": "Reparaciones sanitarias",
       "descripcion": "Atención de fugas y fallas en sistemas sanitarios",
       "frecuencia": "Diaria",
-      "frecuencia_tipo": "bajo_demanda",
-      "duracion_estimada_horas": 2.5,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable de Mantenimientos"
@@ -678,8 +636,6 @@
       "nombre": "Supervisión de suministro eléctrico",
       "descripcion": "Verificación de funcionamiento de tableros y suministro general",
       "frecuencia": "Diaria",
-      "frecuencia_tipo": "diario",
-      "duracion_estimada_horas": 1.0,
       "requiere_evidencia": false,
       "activo": true,
       "plan_trabajo": "Responsable de Mantenimientos"
@@ -691,8 +647,6 @@
       "nombre": "Revisión semanal de sistemas de agua",
       "descripcion": "Inspección de desagües, cisternas y tanques",
       "frecuencia": "Semanal",
-      "frecuencia_tipo": "semanal",
-      "duracion_estimada_horas": 2.5,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable de Mantenimientos"
@@ -704,8 +658,6 @@
       "nombre": "Reparación de mobiliario",
       "descripcion": "Reparación de muebles, puertas y ventanas",
       "frecuencia": "Semanal",
-      "frecuencia_tipo": "semanal",
-      "duracion_estimada_horas": 4.0,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable de Mantenimientos"
@@ -717,8 +669,6 @@
       "nombre": "Pintura y mantenimiento básico",
       "descripcion": "Trabajos de pintura y mantenimiento estético",
       "frecuencia": "Semanal",
-      "frecuencia_tipo": "semanal",
-      "duracion_estimada_horas": 6.0,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable de Mantenimientos"
@@ -730,8 +680,6 @@
       "nombre": "Planificación de mantenimiento preventivo",
       "descripcion": "Elaboración de cronograma de mantenimientos preventivos",
       "frecuencia": "Mensual",
-      "frecuencia_tipo": "mensual",
-      "duracion_estimada_horas": 3.0,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable de Mantenimientos"
@@ -743,8 +691,6 @@
       "nombre": "Solicitud de materiales",
       "descripcion": "Elaboración de lista de materiales necesarios y gestión de compras",
       "frecuencia": "Mensual",
-      "frecuencia_tipo": "mensual",
-      "duracion_estimada_horas": 2.0,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable de Mantenimientos"
@@ -756,8 +702,6 @@
       "nombre": "Informe técnico mensual - Mantenimientos",
       "descripcion": "Reporte de trabajos ejecutados y pendientes a administración",
       "frecuencia": "Mensual",
-      "frecuencia_tipo": "mensual",
-      "duracion_estimada_horas": 3.0,
       "requiere_evidencia": true,
       "activo": true,
       "plan_trabajo": "Responsable de Mantenimientos"
