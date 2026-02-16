@@ -2026,16 +2026,15 @@
             }
         }
 
-       function logoutSeguro() {
-    if (confirm('¿Cerrar sesión?')) {
-        // Limpiar TODO lo guardado en el navegador para este sitio
-        localStorage.clear(); 
-        sessionStorage.clear();
-        
-        // Redirigir sin guardar historial
-        window.location.replace('index.html');
-    }
-}
+        // Logout
+        function logout() {
+            if (confirm('¿Está seguro que desea cerrar sesión?')) {
+                alert('Sesión cerrada correctamente');
+                localStorage.clear(); 
+                sessionStorage.clear();
+                window.location.replace = 'index.html';
+            }
+        }
 
         // Responsive menu
         window.addEventListener('resize', function() {
