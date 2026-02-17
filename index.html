@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>Login - Sistema de Gestión del Campus</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="valiacion.js"></script>
   
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -11,7 +13,7 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Font Awesome -->
+  <!-- Font Awesome para iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
@@ -73,16 +75,6 @@
       100% { transform: rotate(360deg); }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
     .login-container img {
       display: block;
       margin: 0 auto;
@@ -109,730 +101,915 @@
       bottom: -8px;
       left: 50%;
       transform: translateX(-50%);
-      width: 60px;
-      height: 4px;
-      background: linear-gradient(90deg, #0077ff, #00e1ff);
-      border-radius: 2px;
+      width: 60%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00e1ff, transparent);
+      border-radius: 3px;
     }
 
-    .login-container p {
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 35px;
-      font-size: 0.95rem;
-    }
-
-    .input-group {
-      margin-bottom: 22px;
-      text-align: left;
-      position: relative;
-    }
-
-    .input-group label {
-      display: block;
-      margin-bottom: 8px;
-      color: #fff;
-      font-weight: 600;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .input-group label i {
+    .sistema-badge {
+      display: inline-block;
+      background: rgba(0, 119, 255, 0.2);
+      border: 1px solid rgba(0, 225, 255, 0.3);
       color: #00e1ff;
-      font-size: 16px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+      margin-top: 14px;
     }
 
-    .input-wrapper {
+    .input-field {
       position: relative;
+      margin-bottom: 22px;
+      overflow: hidden; 
     }
-
-    .input-group input {
-      width: 100%;
-      padding: 15px 18px 15px 50px;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
-
-    .input-icon {
+    
+    .input-field i {
       position: absolute;
-      left: 18px;
+      left: 15px;
       top: 50%;
       transform: translateY(-50%);
-      color: rgba(255, 255, 255, 0.6);
+      color: rgb(144 138 138 / 65%);
       font-size: 18px;
-      pointer-events: none;
-      transition: color 0.3s ease;
+      z-index: 2;
     }
-
-    .input-group input::placeholder {
-      color: rgba(255, 255, 255, 0.5);
-      font-weight: 400;
-    }
-
-    .input-group input:focus {
+    
+    .input-field input {
+      width: 100%;
+      padding: 16px 40px 16px 48px;
+      border: none;
+      border-radius: 14px;
       outline: none;
-      border-color: #00e1ff;
-      background: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 20px rgba(0, 225, 255, 0.3);
+      font-size: 16px;
+      transition: all 0.35s ease;
+      background: rgba(255, 255, 255, 0.92);
+      color: #2c3e50;
+      font-weight: 500;
+      letter-spacing: 0.5px;
     }
-
-    .input-group input:focus + .input-icon {
-      color: #00e1ff;
+    
+    .input-field input::placeholder {
+      color: #7f8c8d;
+      font-weight: 400;
+      opacity: 1;
     }
-
+    
+    .input-field input:focus {
+      box-shadow: 0 0 0 3px rgba(0, 225, 255, 0.35), 0 0 12px rgba(0, 225, 255, 0.25);
+      background: rgba(255, 255, 255, 1);
+      transform: translateY(-1px);
+    }
+    
     .toggle-password {
       position: absolute;
-      right: 18px;
+      right: 22px;
       top: 50%;
       transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
       cursor: pointer;
-      color: rgba(255, 255, 255, 0.6);
       font-size: 18px;
-      transition: color 0.3s ease;
+      padding: 0;
+      z-index: 3;
+      transition: all 0.3s ease;
+      width: 24px;
+      height: 24px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-
+    
     .toggle-password:hover {
       color: #00e1ff;
+      transform: translateY(-50%) scale(1.15);
+      background: none;
+      box-shadow: none;
     }
 
-    .remember-forgot {
+    .options-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 25px;
-      font-size: 0.9rem;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-
+    
     .remember-me {
       display: flex;
       align-items: center;
-      gap: 8px;
-      color: rgba(255, 255, 255, 0.9);
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 14px;
       cursor: pointer;
-      user-select: none;
     }
-
-    .remember-me input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
+    
+    .remember-me input {
+      margin-right: 8px;
+      width: 16px;
+      height: 16px;
       cursor: pointer;
-      accent-color: #00e1ff;
     }
-
+    
     .forgot-password {
-      color: #00e1ff;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 14px;
       text-decoration: none;
-      font-weight: 500;
       transition: all 0.3s ease;
-      cursor: pointer;
+      font-weight: 500;
     }
-
+    
     .forgot-password:hover {
-      color: #00b8cc;
+      color: #00e1ff;
       text-decoration: underline;
     }
 
-    .btn-login {
+    button[type="submit"], #loginButton {
       width: 100%;
       padding: 16px;
+      background: linear-gradient(90deg, #0077ff, #00c6ff, #00e1ff);
       border: none;
       border-radius: 14px;
-      background: linear-gradient(135deg, #0077ff, #00e1ff);
-      color: #fff;
-      font-size: 1.05rem;
-      font-weight: 700;
+      color: white;
+      font-size: 17px;
+      font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      box-shadow: 0 8px 20px rgba(0, 119, 255, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      transition: all 0.35s ease;
+      margin-top: 8px;
+      box-shadow: 0 6px 20px rgba(0, 100, 255, 0.4);
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.5px;
+    }
+    
+    button[type="submit"]::after, #loginButton::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(rgba(255,255,255,0.2), transparent, rgba(255,255,255,0.3));
+      transform: rotate(30deg);
+      transition: all 0.6s;
+      opacity: 0;
+    }
+    
+    button[type="submit"]:hover::after, #loginButton:hover::after {
+      opacity: 1;
+      left: 120%;
     }
 
-    .btn-login:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(0, 119, 255, 0.5);
-      background: linear-gradient(135deg, #0088ff, #00f2ff);
+    button[type="submit"]:hover, #loginButton:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 119, 255, 0.55), 0 0 15px rgba(0, 225, 255, 0.4);
+      background: linear-gradient(90deg, #0066e0, #00b3e6, #00ccff);
     }
 
-    .btn-login:active {
-      transform: translateY(-1px);
+    button[type="submit"]:active, #loginButton:active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 15px rgba(0, 100, 255, 0.4);
     }
-
-    .btn-login:disabled {
-      opacity: 0.6;
+    
+    button[type="submit"]:disabled, #loginButton:disabled {
+      background: linear-gradient(90deg, #5a98ff, #7eb3ff);
       cursor: not-allowed;
       transform: none;
+      box-shadow: 0 4px 12px rgba(0, 80, 200, 0.3);
     }
 
-    /* Modal de recuperación */
-    .modal-overlay {
+    .lockout-bar {
       display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(5px);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      animation: fadeIn 0.3s ease-out;
+      background: rgba(220, 53, 69, 0.2);
+      border: 1px solid rgba(220, 53, 69, 0.4);
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #ff6b6b;
+      text-align: left;
     }
+    .lockout-bar i { margin-right: 6px; }
 
-    .modal-overlay.active {
+    .attempts-indicator {
       display: flex;
+      gap: 5px;
+      justify-content: center;
+      margin-top: 10px;
+      min-height: 14px;
     }
-
-    .modal-content {
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(12px);
-      padding: 40px;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 450px;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      position: relative;
-      animation: slideDown 0.3s ease-out;
-    }
-
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-50px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: none;
-      border: none;
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 24px;
-      cursor: pointer;
-      width: 35px;
-      height: 35px;
+    .attempt-dot {
+      width: 8px; height: 8px;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
+      background: rgba(255,255,255,0.2);
+      transition: background 0.3s;
     }
+    .attempt-dot.used { background: #ef4444; }
+    .attempt-dot.safe { background: rgba(255,255,255,0.2); }
 
-    .modal-close:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-    }
-
-    .modal-content h3 {
-      color: #fff;
-      font-size: 1.8rem;
-      margin-bottom: 10px;
+    .footer {
+      background: rgba(0, 15, 35, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 22px 0;
       text-align: center;
+      margin-top: auto;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.25);
     }
 
-    .modal-content p {
-      color: rgba(255, 255, 255, 0.8);
-      text-align: center;
-      margin-bottom: 25px;
-      font-size: 0.95rem;
+    .footer-text {
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+    
+    .footer-text strong { color: #00e1ff; font-weight: 600; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(25px); filter: blur(5px); }
+      to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(0, 225, 255, 0.4); }
+      70%  { box-shadow: 0 0 0 12px rgba(0, 225, 255, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 225, 255, 0); }
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60%  { transform: translateX(-5px); }
+      40%, 80%  { transform: translateX(5px); }
     }
 
-    @media (max-width: 500px) {
-      .login-container {
-        padding: 35px 25px;
-      }
+    .login-success { animation: pulse 1.5s infinite; }
+    .input-error   { animation: shake 0.5s; box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.4) !important; }
 
-      .login-container h2 {
-        font-size: 1.8rem;
-      }
+    .btn-loading { position: relative; padding-left: 45px !important; }
+    .btn-loading::after {
+      content: '';
+      position: absolute;
+      left: 15px; top: 50%;
+      transform: translateY(-50%);
+      width: 20px; height: 20px;
+      border: 2.5px solid rgba(255,255,255,0.4);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s linear infinite;
+    }
 
-      .remember-forgot {
-        flex-direction: column;
-        gap: 12px;
-        align-items: flex-start;
+    @media (max-width: 768px) {
+      .login-container { 
+        padding: 35px 30px; 
+        margin: 15px auto; 
+        border-radius: 20px; 
       }
-
-      .modal-content {
-        padding: 30px 25px;
+      .login-container h2 { 
+        font-size: 1.8rem; 
+        margin-bottom: 22px; 
+      }
+      .login-container img { 
+        width: 110px; 
+        margin-bottom: 15px; 
+      }
+      .input-field input { 
+        padding: 15px 40px 15px 45px; 
+        font-size: 16px; 
+      }
+      .options-container { 
+        flex-direction: column; 
+        align-items: flex-start; 
+        gap: 12px; 
+      }
+      button[type="submit"], #loginButton { 
+        padding: 15px; 
+        font-size: 16px; 
+      }
+      .footer { 
+        padding: 18px 0; 
+      }
+      .footer-text { 
+        font-size: 14px; 
+        padding: 0 15px; 
       }
     }
+    @media (max-width: 480px) {
+      .main-content { 
+        padding: 10px; 
+      }
+      .login-container { 
+        padding: 30px 25px; 
+        margin: 10px auto; 
+        border-radius: 18px; 
+      }
+      .login-container h2 { 
+        font-size: 1.65rem; 
+      }
+      .login-container img { 
+        width: 95px; 
+      }
+      .input-field { 
+        margin-bottom: 18px; 
+      }
+      .input-field input { 
+        padding: 14px 35px 14px 42px; 
+        font-size: 15.5px; 
+      }
+      .toggle-password { 
+        font-size: 17px; 
+        right: 18px; 
+      }
+      button[type="submit"], #loginButton { 
+        padding: 14px; 
+        font-size: 16px; 
+      }
+    }  
   </style>
 </head>
 <body>
   <div class="main-content">
     <div class="login-container">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Escudo_UAP.png/800px-Escudo_UAP.png" alt="Logo Campus">
-      <h2>Bienvenido</h2>
-      <p>Sistema de Gestión del Campus</p>
+
+      <img src="https://lh3.googleusercontent.com/fife/ALs6j_G2PUe0Mfr2fWt-nMSpt9Z-tDjXQQc8UI2grsBRqmIIHBnSTuhXsT43xM11ANSHIARGJXzCxA7woBJz7VAY4Kxb7Dozqrj4Ifu5l0tUk0z2Fe2u5FihqlRQtu7Iezlq45yp4s5gJVcSYUFYu2F0kwfy18qE0mc1kFu42kurl8o2C0XmeXOK5ZE47DSnCENoL6_UZLA31QFkhRyzhp2yO4fuKUQPvKbHiGnwUJEPN8vKm3L0e9Ni16Gfp0gRluU5Ou76M8TFU2nk8gQIhSU1hBzV5TRd2vWa0ZXL5q7K_Dz-oUD3BCQ80IUDsOZzJtng33ZUX-iXu5jowA5GdyrMMmhYQOs3bCvzdW-1iVdN7v2xHgpCMweOTD1Wr_8EFjEV3W-0llk806qSyqyV-MbozbDZTxiyNGTSpkNzinBVS1YBWtq8LKitrx57Vfx1l3uUlOORRCFZ3IFPflrmRxM9Hf_0-t_LZsbU3XnuHukd9GEtpZMioG2FB6hLMQNZvap4vDZh3yyaTrn7OKYg-06tnZIoPWCp4JGROJ9dWrTiSDkAoaVFX_apX8QHzppyLQfzPhQ-_IifBOlX0FsXIHeg_7SO2u8ZEwqs6TiB2B5NhIwcUO8zOGe-K_L16CNJyXYDoMhvVE46lfYPMsCBNgBRqAs-N5vuqI5tN7ZtxTRQY2TPEEZv4n-OqgQsQ2hGpmzOs_XkzMPyaCWu81sGPHTqZEC06QvF6OvAKo0cHLL3D2GSFCAijBvkoNk_wkQ-NBpVHMNy1l00Cf9h9hG4Os5p4v9DljOPsnAQ9KnDYjYV9rgUxtjJ7nCcgLVo7AAAQwIE3jnJC2aWQ_hjjDs4L6zkpy2zlbnxJivdPwx1KjOfvF5aUbEUblRomh0PUWtWPRz7PamRZm_cLZAkpqs_l4uCvoV5r2_oyctsZ2QJ4I2peTROtgbDDfAdPVAQYwtGTC23bdjVaxBrIQMHtVtsN0usLHFGrhKSX2z8bYWsZj4gpj3LYqQyKilq1es2VRzuPbLo2ooLXlEmOKtF8-hdjmYlNnz6fjOQfpnHTFBe7p73I_azp_HbGiW26PHwDOiTAzDY32flGYC3hwlDhFWlv9QEe28wdltqtwn0sqMcMMOPN5hTlSWP22v_HHNSd2nFSW1rSESafvvyIb5Gg1ge4rY7s6257NlTCg36o5dYPlSbsN6FMXF9nPP3FGFTKU0xixXbyY0EtPOuR3Hc1Zr1V8xluEW_QHI19nJTXKMic-K8piZo2cxB0qO_usHTGxO9toJlT9Hvu8wLVKu11tK99qM3ZjCNwW9yem67fxv0kVy9_LzRNAcoQa6IXYmsQSXNShb2Dwv5fgM-LkON19-hXMfNlo5Vep-ZJ1fW_BaPFOSN12Ud5yEREds6aBLFeGs-ZXTEw8vjn70gU14YbmqyH117G0w0jBzx5BjjE3v1rSYnq_npQ4lHRXjCgK49vXln_qDBDxJRPBtkGOGEhxvb-QFMWOlOP-VhAxZBcNnmWxwgvIoDiCMJOU28jdcjXkFbyMfaIsdsTSZU90Y94lvUBa-phgLaFFUzfbw6dbr8NhjOhFuaiWlxHuiYW2zONuxYO5ymRErbyalvAor8Q-kVBUcgaHdj65aT_wec3eScWBppModO8lVEOeFCplwtz9eZcILXfIupUkhqkpd5pIqT4W4EJhfTIky0H8Bo3W9JumX34hak29U50J6aptS1kFqLSF6T0AQelch0opP1ShZQhX0=w843-h922?auditContext=prefetch" alt="Logo Campus">
+
+      <h2>Iniciar Sesión</h2>
+      <div class="sistema-badge">
+        <i class="fas fa-shield-alt" style="margin-right:5px;font-size:10px;"></i>
+        Sistema de Gestión del Campus
+      </div>
+
+      <div class="lockout-bar" id="lockoutBar">
+        <i class="fas fa-lock"></i>
+        <span id="lockoutMsg">Cuenta bloqueada temporalmente.</span>
+      </div>
 
       <form id="loginForm">
-        <div class="input-group">
-          <label><i class="fas fa-user"></i> Usuario</label>
-          <div class="input-wrapper">
-            <i class="input-icon fas fa-user"></i>
-            <input type="text" id="username" placeholder="Ingrese su usuario" required autocomplete="username">
-          </div>
+        <div class="input-field">
+          <i class="fas fa-user"></i>
+          <input type="text" id="usuario" placeholder="Nombre de usuario" autocomplete="username" required>
         </div>
-
-        <div class="input-group">
-          <label><i class="fas fa-lock"></i> Contraseña</label>
-          <div class="input-wrapper">
-            <i class="input-icon fas fa-lock"></i>
-            <input type="password" id="password" placeholder="Ingrese su contraseña" required autocomplete="current-password">
-            <i class="toggle-password fas fa-eye" id="togglePassword"></i>
-          </div>
+        <div class="input-field">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" placeholder="Contraseña" autocomplete="current-password" required>
+          <button type="button" class="toggle-password" id="togglePassword">
+            <i class="fas fa-eye"></i>
+          </button>
         </div>
-
-        <div class="remember-forgot">
+        
+        <div class="options-container">
           <label class="remember-me">
-            <input type="checkbox" id="rememberMe">
-            <span>Recordarme</span>
+            <input type="checkbox" id="rememberMe"> Recordar usuario
           </label>
-          <a class="forgot-password" id="forgotPasswordLink">¿Olvidaste tu contraseña?</a>
+          <a href="#" class="forgot-password" id="forgotPassword">¿Olvidaste tu contraseña?</a>
         </div>
-
-        <button type="submit" class="btn-login">
-          <i class="fas fa-sign-in-alt"></i>
-          Iniciar Sesión
+        
+        <button type="submit" id="loginButton">
+          <i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar
         </button>
+
+        <div class="attempts-indicator" id="attemptsIndicator"></div>
       </form>
+
     </div>
   </div>
 
-  <!-- Modal de Recuperación de Contraseña -->
-  <div class="modal-overlay" id="recoveryModal">
-    <div class="modal-content">
-      <button class="modal-close" id="closeModal">
-        <i class="fas fa-times"></i>
-      </button>
-      <h3>Recuperar Contraseña</h3>
-      <p>Ingresa tu usuario y correo electrónico para verificar tu identidad</p>
-      
-      <form id="recoveryForm">
-        <div class="input-group">
-          <label><i class="fas fa-user"></i> Usuario</label>
-          <div class="input-wrapper">
-            <i class="input-icon fas fa-user"></i>
-            <input type="text" id="recoveryUsername" placeholder="Ingrese su usuario" required autocomplete="username">
-          </div>
-        </div>
-
-        <div class="input-group">
-          <label><i class="fas fa-envelope"></i> Correo Electrónico</label>
-          <div class="input-wrapper">
-            <i class="input-icon fas fa-envelope"></i>
-            <input type="email" id="recoveryEmail" placeholder="correo@ejemplo.com" required autocomplete="email">
-          </div>
-        </div>
-
-        <button type="submit" class="btn-login">
-          <i class="fas fa-key"></i>
-          Generar Enlace de Recuperación
-        </button>
-      </form>
+  <footer class="footer">
+    <div class="footer-text">
+      <strong>Sistema de Gestión del Campus</strong> — Unidad de Administración del Campus<br>
+      © 2026 · Campus Universitario · Todos los derechos reservados
     </div>
-  </div>
-
+  </footer>
   <script>
-    const DB_PATH = 'data3.json';
-    let DATABASE = null;
+// ===== CONFIGURACIÓN INICIAL (DEBE ESTAR AL INICIO) =====
+const DB_PATH = 'data2.json';
+let DATABASE = null;
 
-    // Cargar base de datos
-    async function loadDatabase() {
-      try {
-        const response = await fetch(DB_PATH);
-        if (!response.ok) throw new Error('No se pudo cargar la base de datos');
-        DATABASE = await response.json();
-        console.log('✅ Base de datos cargada correctamente');
-        console.log('📊 Usuarios disponibles:', DATABASE.usuarios.length);
-      } catch (error) {
-        console.error('❌ Error al cargar base de datos:', error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error de Conexión',
-          text: 'No se pudo conectar con el sistema. Verifica que data3.json existe.',
-          confirmButtonColor: '#dc3545'
-        });
+// Configuración de roles con dashboards específicos
+const ROLES_CONFIG = {
+  administrador: {
+    label: "Administrador",
+    icono: "🔴",
+    clase: "role-administrador",
+    dashboard: "paginas/dashboard_admin.html",
+    color: "#1e3a8a"
+  },
+  tecnico_sistemas: {
+    label: "Técnico Sistemas Esenciales",
+    icono: "🟣",
+    clase: "role-tecnico_sistemas",
+    dashboard: "dashboard_tecnico_sistemas.html",
+    color: "#a855f7"
+  },
+  tecnico_audiovisual: {
+    label: "Técnico Audiovisual",
+    icono: "🟢",
+    clase: "role-tecnico_audiovisual",
+    dashboard: "dashboard_tecnico_audiovisual.html",
+    color: "#10b981"
+  },
+  tecnico_integral: {
+    label: "Técnico Integral",
+    icono: "🟡",
+    clase: "role-tecnico_integral",
+    dashboard: "dashboard_tecnico_integral.html",
+    color: "#f59e0b"
+  }
+};
+
+const appState = {
+  intentosFallidos: 0,
+  bloqueadoHasta: null,
+  lockoutTimer: null,
+  get maxIntentos() {
+    return DATABASE?.configuracion?.sesiones?.max_intentos_fallidos ?? 5;
+  },
+  get bloqueoDuracionMs() {
+    return (DATABASE?.configuracion?.sesiones?.bloqueo_segundos ?? 30) * 1000;
+  }
+};
+
+// ===== FUNCIONES PRINCIPALES (DEBEN ESTAR DEFINIDAS ANTES DE USARSE) =====
+function verificarSesionActiva() {
+  const sessionData = sessionStorage.getItem('session_SAC');
+  if (sessionData) {
+    try {
+      const session = JSON.parse(sessionData);
+      const ahora = new Date();
+      const expira = new Date(session.expira);
+      
+      if (ahora < expira && ROLES_CONFIG[session.rol]) {
+        window.location.href = ROLES_CONFIG[session.rol].dashboard;
+        return true;
       }
+    } catch (e) {
+      console.error("Error al verificar sesión:", e);
+    }
+  }
+  return false;
+}
+
+async function cargarBaseDeDatos() {
+  try {
+    mostrarEstadoCarga(true);
+    const respuesta = await fetch(DB_PATH);
+
+    if (!respuesta.ok) {
+      throw new Error(`No se pudo cargar ${DB_PATH} (HTTP ${respuesta.status})`);
     }
 
-    // Verificar sesión existente
-    function checkExistingSession() {
-      const sessionData = sessionStorage.getItem('session_SAC');
-      if (sessionData) {
-        try {
-          const session = JSON.parse(sessionData);
-          const now = new Date();
-          if (session.expiracion && new Date(session.expiracion) > now) {
-            console.log('✅ Sesión activa encontrada');
-            redirectByRole(session.rol);
-            return true;
-          } else {
-            console.log('⚠️ Sesión expirada, limpiando...');
-            sessionStorage.removeItem('session_SAC');
-          }
-        } catch (error) {
-          console.error('❌ Error al verificar sesión:', error);
-          sessionStorage.removeItem('session_SAC');
-        }
-      }
-      return false;
+    DATABASE = await respuesta.json();
+
+    // Inicializar estructuras si no existen
+    if (!DATABASE.sesiones) DATABASE.sesiones = [];
+    if (!DATABASE.auditoria) DATABASE.auditoria = [];
+    if (!DATABASE.recuperacion_password) DATABASE.recuperacion_password = [];
+
+    console.log(`✅ Base de datos cargada correctamente`);
+    console.log(`👤 ${DATABASE.usuarios.length} usuarios encontrados`);
+
+    mostrarEstadoCarga(false);
+    setupEventListeners(); // Configurar eventos después de cargar DB
+
+  } catch (error) {
+    mostrarEstadoCarga(false);
+    console.error('❌ Error al cargar database.json:', error);
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Error al cargar el sistema',
+      html: `No se pudo leer el archivo <code>${DB_PATH}</code>.<br><br>
+             <small style="color:#6c757d">
+               Verifica que el archivo exista y esté en la misma carpeta.
+             </small>`,
+      confirmButtonColor: '#dc3545',
+      confirmButtonText: 'Entendido'
+    });
+
+    document.getElementById('loginButton').disabled = true;
+    document.getElementById('loginButton').innerHTML =
+      '<i class="fas fa-exclamation-triangle" style="margin-right:8px;"></i>Sin conexión a datos';
+  }
+}
+
+function mostrarEstadoCarga(cargando) {
+  const btn = document.getElementById('loginButton');
+  if (!btn) return;
+  if (cargando) {
+    btn.disabled = true;
+    btn.classList.add('btn-loading');
+    btn.innerHTML = '<span style="opacity:0">Cargando sistema…</span>';
+  } else {
+    btn.disabled = false;
+    btn.classList.remove('btn-loading');
+    btn.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar';
+  }
+}
+
+function registrarAuditoria(usuarioId, accion, detalle) {
+  if (!DATABASE) return;
+  
+  const registro = {
+    id: `AUD-${String(DATABASE.auditoria.length + 1).padStart(3,'0')}`,
+    usuario_id: usuarioId,
+    accion: accion,
+    modulo: "autenticacion",
+    detalle: detalle,
+    ip: "192.168.1.1",
+    navegador: navigator.userAgent,
+    fecha: new Date().toISOString()
+  };
+  DATABASE.auditoria.push(registro);
+  console.log(`[AUDITORÍA] ${accion} | ${detalle}`);
+}
+
+function crearSesion(usuario) {
+  const token = btoa(`${usuario.id}:${usuario.nombre_usuario}:${Date.now()}`);
+  const sesion = {
+    id: `SES-${String(DATABASE.sesiones.length + 1).padStart(3,'0')}`,
+    usuario_id: usuario.id,
+    token: token,
+    activa: true,
+    fecha_inicio: new Date().toISOString(),
+    fecha_expiracion: new Date(Date.now() + 12 * 3600000).toISOString()
+  };
+  DATABASE.sesiones.push(sesion);
+
+  const sessionData = {
+    sesion_id: sesion.id,
+    usuario_id: usuario.id,
+    nombre_completo: usuario.nombre_completo,
+    nombre_usuario: usuario.nombre_usuario,
+    correo: usuario.correo,
+    rol: usuario.rol,
+    cargo: usuario.cargo,
+    area_id: usuario.area_id,
+    especialidad: usuario.especialidad,
+    token: token,
+    expira: sesion.fecha_expiracion,
+    login_time: new Date().toISOString()
+  };
+  
+  sessionStorage.setItem('session_SAC', JSON.stringify(sessionData));
+  localStorage.setItem('session_SAC_permanent', JSON.stringify(sessionData));
+  return sessionData;
+}
+
+function autenticar(nombreUsuario, password) {
+  if (!DATABASE) {
+    return { exito: false, motivo: "sin_base_datos" };
+  }
+
+  const usuario = DATABASE.usuarios.find(
+    u => u.nombre_usuario.toLowerCase() === nombreUsuario.toLowerCase().trim()
+  );
+
+  if (!usuario) {
+    registrarAuditoria(null, "LOGIN_FAILED", `Usuario '${nombreUsuario}' no existe`);
+    return { exito: false, motivo: "credenciales_invalidas" };
+  }
+
+  if (!usuario.activo) {
+    registrarAuditoria(usuario.id, "LOGIN_BLOCKED", `Cuenta inactiva: ${usuario.nombre_usuario}`);
+    return { exito: false, motivo: "cuenta_inactiva", usuario };
+  }
+
+  if (usuario.bloqueado) {
+    registrarAuditoria(usuario.id, "LOGIN_BLOCKED", `Cuenta bloqueada: ${usuario.nombre_usuario}`);
+    return { exito: false, motivo: "cuenta_bloqueada", usuario };
+  }
+
+  // Validar contraseña con el JSON
+  const passwordValida = password === usuario.password;
+
+  if (!passwordValida) {
+    usuario.intentos_fallidos = (usuario.intentos_fallidos || 0) + 1;
+    if (usuario.intentos_fallidos >= appState.maxIntentos) {
+      usuario.bloqueado = true;
+      registrarAuditoria(usuario.id, "LOGIN_LOCKOUT", `Bloqueado por ${appState.maxIntentos} intentos fallidos`);
+      return { exito: false, motivo: "bloqueo_por_intentos", usuario };
     }
+    registrarAuditoria(usuario.id, "LOGIN_FAILED", `Contraseña incorrecta. Intento ${usuario.intentos_fallidos}/${appState.maxIntentos}`);
+    return { exito: false, motivo: "credenciales_invalidas", intentosRestantes: appState.maxIntentos - usuario.intentos_fallidos };
+  }
 
-    // Toggle password visibility
-    document.getElementById('togglePassword')?.addEventListener('click', function() {
-      const passwordInput = document.getElementById('password');
-      const icon = this;
-      
-      if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-      } else {
-        passwordInput.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-      }
+  usuario.intentos_fallidos = 0;
+  usuario.bloqueado = false;
+  usuario.ultimo_acceso = new Date().toISOString();
+
+  const sesion = crearSesion(usuario);
+  registrarAuditoria(usuario.id, "LOGIN_SUCCESS", `Login exitoso. Rol: ${usuario.rol}`);
+
+  return {
+    exito: true,
+    usuario,
+    sesion,
+    forzar_cambio_password: usuario.forzar_cambio_password
+  };
+}
+
+function actualizarIndicadorIntentos() {
+  const cont = document.getElementById('attemptsIndicator');
+  if (!cont) return;
+  cont.innerHTML = '';
+  if (appState.intentosFallidos === 0) return;
+  for (let i = 0; i < appState.maxIntentos; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'attempt-dot ' + (i < appState.intentosFallidos ? 'used' : 'safe');
+    cont.appendChild(dot);
+  }
+}
+
+function mostrarBloqueoCuenta(segundos) {
+  const bar = document.getElementById('lockoutBar');
+  const msg = document.getElementById('lockoutMsg');
+  if (!bar || !msg) return;
+  bar.style.display = 'block';
+
+  let restantes = segundos;
+  const tick = () => {
+    msg.innerHTML = `Cuenta bloqueada. Espera <strong>${restantes}s</strong> para intentar nuevamente.`;
+    if (restantes <= 0) {
+      bar.style.display = 'none';
+      appState.intentosFallidos = 0;
+      actualizarIndicadorIntentos();
+      document.getElementById('loginButton').disabled = false;
+      document.getElementById('loginButton').innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar';
+      return;
+    }
+    restantes--;
+    appState.lockoutTimer = setTimeout(tick, 1000);
+  };
+  tick();
+}
+
+function setButtonLoading(loading) {
+  const btn = document.getElementById('loginButton');
+  if (loading) {
+    btn.disabled = true;
+    btn.classList.add('btn-loading');
+    btn.innerHTML = '<span style="opacity:0">Verificando...</span>';
+  } else {
+    btn.disabled = false;
+    btn.classList.remove('btn-loading');
+    btn.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar';
+  }
+}
+
+function mostrarPerfilUsuario(resultado) {
+  const { usuario, sesion } = resultado;
+  const cfg = ROLES_CONFIG[usuario.rol];
+
+  if (!cfg) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error de configuración',
+      text: `El rol "${usuario.rol}" no tiene un dashboard configurado`,
+      confirmButtonColor: '#dc3545'
     });
+    return;
+  }
 
-    // Modal handlers
-    document.getElementById('forgotPasswordLink')?.addEventListener('click', function() {
-      document.getElementById('recoveryModal').classList.add('active');
-    });
+  Swal.fire({
+    icon: 'success',
+    title: '¡Acceso concedido!',
+    html: `
+      <div style="text-align:left;background:#f0f4ff;border-radius:14px;padding:18px;margin-top:10px;font-size:14px;line-height:2">
+        <p><i class="fas fa-id-badge" style="color:${cfg.color};width:22px;"></i> <strong>${usuario.nombre_completo}</strong></p>
+        <p><i class="fas fa-user-tag" style="color:${cfg.color};width:22px;"></i> ${cfg.icono} ${cfg.label} — ${usuario.cargo}</p>
+        <p><i class="fas fa-envelope" style="color:${cfg.color};width:22px;"></i> ${usuario.correo}</p>
+        <p><i class="fas fa-briefcase" style="color:${cfg.color};width:22px;"></i> ${usuario.area_id}</p>
+      </div>
+      <p style="margin-top:12px;color:#6c757d;font-size:13px;">Redirigiendo a tu panel...</p>
+    `,
+    confirmButtonColor: cfg.color,
+    confirmButtonText: `Ir a mi panel <i class="fas fa-arrow-right" style="margin-left:6px;"></i>`,
+    timer: 2500,
+    timerProgressBar: true,
+    willClose: () => {
+      localStorage.setItem('ultimo_acceso_exitoso', new Date().toISOString());
+      window.location.href = cfg.dashboard;
+    }
+  });
+}
 
-    document.getElementById('closeModal')?.addEventListener('click', function() {
-      document.getElementById('recoveryModal').classList.remove('active');
-    });
+function setupEventListeners() {
+  // Formulario de login
+  document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-    document.getElementById('recoveryModal')?.addEventListener('click', function(e) {
-      if (e.target === this) {
-        this.classList.remove('active');
-      }
-    });
-
-    // Login form submit
-    document.getElementById('loginForm')?.addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      if (!DATABASE) {
-        await loadDatabase();
-        if (!DATABASE) return;
-      }
-
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value;
-      const rememberMe = document.getElementById('rememberMe').checked;
-
-      console.log('🔍 Intentando login con usuario:', username);
-
-      // Buscar usuario en data3.json
-      const user = DATABASE.usuarios.find(u => 
-        (u.nombre_usuario === username || u.correo === username) && 
-        u.password === password &&
-        u.activo === true
-      );
-
-      if (!user) {
-        console.log('❌ Credenciales incorrectas');
-        Swal.fire({
-          icon: 'error',
-          title: 'Credenciales incorrectas',
-          text: 'Usuario o contraseña incorrectos',
-          confirmButtonColor: '#dc3545'
-        });
-        return;
-      }
-
-      // Verificar si está bloqueado
-      if (user.bloqueado) {
-        console.log('❌ Usuario bloqueado:', user.nombre_usuario);
-        Swal.fire({
-          icon: 'error',
-          title: 'Cuenta Bloqueada',
-          text: 'Tu cuenta ha sido bloqueada. Contacta al administrador.',
-          confirmButtonColor: '#dc3545'
-        });
-        return;
-      }
-
-      console.log('✅ Usuario autenticado:', user.nombre_completo);
-
-      // Crear sesión
-      const ahora = new Date();
-      const expiracion = new Date(ahora.getTime() + 12 * 60 * 60 * 1000); // 12 horas
-
-      // Generar ID de sesión
-      const existingSessions = DATABASE.sesiones || [];
-      const sessionNumber = existingSessions.length + 1;
-      const sessionId = `SES-${String(sessionNumber).padStart(3, '0')}`;
-      
-      const sessionRecord = {
-        id: sessionId,
-        usuario_id: user.id,
-        activa: true,
-        fecha_inicio: ahora.toISOString(),
-        fecha_expiracion: expiracion.toISOString()
-      };
-
-      // Registrar sesión vía Netlify Function UNIFICADA
-      try {
-        const response = await fetch('/.netlify/functions/database-operations', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            action: 'register_session',
-            session_data: sessionRecord
-          })
-        });
-
-        if (response.ok) {
-          const result = await response.json();
-          console.log('✅ Sesión registrada en servidor:', result);
-        } else {
-          console.warn('⚠️ No se pudo registrar en servidor, continuando con sesión local');
-        }
-      } catch (error) {
-        console.warn('⚠️ Error al registrar sesión en servidor:', error);
-      }
-
-      // SIMULACIÓN CONSOLA: Mostrar lo que se guardaría en data3.json
-      console.log('═══════════════════════════════════════════════');
-      console.log('📝 REGISTRO EN data3.json -> tabla sesiones:');
-      console.log('═══════════════════════════════════════════════');
-      console.log(JSON.stringify(sessionRecord, null, 2));
-      console.log('═══════════════════════════════════════════════');
-
-      // Crear datos de sesión para sessionStorage
-      const sessionData = {
-        session_id: sessionId,
-        id: user.id,
-        nombre_completo: user.nombre_completo,
-        nombre_usuario: user.nombre_usuario,
-        correo: user.correo,
-        rol: user.rol,
-        cargo: user.cargo,
-        area_responsabilidad: user.area_responsabilidad,
-        especialidad: user.especialidad,
-        telefono: user.telefono,
-        permisos: user.permisos,
-        login_time: ahora.toISOString(),
-        expiracion: expiracion.toISOString()
-      };
-
-      // Guardar sesión en sessionStorage
-      sessionStorage.setItem('session_SAC', JSON.stringify(sessionData));
-      console.log('✅ Sesión guardada en sessionStorage');
-
-      // Si "Recordarme" está activado, guardar solo el usuario
-      if (rememberMe) {
-        localStorage.setItem('remember_user', username);
-        console.log('✅ Usuario guardado para recordar');
-      } else {
-        localStorage.removeItem('remember_user');
-      }
-
-      // Mostrar mensaje de bienvenida
-      await Swal.fire({
-        icon: 'success',
-        title: '¡Bienvenido!',
-        html: `<p style="font-size: 16px; margin-top: 10px;">Hola <strong>${user.nombre_completo}</strong></p>
-               <p style="font-size: 14px; color: #666; margin-top: 5px;">${user.cargo}</p>`,
-        timer: 2000,
-        showConfirmButton: false
-      });
-
-      // Redirigir según el rol
-      redirectByRole(user.rol);
-    });
-
-    // Recovery form submit
-    document.getElementById('recoveryForm')?.addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      if (!DATABASE) {
-        await loadDatabase();
-        if (!DATABASE) return;
-      }
-
-      const username = document.getElementById('recoveryUsername').value.trim();
-      const email = document.getElementById('recoveryEmail').value.trim();
-
-      console.log('🔍 Buscando usuario para recuperación:', username, email);
-
-      // Buscar usuario por nombre de usuario Y correo (ambos deben coincidir)
-      const user = DATABASE.usuarios.find(u => 
-        u.nombre_usuario === username && 
-        u.correo === email && 
-        u.activo === true
-      );
-
-      if (!user) {
-        console.log('❌ Usuario no encontrado para recuperación');
-        Swal.fire({
-          icon: 'error',
-          title: 'Usuario no encontrado',
-          text: 'El usuario y correo no coinciden o no existen en el sistema',
-          confirmButtonColor: '#dc3545'
-        });
-        return;
-      }
-
-      console.log('✅ Usuario encontrado para recuperación:', user.nombre_completo);
-
-      // Generar token de recuperación
-      const token = generateToken();
-      const ahora = new Date();
-      const expiracion = new Date(ahora.getTime() + 60 * 60 * 1000); // 1 hora
-
-      // Generar ID de recuperación
-      const existingRecoveries = DATABASE.recuperacion_password || [];
-      const recoveryNumber = existingRecoveries.length + 1;
-      const recoveryId = `RPASS-${String(recoveryNumber).padStart(3, '0')}`;
-
-      // Crear objeto de recuperación
-      const recoveryData = {
-        id: recoveryId,
-        usuario_id: user.id,
-        token: token,
-        correo: user.correo,
-        usado: false,
-        fecha_creacion: ahora.toISOString(),
-        fecha_expiracion: expiracion.toISOString()
-      };
-
-      // Registrar recuperación vía Netlify Function UNIFICADA
-      try {
-        const response = await fetch('netlify/functions/database-operations.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            action: 'register_recovery',
-            recovery_data: recoveryData
-          })
-        });
-
-        if (response.ok) {
-          const result = await response.json();
-          console.log('✅ Recuperación registrada en servidor:', result);
-        } else {
-          console.warn('⚠️ No se pudo registrar recuperación en servidor');
-        }
-      } catch (error) {
-        console.warn('⚠️ Error al registrar recuperación:', error);
-      }
-
-      // SIMULACIÓN CONSOLA: Mostrar lo que se guardaría en data3.json
-      console.log('═══════════════════════════════════════════════');
-      console.log('📝 REGISTRO EN data3.json -> tabla recuperacion_password:');
-      console.log('═══════════════════════════════════════════════');
-      console.log(JSON.stringify(recoveryData, null, 2));
-      console.log('═══════════════════════════════════════════════');
-
-      // Generar enlace
-      const baseUrl = window.location.origin;
-      const recoveryLink = `${baseUrl}/reset-password.html?token=${token}`;
-
-      // Mostrar enlace generado
+    if (appState.bloqueadoHasta && Date.now() < appState.bloqueadoHasta) {
+      const restantes = Math.ceil((appState.bloqueadoHasta - Date.now()) / 1000);
       Swal.fire({
-        icon: 'success',
-        title: 'Enlace Generado',
-        html: `
-          <div style="text-align: left;">
-            <p style="text-align: center; margin-bottom: 20px;">Se ha generado un enlace de recuperación para:</p>
-            <div style="background: #f0f9ff; border: 2px solid #0077ff; border-radius: 10px; padding: 15px; margin-bottom: 15px;">
-              <p style="color: #0077ff; margin: 5px 0;"><i class="fas fa-user"></i> <strong>Usuario:</strong> ${user.nombre_usuario}</p>
-              <p style="color: #0077ff; margin: 5px 0;"><i class="fas fa-envelope"></i> <strong>Correo:</strong> ${user.correo}</p>
-            </div>
-            <div style="background: #f0f0f0; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
-              <p style="color: #333; font-size: 12px; margin-bottom: 8px;"><strong>Token generado:</strong></p>
-              <p style="color: #0077ff; font-size: 11px; word-break: break-all; font-family: monospace;">${token}</p>
-            </div>
-            <div style="background: #fff3cd; border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin-bottom: 15px;">
-              <p style="color: #856404; font-size: 12px; margin-bottom: 8px;"><strong>Enlace de recuperación:</strong></p>
-              <a href="${recoveryLink}" target="_blank" style="color: #0077ff; font-size: 11px; word-break: break-all;">${recoveryLink}</a>
-            </div>
-            <p style="text-align: center; margin-top: 15px; font-size: 13px; color: #666;">
-              <i class="fas fa-clock"></i> El enlace expira en 1 hora
-            </p>
-            <p style="text-align: center; margin-top: 10px; font-size: 12px; color: #999;">
-              <i class="fas fa-info-circle"></i> Click en el enlace para abrirlo
-            </p>
-          </div>
-        `,
-        width: '600px',
-        confirmButtonColor: '#0077ff',
-        confirmButtonText: 'Entendido'
+        icon: 'warning',
+        title: 'Cuenta bloqueada',
+        html: `Demasiados intentos fallidos.<br>Intenta en <strong>${restantes} segundos</strong>.`,
+        confirmButtonColor: '#f59e0b'
+      });
+      return;
+    }
+
+    const nombreUsuario = document.getElementById('usuario').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!nombreUsuario || !password) {
+      Swal.fire({ 
+        icon: 'warning', 
+        title: 'Campos requeridos', 
+        text: 'Completa todos los campos.', 
+        confirmButtonColor: '#0077ff' 
+      });
+      return;
+    }
+
+    setButtonLoading(true);
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Simular proceso
+    
+    const resultado = autenticar(nombreUsuario, password);
+    setButtonLoading(false);
+
+    if (resultado.exito) {
+      appState.intentosFallidos = 0;
+      actualizarIndicadorIntentos();
+      mostrarPerfilUsuario(resultado);
+    } else {
+      appState.intentosFallidos++;
+      actualizarIndicadorIntentos();
+
+      ['usuario','password'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.add('input-error');
+          setTimeout(() => el.classList.remove('input-error'), 600);
+        }
       });
 
-      document.getElementById('recoveryModal').classList.remove('active');
-      document.getElementById('recoveryForm').reset();
-    });
-
-    // Redirigir según rol
-    function redirectByRole(rol) {
-      console.log('🔄 Redirigiendo a dashboard de:', rol);
-      switch(rol) {
-        case 'administrador':
-          window.location.href = 'dashboard-admin.html';
+      switch (resultado.motivo) {
+        case 'credenciales_invalidas':
+          Swal.fire({
+            icon: 'error',
+            title: 'Credenciales incorrectas',
+            html: `Usuario o contraseña inválidos.<br>
+                   <small>Te quedan <strong>${resultado.intentosRestantes || (appState.maxIntentos - appState.intentosFallidos)}</strong> intento(s).</small>`,
+            confirmButtonColor: '#dc3545'
+          });
           break;
-        case 'responsable_audiovisual':
-          window.location.href = 'dashboard-audiovisual.html';
+        case 'cuenta_inactiva':
+          Swal.fire({
+            icon: 'warning',
+            title: 'Cuenta inactiva',
+            html: `La cuenta ha sido desactivada.<br><small>Contacta al administrador.</small>`,
+            confirmButtonColor: '#f59e0b'
+          });
           break;
-        case 'personal_apoyo_aulas':
-          window.location.href = 'dashboard-aulas.html';
+        case 'cuenta_bloqueada':
+        case 'bloqueo_por_intentos':
+          appState.bloqueadoHasta = Date.now() + appState.bloqueoDuracionMs;
+          document.getElementById('loginButton').disabled = true;
+          mostrarBloqueoCuenta(30);
+          Swal.fire({
+            icon: 'error',
+            title: 'Cuenta bloqueada',
+            html: `Superaste el límite de <strong>${appState.maxIntentos} intentos</strong>.<br>
+                   Se desbloqueará en 30 segundos.`,
+            confirmButtonColor: '#dc3545'
+          });
           break;
-        case 'responsable_mantenimientos':
-          window.location.href = 'dashboard-mantenimientos.html';
+        case 'sin_base_datos':
+          Swal.fire({
+            icon: 'error',
+            title: 'Base de datos no cargada',
+            text: 'Espera a que el sistema cargue completamente',
+            confirmButtonColor: '#dc3545'
+          });
           break;
-        default:
-          window.location.href = 'dashboard.html';
       }
     }
+  });
 
-    // Generar token aleatorio
-    function generateToken() {
-      return Array.from(crypto.getRandomValues(new Uint8Array(32)))
-        .map(b => b.toString(16).padStart(2, '0'))
-        .join('');
-    }
+  // Toggle de contraseña
+  document.getElementById('togglePassword')?.addEventListener('click', function() {
+    const input = document.getElementById('password');
+    const tipo = input.type === 'password' ? 'text' : 'password';
+    input.type = tipo;
+    this.innerHTML = tipo === 'password'
+      ? '<i class="fas fa-eye"></i>'
+      : '<i class="fas fa-eye-slash"></i>';
+  });
 
-    // Inicialización
-    window.addEventListener('DOMContentLoaded', async function() {
-      console.log('🚀 Iniciando sistema de login...');
-      
-      await loadDatabase();
-      
-      // Verificar sesión existente
-      if (checkExistingSession()) {
-        return;
+  // Recordar usuario
+  const storedUser = localStorage.getItem('SAC_rememberedUser');
+  if (storedUser) {
+    document.getElementById('usuario').value = storedUser;
+    document.getElementById('rememberMe').checked = true;
+  }
+
+  document.getElementById('rememberMe')?.addEventListener('change', function() {
+    const val = document.getElementById('usuario').value;
+    this.checked ? localStorage.setItem('SAC_rememberedUser', val) : localStorage.removeItem('SAC_rememberedUser');
+  });
+
+  // Recuperar contraseña
+  document.getElementById('forgotPassword')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    Swal.fire({
+      title: 'Recuperar contraseña',
+      html: `
+        <input type="text" id="swal_usuario" class="swal2-input" placeholder="Nombre de usuario">
+        <input type="email" id="swal_correo" class="swal2-input" placeholder="Correo institucional">
+      `,
+      confirmButtonText: 'Enviar instrucciones',
+      confirmButtonColor: '#0077ff',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      preConfirm: () => {
+        const usr = document.getElementById('swal_usuario').value.trim();
+        const mail = document.getElementById('swal_correo').value.trim();
+        if (!usr || !mail) {
+          Swal.showValidationMessage('Completa ambos campos');
+          return false;
+        }
+        if (!DATABASE) {
+          Swal.showValidationMessage('Base de datos no cargada');
+          return false;
+        }
+        const found = DATABASE.usuarios.find(
+          u => u.nombre_usuario.toLowerCase() === usr.toLowerCase() && u.correo.toLowerCase() === mail.toLowerCase()
+        );
+        if (!found) {
+          Swal.showValidationMessage('Usuario no encontrado');
+          return false;
+        }
+        return { usuario: found };
       }
-
-      // Cargar usuario recordado
-      const rememberedUser = localStorage.getItem('remember_user');
-      if (rememberedUser) {
-        document.getElementById('username').value = rememberedUser;
-        document.getElementById('rememberMe').checked = true;
-        console.log('✅ Usuario recordado cargado:', rememberedUser);
+    }).then(result => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Correo enviado!',
+          html: `Instrucciones enviadas a <strong>${result.value.usuario.correo}</strong>.`,
+          confirmButtonColor: '#0077ff'
+        });
       }
-
-      console.log('✅ Sistema listo para usar');
     });
-  </script>
+  });
+
+  // Cerrar sesión desde cualquier página
+  window.cerrarSesion = function(motivo = null) {
+    sessionStorage.removeItem('session_SAC');
+    localStorage.removeItem('session_SAC_permanent');
+    
+    if (motivo) {
+      localStorage.setItem('logout_motivo', motivo);
+    }
+    
+    window.location.href = 'index.html?logout=1';
+  };
+
+  // Manejar mensaje de cierre de sesión
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('logout') === '1') {
+    const motivo = localStorage.getItem('logout_motivo');
+    if (motivo) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Sesión cerrada',
+        text: motivo === 'expired' ? 'Tu sesión expiró. Por favor inicia sesión nuevamente.' : 'Sesión cerrada correctamente',
+        confirmButtonColor: '#1e3a8a'
+      });
+      localStorage.removeItem('logout_motivo');
+    }
+    history.replaceState({}, document.title, 'index.html');
+  }
+}
+
+// ===== INICIALIZACIÓN PRINCIPAL (ÚNICO EVENTO DOMContentLoaded) =====
+document.addEventListener('DOMContentLoaded', async () => {
+  // 1. Verificar sesión activa PRIMERO
+  if (verificarSesionActiva()) {
+    return;
+  }
+  
+  // 2. Cargar base de datos
+  await cargarBaseDeDatos();
+  
+  // 3. Protección contra navegación hacia atrás
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+      if (verificarSesionActiva()) {
+        location.reload();
+      }
+    }
+  });
+});
+</script>
 </body>
 </html>
