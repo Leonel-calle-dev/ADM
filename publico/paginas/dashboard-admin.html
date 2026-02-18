@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Administrativo - Sistema de Gestión del Campus</title>
+    <title>Dashboard Adm - Sistema de Gestión del Campus</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
@@ -11,713 +12,9 @@
     
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        :root {
-            --bg-primary: #0a0e1a;
-            --bg-secondary: #111827;
-            --bg-card: #1a2234;
-            --bg-hover: #252e45;
-            --border-color: #2d3748;
-            --text-primary: #f3f4f6;
-            --text-secondary: #9ca3af;
-            --accent-blue: #3b82f6;
-            --accent-blue-hover: #2563eb;
-            --accent-green: #10b981;
-            --accent-red: #ef4444;
-            --accent-yellow: #f59e0b;
-            --accent-purple: #8b5cf6;
-            --accent-indigo: #6366f1;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            overflow-x: hidden;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 260px;
-            height: 100vh;
-            background: linear-gradient(180deg, #1a2234 0%, #111827 100%);
-            border-right: 1px solid var(--border-color);
-            padding: 1.5rem;
-            overflow-y: auto;
-            transition: transform 0.3s ease;
-            z-index: 1000;
-        }
-
-        .sidebar.collapsed {
-            transform: translateX(-100%);
-        }
-
-        .sidebar-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 2rem;
-        }
-
-        .sidebar-logo {
-            width: 40px;
-            height: 40px;
-            background: var(--accent-blue);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .sidebar-title {
-            flex: 1;
-        }
-
-        .sidebar-title h1 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            line-height: 1.2;
-        }
-
-        .sidebar-title p {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-top: 0.25rem;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem;
-            background: var(--bg-card);
-            border-radius: 12px;
-            margin-bottom: 2rem;
-        }
-
-        .user-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--accent-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: white;
-        }
-
-        .user-info h3 {
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 0.125rem;
-        }
-
-        .user-info p {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        .user-badge {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            background: rgba(59, 130, 246, 0.2);
-            color: var(--accent-blue);
-            border-radius: 4px;
-            font-size: 0.625rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-top: 0.25rem;
-        }
-
-        .nav-section {
-            margin-bottom: 1.5rem;
-        }
-
-        .nav-section-title {
-            font-size: 0.625rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
-            padding-left: 0.75rem;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem;
-            border-radius: 8px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            margin-bottom: 0.25rem;
-            cursor: pointer;
-        }
-
-        .nav-item:hover {
-            background: var(--bg-hover);
-            color: var(--text-primary);
-        }
-
-        .nav-item.active {
-            background: var(--accent-blue);
-            color: white;
-        }
-
-        .nav-icon {
-            font-size: 1.25rem;
-        }
-
-        /* Sidebar Backdrop */
-        .sidebar-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            display: none;
-        }
-
-        .sidebar-backdrop.active {
-            display: block;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: 260px;
-            padding: 2rem;
-            transition: margin-left 0.3s ease;
-            min-height: 100vh;
-        }
-
-        .main-content.expanded {
-            margin-left: 0;
-        }
-
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            gap: 1rem;
-        }
-
-        .menu-toggle {
-            display: none;
-            width: 40px;
-            height: 40px;
-            border: none;
-            background: var(--bg-card);
-            color: var(--text-primary);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.25rem;
-            transition: all 0.2s ease;
-        }
-
-        .menu-toggle:hover {
-            background: var(--bg-hover);
-        }
-
-        .page-header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .page-header p {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
-        .btn-exit {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background: linear-gradient(90deg, var(--accent-red), #dc2626);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
-        }
-
-        .btn-exit:hover {
-            background: #dc2626;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, var(--bg-card) 0%, #1e2a3f 100%);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
-        }
-
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            border-color: var(--accent-blue);
-        }
-
-        .stat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            line-height: 1;
-        }
-
-        .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--accent-blue);
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        /* Content Grid */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        .content-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-            overflow: hidden;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .card-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .card-title-icon {
-            font-size: 1.25rem;
-        }
-
-        .btn-primary {
-            padding: 0.625rem 1.25rem;
-            background: linear-gradient(90deg, var(--accent-indigo), var(--accent-purple));
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-
-        .btn-primary:hover {
-            background: var(--accent-blue-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
-        }
-
-        .btn-secondary {
-            padding: 0.625rem 1.25rem;
-            background: var(--bg-hover);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-secondary:hover {
-            background: var(--bg-card);
-            border-color: var(--accent-blue);
-        }
-
-        /* Table */
-        .table-container {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        thead th {
-            text-align: left;
-            padding: 0.75rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        tbody td {
-            padding: 1rem 0.75rem;
-            font-size: 0.875rem;
-            border-bottom: 1px solid rgba(45, 55, 72, 0.3);
-        }
-
-        tbody tr {
-            transition: all 0.2s ease;
-        }
-
-        tbody tr:hover {
-            background: rgba(59, 130, 246, 0.05);
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.375rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: capitalize;
-        }
-
-        .status-aprobado {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--accent-green);
-        }
-
-        .status-pendiente, .status-enviado {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--accent-yellow);
-        }
-
-        .status-observado {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--accent-red);
-        }
-
-        .status-activo {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--accent-green);
-        }
-
-        .status-inactivo {
-            background: rgba(107, 114, 128, 0.1);
-            color: var(--text-secondary);
-        }
-
-        /* Action Buttons */
-        .action-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .btn-icon {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            background: var(--bg-hover);
-            color: var(--text-secondary);
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.875rem;
-            transition: all 0.2s ease;
-        }
-
-        .btn-icon:hover {
-            background: var(--accent-blue);
-            color: white;
-        }
-
-        .btn-icon.danger:hover {
-            background: var(--accent-red);
-        }
-
-        .btn-icon.success:hover {
-            background: var(--accent-green);
-        }
-
-        /* Filters */
-        .filters {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .filter-label {
-            display: block;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-        }
-
-        .filter-input,
-        .filter-select {
-            width: 100%;
-            padding: 0.625rem 0.75rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 0.875rem;
-            transition: all 0.2s ease;
-        }
-
-        .filter-input:focus,
-        .filter-select:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: var(--text-secondary);
-        }
-
-        .empty-state-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-
-        /* Quick Actions */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .quick-action {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1.5rem 1rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            text-decoration: none;
-            color: var(--text-primary);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .quick-action:hover {
-            background: var(--bg-hover);
-            border-color: var(--accent-blue);
-            transform: translateY(-4px);
-        }
-
-        .quick-action-icon {
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            border-radius: 12px;
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--accent-blue);
-        }
-
-        .quick-action-label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        /* SweetAlert Custom Styles */
-        .swal2-popup {
-            background: var(--bg-card) !important;
-            border: 2px solid var(--accent-indigo) !important;
-            border-radius: 16px !important;
-        }
-
-        .swal2-title {
-            color: var(--text-primary) !important;
-        }
-
-        .swal2-html-container {
-            color: var(--text-secondary) !important;
-        }
-
-        .swal2-confirm {
-            background: linear-gradient(90deg, var(--accent-indigo), var(--accent-purple)) !important;
-            border-radius: 8px !important;
-        }
-
-        .swal2-cancel {
-            background: var(--bg-hover) !important;
-            border-radius: 8px !important;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .menu-toggle {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                padding: 1rem;
-            }
-
-            .page-header h1 {
-                font-size: 1.5rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .top-bar {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .filters {
-                flex-direction: column;
-            }
-
-            .filter-group {
-                min-width: 100%;
-            }
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-blue);
-        }
-
-        /* Tab Content */
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-    </style>
+    <!-- Estilos principales -->
+    <link rel="stylesheet" href="../activos/css/style.css">
 </head>
 <body>
     <!-- Sidebar Backdrop -->
@@ -726,9 +23,8 @@
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <div class="sidebar-logo">🍃</div>
+            <div class="sidebar-logo"> <img src="../ADM/img/Logo-adm.png" alt="logo" class="logo-img"></div>
             <div class="sidebar-title">
-                
                 <h1>Panel Administrativo</h1>
                 <p>Sistema de Gestión del Campus</p>
             </div>
@@ -886,7 +182,7 @@
     </main>
 
     <script>
-        const DB_PATH = 'data3.json';
+        const DB_PATH = '../../data3.json';
         let DATABASE = null;
         let currentUser = null;
 
@@ -921,7 +217,7 @@
         function checkSession() {
             const sessionData = sessionStorage.getItem('session_SAC');
             if (!sessionData) {
-                window.location.href = 'index.html';
+                window.location.href = '../../index.html';
                 return;
             }
 
@@ -1008,7 +304,6 @@
                         <div class="stat-icon">👥</div>
                     </div>
                 </div>
-                
                 <div class="stat-card">
                     <div class="stat-header">
                         <div>
@@ -1018,7 +313,6 @@
                         <div class="stat-icon">📋</div>
                     </div>
                 </div>
-                
                 <div class="stat-card">
                     <div class="stat-header">
                         <div>
@@ -1028,7 +322,6 @@
                         <div class="stat-icon">🕐</div>
                     </div>
                 </div>
-                
                 <div class="stat-card">
                     <div class="stat-header">
                         <div>
@@ -1076,40 +369,21 @@
         }
 
         function showTab(tabName) {
-            // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             
-            // Show selected tab
             const selectedTab = document.getElementById('tab-' + tabName);
             if (selectedTab) {
                 selectedTab.classList.add('active');
                 
-                // Load content based on tab
                 switch(tabName) {
-                    case 'usuarios':
-                        loadUsuariosTab();
-                        break;
-                    case 'actividades':
-                        loadActividadesTab();
-                        break;
-                    case 'equipos':
-                        loadEquiposTab();
-                        break;
-                    case 'aulas':
-                        loadAulasTab();
-                        break;
-                    case 'materiales':
-                        loadMaterialesTab();
-                        break;
-                    case 'estadisticas':
-                        loadEstadisticasTab();
-                        break;
-                    case 'auditoria':
-                        loadAuditoriaTab();
-                        break;
-                    case 'configuracion':
-                        loadConfiguracionTab();
-                        break;
+                    case 'usuarios':       loadUsuariosTab();       break;
+                    case 'actividades':    loadActividadesTab();    break;
+                    case 'equipos':        loadEquiposTab();        break;
+                    case 'aulas':          loadAulasTab();          break;
+                    case 'materiales':     loadMaterialesTab();     break;
+                    case 'estadisticas':   loadEstadisticasTab();   break;
+                    case 'auditoria':      loadAuditoriaTab();      break;
+                    case 'configuracion':  loadConfiguracionTab();  break;
                 }
             }
         }
@@ -1212,11 +486,9 @@
             const statusFilter = document.getElementById('filterUserStatus')?.value || '';
 
             const rows = document.querySelectorAll('#usersTableBody tr');
-            
             rows.forEach(row => {
                 const userId = row.getAttribute('data-user-id');
                 const user = DATABASE.usuarios.find(u => u.id === userId);
-                
                 if (!user) return;
 
                 const matchesSearch = searchTerm === '' || 
@@ -1235,7 +507,6 @@
 
         function showAddUserModal() {
             const roles = DATABASE.roles || [];
-            
             Swal.fire({
                 title: 'Crear Nuevo Usuario',
                 html: `
@@ -1295,13 +566,10 @@
                         Swal.showValidationMessage('Por favor complete todos los campos obligatorios');
                         return false;
                     }
-
                     return { name, username, email, password, cargo, rol, phone, area };
                 }
             }).then((result) => {
-                if (result.isConfirmed) {
-                    createUser(result.value);
-                }
+                if (result.isConfirmed) createUser(result.value);
             });
         }
 
@@ -1348,7 +616,6 @@
         function editUser(userId) {
             const user = DATABASE.usuarios.find(u => u.id === userId);
             if (!user) return;
-
             const roles = DATABASE.roles || [];
 
             Swal.fire({
@@ -1389,20 +656,16 @@
                 confirmButtonText: 'Guardar Cambios',
                 cancelButtonText: 'Cancelar',
                 width: '600px',
-                preConfirm: () => {
-                    return {
-                        name: document.getElementById('editUserName').value,
-                        email: document.getElementById('editUserEmail').value,
-                        cargo: document.getElementById('editUserCargo').value,
-                        rol: document.getElementById('editUserRole').value,
-                        phone: document.getElementById('editUserPhone').value,
-                        active: document.getElementById('editUserActive').checked
-                    };
-                }
+                preConfirm: () => ({
+                    name: document.getElementById('editUserName').value,
+                    email: document.getElementById('editUserEmail').value,
+                    cargo: document.getElementById('editUserCargo').value,
+                    rol: document.getElementById('editUserRole').value,
+                    phone: document.getElementById('editUserPhone').value,
+                    active: document.getElementById('editUserActive').checked
+                })
             }).then((result) => {
-                if (result.isConfirmed) {
-                    updateUser(userId, result.value);
-                }
+                if (result.isConfirmed) updateUser(userId, result.value);
             });
         }
 
@@ -1421,20 +684,13 @@
                 updated_at: new Date().toISOString()
             };
 
-            Swal.fire({
-                icon: 'success',
-                title: '¡Usuario Actualizado!',
-                text: 'Los cambios han sido guardados exitosamente',
-                confirmButtonText: 'Aceptar'
-            }).then(() => {
-                loadUsuariosTab();
-            });
+            Swal.fire({ icon: 'success', title: '¡Usuario Actualizado!', text: 'Los cambios han sido guardados exitosamente', confirmButtonText: 'Aceptar' })
+                .then(() => loadUsuariosTab());
         }
 
         function viewUserPermissions(userId) {
             const user = DATABASE.usuarios.find(u => u.id === userId);
             if (!user) return;
-
             const permisos = user.permisos || [];
 
             Swal.fire({
@@ -1490,18 +746,9 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const index = DATABASE.usuarios.findIndex(u => u.id === userId);
-                    DATABASE.usuarios.splice(index, 1);
-                    
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Usuario Eliminado!',
-                        text: 'El usuario ha sido eliminado del sistema',
-                        confirmButtonText: 'Aceptar'
-                    }).then(() => {
-                        loadUsuariosTab();
-                        loadStats();
-                    });
+                    DATABASE.usuarios.splice(DATABASE.usuarios.findIndex(u => u.id === userId), 1);
+                    Swal.fire({ icon: 'success', title: '¡Usuario Eliminado!', text: 'El usuario ha sido eliminado del sistema', confirmButtonText: 'Aceptar' })
+                        .then(() => { loadUsuariosTab(); loadStats(); });
                 }
             });
         }
@@ -1510,21 +757,14 @@
         function loadActividadesTab() {
             const content = document.getElementById('tab-actividades');
             if (!DATABASE) return;
-
             const actividades = DATABASE.actividades || [];
 
             content.innerHTML = `
                 <div class="content-card">
                     <div class="card-header">
-                        <h2 class="card-title">
-                            <span class="card-title-icon">📋</span>
-                            Gestión de Actividades
-                        </h2>
-                        <button class="btn-primary" onclick="showAddActivityModal()">
-                            <i class="fas fa-plus"></i> Nueva Actividad
-                        </button>
+                        <h2 class="card-title"><span class="card-title-icon">📋</span> Gestión de Actividades</h2>
+                        <button class="btn-primary" onclick="showAddActivityModal()"><i class="fas fa-plus"></i> Nueva Actividad</button>
                     </div>
-
                     <div class="filters">
                         <div class="filter-group">
                             <label class="filter-label">Buscar</label>
@@ -1547,19 +787,12 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="table-container">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Título</th>
-                                    <th>Categoría</th>
-                                    <th>Usuario</th>
-                                    <th>Lugar</th>
-                                    <th>Duración</th>
-                                    <th>Estado</th>
-                                    <th>Fecha</th>
-                                    <th>Acciones</th>
+                                    <th>Título</th><th>Categoría</th><th>Usuario</th><th>Lugar</th>
+                                    <th>Duración</th><th>Estado</th><th>Fecha</th><th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody id="activitiesTableBody">
@@ -1598,18 +831,13 @@
             const categoryFilter = document.getElementById('filterActivityCategory')?.value || '';
             const statusFilter = document.getElementById('filterActivityStatus')?.value || '';
 
-            const rows = document.querySelectorAll('#activitiesTableBody tr');
-            
-            rows.forEach(row => {
-                const activityId = row.getAttribute('data-activity-id');
-                const activity = DATABASE.actividades.find(a => a.id === activityId);
-                
+            document.querySelectorAll('#activitiesTableBody tr').forEach(row => {
+                const activity = DATABASE.actividades.find(a => a.id === row.getAttribute('data-activity-id'));
                 if (!activity) return;
 
                 const matchesSearch = searchTerm === '' || 
                     activity.titulo.toLowerCase().includes(searchTerm) ||
                     activity.descripcion.toLowerCase().includes(searchTerm);
-
                 const matchesCategory = categoryFilter === '' || activity.categoria_id === categoryFilter;
                 const matchesStatus = statusFilter === '' || activity.estado === statusFilter;
 
@@ -1698,20 +926,16 @@
                         Swal.showValidationMessage('Por favor complete todos los campos obligatorios');
                         return false;
                     }
-
                     return { title, description, userId, categoryId, typeId, place, duration, priority, notify };
                 }
             }).then((result) => {
-                if (result.isConfirmed) {
-                    createActivity(result.value);
-                }
+                if (result.isConfirmed) createActivity(result.value);
             });
         }
 
         function createActivity(activityData) {
             const newActivityId = `ACT-${String(DATABASE.actividades.length + 1).padStart(3, '0')}`;
-            
-            const newActivity = {
+            DATABASE.actividades.push({
                 id: newActivityId,
                 titulo: activityData.title,
                 descripcion: activityData.description,
@@ -1732,35 +956,21 @@
                 evidencias: [],
                 created_at: new Date().toISOString(),
                 updated_at: new Date().toISOString()
-            };
-
-            DATABASE.actividades.push(newActivity);
+            });
             
-            let successMessage = `La actividad "${activityData.title}" ha sido creada y asignada exitosamente`;
-            
+            let msg = `La actividad "${activityData.title}" ha sido creada y asignada exitosamente`;
             if (activityData.notify) {
                 const usuario = DATABASE.usuarios.find(u => u.id === activityData.userId);
-                if (usuario) {
-                    successMessage += `<br><br><i class="fas fa-envelope"></i> Se enviará una notificación a ${usuario.nombre_completo}`;
-                }
+                if (usuario) msg += `<br><br><i class="fas fa-envelope"></i> Se enviará una notificación a ${usuario.nombre_completo}`;
             }
             
-            Swal.fire({
-                icon: 'success',
-                title: '¡Actividad Creada!',
-                html: successMessage,
-                confirmButtonText: 'Aceptar'
-            }).then(() => {
-                loadActividadesTab();
-                loadStats();
-                loadRecentActivities();
-            });
+            Swal.fire({ icon: 'success', title: '¡Actividad Creada!', html: msg, confirmButtonText: 'Aceptar' })
+                .then(() => { loadActividadesTab(); loadStats(); loadRecentActivities(); });
         }
 
         function viewActivity(activityId) {
             const activity = DATABASE.actividades.find(a => a.id === activityId);
             if (!activity) return;
-
             const categoria = DATABASE.categorias_mantenimiento.find(c => c.id === activity.categoria_id);
             const tipo = DATABASE.tipos_mantenimiento.find(t => t.id === activity.tipo_mantenimiento_id);
             const usuario = DATABASE.usuarios.find(u => u.id === activity.usuario_id);
@@ -1781,21 +991,11 @@
                             <p style="margin-bottom: 5px;"><strong>Descripción:</strong></p>
                             <p style="color: var(--text-secondary);">${activity.descripcion}</p>
                         </div>
-                        ${activity.observacion_empleado ? `
-                            <div style="margin-bottom: 15px;">
-                                <p style="margin-bottom: 5px;"><strong>Observaciones del Empleado:</strong></p>
-                                <p style="color: var(--text-secondary);">${activity.observacion_empleado}</p>
-                            </div>
-                        ` : ''}
-                        ${activity.observacion_supervisor ? `
-                            <div style="margin-bottom: 15px;">
-                                <p style="margin-bottom: 5px;"><strong>Observaciones del Supervisor:</strong></p>
-                                <p style="color: var(--text-secondary);">${activity.observacion_supervisor}</p>
-                            </div>
-                        ` : ''}
+                        ${activity.observacion_empleado ? `<div style="margin-bottom: 15px;"><p><strong>Obs. Empleado:</strong></p><p style="color: var(--text-secondary);">${activity.observacion_empleado}</p></div>` : ''}
+                        ${activity.observacion_supervisor ? `<div style="margin-bottom: 15px;"><p><strong>Obs. Supervisor:</strong></p><p style="color: var(--text-secondary);">${activity.observacion_supervisor}</p></div>` : ''}
                         <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color);">
-                            <p style="margin-bottom: 5px;"><strong>Estado:</strong> <span class="status-badge status-${activity.estado}">${activity.estado}</span></p>
-                            <p style="margin-bottom: 5px; color: var(--text-secondary);">Registrado: ${new Date(activity.fecha_registro).toLocaleString()}</p>
+                            <p><strong>Estado:</strong> <span class="status-badge status-${activity.estado}">${activity.estado}</span></p>
+                            <p style="color: var(--text-secondary);">Registrado: ${new Date(activity.fecha_registro).toLocaleString()}</p>
                             ${activity.fecha_revision ? `<p style="color: var(--text-secondary);">Revisado: ${new Date(activity.fecha_revision).toLocaleString()}</p>` : ''}
                         </div>
                     </div>
@@ -1808,9 +1008,6 @@
         function editActivity(activityId) {
             const activity = DATABASE.actividades.find(a => a.id === activityId);
             if (!activity) return;
-
-            const usuarios = DATABASE.usuarios.filter(u => u.activo) || [];
-            const categorias = DATABASE.categorias_mantenimiento || [];
 
             Swal.fire({
                 title: 'Editar Actividad',
@@ -1846,28 +1043,23 @@
                 confirmButtonText: 'Guardar Cambios',
                 cancelButtonText: 'Cancelar',
                 width: '600px',
-                preConfirm: () => {
-                    return {
-                        title: document.getElementById('editActivityTitle').value,
-                        description: document.getElementById('editActivityDescription').value,
-                        place: document.getElementById('editActivityPlace').value,
-                        duration: document.getElementById('editActivityDuration').value,
-                        status: document.getElementById('editActivityStatus').value
-                    };
-                }
+                preConfirm: () => ({
+                    title: document.getElementById('editActivityTitle').value,
+                    description: document.getElementById('editActivityDescription').value,
+                    place: document.getElementById('editActivityPlace').value,
+                    duration: document.getElementById('editActivityDuration').value,
+                    status: document.getElementById('editActivityStatus').value
+                })
             }).then((result) => {
-                if (result.isConfirmed) {
-                    updateActivity(activityId, result.value);
-                }
+                if (result.isConfirmed) updateActivity(activityId, result.value);
             });
         }
 
         function updateActivity(activityId, activityData) {
-            const activityIndex = DATABASE.actividades.findIndex(a => a.id === activityId);
-            if (activityIndex === -1) return;
-
-            DATABASE.actividades[activityIndex] = {
-                ...DATABASE.actividades[activityIndex],
+            const idx = DATABASE.actividades.findIndex(a => a.id === activityId);
+            if (idx === -1) return;
+            DATABASE.actividades[idx] = {
+                ...DATABASE.actividades[idx],
                 titulo: activityData.title,
                 descripcion: activityData.description,
                 lugar: activityData.place,
@@ -1875,23 +1067,13 @@
                 estado: activityData.status,
                 updated_at: new Date().toISOString()
             };
-
-            Swal.fire({
-                icon: 'success',
-                title: '¡Actividad Actualizada!',
-                text: 'Los cambios han sido guardados exitosamente',
-                confirmButtonText: 'Aceptar'
-            }).then(() => {
-                loadActividadesTab();
-                loadStats();
-                loadRecentActivities();
-            });
+            Swal.fire({ icon: 'success', title: '¡Actividad Actualizada!', text: 'Los cambios han sido guardados exitosamente', confirmButtonText: 'Aceptar' })
+                .then(() => { loadActividadesTab(); loadStats(); loadRecentActivities(); });
         }
 
         function approveActivity(activityId) {
             const activity = DATABASE.actividades.find(a => a.id === activityId);
             if (!activity) return;
-
             Swal.fire({
                 title: '¿Aprobar Actividad?',
                 html: `¿Deseas aprobar la actividad "<strong>${activity.titulo}</strong>"?`,
@@ -1903,21 +1085,12 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const activityIndex = DATABASE.actividades.findIndex(a => a.id === activityId);
-                    DATABASE.actividades[activityIndex].estado = 'aprobado';
-                    DATABASE.actividades[activityIndex].fecha_revision = new Date().toISOString();
-                    DATABASE.actividades[activityIndex].supervisor_id = currentUser.id;
-                    
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Actividad Aprobada!',
-                        text: 'La actividad ha sido aprobada exitosamente',
-                        confirmButtonText: 'Aceptar'
-                    }).then(() => {
-                        loadActividadesTab();
-                        loadStats();
-                        loadRecentActivities();
-                    });
+                    const idx = DATABASE.actividades.findIndex(a => a.id === activityId);
+                    DATABASE.actividades[idx].estado = 'aprobado';
+                    DATABASE.actividades[idx].fecha_revision = new Date().toISOString();
+                    DATABASE.actividades[idx].supervisor_id = currentUser.id;
+                    Swal.fire({ icon: 'success', title: '¡Actividad Aprobada!', text: 'La actividad ha sido aprobada exitosamente', confirmButtonText: 'Aceptar' })
+                        .then(() => { loadActividadesTab(); loadStats(); loadRecentActivities(); });
                 }
             });
         }
@@ -1925,10 +1098,9 @@
         function deleteActivity(activityId) {
             const activity = DATABASE.actividades.find(a => a.id === activityId);
             if (!activity) return;
-
             Swal.fire({
                 title: '¿Eliminar Actividad?',
-                html: `¿Estás seguro de eliminar la actividad "<strong>${activity.titulo}</strong>"?<br><br>Esta acción no se puede deshacer.`,
+                html: `¿Estás seguro de eliminar "<strong>${activity.titulo}</strong>"?<br><br>Esta acción no se puede deshacer.`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#ef4444',
@@ -1937,19 +1109,9 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const index = DATABASE.actividades.findIndex(a => a.id === activityId);
-                    DATABASE.actividades.splice(index, 1);
-                    
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Actividad Eliminada!',
-                        text: 'La actividad ha sido eliminada del sistema',
-                        confirmButtonText: 'Aceptar'
-                    }).then(() => {
-                        loadActividadesTab();
-                        loadStats();
-                        loadRecentActivities();
-                    });
+                    DATABASE.actividades.splice(DATABASE.actividades.findIndex(a => a.id === activityId), 1);
+                    Swal.fire({ icon: 'success', title: '¡Actividad Eliminada!', text: 'La actividad ha sido eliminada del sistema', confirmButtonText: 'Aceptar' })
+                        .then(() => { loadActividadesTab(); loadStats(); loadRecentActivities(); });
                 }
             });
         }
@@ -1958,33 +1120,20 @@
         function loadEquiposTab() {
             const content = document.getElementById('tab-equipos');
             if (!DATABASE) return;
-
             const equipos = DATABASE.equipos || [];
 
             content.innerHTML = `
                 <div class="content-card">
                     <div class="card-header">
-                        <h2 class="card-title">
-                            <span class="card-title-icon">💻</span>
-                            Gestión de Equipos
-                        </h2>
-                        <button class="btn-primary" onclick="showAddEquipmentModal()">
-                            <i class="fas fa-plus"></i> Nuevo Equipo
-                        </button>
+                        <h2 class="card-title"><span class="card-title-icon">💻</span> Gestión de Equipos</h2>
+                        <button class="btn-primary" onclick="showAddEquipmentModal()"><i class="fas fa-plus"></i> Nuevo Equipo</button>
                     </div>
-
                     <div class="table-container">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Código</th>
-                                    <th>Tipo</th>
-                                    <th>Marca/Modelo</th>
-                                    <th>Aula</th>
-                                    <th>Estado</th>
-                                    <th>Última Revisión</th>
-                                    <th>Próximo Mant.</th>
-                                    <th>Acciones</th>
+                                    <th>Código</th><th>Tipo</th><th>Marca/Modelo</th><th>Aula</th>
+                                    <th>Estado</th><th>Última Revisión</th><th>Próximo Mant.</th><th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -2017,20 +1166,12 @@
         }
 
         function showAddEquipmentModal() {
-            // Implementation for adding equipment
-            Swal.fire({
-                icon: 'info',
-                title: 'Función en Desarrollo',
-                text: 'La función de agregar equipos estará disponible próximamente',
-                confirmButtonText: 'Aceptar'
-            });
+            Swal.fire({ icon: 'info', title: 'Función en Desarrollo', text: 'La función de agregar equipos estará disponible próximamente', confirmButtonText: 'Aceptar' });
         }
 
         function viewEquipment(equipmentId) {
-            // Implementation for viewing equipment details
             const equipment = DATABASE.equipos?.find(e => e.id === equipmentId);
             if (!equipment) return;
-
             Swal.fire({
                 title: `${equipment.marca} ${equipment.modelo}`,
                 html: `
@@ -2046,61 +1187,29 @@
         }
 
         function editEquipment(equipmentId) {
-            // Implementation for editing equipment
-            Swal.fire({
-                icon: 'info',
-                title: 'Función en Desarrollo',
-                text: 'La función de editar equipos estará disponible próximamente',
-                confirmButtonText: 'Aceptar'
-            });
+            Swal.fire({ icon: 'info', title: 'Función en Desarrollo', text: 'La función de editar equipos estará disponible próximamente', confirmButtonText: 'Aceptar' });
         }
 
         function deleteEquipment(equipmentId) {
-            // Implementation for deleting equipment
-            Swal.fire({
-                title: '¿Eliminar Equipo?',
-                text: '¿Estás seguro de eliminar este equipo?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#ef4444',
-                cancelButtonColor: '#64748b',
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar'
-            });
+            Swal.fire({ title: '¿Eliminar Equipo?', text: '¿Estás seguro de eliminar este equipo?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#ef4444', cancelButtonColor: '#64748b', confirmButtonText: 'Sí, eliminar', cancelButtonText: 'Cancelar' });
         }
 
         // ========== AULAS TAB ==========
         function loadAulasTab() {
             const content = document.getElementById('tab-aulas');
             if (!DATABASE) return;
-
             const aulas = DATABASE.aulas || [];
 
             content.innerHTML = `
                 <div class="content-card">
                     <div class="card-header">
-                        <h2 class="card-title">
-                            <span class="card-title-icon">🏫</span>
-                            Gestión de Aulas
-                        </h2>
-                        <button class="btn-primary" onclick="showAddRoomModal()">
-                            <i class="fas fa-plus"></i> Nueva Aula
-                        </button>
+                        <h2 class="card-title"><span class="card-title-icon">🏫</span> Gestión de Aulas</h2>
+                        <button class="btn-primary" onclick="showAddRoomModal()"><i class="fas fa-plus"></i> Nueva Aula</button>
                     </div>
-
                     <div class="table-container">
                         <table>
                             <thead>
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Nombre</th>
-                                    <th>Bloque</th>
-                                    <th>Piso</th>
-                                    <th>Capacidad</th>
-                                    <th>Tipo</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
+                                <tr><th>Código</th><th>Nombre</th><th>Bloque</th><th>Piso</th><th>Capacidad</th><th>Tipo</th><th>Estado</th><th>Acciones</th></tr>
                             </thead>
                             <tbody>
                                 ${aulas.map(aula => `
@@ -2114,9 +1223,9 @@
                                         <td><span class="status-badge status-${aula.estado === 'operativa' ? 'activo' : 'observado'}">${aula.estado}</span></td>
                                         <td>
                                             <div class="action-buttons">
-                                                <button class="btn-icon" title="Ver Detalles" onclick="viewRoom('${aula.id}')"><i class="fas fa-eye"></i></button>
-                                                <button class="btn-icon" title="Editar" onclick="editRoom('${aula.id}')"><i class="fas fa-edit"></i></button>
-                                                <button class="btn-icon" title="Ver Equipos" onclick="viewRoomEquipment('${aula.id}')"><i class="fas fa-desktop"></i></button>
+                                                <button class="btn-icon" onclick="viewRoom('${aula.id}')"><i class="fas fa-eye"></i></button>
+                                                <button class="btn-icon" onclick="editRoom('${aula.id}')"><i class="fas fa-edit"></i></button>
+                                                <button class="btn-icon" onclick="viewRoomEquipment('${aula.id}')"><i class="fas fa-desktop"></i></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -2128,74 +1237,27 @@
             `;
         }
 
-        function showAddRoomModal() {
-            Swal.fire({
-                icon: 'info',
-                title: 'Función en Desarrollo',
-                text: 'La función de agregar aulas estará disponible próximamente',
-                confirmButtonText: 'Aceptar'
-            });
-        }
-
-        function viewRoom(roomId) {
-            Swal.fire({
-                icon: 'info',
-                title: 'Ver Detalles del Aula',
-                text: 'Esta función estará disponible próximamente',
-                confirmButtonText: 'Aceptar'
-            });
-        }
-
-        function editRoom(roomId) {
-            Swal.fire({
-                icon: 'info',
-                title: 'Editar Aula',
-                text: 'Esta función estará disponible próximamente',
-                confirmButtonText: 'Aceptar'
-            });
-        }
-
-        function viewRoomEquipment(roomId) {
-            Swal.fire({
-                icon: 'info',
-                title: 'Ver Equipos del Aula',
-                text: 'Esta función estará disponible próximamente',
-                confirmButtonText: 'Aceptar'
-            });
-        }
+        function showAddRoomModal() { Swal.fire({ icon: 'info', title: 'Función en Desarrollo', text: 'La función de agregar aulas estará disponible próximamente', confirmButtonText: 'Aceptar' }); }
+        function viewRoom() { Swal.fire({ icon: 'info', title: 'Ver Detalles del Aula', text: 'Esta función estará disponible próximamente', confirmButtonText: 'Aceptar' }); }
+        function editRoom() { Swal.fire({ icon: 'info', title: 'Editar Aula', text: 'Esta función estará disponible próximamente', confirmButtonText: 'Aceptar' }); }
+        function viewRoomEquipment() { Swal.fire({ icon: 'info', title: 'Ver Equipos del Aula', text: 'Esta función estará disponible próximamente', confirmButtonText: 'Aceptar' }); }
 
         // ========== MATERIALES TAB ==========
         function loadMaterialesTab() {
             const content = document.getElementById('tab-materiales');
             if (!DATABASE) return;
-
             const materiales = DATABASE.materiales_inventario || [];
 
             content.innerHTML = `
                 <div class="content-card">
                     <div class="card-header">
-                        <h2 class="card-title">
-                            <span class="card-title-icon">📦</span>
-                            Inventario de Materiales
-                        </h2>
-                        <button class="btn-primary" onclick="showAddMaterialModal()">
-                            <i class="fas fa-plus"></i> Nuevo Material
-                        </button>
+                        <h2 class="card-title"><span class="card-title-icon">📦</span> Inventario de Materiales</h2>
+                        <button class="btn-primary" onclick="showAddMaterialModal()"><i class="fas fa-plus"></i> Nuevo Material</button>
                     </div>
-
                     <div class="table-container">
                         <table>
                             <thead>
-                                <tr>
-                                    <th>Material</th>
-                                    <th>Categoría</th>
-                                    <th>Stock Actual</th>
-                                    <th>Stock Mínimo</th>
-                                    <th>Unidad</th>
-                                    <th>Precio Unitario</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
+                                <tr><th>Material</th><th>Categoría</th><th>Stock Actual</th><th>Stock Mínimo</th><th>Unidad</th><th>Precio Unitario</th><th>Estado</th><th>Acciones</th></tr>
                             </thead>
                             <tbody>
                                 ${materiales.map(mat => `
@@ -2209,9 +1271,9 @@
                                         <td><span class="status-badge status-${mat.estado === 'disponible' ? 'activo' : 'observado'}">${mat.estado}</span></td>
                                         <td>
                                             <div class="action-buttons">
-                                                <button class="btn-icon" title="Ver Detalles" onclick="viewMaterial('${mat.id}')"><i class="fas fa-eye"></i></button>
-                                                <button class="btn-icon" title="Editar" onclick="editMaterial('${mat.id}')"><i class="fas fa-edit"></i></button>
-                                                <button class="btn-icon" title="Movimientos" onclick="viewMaterialMovements('${mat.id}')"><i class="fas fa-history"></i></button>
+                                                <button class="btn-icon" onclick="viewMaterial('${mat.id}')"><i class="fas fa-eye"></i></button>
+                                                <button class="btn-icon" onclick="editMaterial('${mat.id}')"><i class="fas fa-edit"></i></button>
+                                                <button class="btn-icon" onclick="viewMaterialMovements('${mat.id}')"><i class="fas fa-history"></i></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -2223,104 +1285,46 @@
             `;
         }
 
-        function showAddMaterialModal() {
-            Swal.fire({
-                icon: 'info',
-                title: 'Función en Desarrollo',
-                text: 'La función de agregar materiales estará disponible próximamente',
-                confirmButtonText: 'Aceptar'
-            });
-        }
-
-        function viewMaterial(materialId) {
-            Swal.fire({
-                icon: 'info',
-                title: 'Ver Material',
-                text: 'Esta función estará disponible próximamente',
-                confirmButtonText: 'Aceptar'
-            });
-        }
-
-        function editMaterial(materialId) {
-            Swal.fire({
-                icon: 'info',
-                title: 'Editar Material',
-                text: 'Esta función estará disponible próximamente',
-                confirmButtonText: 'Aceptar'
-            });
-        }
-
-        function viewMaterialMovements(materialId) {
-            Swal.fire({
-                icon: 'info',
-                title: 'Ver Movimientos',
-                text: 'Esta función estará disponible próximamente',
-                confirmButtonText: 'Aceptar'
-            });
-        }
+        function showAddMaterialModal() { Swal.fire({ icon: 'info', title: 'Función en Desarrollo', text: 'La función de agregar materiales estará disponible próximamente', confirmButtonText: 'Aceptar' }); }
+        function viewMaterial() { Swal.fire({ icon: 'info', title: 'Ver Material', text: 'Esta función estará disponible próximamente', confirmButtonText: 'Aceptar' }); }
+        function editMaterial() { Swal.fire({ icon: 'info', title: 'Editar Material', text: 'Esta función estará disponible próximamente', confirmButtonText: 'Aceptar' }); }
+        function viewMaterialMovements() { Swal.fire({ icon: 'info', title: 'Ver Movimientos', text: 'Esta función estará disponible próximamente', confirmButtonText: 'Aceptar' }); }
 
         // ========== ESTADÍSTICAS TAB ==========
         function loadEstadisticasTab() {
-            const content = document.getElementById('tab-estadisticas');
-            content.innerHTML = `
+            document.getElementById('tab-estadisticas').innerHTML = `
                 <div class="content-card">
                     <div class="card-header">
-                        <h2 class="card-title">
-                            <span class="card-title-icon">📈</span>
-                            Estadísticas y Reportes
-                        </h2>
-                        <button class="btn-primary">
-                            <i class="fas fa-file-pdf"></i> Generar Reporte
-                        </button>
+                        <h2 class="card-title"><span class="card-title-icon">📈</span> Estadísticas y Reportes</h2>
+                        <button class="btn-primary"><i class="fas fa-file-pdf"></i> Generar Reporte</button>
                     </div>
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📊</div>
-                        <p>Las estadísticas y reportes estarán disponibles próximamente</p>
-                    </div>
+                    <div class="empty-state"><div class="empty-state-icon">📊</div><p>Las estadísticas y reportes estarán disponibles próximamente</p></div>
                 </div>
             `;
         }
 
         // ========== AUDITORÍA TAB ==========
         function loadAuditoriaTab() {
-            const content = document.getElementById('tab-auditoria');
-            content.innerHTML = `
+            document.getElementById('tab-auditoria').innerHTML = `
                 <div class="content-card">
                     <div class="card-header">
-                        <h2 class="card-title">
-                            <span class="card-title-icon">🔍</span>
-                            Auditoría del Sistema
-                        </h2>
-                        <button class="btn-primary">
-                            <i class="fas fa-download"></i> Exportar Registros
-                        </button>
+                        <h2 class="card-title"><span class="card-title-icon">🔍</span> Auditoría del Sistema</h2>
+                        <button class="btn-primary"><i class="fas fa-download"></i> Exportar Registros</button>
                     </div>
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🔍</div>
-                        <p>Los registros de auditoría estarán disponibles próximamente</p>
-                    </div>
+                    <div class="empty-state"><div class="empty-state-icon">🔍</div><p>Los registros de auditoría estarán disponibles próximamente</p></div>
                 </div>
             `;
         }
 
         // ========== CONFIGURACIÓN TAB ==========
         function loadConfiguracionTab() {
-            const content = document.getElementById('tab-configuracion');
-            content.innerHTML = `
+            document.getElementById('tab-configuracion').innerHTML = `
                 <div class="content-card">
                     <div class="card-header">
-                        <h2 class="card-title">
-                            <span class="card-title-icon">⚙️</span>
-                            Configuración del Sistema
-                        </h2>
-                        <button class="btn-primary">
-                            <i class="fas fa-save"></i> Guardar Cambios
-                        </button>
+                        <h2 class="card-title"><span class="card-title-icon">⚙️</span> Configuración del Sistema</h2>
+                        <button class="btn-primary"><i class="fas fa-save"></i> Guardar Cambios</button>
                     </div>
-                    <div class="empty-state">
-                        <div class="empty-state-icon">⚙️</div>
-                        <p>La configuración del sistema estará disponible próximamente</p>
-                    </div>
+                    <div class="empty-state"><div class="empty-state-icon">⚙️</div><p>La configuración del sistema estará disponible próximamente</p></div>
                 </div>
             `;
         }
