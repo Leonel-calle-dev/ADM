@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Login - Sistema de Gestión del Campus</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
@@ -15,54 +15,81 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
 
     body {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       background: linear-gradient(135deg, rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
-                  url("https://lh3.googleusercontent.com/fife/ALs6j_HMdLowsBDyMH08lSYMP526rzMIMN9wt7jXZZFf8jM6CZZH1ivkEyLEyCmVha1VedXa8c75Sk3RqnW-6Sm-IBSwEOtoJQvc7Esu-RzT0LJ3FuXPBkivVzwM9Q2748XvBIw8aanjN6fyfQeGFhRXoLuZOwf0tpSaOYCECdmCfEk2a6R4-802OCn4S7i1YMb5hM-qd9UdOu47PFFPL06yinWib4KhsmNfD_W7TFo83U_OGEuJZzPbcT7LkKZXC3b_2VgEMe2JS6o7kcb2ry6oRIbOWzqOlFjk61Tlmd-32jBuQWZrn6sy_UJ0a69eYe9uibqkE6pmW9PHP3Gi0BHBTPnvO92uOBJVCWXHOBIegNzBA2uGcx_m-xmDwX4XMuxFK2cqRx3X2vt1E8ElJ4RlFPczag8nWfdC6PtqPJEQU2l7rymXzhiIaE98Q6lyDwzmZIROcddNduoQAljarqmhC_tDzGdFLQATfwVtwFoP1lsJTz_02g2LX8nCAum9oPnR1E_Z5eDu90XBnq_-bvu3dozD7ohKBenK_bmPqCLcbfVkr4TWbg65jy2smsQ6cxqg0lIIFAAwqvU0SZLA0U-hNIE7QGKkwsTLWRvBIXjH4PnGViJf0JokDgRQ3t5FNf7jo3XtbhIXUMGdLOEHmjSqxk_DXinm71dTQH2IdEIkVX_uLFuQJ0h7IamAYO1AE6gcJSbJO08b0sDeAzLIILseimolgNrLHJGmCy3O3SzsolvitUkL8vrYmSRCHRSBZyntsqnhg5VO4DBwc8oBJYUtz2deMX53XJ43Uiui2E4E5V9A8UqL6raacHQfQqbDzVnmOymYwjy6UEmOHNyshpRuFHoQSmTPoDC-OlPvIRF3OUIhnpyaP628spE74uE5inv689gT8ZWIHhRi2Jdj_JJmCcA3e5Xs1ODHF0OHaj7gy4znKZbz-XL6xeR4mETQe8BHzf2GHQDbgDIgieT84MlYNEP_OpzGaKmrL3fpNpDqGQ6IOe4OFzy3uf8d-chcRjr--8Fb9IueJaEzlmJFbor54oJNATKK9J6K6MI2WPmzh48-pfsWLhKNfffOwyFpi6EzUTCE5WTHLGNiYj_aHh3pyN4_KDZlBe8kBsfKwiYyBYwHl_9-B25vDZgZ50kzyNPe9JVpkxW2FphapRaFucNkbfJXsxTXfIS-cuCU-3K_kcuNw0iEAA9HDy6vSAiXHGSX5KWFhpaGwtAoAbmZDf9Hp99elOQ2y3r2bf9lE56OPPvtyK5gvQHRB8U89QxR50DL-9nvYKxUV-3am5qYND1_LXrklWT5fxM9DNIUCbDTjTcl4wMtiRWNmdHTlEW8cspHMrnwmLLLTuEaOgFSDU95aqhUJczV0cnZIhfZ1qM6Ag-FYWOp79RUG9d4lXPWATmtD1G5uIgLqxO8m-3ggULYa3ul9iJ0G2HgDbTR0lAu0m8c1uN-GHCpn1cpwcGPh7e5lf-K9VUBRCEG7Fy1NxEgyuDO4FQZhhxEK3fB5KoEiA2vwN3JaKyfgb7jjaaV_P7nAk_x1f95XwKIjm0zAct0j69srXvRFPhmKjEpTgIEOEs-AydSuz8nkzjJdGTkLznFA_0Lb67owlRMIyZYen5-sBMOkiJd1VVwdURGXbNSmYsA3QbAWF4UqRXHEbno1TgH9eGG8AXXHqsIsY0GWNyj5LAMwDBIa6bRLXjSbKM4T13rmEBG8YWvipHmBEZGbhWV3BvP2ho_m_dYBrw07YU=w1910-h922?auditContext=prefetch") no-repeat center center/cover;
+                  url("img/uap-mural.jpeg") no-repeat center center/cover;
       background-attachment: fixed;
       color: #fff;
     }
 
-    .main-content { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
+    .main-content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
 
     .login-container {
-      background: rgba(255,255,255,0.12);
+      background: rgba(255, 255, 255, 0.12);
       backdrop-filter: blur(12px);
       padding: 45px 40px;
       border-radius: 24px;
       width: 100%;
       max-width: 420px;
       text-align: center;
-      box-shadow: 0 10px 35px rgba(0,0,0,0.45);
-      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       animation: fadeIn 0.8s ease-out;
       margin: 20px auto;
       position: relative;
       overflow: hidden;
     }
-
+    
     .login-container::before {
       content: '';
       position: absolute;
-      top: -50%; left: -50%;
-      width: 200%; height: 200%;
-      background: radial-gradient(circle, rgba(0,119,255,0.15) 0%, rgba(0,225,255,0.08) 35%, transparent 70%);
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0, 119, 255, 0.15) 0%, rgba(0, 225, 255, 0.08) 35%, transparent 70%);
       z-index: -1;
       animation: rotate 15s linear infinite;
     }
+    
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
 
-    @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
 
     .login-container img {
       display: block;
-      margin: 0 auto 18px;
+      margin: 0 auto;
       width: 150px;
       max-width: 100%;
       height: auto;
+      margin-bottom: 18px;
       animation: bounce 2s infinite;
     }
 
@@ -75,585 +102,626 @@
       position: relative;
       display: inline-block;
     }
-
+    
     .login-container h2::after {
       content: '';
       position: absolute;
-      bottom: -8px; left: 50%;
+      bottom: -8px;
+      left: 50%;
       transform: translateX(-50%);
-      width: 60%; height: 3px;
-      background: linear-gradient(90deg, transparent, #00e1ff, transparent);
-      border-radius: 3px;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, #0077ff, #00e1ff);
+      border-radius: 2px;
     }
 
-    .sistema-badge {
-      display: inline-block;
-      background: rgba(0,119,255,0.2);
-      border: 1px solid rgba(0,225,255,0.3);
-      color: #00e1ff;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      border-radius: 100px;
-      margin-bottom: 24px;
-      margin-top: 14px;
+    .login-container p {
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 35px;
+      font-size: 0.95rem;
     }
 
-    .input-field {
-      position: relative;
+    .input-group {
       margin-bottom: 22px;
-      overflow: hidden;
+      text-align: left;
+      position: relative;
     }
 
-    .input-field i.field-icon {
-      position: absolute;
-      left: 15px; top: 50%;
-      transform: translateY(-50%);
-      color: rgb(144 138 138 / 65%);
-      font-size: 18px;
-      z-index: 2;
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .input-field input {
-      width: 100%;
-      padding: 16px 40px 16px 48px;
-      border: none;
-      border-radius: 14px;
-      outline: none;
+    .input-group label i {
+      color: #00e1ff;
       font-size: 16px;
-      transition: all 0.35s ease;
-      background: rgba(255,255,255,0.92);
-      color: #2c3e50;
-      font-weight: 500;
-      letter-spacing: 0.5px;
     }
 
-    .input-field input::placeholder { color: #7f8c8d; font-weight: 400; }
+    .input-wrapper {
+      position: relative;
+    }
 
-    .input-field input:focus {
-      box-shadow: 0 0 0 3px rgba(0,225,255,0.35), 0 0 12px rgba(0,225,255,0.25);
-      background: rgba(255,255,255,1);
-      transform: translateY(-1px);
+    .input-group input {
+      width: 100%;
+      padding: 15px 18px 15px 50px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 18px;
+      pointer-events: none;
+      transition: color 0.3s ease;
+    }
+
+    .input-group input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 400;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: #00e1ff;
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 20px rgba(0, 225, 255, 0.3);
+    }
+
+    .input-group input:focus + .input-icon {
+      color: #00e1ff;
     }
 
     .toggle-password {
       position: absolute;
-      right: 22px; top: 50%;
+      right: 18px;
+      top: 50%;
       transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: rgba(100,100,100,0.7);
       cursor: pointer;
+      color: rgba(255, 255, 255, 0.6);
       font-size: 18px;
-      padding: 0;
-      z-index: 3;
-      transition: all 0.3s ease;
-      display: flex; align-items: center; justify-content: center;
+      transition: color 0.3s ease;
     }
 
-    .toggle-password:hover { color: #0077ff; transform: translateY(-50%) scale(1.15); }
+    .toggle-password:hover {
+      color: #00e1ff;
+    }
 
-    .options-container {
+    .remember-forgot {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 25px;
-      flex-wrap: wrap;
-      gap: 10px;
+      font-size: 0.9rem;
     }
 
     .remember-me {
-      display: flex; align-items: center;
-      color: rgba(255,255,255,0.85);
-      font-size: 14px; cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255, 255, 255, 0.9);
+      cursor: pointer;
+      user-select: none;
     }
 
-    .remember-me input { margin-right: 8px; width: 16px; height: 16px; cursor: pointer; }
+    .remember-me input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #00e1ff;
+    }
 
     .forgot-password {
-      color: rgba(255,255,255,0.85);
-      font-size: 14px;
+      color: #00e1ff;
       text-decoration: none;
-      transition: all 0.3s ease;
       font-weight: 500;
+      transition: all 0.3s ease;
       cursor: pointer;
-      background: none;
-      border: none;
     }
 
-    .forgot-password:hover { color: #00e1ff; text-decoration: underline; }
+    .forgot-password:hover {
+      color: #00b8cc;
+      text-decoration: underline;
+    }
 
-    #loginButton {
+    .btn-login {
       width: 100%;
       padding: 16px;
-      background: linear-gradient(90deg, #0077ff, #00c6ff, #00e1ff);
       border: none;
       border-radius: 14px;
-      color: white;
-      font-size: 17px;
-      font-weight: 600;
+      background: linear-gradient(135deg, #0077ff, #00e1ff);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
       cursor: pointer;
-      transition: all 0.35s ease;
-      margin-top: 8px;
-      box-shadow: 0 6px 20px rgba(0,100,255,0.4);
-      position: relative;
-      overflow: hidden;
-      letter-spacing: 0.5px;
-      font-family: "Poppins", sans-serif;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 8px 20px rgba(0, 119, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
 
-    #loginButton:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0,119,255,0.55), 0 0 15px rgba(0,225,255,0.4);
+    .btn-login:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0, 119, 255, 0.5);
+      background: linear-gradient(135deg, #0088ff, #00f2ff);
     }
 
-    #loginButton:disabled {
-      background: linear-gradient(90deg, #5a98ff, #7eb3ff);
+    .btn-login:active {
+      transform: translateY(-1px);
+    }
+
+    .btn-login:disabled {
+      opacity: 0.6;
       cursor: not-allowed;
       transform: none;
     }
 
-    .lockout-bar {
+    /* Modal de recuperación */
+    .modal-overlay {
       display: none;
-      background: rgba(220,53,69,0.2);
-      border: 1px solid rgba(220,53,69,0.4);
-      border-radius: 12px;
-      padding: 10px 14px;
-      margin-bottom: 16px;
-      font-size: 13px;
-      color: #ff6b6b;
-      text-align: left;
-    }
-
-    .attempts-indicator {
-      display: flex; gap: 5px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
       justify-content: center;
-      margin-top: 10px;
-      min-height: 14px;
+      align-items: center;
+      animation: fadeIn 0.3s ease-out;
     }
 
-    .attempt-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      transition: background 0.3s;
+    .modal-overlay.active {
+      display: flex;
     }
 
-    .attempt-dot.used { background: #ef4444; }
-
-    .footer {
-      background: rgba(0,15,35,0.85);
-      backdrop-filter: blur(10px);
-      padding: 22px 0;
-      text-align: center;
-      margin-top: auto;
-      border-top: 1px solid rgba(255,255,255,0.12);
+    .modal-content {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      padding: 40px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      position: relative;
+      animation: slideDown 0.3s ease-out;
     }
 
-    .footer-text { color: rgba(255,255,255,0.75); font-size: 15px; font-weight: 400; }
-    .footer-text strong { color: #00e1ff; font-weight: 600; }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-5px); } 40%,80% { transform: translateX(5px); } }
-
-    .input-error { animation: shake 0.5s; box-shadow: 0 0 0 3px rgba(220,53,69,0.4) !important; border-radius: 14px; }
-
-    .btn-loading { position: relative; }
-    .btn-loading::after {
-      content: '';
+    .modal-close {
       position: absolute;
-      left: 15px; top: 50%;
-      transform: translateY(-50%);
-      width: 20px; height: 20px;
-      border: 2.5px solid rgba(255,255,255,0.4);
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 24px;
+      cursor: pointer;
+      width: 35px;
+      height: 35px;
       border-radius: 50%;
-      border-top-color: white;
-      animation: spin 1s linear infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
     }
 
-    @media (max-width: 480px) {
-      .login-container { padding: 30px 25px; }
-      .login-container h2 { font-size: 1.65rem; }
-      .login-container img { width: 95px; }
-      .options-container { flex-direction: column; align-items: flex-start; }
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .modal-content h3 {
+      color: #fff;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .modal-content p {
+      color: rgba(255, 255, 255, 0.8);
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 500px) {
+      .login-container {
+        padding: 35px 25px;
+      }
+
+      .login-container h2 {
+        font-size: 1.8rem;
+      }
+
+      .remember-forgot {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .modal-content {
+        padding: 30px 25px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="main-content">
     <div class="login-container">
+      <img src="img/Logo-adm.png" alt="Logo Campus">
+      <h2>Bienvenido</h2>
+      <p>Sistema de Gestión del Campus</p>
 
-      <img src="https://lh3.googleusercontent.com/fife/ALs6j_G2PUe0Mfr2fWt-nMSpt9Z-tDjXQQc8UI2grsBRqmIIHBnSTuhXsT43xM11ANSHIARGJXzCxA7woBJz7VAY4Kxb7Dozqrj4Ifu5l0tUk0z2Fe2u5FihqlRQtu7Iezlq45yp4s5gJVcSYUFYu2F0kwfy18qE0mc1kFu42kurl8o2C0XmeXOK5ZE47DSnCENoL6_UZLA31QFkhRyzhp2yO4fuKUQPvKbHiGnwUJEPN8vKm3L0e9Ni16Gfp0gRluU5Ou76M8TFU2nk8gQIhSU1hBzV5TRd2vWa0ZXL5q7K_Dz-oUD3BCQ80IUDsOZzJtng33ZUX-iXu5jowA5GdyrMMmhYQOs3bCvzdW-1iVdN7v2xHgpCMweOTD1Wr_8EFjEV3W-0llk806qSyqyV-MbozbDZTxiyNGTSpkNzinBVS1YBWtq8LKitrx57Vfx1l3uUlOORRCFZ3IFPflrmRxM9Hf_0-t_LZsbU3XnuHukd9GEtpZMioG2FB6hLMQNZvap4vDZh3yyaTrn7OKYg-06tnZIoPWCp4JGROJ9dWrTiSDkAoaVFX_apX8QHzppyLQfzPhQ-_IifBOlX0FsXIHeg_7SO2u8ZEwqs6TiB2B5NhIwcUO8zOGe-K_L16CNJyXYDoMhvVE46lfYPMsCBNgBRqAs-N5vuqI5tN7ZtxTRQY2TPEEZv4n-OqgQsQ2hGpmzOs_XkzMPyaCWu81sGPHTqZEC06QvF6OvAKo0cHLL3D2GSFCAijBvkoNk_wkQ-NBpVHMNy1l00Cf9h9hG4Os5p4v9DljOPsnAQ9KnDYjYV9rgUxtjJ7nCcgLVo7AAAQwIE3jnJC2aWQ_hjjDs4L6zkpy2zlbnxJivdPwx1KjOfvF5aUbEUblRomh0PUWtWPRz7PamRZm_cLZAkpqs_l4uCvoV5r2_oyctsZ2QJ4I2peTROtgbDDfAdPVAQYwtGTC23bdjVaxBrIQMHtVtsN0usLHFGrhKSX2z8bYWsZj4gpj3LYqQyKilq1es2VRzuPbLo2ooLXlEmOKtF8-hdjmYlNnz6fjOQfpnHTFBe7p73I_azp_HbGiW26PHwDOiTAzDY32flGYC3hwlDhFWlv9QEe28wdltqtwn0sqMcMMOPN5hTlSWP22v_HHNSd2nFSW1rSESafvvyIb5Gg1ge4rY7s6257NlTCg36o5dYPlSbsN6FMXF9nPP3FGFTKU0xixXbyY0EtPOuR3Hc1Zr1V8xluEW_QHI19nJTXKMic-K8piZo2cxB0qO_usHTGxO9toJlT9Hvu8wLVKu11tK99qM3ZjCNwW9yem67fxv0kVy9_LzRNAcoQa6IXYmsQSXNShb2Dwv5fgM-LkON19-hXMfNlo5Vep-ZJ1fW_BaPFOSN12Ud5yEREds6aBLFeGs-ZXTEw8vjn70gU14YbmqyH117G0w0jBzx5BjjE3v1rSYnq_npQ4lHRXjCgK49vXln_qDBDxJRPBtkGOGEhxvb-QFMWOlOP-VhAxZBcNnmWxwgvIoDiCMJOU28jdcjXkFbyMfaIsdsTSZU90Y94lvUBa-phgLaFFUzfbw6dbr8NhjOhFuaiWlxHuiYW2zONuxYO5ymRErbyalvAor8Q-kVBUcgaHdj65aT_wec3eScWBppModO8lVEOeFCplwtz9eZcILXfIupUkhqkpd5pIqT4W4EJhfTIky0H8Bo3W9JumX34hak29U50J6aptS1kFqLSF6T0AQelch0opP1ShZQhX0=w843-h922?auditContext=prefetch" alt="Logo Campus">
+      <form id="loginForm">
+        <div class="input-group">
+          <label><i class="fas fa-user"></i> Usuario</label>
+          <div class="input-wrapper">
+            <i class="input-icon fas fa-user"></i>
+            <input type="text" id="username" placeholder="Ingrese su usuario" required autocomplete="username">
+          </div>
+        </div>
 
-      <h2>Iniciar Sesión</h2>
-      <div class="sistema-badge">
-        <i class="fas fa-shield-alt" style="margin-right:5px;font-size:10px;"></i>
-        Sistema de Gestión del Campus
-      </div>
+        <div class="input-group">
+          <label><i class="fas fa-lock"></i> Contraseña</label>
+          <div class="input-wrapper">
+            <i class="input-icon fas fa-lock"></i>
+            <input type="password" id="password" placeholder="Ingrese su contraseña" required autocomplete="current-password">
+            <i class="toggle-password fas fa-eye" id="togglePassword"></i>
+          </div>
+        </div>
 
-      <div class="lockout-bar" id="lockoutBar">
-        <i class="fas fa-lock"></i>
-        <span id="lockoutMsg">Cuenta bloqueada temporalmente.</span>
-      </div>
+        <div class="remember-forgot">
+          <label class="remember-me">
+            <input type="checkbox" id="rememberMe">
+            <span>Recordarme</span>
+          </label>
+          <a class="forgot-password" id="forgotPasswordLink">¿Olvidaste tu contraseña?</a>
+        </div>
 
-      <div class="input-field">
-        <i class="field-icon fas fa-envelope"></i>
-        <input type="email" id="correo" placeholder="Correo institucional" autocomplete="email" required>
-      </div>
-
-      <div class="input-field">
-        <i class="field-icon fas fa-lock"></i>
-        <input type="password" id="password" placeholder="Contraseña" autocomplete="current-password" required>
-        <button type="button" class="toggle-password" id="togglePassword">
-          <i class="fas fa-eye"></i>
+        <button type="submit" class="btn-login">
+          <i class="fas fa-sign-in-alt"></i>
+          Iniciar Sesión
         </button>
-      </div>
-
-      <div class="options-container">
-        <label class="remember-me">
-          <input type="checkbox" id="rememberMe"> Recordar sesión
-        </label>
-        <button class="forgot-password" id="forgotPassword">¿Olvidaste tu contraseña?</button>
-      </div>
-
-      <button id="loginButton">
-        <i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar
-      </button>
-
-      <div class="attempts-indicator" id="attemptsIndicator"></div>
-
+      </form>
     </div>
   </div>
 
-  <footer class="footer">
-    <div class="footer-text">
-      <strong>Sistema de Gestión del Campus</strong> — Unidad de Administración del Campus<br>
-      © 2026 · Campus Universitario Las Palmas · Todos los derechos reservados
-    </div>
-  </footer>
-
-<!-- ===================== FIREBASE ===================== -->
-<script type="module">
-  import { auth, db } from "./firebase-config.js";
-  import {
-    signInWithEmailAndPassword,
-    sendPasswordResetEmail,
-    onAuthStateChanged,
-    setPersistence,
-    browserSessionPersistence,
-    browserLocalPersistence
-  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-  import {
-    collection, query, where, getDocs,
-    updateDoc, doc, serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  // ─── ROLES → dashboards ───────────────────────────────────
-  const ROLES_CONFIG = {
-    administrador: {
-      label: "Administrador", icono: "🔴", color: "#1e3a8a",
-      dashboard: "publico/paginas/dashboard-admin.html"
-    },
-    personal_apoyo_aulas: {
-      label: "Personal de Apoyo Aulas", icono: "🟠", color: "#f97316",
-      dashboard: "dashboard-apoyo.html"
-    },
-    responsable_audiovisual: {
-      label: "Responsable Audiovisual", icono: "🟢", color: "#10b981",
-      dashboard: "dashboard-audiovisual.html"
-    },
-    responsable_mantenimientos: {
-      label: "Responsable Mantenimientos", icono: "🟡", color: "#f59e0b",
-      dashboard: "dashboard-mantenimientos.html"
-    }
-  };
-
-  const MAX_INTENTOS  = 5;
-  const BLOQUEO_MS    = 30 * 1000;
-  let intentosFallidos = 0;
-  let bloqueadoHasta   = null;
-
-  // ─── Errores Firebase → español ──────────────────────────
-  function traducirError(code) {
-    const map = {
-      "auth/user-not-found":      "No existe una cuenta con ese correo.",
-      "auth/wrong-password":      "Contraseña incorrecta.",
-      "auth/invalid-email":       "El formato del correo no es válido.",
-      "auth/user-disabled":       "Esta cuenta ha sido desactivada.",
-      "auth/too-many-requests":   "Demasiados intentos. Intenta más tarde.",
-      "auth/invalid-credential":  "Correo o contraseña incorrectos.",
-      "auth/network-request-failed": "Sin conexión a internet."
-    };
-    return map[code] || "Error de autenticación. Intenta nuevamente.";
-  }
-
-  // ─── Sesión activa → redirigir ────────────────────────────
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      const snap = await getDocs(query(collection(db, "usuarios"), where("uid_firebase", "==", user.uid)));
-      if (!snap.empty) {
-        const perfil = snap.docs[0].data();
-        const cfg = ROLES_CONFIG[perfil.rol];
-        if (cfg) window.location.href = cfg.dashboard;
-      }
-    }
-  });
-
-  // ─── Toggle contraseña ────────────────────────────────────
-  document.getElementById("togglePassword").addEventListener("click", function () {
-    const inp = document.getElementById("password");
-    const isPass = inp.type === "password";
-    inp.type = isPass ? "text" : "password";
-    this.innerHTML = isPass
-      ? '<i class="fas fa-eye-slash"></i>'
-      : '<i class="fas fa-eye"></i>';
-  });
-
-  // ─── Recordar correo ─────────────────────────────────────
-  const saved = localStorage.getItem("SAC_rememberedEmail");
-  if (saved) {
-    document.getElementById("correo").value = saved;
-    document.getElementById("rememberMe").checked = true;
-  }
-
-  // ─── Indicador de intentos ────────────────────────────────
-  function actualizarDots() {
-    const cont = document.getElementById("attemptsIndicator");
-    cont.innerHTML = "";
-    if (intentosFallidos === 0) return;
-    for (let i = 0; i < MAX_INTENTOS; i++) {
-      const d = document.createElement("div");
-      d.className = "attempt-dot" + (i < intentosFallidos ? " used" : "");
-      cont.appendChild(d);
-    }
-  }
-
-  // ─── Contador de bloqueo ──────────────────────────────────
-  function iniciarBloqueo() {
-    const bar = document.getElementById("lockoutBar");
-    const msg = document.getElementById("lockoutMsg");
-    const btn = document.getElementById("loginButton");
-    bar.style.display = "block";
-    btn.disabled = true;
-    let seg = 30;
-    const tick = () => {
-      msg.innerHTML = `Demasiados intentos. Espera <strong>${seg}s</strong>.`;
-      if (seg <= 0) {
-        bar.style.display = "none";
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar';
-        intentosFallidos = 0;
-        actualizarDots();
-        return;
-      }
-      seg--;
-      setTimeout(tick, 1000);
-    };
-    tick();
-  }
-
-  // ─── Botón loading ────────────────────────────────────────
-  function setLoading(on) {
-    const btn = document.getElementById("loginButton");
-    if (on) {
-      btn.disabled = true;
-      btn.classList.add("btn-loading");
-      btn.innerHTML = '<span style="opacity:0">Verificando...</span>';
-    } else {
-      btn.disabled = false;
-      btn.classList.remove("btn-loading");
-      btn.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Ingresar';
-    }
-  }
-
-  // ─── LOGIN ────────────────────────────────────────────────
-  document.getElementById("loginButton").addEventListener("click", async () => {
-    // Bloqueo local activo
-    if (bloqueadoHasta && Date.now() < bloqueadoHasta) {
-      const seg = Math.ceil((bloqueadoHasta - Date.now()) / 1000);
-      Swal.fire({ icon: "warning", title: "Bloqueado", html: `Intenta en <strong>${seg}s</strong>.`, confirmButtonColor: "#f59e0b" });
-      return;
-    }
-
-    const correo   = document.getElementById("correo").value.trim();
-    const password = document.getElementById("password").value;
-
-    if (!correo || !password) {
-      Swal.fire({ icon: "warning", title: "Campos requeridos", text: "Completa correo y contraseña.", confirmButtonColor: "#0077ff" });
-      return;
-    }
-
-    // Recordar
-    if (document.getElementById("rememberMe").checked) {
-      localStorage.setItem("SAC_rememberedEmail", correo);
-    } else {
-      localStorage.removeItem("SAC_rememberedEmail");
-    }
-
-    setLoading(true);
-
-    try {
-      // 1. Verificar si está bloqueado en Firestore
-      const snap = await getDocs(query(collection(db, "usuarios"), where("correo", "==", correo)));
-      if (!snap.empty) {
-        const perfil = snap.docs[0].data();
-        if (perfil.bloqueado === true) {
-          setLoading(false);
-          Swal.fire({ icon: "error", title: "Cuenta bloqueada", text: "Tu cuenta está bloqueada. Contacta al administrador.", confirmButtonColor: "#dc3545" });
-          return;
-        }
-        if (perfil.activo === false) {
-          setLoading(false);
-          Swal.fire({ icon: "warning", title: "Cuenta inactiva", text: "Tu cuenta está desactivada. Contacta al administrador.", confirmButtonColor: "#f59e0b" });
-          return;
-        }
-      }
-
-      // 2. Firebase Auth
-      const persistencia = document.getElementById("rememberMe").checked
-        ? browserLocalPersistence
-        : browserSessionPersistence;
-      await setPersistence(auth, persistencia);
-
-      const cred = await signInWithEmailAndPassword(auth, correo, password);
-      const uid  = cred.user.uid;
-
-      // 3. Cargar perfil Firestore
-      const snap2 = await getDocs(query(collection(db, "usuarios"), where("uid_firebase", "==", uid)));
-      if (snap2.empty) {
-        setLoading(false);
-        Swal.fire({ icon: "error", title: "Perfil no encontrado", text: "No se encontró tu perfil en el sistema.", confirmButtonColor: "#dc3545" });
-        return;
-      }
-
-      const perfilDoc = snap2.docs[0];
-      const perfil    = perfilDoc.data();
-      const cfg       = ROLES_CONFIG[perfil.rol];
-
-      // 4. Actualizar ultimo_acceso e intentos
-      await updateDoc(doc(db, "usuarios", perfilDoc.id), {
-        ultimo_acceso: serverTimestamp(),
-        intentos_fallidos: 0
-      });
-
-      // 5. Guardar sesión
-      sessionStorage.setItem("session_SAC", JSON.stringify({
-        uid, nombre_completo: perfil.nombre_completo,
-        correo: perfil.correo, rol: perfil.rol,
-        cargo: perfil.cargo, especialidad: perfil.especialidad,
-        login_time: new Date().toISOString()
-      }));
-
-      intentosFallidos = 0;
-      actualizarDots();
-      setLoading(false);
-
-      // 6. Bienvenida
-      Swal.fire({
-        icon: "success",
-        title: "¡Acceso concedido!",
-        html: `
-          <div style="text-align:left;background:#f0f4ff;border-radius:14px;padding:18px;font-size:14px;line-height:2">
-            <p><i class="fas fa-id-badge" style="color:${cfg?.color || '#0077ff'};width:22px;"></i> <strong>${perfil.nombre_completo}</strong></p>
-            <p><i class="fas fa-user-tag" style="color:${cfg?.color || '#0077ff'};width:22px;"></i> ${cfg?.icono || ''} ${cfg?.label || perfil.rol}</p>
-            <p><i class="fas fa-envelope" style="color:${cfg?.color || '#0077ff'};width:22px;"></i> ${perfil.correo}</p>
+  <!-- Modal de Recuperación de Contraseña -->
+  <div class="modal-overlay" id="recoveryModal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeModal">
+        <i class="fas fa-times"></i>
+      </button>
+      <h3>Recuperar Contraseña</h3>
+      <p>Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña</p>
+      
+      <form id="recoveryForm">
+        <div class="input-group">
+          <label><i class="fas fa-envelope"></i> Correo Electrónico</label>
+          <div class="input-wrapper">
+            <i class="input-icon fas fa-envelope"></i>
+            <input type="email" id="recoveryEmail" placeholder="correo@ejemplo.com" required autocomplete="email">
           </div>
-          <p style="margin-top:12px;color:#6c757d;font-size:13px;">Redirigiendo a tu panel...</p>
-        `,
-        confirmButtonColor: cfg?.color || "#0077ff",
-        confirmButtonText: `Ir a mi panel <i class="fas fa-arrow-right" style="margin-left:6px;"></i>`,
-        timer: 2500,
-        timerProgressBar: true,
-        willClose: () => { if (cfg) window.location.href = cfg.dashboard; }
-      });
+        </div>
 
-    } catch (err) {
-      setLoading(false);
-      intentosFallidos++;
-      actualizarDots();
+        <button type="submit" class="btn-login">
+          <i class="fas fa-paper-plane"></i>
+          Enviar Enlace
+        </button>
+      </form>
+    </div>
+  </div>
 
-      // Shake inputs
-      ["correo", "password"].forEach(id => {
-        const el = document.getElementById(id);
-        el.classList.add("input-error");
-        setTimeout(() => el.classList.remove("input-error"), 600);
-      });
+  <script>
+    const DB_PATH = 'data3.json';
+    let DATABASE = null;
 
-      // Bloqueo local tras MAX intentos
-      if (intentosFallidos >= MAX_INTENTOS) {
-        bloqueadoHasta = Date.now() + BLOQUEO_MS;
-        iniciarBloqueo();
+    // Cargar base de datos
+    async function loadDatabase() {
+      try {
+        const response = await fetch(DB_PATH);
+        if (!response.ok) throw new Error('No se pudo cargar la base de datos');
+        DATABASE = await response.json();
+        console.log('✅ Base de datos cargada');
+      } catch (error) {
+        console.error('❌ Error al cargar base de datos:', error);
         Swal.fire({
-          icon: "error", title: "Cuenta bloqueada",
-          html: `Superaste <strong>${MAX_INTENTOS} intentos</strong>.<br>Se desbloqueará en 30 segundos.`,
-          confirmButtonColor: "#dc3545"
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo conectar con el sistema',
+          confirmButtonColor: '#dc3545'
+        });
+      }
+    }
+
+    // Verificar sesión existente
+    function checkExistingSession() {
+      const sessionData = sessionStorage.getItem('session_SAC');
+      if (sessionData) {
+        try {
+          const session = JSON.parse(sessionData);
+          // Verificar que la sesión no haya expirado
+          const now = new Date();
+          if (session.expiracion && new Date(session.expiracion) > now) {
+            // Redirigir según el rol
+            redirectByRole(session.rol);
+            return true;
+          } else {
+            // Sesión expirada
+            sessionStorage.removeItem('session_SAC');
+          }
+        } catch (error) {
+          sessionStorage.removeItem('session_SAC');
+        }
+      }
+      return false;
+    }
+
+    // Toggle password visibility
+    document.getElementById('togglePassword')?.addEventListener('click', function() {
+      const passwordInput = document.getElementById('password');
+      const icon = this;
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        passwordInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    });
+
+    // Modal handlers
+    document.getElementById('forgotPasswordLink')?.addEventListener('click', function() {
+      document.getElementById('recoveryModal').classList.add('active');
+    });
+
+    document.getElementById('closeModal')?.addEventListener('click', function() {
+      document.getElementById('recoveryModal').classList.remove('active');
+    });
+
+    document.getElementById('recoveryModal')?.addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.classList.remove('active');
+      }
+    });
+
+    // Login form submit
+    document.getElementById('loginForm')?.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      if (!DATABASE) {
+        await loadDatabase();
+        if (!DATABASE) return;
+      }
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const rememberMe = document.getElementById('rememberMe').checked;
+
+      // Verificar si hay contraseñas actualizadas en localStorage
+      const passwordUpdates = JSON.parse(localStorage.getItem('password_updates') || '{}');
+
+      // Buscar usuario - verificar tanto password original como actualizada
+      const user = DATABASE.usuarios.find(u => {
+        const usernameMatch = u.nombre_usuario === username || u.correo === username;
+        
+        // Verificar contraseña actualizada primero
+        const updatedPassword = passwordUpdates[u.nombre_usuario];
+        const passwordMatch = (updatedPassword && updatedPassword === password) || u.password === password;
+        
+        return usernameMatch && passwordMatch && u.activo === true;
+      });
+
+      if (!user) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Credenciales incorrectas',
+          text: 'Usuario o contraseña incorrectos',
+          confirmButtonColor: '#dc3545'
         });
         return;
       }
 
-      Swal.fire({
-        icon: "error",
-        title: "Error de acceso",
-        html: `${traducirError(err.code)}<br><small style="color:#6c757d">Te quedan <strong>${MAX_INTENTOS - intentosFallidos}</strong> intento(s).</small>`,
-        confirmButtonColor: "#dc3545"
-      });
-    }
-  });
-
-  // ─── RECUPERAR CONTRASEÑA ─────────────────────────────────
-  document.getElementById("forgotPassword").addEventListener("click", async () => {
-    const { value: correo } = await Swal.fire({
-      title: "Recuperar contraseña",
-      html: `
-        <p style="color:#6c757d;font-size:14px;margin-bottom:12px;">
-          Ingresa tu correo institucional y te enviaremos un enlace para restablecer tu contraseña.
-        </p>
-        <input type="email" id="swal-correo" class="swal2-input" placeholder="tu.correo@campus.edu.bo">
-      `,
-      confirmButtonText: "Enviar enlace",
-      confirmButtonColor: "#0077ff",
-      showCancelButton: true,
-      cancelButtonText: "Cancelar",
-      focusConfirm: false,
-      preConfirm: () => {
-        const v = document.getElementById("swal-correo").value.trim();
-        if (!v) { Swal.showValidationMessage("Ingresa tu correo"); return false; }
-        return v;
+      // Verificar si está bloqueado
+      if (user.bloqueado) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Cuenta Bloqueada',
+          text: 'Tu cuenta ha sido bloqueada. Contacta al administrador.',
+          confirmButtonColor: '#dc3545'
+        });
+        return;
       }
+
+      // Crear sesión
+      const ahora = new Date();
+      const expiracion = new Date(ahora.getTime() + 12 * 60 * 60 * 1000); // 12 horas
+
+      const sessionData = {
+        id: user.id,
+        nombre_completo: user.nombre_completo,
+        nombre_usuario: user.nombre_usuario,
+        correo: user.correo,
+        rol: user.rol,
+        cargo: user.cargo,
+        area_responsabilidad: user.area_responsabilidad,
+        especialidad: user.especialidad,
+        telefono: user.telefono,
+        permisos: user.permisos,
+        login_time: ahora.toISOString(),
+        expiracion: expiracion.toISOString()
+      };
+
+      // Guardar sesión
+      sessionStorage.setItem('session_SAC', JSON.stringify(sessionData));
+
+      // Si "Recordarme" está activado, guardar en localStorage
+      if (rememberMe) {
+        localStorage.setItem('remember_user', username);
+      } else {
+        localStorage.removeItem('remember_user');
+      }
+
+      // Mostrar mensaje de bienvenida
+      await Swal.fire({
+        icon: 'success',
+        title: '¡Bienvenido!',
+        html: `<p style="font-size: 16px; margin-top: 10px;">Hola <strong>${user.nombre_completo}</strong></p>`,
+        timer: 2000,
+        showConfirmButton: false
+      });
+
+      // Redirigir según el rol
+      redirectByRole(user.rol);
     });
 
-    if (!correo) return;
+    // Recovery form submit
+    document.getElementById('recoveryForm')?.addEventListener('submit', async function(e) {
+      e.preventDefault();
 
-    try {
-      await sendPasswordResetEmail(auth, correo);
-      Swal.fire({
-        icon: "success",
-        title: "¡Correo enviado!",
-        html: `Se enviaron instrucciones a <strong>${correo}</strong>.<br>
-               <small style="color:#6c757d">Revisa también tu carpeta de spam.</small>`,
-        confirmButtonColor: "#0077ff"
-      });
-    } catch (err) {
-      const msgs = {
-        "auth/user-not-found": "No hay cuenta registrada con ese correo.",
-        "auth/invalid-email":  "El formato del correo no es válido."
+      if (!DATABASE) {
+        await loadDatabase();
+        if (!DATABASE) return;
+      }
+
+      const email = document.getElementById('recoveryEmail').value.trim();
+
+      // Buscar usuario por correo
+      const user = DATABASE.usuarios.find(u => u.correo === email && u.activo === true);
+
+      if (!user) {
+        // Por seguridad, no revelar si el correo existe o no
+        Swal.fire({
+          icon: 'info',
+          title: 'Solicitud Recibida',
+          html: `
+            <p>Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.</p>
+            <p style="margin-top: 10px; font-size: 14px; color: #666;">Revisa tu bandeja de entrada y spam.</p>
+          `,
+          confirmButtonColor: '#0077ff'
+        });
+        document.getElementById('recoveryModal').classList.remove('active');
+        document.getElementById('recoveryForm').reset();
+        return;
+      }
+
+      // Generar token de recuperación con datos codificados
+      const expiracion = new Date();
+      expiracion.setHours(expiracion.getHours() + 1); // 1 hora de validez
+
+      // Crear payload con datos del usuario
+      const payload = {
+        usuario_id: user.id,
+        correo: user.correo,
+        nombre_usuario: user.nombre_usuario,
+        exp: expiracion.getTime()
       };
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: msgs[err.code] || "No se pudo enviar el correo. Intenta nuevamente.",
-        confirmButtonColor: "#dc3545"
-      });
-    }
-  });
 
-}); // DOMContentLoaded
-</script>
+      // Codificar payload en base64
+      const token = btoa(JSON.stringify(payload)) + '.' + generateToken().substring(0, 32);
+
+      // Simular envío de correo (en producción, esto sería una llamada a backend)
+      // Detectar si estamos en GitHub Pages o local
+      const baseUrl = window.location.hostname.includes('github.io') 
+        ? window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '')
+        : window.location.origin;
+      const recoveryLink = `${baseUrl}/reset-password.html?token=${token}`;
+
+      // Mostrar información (en producción, esto se enviaría por correo)
+      Swal.fire({
+        icon: 'success',
+        title: 'Enlace Enviado',
+        html: `
+          <p>Se ha enviado un enlace de recuperación al correo:</p>
+          <p style="font-weight: 600; color: #0077ff; margin: 15px 0;">${email}</p>
+          <div style="background: #f0f0f0; padding: 15px; border-radius: 10px; margin-top: 15px; text-align: left; word-break: break-all;">
+            <p style="color: #333; font-size: 12px; margin-bottom: 8px;"><strong>Enlace de recuperación:</strong></p>
+            <a href="${recoveryLink}" target="_blank" style="color: #0077ff; font-size: 11px; word-break: break-all;">${recoveryLink}</a>
+          </div>
+          <p style="margin-top: 15px; font-size: 13px; color: #666;">El enlace expira en 1 hora</p>
+          <p style="margin-top: 10px; font-size: 12px; color: #999;">
+            <i class="fas fa-mouse-pointer"></i> Click en el enlace para abrirlo
+          </p>
+        `,
+        confirmButtonColor: '#0077ff',
+        confirmButtonText: 'Entendido'
+      });
+
+      document.getElementById('recoveryModal').classList.remove('active');
+      document.getElementById('recoveryForm').reset();
+    });
+
+    // Redirigir según rol
+    function redirectByRole(rol) {
+      switch(rol) {
+        case 'administrador':
+          window.location.href = 'publico/paginas/dashboard-admin.html';
+          break;
+        case 'responsable_audiovisual':
+          window.location.href = 'dashboard-audiovisual.html';
+          break;
+        case 'personal_apoyo_aulas':
+          window.location.href = 'dashboard-aulas.html';
+          break;
+        case 'responsable_mantenimientos':
+          window.location.href = 'dashboard-mantenimientos.html';
+          break;
+        default:
+          window.location.href = 'index.html';
+      }
+    }
+
+    // Generar token aleatorio
+    function generateToken() {
+      return Array.from(crypto.getRandomValues(new Uint8Array(32)))
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+    }
+
+    // Cargar usuario recordado
+    window.addEventListener('DOMContentLoaded', async function() {
+      await loadDatabase();
+      
+      // Verificar sesión existente
+      if (checkExistingSession()) {
+        return;
+      }
+
+      // Cargar usuario recordado
+      const rememberedUser = localStorage.getItem('remember_user');
+      if (rememberedUser) {
+        document.getElementById('username').value = rememberedUser;
+        document.getElementById('rememberMe').checked = true;
+      }
+    });
+  </script>
 </body>
 </html>
