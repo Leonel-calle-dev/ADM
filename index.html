@@ -338,7 +338,10 @@
 
 <!-- ===================== FIREBASE ===================== -->
 <script type="module">
+  // ✅ Importa auth y db desde tu config (asegúrate de que firebase-config.js use CDN también)
   import { auth, db } from "./firebase-config.js";
+  
+  // ✅ URLs SIN espacios al final
   import {
     signInWithEmailAndPassword,
     sendPasswordResetEmail,
@@ -347,12 +350,13 @@
     browserSessionPersistence,
     browserLocalPersistence
   } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  
   import {
     collection, query, where, getDocs,
     updateDoc, doc, serverTimestamp
   } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-document.addEventListener("DOMContentLoaded", () => {
+  
+  document.addEventListener("DOMContentLoaded", () => {
 
   // ─── ROLES → dashboards ───────────────────────────────────
   const ROLES_CONFIG = {
